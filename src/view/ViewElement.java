@@ -1,6 +1,6 @@
 package view;
 
-import model.ICommandSender;
+import controller.ICommandSender;
 
 public abstract class ViewElement implements ICommandSender{
 
