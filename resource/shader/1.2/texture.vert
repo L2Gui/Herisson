@@ -1,15 +1,15 @@
-#version 150 core
+#version 120
 
 uniform mat4 projectionMatrix;/*
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;*/
 
-in vec4 in_Position;
-in vec4 in_Color;
-in vec2 in_TextureCoord;
+attribute vec4 in_Position;
+attribute vec4 in_Color;
+attribute vec2 in_TextureCoord;
 
-out vec4 pass_Color;
-out vec2 pass_TextureCoord;
+varying vec4 pass_Color;
+varying vec2 pass_TextureCoord;
 
 void main(void) {
 	gl_Position = in_Position;
@@ -20,7 +20,7 @@ void main(void) {
 	pm = mat4(1.0);
 	pm = projectionMatrix;
 	
-	gl_Position = in_Position;
+	gl_Position = pm * in_Position;
 	
 	pass_Color = in_Color;
 	pass_TextureCoord = in_TextureCoord;

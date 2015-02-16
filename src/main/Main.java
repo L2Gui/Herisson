@@ -10,6 +10,7 @@ import opengl.GLTexture;
 import opengl.GLTexturedVertex;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.GLContext;
  
 public class Main {
 	public JFrame frame;
@@ -34,20 +35,20 @@ public class Main {
 		};
 		
 		GLTexturedVertex v0 = new GLTexturedVertex(); 
-		v0.setXYZ(-0.5f, 0.5f, 0); v0.setRGB(1, 0, 0); v0.setST(0, 0);
+		v0.setXYZ(-0.5f, 0.5f, -1.0f); v0.setRGB(1, 0, 0); v0.setST(0, 0);
 		GLTexturedVertex v1 = new GLTexturedVertex(); 
-		v1.setXYZ(-0.5f, -0.5f, 0); v1.setRGB(0, 1, 0); v1.setST(0, 1);
+		v1.setXYZ(-0.5f, -0.5f, -1.0f); v1.setRGB(0, 1, 0); v1.setST(0, 1);
 		GLTexturedVertex v2 = new GLTexturedVertex(); 
-		v2.setXYZ(0.5f, -0.5f, 0); v2.setRGB(0, 0, 1); v2.setST(1, 1);
+		v2.setXYZ(0.5f, -0.5f, -1.0f); v2.setRGB(0, 0, 1); v2.setST(1, 1);
 		GLTexturedVertex v3 = new GLTexturedVertex(); 
-		v3.setXYZ(0.5f, 0.5f, 0); v3.setRGB(1, 1, 1); v3.setST(1, 0);
+		v3.setXYZ(0.5f, 0.5f, -1.0f); v3.setRGB(1, 1, 1); v3.setST(1, 0);
 		
 		GLTexturedVertex[] vertices = new GLTexturedVertex[] {v0, v1, v2, v3};
 		
 		try {
 			GLCanvas canvas = new GLCanvas();
+			GLShader shader = new GLShader("texture.vert", "texture.frag");
 			
-			GLShader shader = new GLShader("resource/shader/texture.vert", "resource/shader/texture.frag");
 			GLTexture texture = new GLTexture("resource/png/ash_uvgrid04.png");
 			GLObject obj = new GLObject(shader, texture, vertices, indices);
 			

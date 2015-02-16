@@ -6,11 +6,13 @@ import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.util.vector.Matrix4f;
 
 public class GLObject {
 	private GLTexture texture;
@@ -51,9 +53,15 @@ public class GLObject {
 		GL30.glBindVertexArray(0);
 	}
 	
-	public void render() {
+	public void render(Matrix4f projectionMatrix) {
 		this.texture.bind();
 		this.shader.bind();
+		
+		FloatBuffer matrix44Buffer = BufferUtils.createFloatBuffer(16);
+		
+		projectionMatrix.store(matrix44Buffer); 
+		matrix44Buffer.flip();
+		GL20.glUniformMatrix4(this.shader.getUniform("projectionMatrix"), false, matrix44Buffer);
 		
 		GL30.glBindVertexArray(this.vaid);
     	

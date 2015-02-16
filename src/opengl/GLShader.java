@@ -5,12 +5,15 @@ import static org.lwjgl.opengl.GL20.*;
 import org.lwjgl.opengl.GL20;
  
 
+import org.lwjgl.opengl.GLContext;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
  
+
 
 import org.lwjgl.BufferUtils;
  
@@ -31,6 +34,14 @@ public class GLShader implements GLResource {
 		if (this.vertexPath == null || this.fragmentPath == null) {
 			System.err.println("Paths are invalid or this shader is already initialized");
 			return;
+		}
+		
+		if (GLContext.getCapabilities().OpenGL32) {
+			this.vertexPath = "resource/shader/" + this.vertexPath;
+			this.fragmentPath = "resource/shader/" + this.fragmentPath;
+		} else {
+			this.vertexPath = "resource/shader/1.2" + this.vertexPath;
+			this.fragmentPath = "resource/shader/1.2" + this.fragmentPath;
 		}
 		
 		this.programv = createShader(this.vertexPath, GL_VERTEX_SHADER);

@@ -7,6 +7,7 @@ import java.util.Set;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.AWTGLCanvas;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Matrix4f;
 
 public class GLCanvas extends AWTGLCanvas {
 	private static final long serialVersionUID = 7519333736764307525L;
@@ -14,9 +15,34 @@ public class GLCanvas extends AWTGLCanvas {
 	private Set<GLResource> uninitializedResources = new HashSet<GLResource>();
 	private Set<GLObject> uninitializedObjects = new HashSet<GLObject>();
 	private Set<GLObject> objects = new HashSet<GLObject>();
+	
+	private Matrix4f projectionMatrix;
 
 	public GLCanvas() throws LWJGLException {
 		super();
+		
+		// Setup projection matrix
+		this.projectionMatrix = new Matrix4f();
+		float fieldOfView = 60f;
+		float aspectRatio = (float) super.getWidth() / (float) super.getHeight();
+		float near_plane = 0.1f;
+		float far_plane = 100f;
+		 
+		float y_scale = (float) Math.tanh(Math.toRadians(fieldOfView / 2f));
+		float x_scale = y_scale / aspectRatio;
+		float frustum_length = far_plane - near_plane;
+		
+		this.projectionMatrix.m00 = 1.0f;
+		this.projectionMatrix.m11 = 1.0f;
+		this.projectionMatrix.m22 = 1.0f;
+		this.projectionMatrix.m33 = 1.0f;
+		
+		/*this.projectionMatrix.m00 = x_scale;
+		this.projectionMatrix.m11 = y_scale;
+		this.projectionMatrix.m22 = -((far_plane + near_plane) / frustum_length);
+		this.projectionMatrix.m23 = -1;
+		this.projectionMatrix.m32 = -((2 * near_plane * far_plane) / frustum_length);
+		this.projectionMatrix.m33 = 0;*/
 	}
 	
 	@Override
@@ -36,7 +62,7 @@ public class GLCanvas extends AWTGLCanvas {
     	GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
     	
     	for (GLObject obj : this.objects) {
-    		obj.render();
+    		obj.render(this.projectionMatrix);
     	}
 		
 		try {
