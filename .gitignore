@@ -5,3 +5,7 @@ out/*
 .classpath
 LWJGLTest.iml
 herisson.iml
+/bin/
+/out/
+/.idea/
+/.settings/
