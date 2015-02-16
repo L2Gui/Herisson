@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Color;
+import java.awt.Font;
 
 import view.EdgeView;
 
@@ -91,7 +92,7 @@ public class Edge {
 	
 	public void setLabel(String label)
 	{
-		mainView.setLabel(label);s
+		mainView.setLabel(label);
 	}
 	
 	public Color getTextColor()
