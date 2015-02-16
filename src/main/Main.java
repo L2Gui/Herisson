@@ -101,8 +101,8 @@ public class Main {
     			JMenu editElem = new JMenu("Modifier");
 					JMenuItem editVertex = new JMenuItem("Noeud");
 					JMenuItem editEdge = new JMenuItem("Trait");
-				editElem.add(newVertex);
-				editElem.add(newEdge);
+				editElem.add(editVertex);
+				editElem.add(editEdge);
 				
 				JMenuItem undo = new JMenuItem("Annuler");
 				JMenuItem redo = new JMenuItem("Restaurer");
@@ -119,7 +119,7 @@ public class Main {
 			menu.add(edit);
 			
 			JMenu display = new JMenu("Affichage");
-			
+				
 			menu.add(display);
     		
     	frame.setJMenuBar(menu);
