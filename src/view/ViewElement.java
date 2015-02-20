@@ -42,6 +42,6 @@ public abstract class ViewElement implements ICommandSender {
 	public abstract void paint();
 	
 	protected void sendCommand(ICommand command) {
-	
+		this.commandHandler.executeCommand(command);
 	}
 }
