@@ -31,7 +31,7 @@ public class Edge {
 	
 	/**
 	 * 
-	 * @return
+	 * @return this.style (EdgeStyle)
 	 */
 	public EdgeStyle getStyle() {
 		return style;
@@ -39,7 +39,7 @@ public class Edge {
 
 	/**
 	 * 
-	 * @param style
+	 * @param style est la nouvelle valeur de this.style
 	 */
 	public void setStyle(EdgeStyle style) {
 		this.style = style;
@@ -49,7 +49,7 @@ public class Edge {
 	
 	/**
 	 * 
-	 * @return
+	 * @return this.mainView (EdgeView)
 	 */
 	public EdgeView getMainView() {
 		return mainView;
@@ -57,7 +57,7 @@ public class Edge {
 
 	/**
 	 * 
-	 * @param mainView
+	 * @param mainView est nouvelle valeur de this.mainView
 	 */
 	public void setMainView(EdgeView mainView) {
 		this.mainView = mainView;
@@ -65,59 +65,93 @@ public class Edge {
 
 	// Modification methods for fields in style
 	
+	/**
+	 * 
+	 * @return this.style.color (Color)
+	 */
 	public Color getColor()
 	{
-		return style.color;
+		return style.getColor();
 	}
 	
+	/**
+	 * 
+	 * @param color est la nouvelle valeur de this.style.color
+	 */
 	public void setColor(Color color)
 	{
 		//TODO
 	}
 	
+	/**
+	 * 
+	 * @return this.style.thickness (float)
+	 */
 	public float getThickness()
 	{
-		return style.thickness;
+		return style.getThickness();
 	}
 	
+	/**
+	 * 
+	 * @param thickness est la nouvelle valeur de this.style.thickness
+	 */
 	public void setThickness(float thickness)
 	{
 		//TODO
 	}
 	
+	/**
+	 * 
+	 * @return this.mainView.label (String)
+	 */
 	public String getLabel()
 	{
 		return mainView.getLabel();
 	}
 	
+	/**
+	 * 
+	 * @param label est la nouvelle valeur de this.mainView.label
+	 */
 	public void setLabel(String label)
 	{
 		mainView.setLabel(label);
 	}
 	
+	/**
+	 * 
+	 * @return this.style.textColor (Color)
+	 */
 	public Color getTextColor()
 	{
-		return style.color;
+		return style.getTextColor();
 	}
 	
+	/**
+	 * 
+	 * @param textColor est la nouvelle valeur de this.style.textColor
+	 */
 	public void setTextColor(Color textColor)
 	{
 		//TODO
 	}
 	
+	/**
+	 * 
+	 * @return this.style.font (Font)
+	 */
 	public Font getFont()
 	{
-		return style.font;
+		return style.getFont();
 	}
 	
+	/**
+	 * 
+	 * @param font est la nouvelle valeur de this.style.font
+	 */
 	public void setFont(Font font)
 	{
 		//TODO
-	}
-	
-	
-	
-	
-	
-	
+	}	
 }
