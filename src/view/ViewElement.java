@@ -1,14 +1,11 @@
 package view;
 
-import opengl.GLObject;
-
-import org.lwjgl.util.vector.Matrix4f;
-
+import opengl.GLColoredObject;
 import controller.CommandHandler;
 import controller.ICommand;
 import controller.ICommandSender;
 
-public abstract class ViewElement implements ICommandSender {
+public abstract class ViewElement extends GLColoredObject implements ICommandSender {
 	private CommandHandler commandHandler;
 	private String label;
 	private int index;
@@ -45,5 +42,5 @@ public abstract class ViewElement implements ICommandSender {
 	
 	protected void sendCommand(ICommand command) {
 		this.commandHandler.executeCommand(command);
-	}	
+	}
 }

@@ -24,7 +24,7 @@ public class GLTexturedObject extends GLObject {
 	private int vid;
 	private int iid;
 	
-	public GLTexturedObject(GLShader shader, GLTexture texture, GLTexturedVertex[] vertices, int[] indices) {
+	public void setup(GLShader shader, GLTexture texture, GLTexturedVertex[] vertices, int[] indices) {
 		this.texture = texture;
 		this.shader = shader;
 		this.vertices = vertices;

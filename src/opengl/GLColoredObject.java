@@ -23,7 +23,7 @@ public class GLColoredObject extends GLObject {
 	private int vid;
 	private int iid;
 	
-	public GLColoredObject(GLShader shader, GLColoredVertex[] vertices, int[] indices) {
+	public void setup(GLShader shader, GLColoredVertex[] vertices, int[] indices) {
 		this.shader = shader;
 		this.vertices = vertices;
 		this.indices = indices;
