@@ -14,10 +14,4 @@ public class EdgeView extends ViewElement {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void paint() {
-		// TODO Auto-generated method stub
-		
-	}
 }

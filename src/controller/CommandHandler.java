@@ -2,7 +2,7 @@ package controller;
 
 import java.util.Stack;
 
-public class CommandHandler {
+public class CommandHandler {	
 	private Stack<ICommand> commandStack;
 	private Stack<ICommand> undoStack;
 	

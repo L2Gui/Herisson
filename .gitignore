@@ -6,3 +6,6 @@ out/*
 LWJGLTest.iml
 herisson.iml
 /bin/
+/target/
+/bin/
+/bin1/

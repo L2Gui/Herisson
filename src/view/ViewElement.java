@@ -1,5 +1,9 @@
 package view;
 
+import opengl.GLObject;
+
+import org.lwjgl.util.vector.Matrix4f;
+
 import controller.CommandHandler;
 import controller.ICommand;
 import controller.ICommandSender;
@@ -39,9 +43,7 @@ public abstract class ViewElement implements ICommandSender {
 		this.commandHandler = commandHandler;
 	}
 	
-	public abstract void paint();
-	
 	protected void sendCommand(ICommand command) {
 		this.commandHandler.executeCommand(command);
-	}
+	}	
 }

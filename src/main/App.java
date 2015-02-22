@@ -1,20 +1,35 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.WindowConstants;
 
+import model.Graph;
+import controller.CommandHandler;
+import controller.IOAlgorithm;
+import controller.IOHandler;
+import controller.KeyboardHandler;
 import opengl.GLCanvas;
+import view.IVisuAlgorithm;
 
-public class Main {
-	public JFrame frame;
+public class App {
+	private JFrame frame;
+	private IOHandler ioHandler;
+	private CommandHandler commandHandler;
+	private KeyboardHandler keyboardHandler;
+	private Collection<IOAlgorithm> ioAlgorithms;
+	private Collection<IVisuAlgorithm> visuAlgorithms;
+	private Collection<Graph> graphs;
 	
     public static void main(String args[]) {
-        Main l10 = new Main();
+        App app = new App();
         try {
-        	l10.run();
+        	app.run();
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);
@@ -23,8 +38,17 @@ public class Main {
     
     public void run() throws Exception {
         createWindow();
+        this.ioHandler = new IOHandler();
+        this.commandHandler = new CommandHandler();
+        this.keyboardHandler = new KeyboardHandler();
+        this.ioAlgorithms = new ArrayList<IOAlgorithm>();
+        this.visuAlgorithms = new ArrayList<IVisuAlgorithm>();
+        this.graphs = new ArrayList<Graph>();
 		
-		frame.setVisible(true);
+        this.keyboardHandler.setCommandHandler(commandHandler);
+        
+        this.frame.addKeyListener(this.keyboardHandler);
+		this.frame.setVisible(true);
     }
     
     private void createWindow() throws Exception {
