@@ -8,49 +8,33 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.AWTGLCanvas;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 public class GLCanvas extends AWTGLCanvas {
 	private static final long serialVersionUID = 7519333736764307525L;
 	
 	private Set<GLResource> uninitializedResources = new HashSet<GLResource>();
-	private Set<GLObject> uninitializedObjects = new HashSet<GLObject>();
-	private Set<GLObject> objects = new HashSet<GLObject>();
+	private Set<GLTexturedObject> uninitializedObjects = new HashSet<GLTexturedObject>();
+	private Set<GLTexturedObject> objects = new HashSet<GLTexturedObject>();
 	
-	private Matrix4f projectionMatrix;
-
+	private Matrix4f viewMatrix;
+	private IGLCamera camera;
+	
 	public GLCanvas() throws LWJGLException {
 		super();
 		
-		// Setup projection matrix
-		this.projectionMatrix = new Matrix4f();
-		float fieldOfView = 60f;
-		float aspectRatio = (float) super.getWidth() / (float) super.getHeight();
-		float near_plane = 0.1f;
-		float far_plane = 100f;
-		 
-		float y_scale = (float) Math.tanh(Math.toRadians(fieldOfView / 2f));
-		float x_scale = y_scale / aspectRatio;
-		float frustum_length = far_plane - near_plane;
-		
-		this.projectionMatrix.m00 = 1.0f;
-		this.projectionMatrix.m11 = 1.0f;
-		this.projectionMatrix.m22 = 1.0f;
-		this.projectionMatrix.m33 = 1.0f;
-		
-		/*this.projectionMatrix.m00 = x_scale;
-		this.projectionMatrix.m11 = y_scale;
-		this.projectionMatrix.m22 = -((far_plane + near_plane) / frustum_length);
-		this.projectionMatrix.m23 = -1;
-		this.projectionMatrix.m32 = -((2 * near_plane * far_plane) / frustum_length);
-		this.projectionMatrix.m33 = 0;*/
+		this.viewMatrix = new Matrix4f();
+        this.camera = new GLPerspectiveCamera(super.getWidth(), super.getHeight(), 60.0f, 0.1f, 100.0f);
+        
+        this.viewMatrix.rotate((float) Math.toRadians(0.0f), new Vector3f(0.0f, 1.0f, 0.0f));
+        this.viewMatrix.translate(new Vector3f(0.0f, 0.0f, -0.5f));
 	}
 	
 	@Override
 	public void initGL() {
 		this.initializeResources();
 		this.initializeObjects();
-		
-		GL11.glViewport(0,0, getWidth(), getHeight());
+		this.resizeGLView();
 	}
 	
 	@Override
@@ -61,8 +45,8 @@ public class GLCanvas extends AWTGLCanvas {
 		GL11.glClearColor(0.4f, 0.6f, 0.9f, 1.0f);
     	GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
     	
-    	for (GLObject obj : this.objects) {
-    		obj.render(this.projectionMatrix);
+    	for (GLTexturedObject obj : this.objects) {
+    		obj.render(this.camera.getProjectionMatrix(), this.viewMatrix);
     	}
 		
 		try {
@@ -77,7 +61,7 @@ public class GLCanvas extends AWTGLCanvas {
 	public void componentResized(ComponentEvent e) {
 		try {
 			super.makeCurrent();
-			GL11.glViewport(0, 0, getWidth(), getHeight());
+			this.resizeGLView();
 		} catch (LWJGLException e1) {
 			e1.printStackTrace();
 		} catch (IllegalStateException e1) {}
@@ -85,7 +69,7 @@ public class GLCanvas extends AWTGLCanvas {
 		super.componentResized(e);
 	}
 	
-	public void add(GLObject obj) {
+	public void add(GLTexturedObject obj) {
 		this.uninitializedObjects.add(obj);
 	}
 	
@@ -94,7 +78,7 @@ public class GLCanvas extends AWTGLCanvas {
 	}
 	
 	private void initializeObjects() {
-		for (GLObject obj : this.uninitializedObjects) {
+		for (GLTexturedObject obj : this.uninitializedObjects) {
 			obj.init();
 			this.objects.add(obj);
 		}
@@ -106,5 +90,14 @@ public class GLCanvas extends AWTGLCanvas {
 			res.init();
 		}
 		this.uninitializedResources.clear();
+	}
+	
+	private void resizeGLView() {
+		GL11.glViewport(0, 0, getWidth(), getHeight());
+		this.computeProjectionMatrix();
+	}
+	
+	private void computeProjectionMatrix() {
+		this.camera.updateViewport((float) super.getWidth(), (float) super.getHeight());
 	}
 }

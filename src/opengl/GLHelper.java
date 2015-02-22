@@ -29,6 +29,16 @@ public class GLHelper {
 		 return buf;
 	 }
 	 
+	 public static FloatBuffer makeColoredVertexBuffer(GLColoredVertex[] vertices) {
+		 FloatBuffer buf = BufferUtils.createFloatBuffer(vertices.length * GLColoredVertex.elementCount);
+		 for (int i = 0; i < vertices.length; i++) {
+			 // Add position and color floats to the buffer
+			 buf.put(vertices[i].getElements());
+		 }
+		 buf.position(0);
+		 return buf;
+	 }
+	 
 	 public static FloatBuffer makeFloatBuffer(float[] ibuf) {
 		  FloatBuffer buf = BufferUtils.createFloatBuffer(ibuf.length);
 		  for(float i:ibuf) {
