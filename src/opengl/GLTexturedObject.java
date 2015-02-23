@@ -36,8 +36,8 @@ public class GLTexturedObject extends GLObject {
 		FloatBuffer fb = GLHelper.makeTexturedVertexBuffer(this.vertices);
 		IntBuffer ib = GLHelper.makeIntBuffer(this.indices);
 		
-		this.vid = GLHelper.makeBuffer(GL15.GL_ARRAY_BUFFER, fb);
-    	this.iid = GLHelper.makeBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, ib);
+		this.vid = GLHelper.makeBuffer(GL15.GL_ARRAY_BUFFER, fb, GL15.GL_STATIC_DRAW);
+    	this.iid = GLHelper.makeBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, ib, GL15.GL_STATIC_DRAW);
     	this.indices = null;
     	this.vertices = null;
 		

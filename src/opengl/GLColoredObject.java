@@ -17,15 +17,17 @@ import org.lwjgl.util.vector.Matrix4f;
 public class GLColoredObject extends GLObject {
 	private GLShader shader;
 	private GLColoredVertex[] vertices;
+	private GLObjectUsage state;
 	private int[] indices;
 	private int indicesCount;
 	private int vaid;
 	private int vid;
 	private int iid;
 	
-	public void setup(GLShader shader, GLColoredVertex[] vertices, int[] indices) {
+	public void setup(GLShader shader, GLColoredVertex[] vertices, int[] indices, GLObjectUsage usage) {
 		this.shader = shader;
 		this.vertices = vertices;
+		this.state = usage;
 		this.indices = indices;
 		this.indicesCount = indices.length;
 	}
@@ -34,8 +36,8 @@ public class GLColoredObject extends GLObject {
 		FloatBuffer fb = GLHelper.makeColoredVertexBuffer(this.vertices);
 		IntBuffer ib = GLHelper.makeIntBuffer(this.indices);
 		
-		this.vid = GLHelper.makeBuffer(GL15.GL_ARRAY_BUFFER, fb);
-    	this.iid = GLHelper.makeBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, ib);
+		this.vid = GLHelper.makeBuffer(GL15.GL_ARRAY_BUFFER, fb, this.state.getUsage());
+    	this.iid = GLHelper.makeBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, ib, this.state.getUsage());
     	this.indices = null;
     	this.vertices = null;
 		

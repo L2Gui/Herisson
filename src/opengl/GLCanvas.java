@@ -1,5 +1,6 @@
 package opengl;
 
+import java.awt.Graphics;
 import java.awt.event.ComponentEvent;
 import java.util.HashSet;
 import java.util.Set;
@@ -54,6 +55,7 @@ public class GLCanvas extends AWTGLCanvas {
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
+		
 		super.repaint();
 	}
 	

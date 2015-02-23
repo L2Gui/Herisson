@@ -56,22 +56,22 @@ public class GLHelper {
 	 	return makeFloatBuffer(f);
 	 }
 	 
-	 public static int makeBuffer(int target, IntBuffer bufferdata) {
+	 public static int makeBuffer(int target, IntBuffer bufferdata, int usage) {
 		 IntBuffer bufferid = BufferUtils.createIntBuffer(1);//IntBuffer.allocate(1);
 		 GL15.glGenBuffers(bufferid);
 		 int buffer = bufferid.get(0);
 		 GL15.glBindBuffer(target, buffer);
-		 GL15.glBufferData(target, bufferdata, GL15.GL_STATIC_DRAW);
+		 GL15.glBufferData(target, bufferdata, usage);
 		 GL15.glBindBuffer(target, 0);
 		 return buffer;
 	 }
 	 
-	 public static int makeBuffer(int target, FloatBuffer bufferdata) {
+	 public static int makeBuffer(int target, FloatBuffer bufferdata, int usage) {
 		 IntBuffer bufferid = BufferUtils.createIntBuffer(1);
 		 glGenBuffers(bufferid);
 		 int buffer = bufferid.get(0);
 		 GL15.glBindBuffer(target, buffer);
-		 GL15.glBufferData(target, bufferdata, GL15.GL_STATIC_DRAW);
+		 GL15.glBufferData(target, bufferdata, usage);
 		 GL15.glBindBuffer(target, 0);
 		 return buffer;
 	 }
