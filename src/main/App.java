@@ -52,7 +52,7 @@ public class App {
     }
     
     private void createWindow() throws Exception {
-    	frame = new JFrame("PT_Graphe_Hérisson");
+    	frame = new JFrame("PT_Graphe_HÃ©risson");
     	frame.setSize(600, 600);
     	frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     	frame.setLocationByPlatform(true);
