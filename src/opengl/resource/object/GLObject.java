@@ -1,4 +1,4 @@
-package opengl;
+package opengl.resource.object;
 
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
@@ -24,6 +24,7 @@ public abstract class GLObject implements IGLObject {
 		return this.modified;
 	}
 	
+	@Override
 	public Matrix4f getModelMatrix() {
 		return this.modelMatrix;
 	}

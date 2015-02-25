@@ -1,4 +1,4 @@
-package opengl;
+package opengl.resource;
 
 import static org.lwjgl.opengl.GL20.*;
 
@@ -15,11 +15,15 @@ import java.nio.IntBuffer;
  
 
 
+
+
+
 import org.lwjgl.BufferUtils;
  
-public class GLShader implements GLResource {
+public class GLShader implements IGLResource {
 	private String vertexPath;
 	private String fragmentPath;
+	private boolean isInitialized;
 	private int programf = 0,programv = 0,programs;
 	public int uni2;
 	public int uni3;
@@ -27,11 +31,12 @@ public class GLShader implements GLResource {
 	public GLShader(String vertexPath, String fragmentPath) {
 		this.vertexPath = vertexPath;
 		this.fragmentPath = fragmentPath;
+		this.isInitialized = false;
 	}
 	
 	@Override
 	public void init() {
-		if (this.vertexPath == null || this.fragmentPath == null) {
+		if (this.isInitialized() || this.vertexPath == null || this.fragmentPath == null) {
 			System.err.println("Paths are invalid or this shader is already initialized");
 			return;
 		}
@@ -55,6 +60,12 @@ public class GLShader implements GLResource {
         
         this.vertexPath = null;
         this.fragmentPath = null;
+        this.isInitialized = true;
+	}
+	
+	@Override
+	public boolean isInitialized() {
+		return this.isInitialized;
 	}
  	
  	public int getUniform(String name) {

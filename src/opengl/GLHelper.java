@@ -4,6 +4,9 @@ import static org.lwjgl.opengl.GL15.glGenBuffers;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.util.Collection;
+
+import opengl.vertex.GLVertex;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL15;
@@ -19,23 +22,12 @@ public class GLHelper {
 		  return buf;
 	 }
 	 
-	 public static FloatBuffer makeTexturedVertexBuffer(GLTexturedVertex[] vertices) {
-		 FloatBuffer buf = BufferUtils.createFloatBuffer(vertices.length * GLTexturedVertex.elementCount);
-		 for (int i = 0; i < vertices.length; i++) {
-			 // Add position, color and texture floats to the buffer
-			 buf.put(vertices[i].getElements());
+	 public static FloatBuffer makeVertexBuffer(Collection<? extends GLVertex> vertices, int elementCount) {
+		 FloatBuffer buf = BufferUtils.createFloatBuffer(vertices.size() * elementCount);
+		 for (GLVertex vertex : vertices) {
+			 buf.put(vertex.getElements());
 		 }
-		 buf.position(0);
-		 return buf;
-	 }
-	 
-	 public static FloatBuffer makeColoredVertexBuffer(GLColoredVertex[] vertices) {
-		 FloatBuffer buf = BufferUtils.createFloatBuffer(vertices.length * GLColoredVertex.elementCount);
-		 for (int i = 0; i < vertices.length; i++) {
-			 // Add position and color floats to the buffer
-			 buf.put(vertices[i].getElements());
-		 }
-		 buf.position(0);
+		 buf.flip();
 		 return buf;
 	 }
 	 

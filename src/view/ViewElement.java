@@ -1,6 +1,6 @@
 package view;
 
-import opengl.GLColoredObject;
+import opengl.resource.object.drawable.GLColoredObject;
 import controller.CommandHandler;
 import controller.ICommand;
 import controller.ICommandSender;

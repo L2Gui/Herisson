@@ -1,38 +1,38 @@
 package opengl;
 
-import java.awt.Graphics;
 import java.awt.event.ComponentEvent;
-import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.HashSet;
+import java.util.TreeMap;
+
+import opengl.resource.IGLResource;
+import opengl.resource.object.camera.IGLCamera;
+import opengl.resource.object.drawable.IGLDrawable;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.AWTGLCanvas;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
 
 public class GLCanvas extends AWTGLCanvas {
 	private static final long serialVersionUID = 7519333736764307525L;
 	
-	private Set<GLResource> uninitializedResources = new HashSet<GLResource>();
-	private Set<GLTexturedObject> uninitializedObjects = new HashSet<GLTexturedObject>();
-	private Set<GLTexturedObject> objects = new HashSet<GLTexturedObject>();
-	
-	private Matrix4f viewMatrix;
+	private Set<IGLResource> uninitializedResources = new HashSet<IGLResource>();
+	private Map<Integer, IGLDrawable> uninitializedDrawables = new TreeMap<Integer, IGLDrawable>();
+	private Map<Integer, IGLDrawable> objects = new TreeMap<Integer, IGLDrawable>();
+
 	private IGLCamera camera;
 	
 	public GLCanvas() throws LWJGLException {
 		super();
-		
-		this.viewMatrix = new Matrix4f();
-        this.camera = new GLPerspectiveCamera(super.getWidth(), super.getHeight(), 60.0f, 0.1f, 100.0f);
-        
-        this.viewMatrix.rotate((float) Math.toRadians(0.0f), new Vector3f(0.0f, 1.0f, 0.0f));
-        this.viewMatrix.translate(new Vector3f(0.0f, 0.0f, -0.5f));
 	}
 	
 	@Override
 	public void initGL() {
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA); 
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		
 		this.initializeResources();
 		this.initializeObjects();
 		this.resizeGLView();
@@ -44,17 +44,21 @@ public class GLCanvas extends AWTGLCanvas {
 		this.initializeObjects();
 		
 		GL11.glClearColor(0.4f, 0.6f, 0.9f, 1.0f);
-    	GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+    	GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
     	
-    	for (GLTexturedObject obj : this.objects) {
-    		obj.render(this.camera.getProjectionMatrix(), this.viewMatrix);
+    	if (this.camera == null) {
+    		return;
     	}
-		
+    	
+    	for (Map.Entry<Integer, IGLDrawable> obj : this.objects.entrySet()) {
+    		obj.getValue().render(this.camera.getProjectionViewMatrix());
+    	}
+    	
 		try {
 			super.swapBuffers();
 		} catch (LWJGLException e) {
 			e.printStackTrace();
-		}
+		}		
 		
 		super.repaint();
 	}
@@ -71,24 +75,32 @@ public class GLCanvas extends AWTGLCanvas {
 		super.componentResized(e);
 	}
 	
-	public void add(GLTexturedObject obj) {
-		this.uninitializedObjects.add(obj);
+	public void setCamera(IGLCamera camera) {
+		this.camera = camera;
 	}
 	
-	public void add(GLResource res) {
+	public void add(int priority, IGLDrawable obj) {
+		this.uninitializedDrawables.put(priority, obj);
+	}
+	
+	public void add(IGLResource res) {
 		this.uninitializedResources.add(res);
 	}
 	
 	private void initializeObjects() {
-		for (GLTexturedObject obj : this.uninitializedObjects) {
-			obj.init();
-			this.objects.add(obj);
+		if (this.camera != null && !this.camera.isInitialized()) {
+			this.camera.init();
 		}
-		this.uninitializedObjects.clear();
+		
+		for (Map.Entry<Integer, IGLDrawable> obj : this.uninitializedDrawables.entrySet()) {
+			obj.getValue().init();
+			this.objects.put(obj.getKey(), obj.getValue());
+		}
+		this.uninitializedDrawables.clear();
 	}
 	
 	private void initializeResources() {
-		for (GLResource res : this.uninitializedResources) {
+		for (IGLResource res : this.uninitializedResources) {
 			res.init();
 		}
 		this.uninitializedResources.clear();
@@ -100,6 +112,8 @@ public class GLCanvas extends AWTGLCanvas {
 	}
 	
 	private void computeProjectionMatrix() {
-		this.camera.updateViewport((float) super.getWidth(), (float) super.getHeight());
+		if (this.camera != null) {
+			this.camera.updateViewport((float) super.getWidth(), (float) super.getHeight());
+		}
 	}
 }
