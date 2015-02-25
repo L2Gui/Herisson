@@ -46,12 +46,10 @@ public class GLCanvas extends AWTGLCanvas {
 		GL11.glClearColor(0.4f, 0.6f, 0.9f, 1.0f);
     	GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
     	
-    	if (this.camera == null) {
-    		return;
-    	}
-    	
-    	for (Map.Entry<Integer, IGLDrawable> obj : this.objects.entrySet()) {
-    		obj.getValue().render(this.camera.getProjectionViewMatrix());
+    	if (this.camera != null) {
+    		for (Map.Entry<Integer, IGLDrawable> obj : this.objects.entrySet()) {
+        		obj.getValue().render(this.camera.getProjectionViewMatrix());
+        	}
     	}
     	
 		try {
