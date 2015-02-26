@@ -1,16 +1,24 @@
 package main;
 
+import java.awt.Desktop;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 import model.Graph;
@@ -83,6 +91,13 @@ public class App {
     		Collection<ISizeAlgorythm> AlgoSize){
     	JMenuBar menu = new JMenuBar();
 		JMenu file = new JMenu("Fichier");
+		try {
+			BufferedImage image;
+			image = ImageIO.read(new File("res/file.png"));
+	        file.setHorizontalTextPosition(SwingConstants.CENTER);
+	        file.setVerticalTextPosition(SwingConstants.BOTTOM);
+	        file.setIcon(new ImageIcon(image));
+		} catch (IOException e) {}
 			JMenuItem newFile = new JMenuItem("Nouveau");
 			JMenuItem open = new JMenuItem("Ouvrir");
 			JMenuItem save = new JMenuItem("Enregistrer");
@@ -95,6 +110,13 @@ public class App {
 		menu.add(file);
 		
 		JMenu edit = new JMenu("Edition");
+		try {
+			BufferedImage image;
+			image = ImageIO.read(new File("res/tools.png"));
+	        edit.setHorizontalTextPosition(SwingConstants.CENTER);
+	        edit.setVerticalTextPosition(SwingConstants.BOTTOM);
+	        edit.setIcon(new ImageIcon(image));
+		} catch (IOException e) {}
 			JMenuItem copy = new JMenuItem("Copier");
 			JMenuItem cut = new JMenuItem("Couper");
 			JMenuItem paste = new JMenuItem("Coller");
@@ -128,6 +150,13 @@ public class App {
 		menu.add(edit);
 		
 		JMenu display = new JMenu("Affichage");
+		try {
+			BufferedImage image;
+			image = ImageIO.read(new File("res/screen.png"));
+	        display.setHorizontalTextPosition(SwingConstants.CENTER);
+	        display.setVerticalTextPosition(SwingConstants.BOTTOM);
+	        display.setIcon(new ImageIcon(image));
+		} catch (IOException e) {}
 			JMenuItem zoomIn = new JMenuItem("Zoom +");
 			JMenuItem zoomOut = new JMenuItem("Zoom -");
 			
@@ -195,6 +224,38 @@ public class App {
 			display.add(size);
 			
 		menu.add(display);
+		JMenu help = new JMenu("Aide");
+		try {
+			BufferedImage image;
+			image = ImageIO.read(new File("res/site.png"));
+	        help.setHorizontalTextPosition(SwingConstants.CENTER);
+	        help.setVerticalTextPosition(SwingConstants.BOTTOM);
+	        help.setIcon(new ImageIcon(image));
+		} catch (IOException e) {}
+		help.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				try {
+					URI uri = URI.create("https://docs.google.com/document/d/1O6I38bpy3eshSb-ov9bVoirzjHJtZEO15fjJBlTmeho/edit?usp=sharing");
+					Desktop.getDesktop().browse(uri);
+				} catch (IOException e) {
+					System.err.println("Erreur ouverture site web");
+					e.printStackTrace();
+				}
+			}
+			
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}
+			@Override
+			public void mouseExited(MouseEvent arg0) {}
+			@Override
+			public void mouseEntered(MouseEvent arg0) {}
+			@Override
+			public void mouseClicked(MouseEvent arg0) {}
+		});
+		
+		menu.add(help);
 		return menu;
     }
 }
