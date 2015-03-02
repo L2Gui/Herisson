@@ -14,6 +14,7 @@ public class Vertex {
 	private VertexStyle style;
 	private Graph graph;
 	private Vector3f position;
+	private String label;
 	
 	
 	public VertexView getMainView() {

@@ -5,6 +5,10 @@ import model.Edge;
 public class EdgeView extends ViewElement {
 	private Edge model;
 
+	public static void paint(){
+		
+	}
+	
 	public String getLabel() {
 		// TODO Auto-generated method stub
 		return null;
