@@ -17,14 +17,12 @@ public class Graph {
 	 * 
 	 * @param edge : Correspond à l'élément à ajouter à this.edges (Collection<Edge>)
 	 */
-	public void addEdge(Edge edge)
-	{
+	public void addEdge(Edge edge){
 		/* Surrement à modifier, neanmoins on doit prendre en compte que 
 		 * la méthode add renvoie vrai si l'argument a pu etre ajouté ou 
 		 * faux si l'élément existe déja dans la Collection.
 		 */
-		if (!edges.add(edge))
-		{
+		if (!edges.add(edge)){
 			System.out.println("Edge already exists");
 		}
 	}
@@ -33,14 +31,12 @@ public class Graph {
 	 * 
 	 * @param vertex : Correspond à l'élément à ajouter à this.vertexs (Collection<Vertex>)
 	 */
-	public void addVertex(Vertex vertex)
-	{
+	public void addVertex(Vertex vertex){
 		/* Surrement à modifier, neanmoins on doit prendre en compte que 
 		 * la méthode add renvoie vrai si l'argument a pu etre ajouté ou 
 		 * faux si l'élément existe déja dans la Collection.
 		 */
-		if (!vertexs.add(vertex))
-		{
+		if (!vertexs.add(vertex)){
 			System.out.println("Vertex already exist");
 		}
 	}
@@ -51,14 +47,12 @@ public class Graph {
 	 * 
 	 * @param edge : Correspond à l'élément à supprimer de this.edges (Collection<Edge>)
 	 */
-	public void removeEdge(Edge edge)
-	{
+	public void removeEdge(Edge edge){
 		/* Surrement à modifier, neanmoins on doit prendre en compte que 
 		 * la méthode remove renvoie vrai si l'argument a pu etre supprimé ou 
 		 * faux sinon.
 		 */
-		if (!edges.remove(edge))
-		{
+		if (!edges.remove(edge)){
 			System.out.println("Edge suppression is impossible");
 		}
 	}
@@ -67,14 +61,12 @@ public class Graph {
 	 * 
 	 * @param vertex : Correspond à l'élément à supprimer de this.vertexs (Collection<Vertex>)
 	 */
-	public void removeVertex(Vertex vertex)
-	{
+	public void removeVertex(Vertex vertex){
 		/* Surrement à modifier, neanmoins on doit prendre en compte que 
 		 * la méthode remove renvoie vrai si l'argument a pu etre supprimé ou 
 		 * faux sinon.
 		 */
-		if (!vertexs.remove(vertex))
-		{
+		if (!vertexs.remove(vertex)){
 			System.out.println("Vertex suppression is impossible");
 		}
 	}
