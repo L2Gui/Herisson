@@ -37,8 +37,7 @@ public class Vertex {
 	 * 
 	 * @return this.style.borderThickness (float)
 	 */
-	public float getThickness()
-	{
+	public float getThickness(){
 		return style.getBorderThickness();
 	}
 	
@@ -46,8 +45,7 @@ public class Vertex {
 	 * 
 	 * @param thickness est la nouvelle valeur de this.style.borderThickness
 	 */
-	public void setThickness(float thickness)
-	{
+	public void setThickness(float thickness){
 		//TODO
 	}
 	
@@ -55,8 +53,7 @@ public class Vertex {
 	 * 
 	 * @return
 	 */
-	public float getSize()
-	{
+	public float getSize(){
 		return this.style.getSize();
 	}
 	
@@ -64,8 +61,7 @@ public class Vertex {
 	 * 
 	 * @param size
 	 */
-	public void setSize(float size)
-	{
+	public void setSize(float size){
 		//TODO
 	}
 	
@@ -73,8 +69,7 @@ public class Vertex {
 	 * 
 	 * @return
 	 */
-	public Color getBackgroundColor()
-	{
+	public Color getBackgroundColor(){
 		return this.style.getBackgroundColor();
 	}
 	
@@ -82,8 +77,7 @@ public class Vertex {
 	 * 
 	 * @param color
 	 */
-	public void setBackgroundColor( Color color)
-	{
+	public void setBackgroundColor( Color color){
 		//TODO
 	}
 	
@@ -91,8 +85,7 @@ public class Vertex {
 	 * 
 	 * @return this.mainView.label (String)
 	 */
-	public String getLabel()
-	{
+	public String getLabel(){
 		return mainView.getLabel();
 	}
 	
@@ -100,8 +93,7 @@ public class Vertex {
 	 * 
 	 * @param label est la nouvelle valeur de this.mainView.label
 	 */
-	public void setLabel(String label)
-	{
+	public void setLabel(String label){
 		mainView.setLabel(label);
 	}
 	
@@ -109,8 +101,7 @@ public class Vertex {
 	 * 
 	 * @return this.style.textColor (Color)
 	 */
-	public Color getTextColor()
-	{
+	public Color getTextColor(){
 		return style.getTextColor();
 	}
 	
@@ -118,8 +109,7 @@ public class Vertex {
 	 * 
 	 * @param textColor est la nouvelle valeur de this.style.textColor
 	 */
-	public void setTextColor(Color textColor)
-	{
+	public void setTextColor(Color textColor){
 		//TODO
 	}
 	
@@ -127,8 +117,7 @@ public class Vertex {
 	 * 
 	 * @return this.style.font (Font)
 	 */
-	public Font getFont()
-	{
+	public Font getFont(){
 		return style.getFont();
 	}
 	
@@ -136,8 +125,7 @@ public class Vertex {
 	 * 
 	 * @param font est la nouvelle valeur de this.style.font
 	 */
-	public void setFont(Font font)
-	{
+	public void setFont(Font font){
 		//TODO
 	}
 	
@@ -145,13 +133,11 @@ public class Vertex {
 	 * 
 	 * @return
 	 */
-	public Color getBorderColor()
-	{
+	public Color getBorderColor(){
 		return this.style.getBorderColor();
 	}
 	
-	public void setBorderColor(Color color)
-	{
+	public void setBorderColor(Color color){
 		//TODO
 	}
 	

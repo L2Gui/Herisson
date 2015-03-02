@@ -11,7 +11,7 @@ public class CommandTest {
 	private int x;
 	
 	@Test
-	public void CommandHandlerTest() {
+	public void commandHandlerTest() {
 		ICommand command1 = new ICommand() {
 			@Override
 			public void execute() {

@@ -97,7 +97,9 @@ public class App {
 	        file.setHorizontalTextPosition(SwingConstants.CENTER);
 	        file.setVerticalTextPosition(SwingConstants.BOTTOM);
 	        file.setIcon(new ImageIcon(image));
-		} catch (IOException e) {}
+		} catch (IOException e) {
+			//Ignore
+		}
 			JMenuItem newFile = new JMenuItem("Nouveau");
 			JMenuItem open = new JMenuItem("Ouvrir");
 			JMenuItem save = new JMenuItem("Enregistrer");
@@ -116,7 +118,9 @@ public class App {
 	        edit.setHorizontalTextPosition(SwingConstants.CENTER);
 	        edit.setVerticalTextPosition(SwingConstants.BOTTOM);
 	        edit.setIcon(new ImageIcon(image));
-		} catch (IOException e) {}
+		} catch (IOException e) {
+			//Ignore
+		}
 			JMenuItem copy = new JMenuItem("Copier");
 			JMenuItem cut = new JMenuItem("Couper");
 			JMenuItem paste = new JMenuItem("Coller");
@@ -156,7 +160,9 @@ public class App {
 	        display.setHorizontalTextPosition(SwingConstants.CENTER);
 	        display.setVerticalTextPosition(SwingConstants.BOTTOM);
 	        display.setIcon(new ImageIcon(image));
-		} catch (IOException e) {}
+		} catch (IOException e) {
+			//Ignore
+		}
 			JMenuItem zoomIn = new JMenuItem("Zoom +");
 			JMenuItem zoomOut = new JMenuItem("Zoom -");
 			
@@ -171,7 +177,7 @@ public class App {
 						disposition.add(DispositionRadioBtn);
 					}
 				}catch(NullPointerException e){
-					
+					//Ignore
 				}
 				//Disposition personnalisée
 				JRadioButtonMenuItem dispositionPerso = new JRadioButtonMenuItem("Personnalisée");
@@ -190,7 +196,7 @@ public class App {
 						color.add(ColorRadioBtn);
 					}
 				}catch(NullPointerException e){
-					
+					//Ignore
 				}
 				//Disposition personnalisée
 				JRadioButtonMenuItem colorPerso = new JRadioButtonMenuItem("Personnalisée");
@@ -209,7 +215,7 @@ public class App {
 						size.add(SizeRadioBtn);
 					}
 				}catch(NullPointerException e){
-					
+					//Ignore
 				}
 				//Disposition personnalisée
 				JRadioButtonMenuItem sizePerso = new JRadioButtonMenuItem("Personnalisée");
@@ -231,7 +237,9 @@ public class App {
 	        help.setHorizontalTextPosition(SwingConstants.CENTER);
 	        help.setVerticalTextPosition(SwingConstants.BOTTOM);
 	        help.setIcon(new ImageIcon(image));
-		} catch (IOException e) {}
+		} catch (IOException e) {
+			//Ignore
+		}
 		help.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -246,13 +254,21 @@ public class App {
 			}
 			
 			@Override
-			public void mouseReleased(MouseEvent arg0) {}
+			public void mouseReleased(MouseEvent arg0) {
+				//Empty
+			}
 			@Override
-			public void mouseExited(MouseEvent arg0) {}
+			public void mouseExited(MouseEvent arg0) {
+				//Empty
+			}
 			@Override
-			public void mouseEntered(MouseEvent arg0) {}
+			public void mouseEntered(MouseEvent arg0) {
+				//Empty
+			}
 			@Override
-			public void mouseClicked(MouseEvent arg0) {}
+			public void mouseClicked(MouseEvent arg0) {
+				//Empty
+			}
 		});
 		
 		menu.add(help);

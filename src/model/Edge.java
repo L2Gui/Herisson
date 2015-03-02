@@ -69,8 +69,7 @@ public class Edge {
 	 * 
 	 * @return this.style.color (Color)
 	 */
-	public Color getColor()
-	{
+	public Color getColor(){
 		return style.getColor();
 	}
 	
@@ -78,8 +77,7 @@ public class Edge {
 	 * 
 	 * @param color est la nouvelle valeur de this.style.color
 	 */
-	public void setColor(Color color)
-	{
+	public void setColor(Color color){
 		//TODO
 	}
 	
@@ -87,8 +85,7 @@ public class Edge {
 	 * 
 	 * @return this.style.thickness (float)
 	 */
-	public float getThickness()
-	{
+	public float getThickness(){
 		return style.getThickness();
 	}
 	
@@ -96,8 +93,7 @@ public class Edge {
 	 * 
 	 * @param thickness est la nouvelle valeur de this.style.thickness
 	 */
-	public void setThickness(float thickness)
-	{
+	public void setThickness(float thickness){
 		//TODO
 	}
 	
@@ -105,8 +101,7 @@ public class Edge {
 	 * 
 	 * @return this.mainView.label (String)
 	 */
-	public String getLabel()
-	{
+	public String getLabel(){
 		return mainView.getLabel();
 	}
 	
@@ -114,8 +109,7 @@ public class Edge {
 	 * 
 	 * @param label est la nouvelle valeur de this.mainView.label
 	 */
-	public void setLabel(String label)
-	{
+	public void setLabel(String label){
 		mainView.setLabel(label);
 	}
 	
@@ -123,8 +117,7 @@ public class Edge {
 	 * 
 	 * @return this.style.textColor (Color)
 	 */
-	public Color getTextColor()
-	{
+	public Color getTextColor(){
 		return style.getTextColor();
 	}
 	
@@ -132,8 +125,7 @@ public class Edge {
 	 * 
 	 * @param textColor est la nouvelle valeur de this.style.textColor
 	 */
-	public void setTextColor(Color textColor)
-	{
+	public void setTextColor(Color textColor){
 		//TODO
 	}
 	
@@ -141,8 +133,7 @@ public class Edge {
 	 * 
 	 * @return this.style.font (Font)
 	 */
-	public Font getFont()
-	{
+	public Font getFont(){
 		return style.getFont();
 	}
 	
@@ -150,8 +141,7 @@ public class Edge {
 	 * 
 	 * @param font est la nouvelle valeur de this.style.font
 	 */
-	public void setFont(Font font)
-	{
+	public void setFont(Font font){
 		//TODO
 	}	
 }
