@@ -18,6 +18,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
@@ -73,8 +74,8 @@ public class App {
     	frame.setLocationByPlatform(true);
     	
     		
-    	frame.setJMenuBar(generateMenuBar(null, null, null));
-    	
+    	//frame.setJMenuBar(generateMenuBar(null, null, null));
+    	frame.add(generateToolBar(null, null, null));
     	GLCanvas canvas = new GLCanvas();
 		
 		frame.getContentPane().add(canvas);
@@ -152,7 +153,7 @@ public class App {
 			edit.add(redo);
 		
 		menu.add(edit);
-		
+				
 		JMenu display = new JMenu("Affichage");
 		try {
 			BufferedImage image;
@@ -230,6 +231,11 @@ public class App {
 			display.add(size);
 			
 		menu.add(display);
+		
+		
+		
+		
+		
 		JMenu help = new JMenu("Aide");
 		try {
 			BufferedImage image;
@@ -273,5 +279,140 @@ public class App {
 		
 		menu.add(help);
 		return menu;
+    }
+    
+    private JToolBar generateToolBar(Collection<IDispoAlgorythm> AlgoDispo,
+    		Collection<IColorAlgorythm> AlgoColor,
+    		Collection<ISizeAlgorythm> AlgoSize){
+JToolBar shortcut = new JToolBar();
+		
+		JMenu copySC = new JMenu("");
+		try {
+			BufferedImage image;
+			image = ImageIO.read(new File("res/copy1.png"));
+	        copySC.setHorizontalTextPosition(SwingConstants.CENTER);
+	        copySC.setVerticalTextPosition(SwingConstants.BOTTOM);
+	        copySC.setIcon(new ImageIcon(image));
+		} catch (IOException e) {
+			//Ignore
+		}
+		shortcut.add(copySC);
+		
+		JMenu cutSC = new JMenu("");
+		try {
+			BufferedImage image;
+			image = ImageIO.read(new File("res/cut3.png"));
+	        cutSC.setHorizontalTextPosition(SwingConstants.CENTER);
+	        cutSC.setVerticalTextPosition(SwingConstants.BOTTOM);
+	        cutSC.setIcon(new ImageIcon(image));
+		} catch (IOException e) {
+			//Ignore
+		}
+		shortcut.add(cutSC);
+		
+		JMenu pasteSC = new JMenu("");
+		try {
+			BufferedImage image;
+			image = ImageIO.read(new File("res/paste3.png"));
+	        pasteSC.setHorizontalTextPosition(SwingConstants.CENTER);
+	        pasteSC.setVerticalTextPosition(SwingConstants.BOTTOM);
+	        pasteSC.setIcon(new ImageIcon(image));
+		} catch (IOException e) {
+			//Ignore
+		}
+		shortcut.add(pasteSC);
+		
+		JMenu newElemSC = new JMenu("");
+		try {
+			BufferedImage image;
+			image = ImageIO.read(new File("res/add204.png"));
+	        newElemSC.setHorizontalTextPosition(SwingConstants.CENTER);
+	        newElemSC.setVerticalTextPosition(SwingConstants.BOTTOM);
+	        newElemSC.setIcon(new ImageIcon(image));
+		} catch (IOException e) {
+			//Ignore
+		}
+		JMenuItem newVertex = new JMenuItem("Noeud");
+		JMenuItem newEdge = new JMenuItem("Trait");
+		newElemSC.add(newVertex);
+		newElemSC.add(newEdge);
+		shortcut.add(newElemSC);
+		
+		JMenu deleteSC = new JMenu("");
+		try {
+			BufferedImage image;
+			image = ImageIO.read(new File("res/cancel21.png"));
+	        deleteSC.setHorizontalTextPosition(SwingConstants.CENTER);
+	        deleteSC.setVerticalTextPosition(SwingConstants.BOTTOM);
+	        deleteSC.setIcon(new ImageIcon(image));
+		} catch (IOException e) {
+			//Ignore
+		}
+		shortcut.add(deleteSC);
+		
+		JMenu editElemSC = new JMenu("");
+		try {
+			BufferedImage image;
+			image = ImageIO.read(new File("res/pencil43.png"));
+	        editElemSC.setHorizontalTextPosition(SwingConstants.CENTER);
+	        editElemSC.setVerticalTextPosition(SwingConstants.BOTTOM);
+	        editElemSC.setIcon(new ImageIcon(image));
+		} catch (IOException e) {
+			//Ignore
+		}
+		JMenuItem editVertex = new JMenuItem("Noeud");
+		JMenuItem editEdge = new JMenuItem("Trait");
+		editElemSC.add(editVertex);
+		editElemSC.add(editEdge);
+		shortcut.add(editElemSC);
+		
+		JMenu undoSC = new JMenu("");
+		try {
+			BufferedImage image;
+			image = ImageIO.read(new File("res/return13.png"));
+	        undoSC.setHorizontalTextPosition(SwingConstants.CENTER);
+	        undoSC.setVerticalTextPosition(SwingConstants.BOTTOM);
+	        undoSC.setIcon(new ImageIcon(image));
+		} catch (IOException e) {
+			//Ignore
+		}
+		shortcut.add(undoSC);
+		
+		JMenu redoSC = new JMenu("");
+		try {
+			BufferedImage image;
+			image = ImageIO.read(new File("res/send.png"));
+	        redoSC.setHorizontalTextPosition(SwingConstants.CENTER);
+	        redoSC.setVerticalTextPosition(SwingConstants.BOTTOM);
+	        redoSC.setIcon(new ImageIcon(image));
+		} catch (IOException e) {
+			//Ignore
+		}
+		shortcut.add(redoSC);
+		
+		JMenu zoomInSC = new JMenu("");
+		try {
+			BufferedImage image;
+			image = ImageIO.read(new File("res/zoom.png"));
+			zoomInSC.setHorizontalTextPosition(SwingConstants.CENTER);
+			zoomInSC.setVerticalTextPosition(SwingConstants.BOTTOM);
+			zoomInSC.setIcon(new ImageIcon(image));
+		} catch (IOException e) {
+			//Ignore
+		}
+		shortcut.add(zoomInSC);
+		
+		JMenu zoomOutSC = new JMenu("");
+		try {
+			BufferedImage image;
+			image = ImageIO.read(new File("res/dezoom.png"));
+			zoomOutSC.setHorizontalTextPosition(SwingConstants.CENTER);
+			zoomOutSC.setVerticalTextPosition(SwingConstants.BOTTOM);
+			zoomOutSC.setIcon(new ImageIcon(image));
+		} catch (IOException e) {
+			//Ignore
+		}
+		shortcut.add(zoomOutSC);
+		return shortcut;
     }
 }
