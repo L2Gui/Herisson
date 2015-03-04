@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -13,6 +14,7 @@ import java.util.Collection;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -74,11 +76,12 @@ public class App {
     	frame.setLocationByPlatform(true);
     	
     		
-    	//frame.setJMenuBar(generateMenuBar(null, null, null));
+    	frame.setJMenuBar(generateMenuBar(null, null, null));
     	frame.add(generateToolBar(null, null, null));
     	GLCanvas canvas = new GLCanvas();
-		
-		frame.getContentPane().add(canvas);
+    	frame.getContentPane().setLayout(new BorderLayout());
+		frame.getContentPane().add(generateToolBar(null, null, null), BorderLayout.NORTH);
+		frame.getContentPane().add(canvas, BorderLayout.CENTER);
     }
     /**
      * Génère la barre de menu en incorporant les algos dans leurs menus respectifs
@@ -286,7 +289,7 @@ public class App {
     		Collection<ISizeAlgorythm> AlgoSize){
 JToolBar shortcut = new JToolBar();
 		
-		JMenu copySC = new JMenu("");
+		JMenuItem copySC = new JMenuItem("");
 		try {
 			BufferedImage image;
 			image = ImageIO.read(new File("res/copy1.png"));
@@ -298,7 +301,7 @@ JToolBar shortcut = new JToolBar();
 		}
 		shortcut.add(copySC);
 		
-		JMenu cutSC = new JMenu("");
+		JMenuItem cutSC = new JMenuItem("");
 		try {
 			BufferedImage image;
 			image = ImageIO.read(new File("res/cut3.png"));
@@ -310,7 +313,7 @@ JToolBar shortcut = new JToolBar();
 		}
 		shortcut.add(cutSC);
 		
-		JMenu pasteSC = new JMenu("");
+		JMenuItem pasteSC = new JMenuItem("");
 		try {
 			BufferedImage image;
 			image = ImageIO.read(new File("res/paste3.png"));
@@ -338,7 +341,7 @@ JToolBar shortcut = new JToolBar();
 		newElemSC.add(newEdge);
 		shortcut.add(newElemSC);
 		
-		JMenu deleteSC = new JMenu("");
+		JMenuItem deleteSC = new JMenuItem("");
 		try {
 			BufferedImage image;
 			image = ImageIO.read(new File("res/cancel21.png"));
@@ -366,7 +369,7 @@ JToolBar shortcut = new JToolBar();
 		editElemSC.add(editEdge);
 		shortcut.add(editElemSC);
 		
-		JMenu undoSC = new JMenu("");
+		JMenuItem undoSC = new JMenuItem("");
 		try {
 			BufferedImage image;
 			image = ImageIO.read(new File("res/return13.png"));
@@ -378,7 +381,7 @@ JToolBar shortcut = new JToolBar();
 		}
 		shortcut.add(undoSC);
 		
-		JMenu redoSC = new JMenu("");
+		JMenuItem redoSC = new JMenuItem("");
 		try {
 			BufferedImage image;
 			image = ImageIO.read(new File("res/send.png"));
@@ -390,7 +393,7 @@ JToolBar shortcut = new JToolBar();
 		}
 		shortcut.add(redoSC);
 		
-		JMenu zoomInSC = new JMenu("");
+		JMenuItem zoomInSC = new JMenuItem("");
 		try {
 			BufferedImage image;
 			image = ImageIO.read(new File("res/zoom.png"));
@@ -402,7 +405,7 @@ JToolBar shortcut = new JToolBar();
 		}
 		shortcut.add(zoomInSC);
 		
-		JMenu zoomOutSC = new JMenu("");
+		JMenuItem zoomOutSC = new JMenuItem("");
 		try {
 			BufferedImage image;
 			image = ImageIO.read(new File("res/dezoom.png"));
