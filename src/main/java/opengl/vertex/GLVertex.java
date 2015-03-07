@@ -1,5 +1,8 @@
 package opengl.vertex;
 
+import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
+
 public class GLVertex {
 	public static final int elementBytes = 4;
 	public static final int positionElementCount = 4;
@@ -8,45 +11,50 @@ public class GLVertex {
 	public static final int elementCount = positionElementCount;
 	public static final int stride = positionBytesCount;
 	
-	private float[] position = new float[] {0f, 0f, 0f, 1f};
+	private Vector4f position = new Vector4f(0f, 0f, 0f, 1.0f);
 	
-	public void setPosition(float x, float y, float z) {
-		this.setPosition(x, y, z, 1f);
+	public void setPosition(Vector3f position) {
+		this.position = new Vector4f(position.x, position.y, position.z, 1.0f);
 	}
 	
-	public void setPosition(float x, float y, float z, float w) {
-		this.position = new float[] {x, y, z, w};
+	public void setPosition(Vector4f position) {
+		this.position = position;
 	}
 	
-	public float[] getPosition() {
-		return new float[] {this.position[0], this.position[1], this.position[2], this.position[3]};
+	public Vector4f getPosition() {
+		return this.position;
 	}
 	
 	public void setX(float x) {
-		this.position[0] = x;
+		this.position.x = x;
 	}
 	
 	public void setY(float y) {
-		this.position[1] = y;
+		this.position.y = y;
 	}
 	
 	public void setZ(float z) {
-		this.position[2] = z;
+		this.position.z = z;
 	}
 	
 	public float getX() {
-		return this.position[0];
+		return this.position.x;
 	}
 	
 	public float getY() {
-		return this.position[1];
+		return this.position.y;
 	}
 	
 	public float getZ() {
-		return this.position[2];
+		return this.position.z;
 	}
 	
 	public float[] getElements() {		
-		return this.position.clone();
+		return new float[] {
+			this.position.x,
+			this.position.y,
+			this.position.z,
+			this.position.w
+		};
 	}
 }

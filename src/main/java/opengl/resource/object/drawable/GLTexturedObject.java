@@ -4,7 +4,7 @@ import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 
 import java.nio.FloatBuffer;
-import java.util.Collection;
+import java.util.List;
 
 import opengl.GLHelper;
 import opengl.resource.GLShader;
@@ -19,13 +19,17 @@ import org.lwjgl.util.vector.Matrix4f;
 public class GLTexturedObject extends GLColoredObject {	
 	private GLTexture texture;
 	
-	public void setup(GLShader shader, GLTexture texture, Collection<GLTexturedVertex> vertices, int[] indices, GLObjectUsage usage) {
-		super.setupObject(shader, vertices, indices, usage);
+	public void setup(GLTexture texture, List<GLTexturedVertex> vertices, int[] indices, GLObjectUsage usage) {
+		super.setupObject(GLShader.texture3D, vertices, indices, usage);
 		this.texture = texture;
 	}
 	
-	public void updateTexturedVertices(Collection<GLTexturedVertex> vertices) {
+	public void updateTexturedVertices(List<GLTexturedVertex> vertices) {
 		super.updateVertices(vertices, GLTexturedVertex.elementCount);
+	}
+	
+	public void setTexture(GLTexture texture) {
+		this.texture = texture;
 	}
 	
 	@Override
