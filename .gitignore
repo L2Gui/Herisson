@@ -1,12 +1,2 @@
-bin/*
-out/*
-.idea/*
-.settings/*
-.classpath
-LWJGLTest.iml
-herisson.iml
-/bin/
-/target/
-/bin/
-/bin1/
-*.iml
+target/
+.idea/
