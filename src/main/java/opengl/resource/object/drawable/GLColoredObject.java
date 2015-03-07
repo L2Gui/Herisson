@@ -4,7 +4,7 @@ import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 
 import java.nio.FloatBuffer;
-import java.util.Collection;
+import java.util.List;
 
 import opengl.GLHelper;
 import opengl.resource.GLShader;
@@ -16,11 +16,11 @@ import org.lwjgl.opengl.GL20;
 
 public class GLColoredObject extends GLDrawableObject {
 	
-	public void setup(GLShader shader, Collection<GLColoredVertex> vertices, int[] indices, GLObjectUsage usage) {
-		super.setupObject(shader, vertices, indices, usage);
+	public void setup(List<GLColoredVertex> vertices, int[] indices, GLObjectUsage usage) {
+		super.setupObject(GLShader.color3D, vertices, indices, usage);
 	}
 	
-	public void updateColoredVertices(Collection<GLColoredVertex> vertices) {
+	public void updateColoredVertices(List<GLColoredVertex> vertices) {
 		super.updateVertices(vertices, GLColoredVertex.elementCount);
 	}
 	

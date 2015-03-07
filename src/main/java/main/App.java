@@ -95,36 +95,14 @@ public class App {
     		Collection<ISizeAlgorythm> AlgoSize){
     	JMenuBar menu = new JMenuBar();
 		JMenu file = new JMenu("Fichier");
-		try {
-			BufferedImage image;
-			image = ImageIO.read(new File("res/file.png"));
-	        file.setHorizontalTextPosition(SwingConstants.CENTER);
-	        file.setVerticalTextPosition(SwingConstants.BOTTOM);
-	        file.setIcon(new ImageIcon(image));
-		} catch (IOException e) {
-			//Ignore
-		}
-			JMenuItem newFile = new JMenuItem("Nouveau");
-			JMenuItem open = new JMenuItem("Ouvrir");
-			JMenuItem save = new JMenuItem("Enregistrer");
-			JMenuItem saveAs = new JMenuItem("Enregistrer sous");
-			
-			file.add(newFile);
-			file.add(open);
-			file.add(save);
-			file.add(saveAs);
+        file.setMnemonic('f');
+        file.add(MenuActions.newFile);
+        file.add(MenuActions.openFile);
+        file.add(MenuActions.save);
+        file.add(MenuActions.saveAs);
 		menu.add(file);
 		
 		JMenu edit = new JMenu("Edition");
-		try {
-			BufferedImage image;
-			image = ImageIO.read(new File("res/tools.png"));
-	        edit.setHorizontalTextPosition(SwingConstants.CENTER);
-	        edit.setVerticalTextPosition(SwingConstants.BOTTOM);
-	        edit.setIcon(new ImageIcon(image));
-		} catch (IOException e) {
-			//Ignore
-		}
 			JMenuItem copy = new JMenuItem("Copier");
 			JMenuItem cut = new JMenuItem("Couper");
 			JMenuItem paste = new JMenuItem("Coller");
@@ -158,21 +136,12 @@ public class App {
 		menu.add(edit);
 				
 		JMenu display = new JMenu("Affichage");
-		try {
-			BufferedImage image;
-			image = ImageIO.read(new File("res/screen.png"));
-	        display.setHorizontalTextPosition(SwingConstants.CENTER);
-	        display.setVerticalTextPosition(SwingConstants.BOTTOM);
-	        display.setIcon(new ImageIcon(image));
-		} catch (IOException e) {
-			//Ignore
-		}
 			JMenuItem zoomIn = new JMenuItem("Zoom +");
 			JMenuItem zoomOut = new JMenuItem("Zoom -");
-			
+
 			JMenu disposition = new JMenu("Disposition");
 				ButtonGroup dispositionGroup = new ButtonGroup();
-				// on essaie d'ajouter les éléments de la liste 
+				// on essaie d'ajouter les éléments de la liste
 				try{
 					for (IDispoAlgorythm algo : AlgoDispo) {
 						JRadioButtonMenuItem DispositionRadioBtn = new JRadioButtonMenuItem(algo.getName());
@@ -240,15 +209,6 @@ public class App {
 		
 		
 		JMenu help = new JMenu("Aide");
-		try {
-			BufferedImage image;
-			image = ImageIO.read(new File("res/site.png"));
-	        help.setHorizontalTextPosition(SwingConstants.CENTER);
-	        help.setVerticalTextPosition(SwingConstants.BOTTOM);
-	        help.setIcon(new ImageIcon(image));
-		} catch (IOException e) {
-			//Ignore
-		}
 		help.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -287,8 +247,19 @@ public class App {
     private JToolBar generateToolBar(Collection<IDispoAlgorythm> AlgoDispo,
     		Collection<IColorAlgorythm> AlgoColor,
     		Collection<ISizeAlgorythm> AlgoSize){
-JToolBar shortcut = new JToolBar();
-		
+        JToolBar toolBar = new JToolBar();
+        toolBar.setName("Raccourcis");
+
+        toolBar.add(MenuActions.newFile);
+        JButton button = (JButton)toolBar.getComponentAtIndex(0);
+        button.setIcon((ImageIcon)MenuActions.newFile.getValue(MenuAction.SMALL_ICON));
+        button.setFocusPainted(false);
+
+        toolBar.add(MenuActions.save);
+        button = (JButton)toolBar.getComponentAtIndex(1);
+        button.setIcon((ImageIcon) MenuActions.save.getValue(MenuAction.SMALL_ICON));
+        button.setFocusPainted(false);
+        /*
 		JMenuItem copySC = new JMenuItem("");
 		try {
 			BufferedImage image;
@@ -415,7 +386,7 @@ JToolBar shortcut = new JToolBar();
 		} catch (IOException e) {
 			//Ignore
 		}
-		shortcut.add(zoomOutSC);
-		return shortcut;
+		shortcut.add(zoomOutSC);*/
+		return toolBar;
     }
 }

@@ -15,12 +15,23 @@ import org.lwjgl.opengl.GL13;
 public class GLTextTexture extends GLTexture {
 	private String text;
 	private Font font;
+	private Dimension size;
+	private int des;
 	private boolean isInitialized;
 	
 	public GLTextTexture(String str, Font font) {
 		this.text = str;
 		this.font = font;
 		this.isInitialized = false;
+		
+		BufferedImage dummy = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D graphics = dummy.createGraphics();
+		
+		FontMetrics metrics = graphics.getFontMetrics(this.font);
+		int hgt = metrics.getHeight();
+		int adv = metrics.stringWidth(this.text);
+		this.des = metrics.getDescent();
+		this.size = new Dimension(adv, hgt);
 	}
 	
 	@Override
@@ -29,7 +40,7 @@ public class GLTextTexture extends GLTexture {
 			return;
 		}
 		
-		super.setID(GLTextTexture.loadFromString(this.text, this.font, GL13.GL_TEXTURE0));
+		this.loadFromString(GL13.GL_TEXTURE0);
 		this.text = null;
 		this.font = null;
 		this.isInitialized = true;
@@ -40,22 +51,17 @@ public class GLTextTexture extends GLTexture {
 		return this.isInitialized;
 	}
 	
-	private static int loadFromString(String str, Font font, int textureUnit) {
-		BufferedImage dummy = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D graphics = dummy.createGraphics();
-		
-		FontMetrics metrics = graphics.getFontMetrics(font);
-		int hgt = metrics.getHeight();
-		int adv = metrics.stringWidth(str);
-		int des = metrics.getDescent();
-		Dimension size = new Dimension(adv, hgt);
-		
+	public float getRatio() {
+		return (float) this.size.width / (float) this.size.height;
+	}
+	
+	private void loadFromString(int textureUnit) {		
 		BufferedImage image = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
-		graphics = image.createGraphics();
+		Graphics2D graphics = image.createGraphics();
 		graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		graphics.setColor(Color.black);
-		graphics.setFont(font);
-		graphics.drawString(str, 0, size.height - des);
+		graphics.setFont(this.font);
+		graphics.drawString(this.text, 0, size.height - des);
 		graphics.dispose();
 		
 		ByteBuffer byteBuffer = BufferUtils.createByteBuffer(size.width * size.height * 4);
@@ -70,6 +76,6 @@ public class GLTextTexture extends GLTexture {
 		}
 		byteBuffer.flip();
 		
-		return GLTexture.createTexture(byteBuffer, textureUnit, size.width, size.height);
+		super.setID(GLTexture.createTexture(byteBuffer, textureUnit, size.width, size.height));
 	}
 }
