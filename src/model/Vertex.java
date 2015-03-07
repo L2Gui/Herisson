@@ -9,6 +9,7 @@ import org.lwjgl.util.vector.Vector3f;
 import view.VertexView;
 
 public class Vertex {
+	
 	private Collection<Edge> edges;
 	private VertexView mainView;
 	private VertexStyle style;
@@ -33,6 +34,14 @@ public class Vertex {
 		this.position = position;
 	}
 
+	
+	public void addEdge(Edge edge)
+	{
+		if (!edges.contains(edge))
+		{
+			edges.add(edge);
+		}
+	}
 	
 	/**
 	 * 
@@ -140,6 +149,24 @@ public class Vertex {
 	
 	public void setBorderColor(Color color){
 		//TODO
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public VertexShape getShape()
+	{
+		return this.style.getShape();
+	}
+	
+	/**
+	 * 
+	 * @param shape
+	 */
+	public void setShape(VertexShape shape)
+	{
+		this.style.setShape(shape);
 	}
 	
 }

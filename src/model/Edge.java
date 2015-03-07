@@ -24,6 +24,38 @@ public class Edge {
 		
 	/**
 	 * 
+	 * @return
+	 */
+	public Vertex getSrcVertex() {
+		return srcVertex;
+	}
+
+	/**
+	 * 
+	 * @param srcVertex
+	 */
+	public void setSrcVertex(Vertex srcVertex) {
+		this.srcVertex = srcVertex;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Vertex getDstVertex() {
+		return dstVertex;
+	}
+
+	/**
+	 * 
+	 * @param dstVertex
+	 */
+	public void setDstVertex(Vertex dstVertex) {
+		this.dstVertex = dstVertex;
+	}
+
+	/**
+	 * 
 	 */
 	public boolean isTurnedToDest;
 	
