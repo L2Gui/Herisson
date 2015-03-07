@@ -1,0 +1,32 @@
+package main;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+
+public abstract class MenuAction extends AbstractAction {
+    /**
+     * Constructeur de MenuAction
+     *
+     * @param name  le nom de l'action (sera également la description courte)
+     * @param icon  le chemin de l'icone à affecter (Peut être null)
+     * @param mnemonicKey   La touche mnemonique a affecter (utiliser KeyEvent.***) (peut être null)
+     * @param mnemonicIndex L'index du nom qui sera souligné pour indiquer le mnemonic (peut être null)
+     */
+    public MenuAction(String name, String icon, Integer mnemonicKey, Integer mnemonicIndex) {
+        if(icon==null) {
+            ImageIcon smallIcon = new ImageIcon(icon);
+            putValue(SMALL_ICON, smallIcon);
+        }
+        if(mnemonicKey!=null) {
+            if(mnemonicIndex==null) {
+                putValue(Action.DISPLAYED_MNEMONIC_INDEX_KEY, mnemonicIndex);
+            }
+            putValue(MNEMONIC_KEY, mnemonicKey);   // Alt+?
+        }
+        putValue(NAME, name);
+        putValue(SHORT_DESCRIPTION, name);
+        putValue(LONG_DESCRIPTION, name);
+    }
+    @Override
+    public abstract void actionPerformed(ActionEvent e);
+}
