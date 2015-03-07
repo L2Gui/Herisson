@@ -15,12 +15,12 @@ public class Graph {
 	
 	/**
 	 * 
-	 * @param edge : Correspond à l'élément à ajouter à this.edges (Collection<Edge>)
+	 * @param edge : Correspond ï¿½ l'ï¿½lï¿½ment ï¿½ ajouter ï¿½ this.edges (Collection<Edge>)
 	 */
 	public void addEdge(Edge edge){
-		/* Surrement à modifier, neanmoins on doit prendre en compte que 
-		 * la méthode add renvoie vrai si l'argument a pu etre ajouté ou 
-		 * faux si l'élément existe déja dans la Collection.
+		/* Surrement ï¿½ modifier, neanmoins on doit prendre en compte que 
+		 * la mï¿½thode add renvoie vrai si l'argument a pu etre ajoutï¿½ ou 
+		 * faux si l'ï¿½lï¿½ment existe dï¿½ja dans la Collection.
 		 */
 		if (!edges.add(edge)){
 			System.out.println("Edge already exists");
@@ -29,12 +29,12 @@ public class Graph {
 	
 	/**
 	 * 
-	 * @param vertex : Correspond à l'élément à ajouter à this.vertexs (Collection<Vertex>)
+	 * @param vertex : Correspond ï¿½ l'ï¿½lï¿½ment ï¿½ ajouter ï¿½ this.vertexs (Collection<Vertex>)
 	 */
 	public void addVertex(Vertex vertex){
-		/* Surrement à modifier, neanmoins on doit prendre en compte que 
-		 * la méthode add renvoie vrai si l'argument a pu etre ajouté ou 
-		 * faux si l'élément existe déja dans la Collection.
+		/* Surrement ï¿½ modifier, neanmoins on doit prendre en compte que 
+		 * la mï¿½thode add renvoie vrai si l'argument a pu etre ajoutï¿½ ou 
+		 * faux si l'ï¿½lï¿½ment existe dï¿½ja dans la Collection.
 		 */
 		if (!vertexs.add(vertex)){
 			System.out.println("Vertex already exist");
@@ -45,11 +45,11 @@ public class Graph {
 	
 	/**
 	 * 
-	 * @param edge : Correspond à l'élément à supprimer de this.edges (Collection<Edge>)
+	 * @param edge : Correspond ï¿½ l'ï¿½lï¿½ment ï¿½ supprimer de this.edges (Collection<Edge>)
 	 */
 	public void removeEdge(Edge edge){
-		/* Surrement à modifier, neanmoins on doit prendre en compte que 
-		 * la méthode remove renvoie vrai si l'argument a pu etre supprimé ou 
+		/* Surrement ï¿½ modifier, neanmoins on doit prendre en compte que 
+		 * la mï¿½thode remove renvoie vrai si l'argument a pu etre supprimï¿½ ou 
 		 * faux sinon.
 		 */
 		if (!edges.remove(edge)){
@@ -59,11 +59,11 @@ public class Graph {
 	
 	/**
 	 * 
-	 * @param vertex : Correspond à l'élément à supprimer de this.vertexs (Collection<Vertex>)
+	 * @param vertex : Correspond ï¿½ l'ï¿½lï¿½ment ï¿½ supprimer de this.vertexs (Collection<Vertex>)
 	 */
 	public void removeVertex(Vertex vertex){
-		/* Surrement à modifier, neanmoins on doit prendre en compte que 
-		 * la méthode remove renvoie vrai si l'argument a pu etre supprimé ou 
+		/* Surrement ï¿½ modifier, neanmoins on doit prendre en compte que 
+		 * la mï¿½thode remove renvoie vrai si l'argument a pu etre supprimï¿½ ou 
 		 * faux sinon.
 		 */
 		if (!vertexs.remove(vertex)){

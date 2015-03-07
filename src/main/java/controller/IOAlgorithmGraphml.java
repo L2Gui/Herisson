@@ -20,10 +20,7 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
 
 	@Override
 	public Graph open(String filename) throws Exception {
-		
-		/*
-		 * Graph retourné a la fin
-		 */
+
 		Graph graph = new Graph();
 		
 		SAXBuilder sxb = new SAXBuilder();
