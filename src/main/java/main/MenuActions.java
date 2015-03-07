@@ -6,9 +6,6 @@ import java.awt.event.KeyEvent;
 
 import main.MenuAction;
 
-/**
- * Created by kwetzakwak on 07/03/15.
- */
 public class MenuActions {
     /**
      * Nouveau Fichier
@@ -46,6 +43,94 @@ public class MenuActions {
             System.out.println("Enregistrer sous ... ("+e.getSource().getClass().getName()+")");
         }
     };
-
-
+    /**
+     * Copier
+     */
+    public static MenuAction copy = new MenuAction("Copier", "res/copy.png", KeyEvent.VK_C, 0) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Copier ("+e.getSource().getClass().getName()+")");
+        }
+    };
+    /**
+     * Couper
+     */
+    public static MenuAction cut = new MenuAction("Couper", "res/cut.png", KeyEvent.VK_X, null) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Couper ("+e.getSource().getClass().getName()+")");
+        }
+    };
+    /**
+     * Coller
+     */
+    public static MenuAction paste = new MenuAction("Coller", "res/paste.png", KeyEvent.VK_V, null) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Coller ("+e.getSource().getClass().getName()+")");
+        }
+    };
+    /**
+     * Nouveau noeud
+     */
+    public static MenuAction newVertex = new MenuAction("Nouveau noeud", "res/node3.png", null, null) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("nouveau vertex ("+e.getSource().getClass().getName()+")");
+        }
+    };
+    /**
+     * Nouveau trait
+     */
+    public static MenuAction newEdge = new MenuAction("Nouveau trait", "res/edge3.png", null, null) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("nouvelle edge ("+e.getSource().getClass().getName()+")");
+        }
+    };
+    /**
+     * Supprimer
+     */
+    public static MenuAction remove = new MenuAction("Supprimer", "res/cancel.png", KeyEvent.VK_R, 4) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("remove ("+e.getSource().getClass().getName()+")");
+        }
+    };
+    /**
+     * Modifier noeud
+     */
+    public static MenuAction editVertex = new MenuAction("Modifier Noeud", "res/edit_node3.png", null, null) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("edit vertex ("+e.getSource().getClass().getName()+")");
+        }
+    };
+    /**
+     * Modifier trait
+     */
+    public static MenuAction editEdge = new MenuAction("Modifier Noeud", "res/edit_edge3.png", null, null) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("edit edge ("+e.getSource().getClass().getName()+")");
+        }
+    };
+    /**
+     * Annuler
+     */
+    public static MenuAction undo = new MenuAction("Annuler", "res/prev.png", KeyEvent.VK_Z, null) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("annuler ("+e.getSource().getClass().getName()+")");
+        }
+    };
+    /**
+     * Restaurer
+     */
+    public static MenuAction redo = new MenuAction("Restaurer", "res/next.png", KeyEvent.VK_Y, null) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("restaurer ("+e.getSource().getClass().getName()+")");
+        }
+    };
 }

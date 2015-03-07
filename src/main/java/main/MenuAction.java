@@ -18,14 +18,18 @@ public abstract class MenuAction extends AbstractAction {
             putValue(SMALL_ICON, smallIcon);
         }
         if(mnemonicKey!=null) {
+
+            putValue(SHORT_DESCRIPTION, name+" (alt+"+(char)mnemonicKey.byteValue()+")");
+            putValue(LONG_DESCRIPTION, name+" (alt+"+(char)mnemonicKey.byteValue()+")");
             if(mnemonicIndex==null) {
                 putValue(Action.DISPLAYED_MNEMONIC_INDEX_KEY, mnemonicIndex);
             }
             putValue(MNEMONIC_KEY, mnemonicKey);   // Alt+?
+        }else{
+            putValue(LONG_DESCRIPTION, name);
+            putValue(SHORT_DESCRIPTION, name);
         }
         putValue(NAME, name);
-        putValue(SHORT_DESCRIPTION, name);
-        putValue(LONG_DESCRIPTION, name);
     }
     @Override
     public abstract void actionPerformed(ActionEvent e);
