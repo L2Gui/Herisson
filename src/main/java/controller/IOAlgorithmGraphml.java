@@ -50,7 +50,7 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
 		for (Element node : graphRacine.getChildren("node")){
 			String id = node.getAttributeValue("id");
 			Vertex vertex = new Vertex();
-			
+			/*
 			for (Element data : node.getChildren("data")){
 				switch (nodeKeyMap.get(data.getAttributeValue("id"))){
 					case "color":
@@ -72,7 +72,7 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
 						vertex.setLabel(data.getTextNormalize());
 						break;
 				}
-			}
+			}*/
 			vertices.put(id, vertex);
 		}
 		
@@ -84,7 +84,7 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
 			String dst = edg.getAttributeValue("target");
 			
 			
-			
+			/*
 			for (Element data : edg.getChildren("data")){
 				switch (nodeKeyMap.get(data.getAttributeValue("id"))){
 					case "color":
@@ -103,7 +103,7 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
 						edge.setLabel(data.getTextNormalize());
 						break;
 				}
-			}
+			}*/
 			
 			if (src != null){
 				edge.setSrcVertex(vertices.get(src));

@@ -6,7 +6,7 @@ public class ShapeUtils {
 	public static VertexShape stringToShape(String value){
 		
 		VertexShape shape = VertexShape.SQUARE;
-		
+		/*
 		switch (value.toLowerCase())
 		{
 			case "square":
@@ -20,7 +20,7 @@ public class ShapeUtils {
 				break;
 			default :
 				break;
-		}
+		}*/
 		
 		return shape;
 	}

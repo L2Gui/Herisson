@@ -8,7 +8,7 @@ public class LineStyleUtils {
 	{
 		LineStyle style = LineStyle.SOLID;
 		
-		switch (value.toLowerCase()){
+		/*switch (value.toLowerCase()){
 			case "solid" :
 				style = LineStyle.SOLID;
 				break;
@@ -18,7 +18,7 @@ public class LineStyleUtils {
 			case "dashed":
 				style = LineStyle.DASHED;
 				break;
-		}
+		}*/
 		
 		return style;
 	}
