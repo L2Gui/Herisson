@@ -33,57 +33,87 @@ public abstract class GLObject implements IGLObject {
 	public Vector3f getScale() {
 		return this.scale;
 	}
-	
-	@Override
-	public void setPosition(Vector3f position) {
-		this.position = position;
-		this.computeMatrix();
-	}
-	
-	@Override
-	public void setRotation(float angle, Vector3f axis) {
-		float radHalfAngle = (angle * (float) Math.PI) / 360.0f;
-		float sinVal = (float) Math.sin(radHalfAngle);
-		float cosVal = (float) Math.cos(radHalfAngle);
-		float xVal = axis.x * sinVal;
-		float yVal = axis.y * sinVal;
-		float zVal = axis.z * sinVal;
-		this.rotation = new Quaternion(xVal, yVal, zVal, cosVal);
-		this.computeMatrix();
-	}
-	
-	@Override
-	public void setScale(Vector3f scale) {
-		this.scale = scale;
-		this.computeMatrix();
-	}
-	
-	@Override
-	public void translate(Vector3f pos) {
-		this.position.translate(pos.x, pos.y, pos.z);
-		this.computeMatrix();
-	}
 
-	@Override
-	public void rotate(float angle, Vector3f axis) {
-		float radHalfAngle = (angle * (float) Math.PI) / 360.0f;
-		float sinVal = (float) Math.sin(radHalfAngle);
-		float cosVal = (float) Math.cos(radHalfAngle);
-		float xVal = axis.x * sinVal;
-		float yVal = axis.y * sinVal;
-		float zVal = axis.z * sinVal;
-		Quaternion rotation = new Quaternion(xVal, yVal, zVal, cosVal);
-		Quaternion.mul(rotation, this.rotation, this.rotation);
-		this.computeMatrix();
-	}
+    @Override
+    public void setPosition(Vector3f position) {
+        this.position = position;
+        this.computeMatrix();
+    }
 
-	@Override
-	public void scale(Vector3f scale) {
-		this.scale.x *= scale.x;
-		this.scale.y *= scale.y;
-		this.scale.z *= scale.z;
-		this.computeMatrix();
-	}
+    @Override
+    public void setPosition(float x, float y, float z) {
+        this.setPosition(new Vector3f(x, y, z));
+    }
+
+    @Override
+    public void setRotation(float angle, Vector3f axis) {
+        float radHalfAngle = (angle * (float) Math.PI) / 360.0f;
+        float sinVal = (float) Math.sin(radHalfAngle);
+        float cosVal = (float) Math.cos(radHalfAngle);
+        float xVal = axis.x * sinVal;
+        float yVal = axis.y * sinVal;
+        float zVal = axis.z * sinVal;
+        this.rotation = new Quaternion(xVal, yVal, zVal, cosVal);
+        this.computeMatrix();
+    }
+
+    @Override
+    public void setRotation(float angle, float xAxis, float yAxis, float zAxis) {
+        this.setRotation(angle, new Vector3f(xAxis, yAxis, zAxis));
+    }
+
+    @Override
+    public void setScale(Vector3f scale) {
+        this.scale = scale;
+        this.computeMatrix();
+    }
+
+    @Override
+    public void setScale(float x, float y, float z) {
+        this.setScale(new Vector3f(x, y, z));
+    }
+
+    @Override
+    public void translate(Vector3f pos) {
+        this.position.translate(pos.x, pos.y, pos.z);
+        this.computeMatrix();
+    }
+
+    @Override
+    public void translate(float x, float y, float z) {
+        this.translate(new Vector3f(x, y, z));
+    }
+
+    @Override
+    public void rotate(float angle, Vector3f axis) {
+        float radHalfAngle = (angle * (float) Math.PI) / 360.0f;
+        float sinVal = (float) Math.sin(radHalfAngle);
+        float cosVal = (float) Math.cos(radHalfAngle);
+        float xVal = axis.x * sinVal;
+        float yVal = axis.y * sinVal;
+        float zVal = axis.z * sinVal;
+        Quaternion rotation = new Quaternion(xVal, yVal, zVal, cosVal);
+        Quaternion.mul(rotation, this.rotation, this.rotation);
+        this.computeMatrix();
+    }
+
+    @Override
+    public void rotate(float angle, float xAxis, float yAxis, float zAxis) {
+        this.rotate(angle, new Vector3f(xAxis, yAxis, zAxis));
+    }
+
+    @Override
+    public void scale(Vector3f scale) {
+        this.scale.x *= scale.x;
+        this.scale.y *= scale.y;
+        this.scale.z *= scale.z;
+        this.computeMatrix();
+    }
+
+    @Override
+    public void scale(float x, float y, float z) {
+        this.scale(new Vector3f(x, y, z));
+    }
 	
 	@Override
 	public void computeMatrix() {

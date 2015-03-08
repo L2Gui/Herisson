@@ -1,27 +1,25 @@
-package opengl.resource.object.drawable;
+package opengl.resource.object.mesh;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 
-import opengl.resource.object.GLObject;
+import opengl.resource.IGLResource;
 import opengl.resource.object.GLObjectUsage;
 import opengl.resource.texture.GLTextTexture;
-import opengl.utils.GLRay;
 import opengl.vertex.GLTexturedVertex;
 
-import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-public class GLTextObject extends GLObject implements IGLDrawable  {
+public class GLTextMesh implements IGLResource {
 	private GLTextTexture textTexture;
-	private GLTexturedObject texturedObject;
+	private GLTexturedMesh texturedMesh;
 	private float width;
 	private float height;
 	
-	public GLTextObject() {
-		this.texturedObject = new GLTexturedObject();
+	public GLTextMesh() {
+		this.texturedMesh = new GLTexturedMesh();
 	}
 	
 	public void setup(String text, Font font, float height, GLObjectUsage usage) {
@@ -65,23 +63,18 @@ public class GLTextObject extends GLObject implements IGLDrawable  {
 			2, 3, 0
 		};
 		
-		this.texturedObject.setup(this.textTexture, vertices, indices, usage);
+		this.texturedMesh.setup(this.textTexture, vertices, indices, usage);
 	}
 	
 	@Override
 	public void init() {
 		this.textTexture.init();
-		this.texturedObject.init();
+		this.texturedMesh.init();
 	}
 
 	@Override
 	public boolean isInitialized() {
-		return this.textTexture.isInitialized() && this.texturedObject.isInitialized();
-	}
-
-	@Override
-	public void render(Matrix4f projectionViewMatrix) {
-		this.texturedObject.render(projectionViewMatrix);
+		return this.textTexture.isInitialized() && this.texturedMesh.isInitialized();
 	}
 	
 	public float getWidth() {
@@ -90,30 +83,5 @@ public class GLTextObject extends GLObject implements IGLDrawable  {
 	
 	public float getHeight() {
 		return this.height;
-	}
-	
-	@Override
-	public void translate(Vector3f pos) {
-		this.texturedObject.translate(pos);
-	}
-	
-	@Override
-	public void rotate(float angle, Vector3f axis) {
-		this.texturedObject.rotate(angle, axis);
-	}
-	
-	@Override
-	public void scale(Vector3f scale) {
-		this.texturedObject.scale(scale);
-	}
-
-	@Override
-	public boolean isIntersected(GLRay ray) {
-		return this.texturedObject.isIntersected(ray);
-	}
-
-	@Override
-	public float getDistance(GLRay ray) {
-		return this.texturedObject.getDistance(ray);
 	}
 }

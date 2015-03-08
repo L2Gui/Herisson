@@ -19,7 +19,7 @@ import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
 
 public class GLCanvas extends AWTGLCanvas {
 	private static final long serialVersionUID = 7519333736764307525L;
-	
+
 	private Set<IGLResource> uninitializedResources = new HashSet<IGLResource>();
 	private Map<Integer, IGLDrawable> uninitializedDrawables = new TreeMap<Integer, IGLDrawable>();
 	private Map<Integer, IGLDrawable> drawables = new TreeMap<Integer, IGLDrawable>();
@@ -31,14 +31,13 @@ public class GLCanvas extends AWTGLCanvas {
 		super();
 		this.mutex = new Mutex();
 	}
-	
+
 	@Override
 	public void initGL() {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA); 
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		
-		GLShader.InitDefaultShaders();
+
 		this.initializeResources();
 		this.initializeObjects();
 		this.resizeGLView();
@@ -104,21 +103,16 @@ public class GLCanvas extends AWTGLCanvas {
 		this.camera = camera;
 	}
 	
-	public void add(int priority, IGLDrawable obj) {
+	public void addDrawable(int priority, IGLDrawable obj) {
 		this.uninitializedDrawables.put(priority, obj);
 	}
 	
-	public void add(IGLResource res) {
+	public void addResource(IGLResource res) {
 		this.uninitializedResources.add(res);
 	}
 	
 	private void initializeObjects() {
-		if (this.camera != null && !this.camera.isInitialized()) {
-			this.camera.init();
-		}
-		
 		for (Map.Entry<Integer, IGLDrawable> obj : this.uninitializedDrawables.entrySet()) {
-			obj.getValue().init();
 			this.drawables.put(obj.getKey(), obj.getValue());
 		}
 		this.uninitializedDrawables.clear();

@@ -20,6 +20,10 @@ public class GLVertex {
 	public void setPosition(Vector4f position) {
 		this.position = position;
 	}
+
+    public void setPosition(float x, float y, float z) {
+        this.setPosition(new Vector3f(x, y, z));
+    }
 	
 	public Vector4f getPosition() {
 		return this.position;

@@ -1,11 +1,11 @@
 package view;
 
-import opengl.resource.object.drawable.GLColoredObject;
+import opengl.resource.object.mesh.GLColoredMesh;
 import controller.CommandHandler;
 import controller.ICommand;
 import controller.ICommandSender;
 
-public abstract class ViewElement extends GLColoredObject implements ICommandSender {
+public abstract class ViewElement extends GLColoredMesh implements ICommandSender {
 	private CommandHandler commandHandler;
 	private String label;
 	private int index;

@@ -35,7 +35,7 @@ public abstract class GLTexture implements IGLResource {
 	}
 	
 	protected static int createTexture(ByteBuffer buf, int textureUnit, int width, int height) {		
-		// Create a new texture object in memory and bind it
+		// Create a new texture object in memory and bindVerticesArrayBuffer it
 		int textureID = GL11.glGenTextures();
 		GL13.glActiveTexture(textureUnit);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);

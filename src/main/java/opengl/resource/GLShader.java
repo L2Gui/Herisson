@@ -22,28 +22,10 @@ import java.nio.IntBuffer;
 import org.lwjgl.BufferUtils;
  
 public class GLShader implements IGLResource {
-	private static boolean defaultShadersInitialized = false;
-	public static GLShader white3D = new GLShader("default3D.vert", "white.frag");
-	public static GLShader color3D = new GLShader("color3D.vert", "color.frag");
-	public static GLShader texture3D = new GLShader("texture3D.vert", "texture.frag");
-	
-	public static void InitDefaultShaders() {
-		if (GLShader.defaultShadersInitialized) {
-			return;
-		}
-		
-		GLShader.defaultShadersInitialized = true;
-		GLShader.white3D.init();
-		GLShader.color3D.init();
-		GLShader.texture3D.init();
-	}
-	
 	private String vertexPath;
 	private String fragmentPath;
 	private boolean isInitialized;
 	private int programf = 0,programv = 0,programs;
-	public int uni2;
-	public int uni3;
 	
 	public GLShader(String vertexPath, String fragmentPath) {
 		this.vertexPath = vertexPath;
