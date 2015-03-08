@@ -49,7 +49,7 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
     public void computeMatrix() {
         super.computeMatrix();
         this.viewMatrix.setIdentity();
-        Matrix4f.mul(this.viewMatrix, MathUtils.quaternionToMatrix(MathUtils.invertQuaternion(super.getRotation())), this.viewMatrix);
+        Matrix4f.mul(this.viewMatrix, MathUtils.quaternionToMatrix(super.getRotation()), this.viewMatrix);
         this.viewMatrix.translate(this.getPosition().negate(null));
         this.viewInvertedMatrix = (Matrix4f) new Matrix4f(this.viewMatrix).invert();
     }

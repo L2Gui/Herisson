@@ -57,6 +57,12 @@ public abstract class GLObject implements IGLObject {
     }
 
     @Override
+    public void setRotation(Quaternion rotation) {
+        this.rotation = rotation;
+        this.computeMatrix();
+    }
+
+    @Override
     public void translate(Vector3f translation) {
         this.position.translate(translation.x, translation.y, translation.z);
         this.computeMatrix();
@@ -85,14 +91,20 @@ public abstract class GLObject implements IGLObject {
         this.rotate(angle, new Vector3f(xAxis, yAxis, zAxis));
     }
 
+    @Override
+    public void rotate(Quaternion rotation) {
+        Quaternion.mul(this.rotation, rotation, this.rotation);
+        this.computeMatrix();
+    }
+
 	@Override
      public void computeMatrix() {
         this.modelMatrix.setIdentity();
         Matrix4f.mul(this.modelMatrix, MathUtils.quaternionToMatrix(this.rotation), this.modelMatrix);
         this.modelMatrix.translate(this.position);
     }
-	
-	@Override
+
+    @Override
 	public Matrix4f getModelMatrix() {
 		return this.modelMatrix;
 	}

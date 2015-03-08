@@ -8,6 +8,7 @@ import opengl.resource.object.camera.IGLCamera;
 import opengl.resource.object.drawable.GLDrawableObject;
 import opengl.resource.object.mesh.GLColoredMesh;
 import opengl.vertex.GLColoredVertex;
+import org.lwjgl.util.vector.Quaternion;
 import org.lwjgl.util.vector.Vector3f;
 import utils.MathUtils;
 
@@ -87,11 +88,19 @@ public class OpenGLApp {
             this.canvas.setCamera(this.camera);
 
             float speed = 0.01f;
-            Vector3f dest = new Vector3f(0.0f, 0.0f, 5.0f);
+            Vector3f dest = new Vector3f(-5.0f, 2.0f, 5.0f);
 
             while (this.frame.isVisible()) {
                 Vector3f position = this.camera.getPosition();
-                Vector3f newPosition = MathUtils.Lerp(position, dest, speed);
+                Vector3f newPosition = MathUtils.vectorLerp(position, dest, speed);
+
+                Quaternion cameraToObject = MathUtils.quaternionLookAt(position, dest);
+                Quaternion objectToCamera = MathUtils.invertQuaternion(cameraToObject);
+                Quaternion objectToCameraSlerped = MathUtils.quaternionSlerp(this.drawableObject.getRotation(), objectToCamera, speed);
+
+                this.camera.setRotation(cameraToObject);
+                this.drawableObject.setRotation(objectToCameraSlerped);
+
                 this.canvas.lockDraw();
                 this.camera.setPosition(newPosition);
                 this.canvas.unlockDraw();

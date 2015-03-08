@@ -51,6 +51,12 @@ public interface IGLObject {
     void setRotation(float angle, float xAxis, float yAxis, float zAxis);
 
     /**
+     * Modifie la rotation de l'objet
+     * @param rotation Quaternion représentant la rotation de l'objet
+     */
+    void setRotation(Quaternion rotation);
+
+    /**
      * Applique une translation à l'objet
      * @param translation Vecteur 3D représentant la translation
      */
@@ -79,6 +85,12 @@ public interface IGLObject {
      * @param zAxis Valeur de la coordonnée sur l'axe Z de l'axe de rotation
      */
     void rotate(float angle, float xAxis, float yAxis, float zAxis);
+
+    /**
+     * Applique une rotation à l'objet
+     * @param rotation Quaternion représentant la rotation à appliquer
+     */
+    void rotate(Quaternion rotation);
 
     /**
      * Recalcule la matrice des transformations de l'objet
