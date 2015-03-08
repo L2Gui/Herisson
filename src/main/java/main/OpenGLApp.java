@@ -8,6 +8,8 @@ import opengl.resource.object.camera.IGLCamera;
 import opengl.resource.object.drawable.GLDrawableObject;
 import opengl.resource.object.mesh.GLColoredMesh;
 import opengl.vertex.GLColoredVertex;
+import org.lwjgl.util.vector.Vector3f;
+import utils.MathUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,8 +43,7 @@ public class OpenGLApp {
             this.frame.setSize(600, 600);
 
             this.frame.setContentPane(this.panel);
-            this.panel.setLayout(new BorderLayout());
-            this.panel.add(this.canvas, BorderLayout.CENTER);
+            this.panel.add(this.canvas);
 
             this.frame.setVisible(true);
 
@@ -80,12 +81,22 @@ public class OpenGLApp {
             this.drawableObject.setShader(shader);
             this.drawableObject.setMesh(this.mesh);
 
-            this.camera.translate(0.0f, 0.0f, 5.0f);
-
             this.canvas.addResource(shader);
             this.canvas.addResource(this.mesh);
             this.canvas.addDrawable(0, this.drawableObject);
             this.canvas.setCamera(this.camera);
+
+            float speed = 0.01f;
+            Vector3f dest = new Vector3f(0.0f, 0.0f, 5.0f);
+
+            while (this.frame.isVisible()) {
+                Vector3f position = this.camera.getPosition();
+                Vector3f newPosition = MathUtils.Lerp(position, dest, speed);
+                this.canvas.lockDraw();
+                this.camera.setPosition(newPosition);
+                this.canvas.unlockDraw();
+                Thread.sleep(16L);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

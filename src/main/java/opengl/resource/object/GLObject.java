@@ -10,13 +10,12 @@ public abstract class GLObject implements IGLObject {
 	private Matrix4f modelMatrix;
 	private Vector3f position;
 	private Quaternion rotation;
-	private Vector3f scale;
-	
+
+
 	public GLObject() {
 		this.modelMatrix = new Matrix4f();
 		this.position = new Vector3f();
 		this.rotation = new Quaternion();
-		this.scale = new Vector3f(1.0f, 1.0f, 1.0f);
 	}
 	
 	@Override
@@ -27,11 +26,6 @@ public abstract class GLObject implements IGLObject {
 	@Override
 	public Quaternion getRotation() {
 		return this.rotation;
-	}
-	
-	@Override
-	public Vector3f getScale() {
-		return this.scale;
 	}
 
     @Override
@@ -63,19 +57,8 @@ public abstract class GLObject implements IGLObject {
     }
 
     @Override
-    public void setScale(Vector3f scale) {
-        this.scale = scale;
-        this.computeMatrix();
-    }
-
-    @Override
-    public void setScale(float x, float y, float z) {
-        this.setScale(new Vector3f(x, y, z));
-    }
-
-    @Override
-    public void translate(Vector3f pos) {
-        this.position.translate(pos.x, pos.y, pos.z);
+    public void translate(Vector3f translation) {
+        this.position.translate(translation.x, translation.y, translation.z);
         this.computeMatrix();
     }
 
@@ -102,26 +85,12 @@ public abstract class GLObject implements IGLObject {
         this.rotate(angle, new Vector3f(xAxis, yAxis, zAxis));
     }
 
-    @Override
-    public void scale(Vector3f scale) {
-        this.scale.x *= scale.x;
-        this.scale.y *= scale.y;
-        this.scale.z *= scale.z;
-        this.computeMatrix();
-    }
-
-    @Override
-    public void scale(float x, float y, float z) {
-        this.scale(new Vector3f(x, y, z));
-    }
-	
 	@Override
-	public void computeMatrix() {
-		this.modelMatrix.setIdentity();
-		this.modelMatrix.scale(scale);
-		Matrix4f.mul(this.modelMatrix, MathUtils.quaternionToMatrix(this.rotation), this.modelMatrix);
-		this.modelMatrix.translate(this.position);
-	}
+     public void computeMatrix() {
+        this.modelMatrix.setIdentity();
+        Matrix4f.mul(this.modelMatrix, MathUtils.quaternionToMatrix(this.rotation), this.modelMatrix);
+        this.modelMatrix.translate(this.position);
+    }
 	
 	@Override
 	public Matrix4f getModelMatrix() {

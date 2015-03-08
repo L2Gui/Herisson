@@ -9,6 +9,7 @@ import org.lwjgl.opengl.*;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
+import utils.MathUtils;
 
 import java.nio.FloatBuffer;
 
@@ -18,14 +19,20 @@ import java.nio.FloatBuffer;
 public class GLDrawableObject extends GLObject implements IGLDrawable {
     private GLMesh mesh;
     private GLShader shader;
+    private Vector3f scale;
 
     public GLDrawableObject() {
-
+        this.scale = new Vector3f(1.0f, 1.0f, 1.0f);
     }
 
     public GLDrawableObject(GLShader shader, GLMesh mesh) {
         this.shader = shader;
         this.mesh = mesh;
+    }
+
+    @Override
+    public Vector3f getScale() {
+        return this.scale;
     }
 
     public void setShader(GLShader shader) {
@@ -34,6 +41,17 @@ public class GLDrawableObject extends GLObject implements IGLDrawable {
 
     public void setMesh(GLMesh mesh) {
         this.mesh = mesh;
+    }
+
+    @Override
+    public void setScale(Vector3f scale) {
+        this.scale = scale;
+        this.computeMatrix();
+    }
+
+    @Override
+    public void setScale(float x, float y, float z) {
+        this.setScale(new Vector3f(x, y, z));
     }
 
     @Override
@@ -58,6 +76,27 @@ public class GLDrawableObject extends GLObject implements IGLDrawable {
         this.mesh.unbind();
 
         this.shader.unbind();
+    }
+
+    @Override
+    public void scale(Vector3f scale) {
+        this.scale.x *= scale.x;
+        this.scale.y *= scale.y;
+        this.scale.z *= scale.z;
+        this.computeMatrix();
+    }
+
+    @Override
+    public void scale(float x, float y, float z) {
+        this.scale(new Vector3f(x, y, z));
+    }
+
+    @Override
+    public void computeMatrix() {
+        super.getModelMatrix().setIdentity();
+        super.getModelMatrix().scale(scale);
+        Matrix4f.mul(super.getModelMatrix(), MathUtils.quaternionToMatrix(super.getRotation()), super.getModelMatrix());
+        super.getModelMatrix().translate(super.getPosition());
     }
 
     @Override

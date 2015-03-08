@@ -7,6 +7,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
+import utils.MathUtils;
 
 public class GLPerspectiveCamera extends GLObject implements IGLCamera {
 	private Matrix4f projectionMatrix;
@@ -27,7 +28,7 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
 
         float aspectRatio = 1.0f;
 
-        float y_scale = coTangent((float) Math.toRadians(this.fov / 2.0f));
+        float y_scale = MathUtils.coTangent((float) Math.toRadians(this.fov / 2.0f));
         float x_scale = y_scale / aspectRatio;
         float frustum_length = this.far - this.near;
 
@@ -43,35 +44,23 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
 	public Matrix4f getProjectionViewMatrix() {
 		return Matrix4f.mul(this.projectionMatrix, this.viewMatrix, null);
 	}
-	
-	@Override
-	public void translate(Vector3f pos) {
-		super.translate(pos);
-		this.viewMatrix.translate(pos.negate(null));
-		this.viewInvertedMatrix = (Matrix4f) new Matrix4f(this.viewMatrix).invert();
-	};
-	
-	@Override
-	public void rotate(float angle, Vector3f axis) {
-		super.rotate(angle, axis);
-		this.viewMatrix.rotate(-angle, axis);
-		this.viewInvertedMatrix = (Matrix4f) new Matrix4f(this.viewMatrix).invert();
-	};
-	
-	@Override
-	public void scale(Vector3f scale) {
-		super.scale(scale);
-		this.viewMatrix.scale(scale);
-		this.viewInvertedMatrix = (Matrix4f) new Matrix4f(this.viewMatrix).invert();
-	};
-	
-	@Override
+
+    @Override
+    public void computeMatrix() {
+        super.computeMatrix();
+        this.viewMatrix.setIdentity();
+        Matrix4f.mul(this.viewMatrix, MathUtils.quaternionToMatrix(MathUtils.invertQuaternion(super.getRotation())), this.viewMatrix);
+        this.viewMatrix.translate(this.getPosition().negate(null));
+        this.viewInvertedMatrix = (Matrix4f) new Matrix4f(this.viewMatrix).invert();
+    }
+
+    @Override
 	public void updateViewport(float width, float height) {
 		this.viewport.x = width;
 		this.viewport.y = height;
 		
 		float aspectRatio = width / height;
-        float y_scale = coTangent((float) Math.toRadians(this.fov / 2.0f));
+        float y_scale = MathUtils.coTangent((float) Math.toRadians(this.fov / 2.0f));
         float x_scale = y_scale / aspectRatio;
         
         this.projectionMatrix.m00 = x_scale;
@@ -113,8 +102,4 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
 
 	    return new GLRay(rayPosition, rayDirection);
 	}
-	
-	private static float coTangent(float angle) {
-        return (float)(1f / Math.tan(angle));
-    }
 }
