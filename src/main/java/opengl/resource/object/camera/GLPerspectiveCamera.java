@@ -13,6 +13,7 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
 	private float fov;
 	private float near;
 	private float far;
+    private Vector3f target;
 	private Vector2f viewport;
 	
 	public GLPerspectiveCamera(float fov, float near, float far) {
@@ -22,6 +23,11 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
 		this.near = near;
 		this.far = far;
 		this.viewport = new Vector2f();
+        this.target = new Vector3f(0.0f, 0.0f, -1.0f);
+
+        Vector3f direction = new Vector3f(0.0f, 0.0f, -1.0f);
+        Quaternion quat = MathUtils.quaternionFromEuler(direction);
+        super.setRotation(quat);
 
         float aspectRatio = 1.0f;
 
@@ -42,19 +48,16 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
 		return Matrix4f.mul(this.projectionMatrix, this.viewMatrix, null);
 	}
 
-
-
     @Override
-    public Quaternion getViewRotation() {
-        return MathUtils.invertQuaternion(super.getRotation());
-    }
+    public void computeMatrix() {
+        super.computeMatrix();
 
-    @Override
-    public void lookAtRH( Vector3f eye, Vector3f target, Vector3f up )
-    {
-        Vector3f zaxis = Vector3f.sub(eye, target, null);
+        Vector3f direction = MathUtils.quaternionToEuler(super.getRotation());
+        Vector3f target = Vector3f.add(super.getPosition(), direction, null);
+
+        Vector3f zaxis = Vector3f.sub(super.getPosition(), target, null);
         zaxis.normalise();
-        Vector3f xaxis = Vector3f.cross(up, zaxis, null);
+        Vector3f xaxis = Vector3f.cross(new Vector3f(0.0f, 1.0f, 0.0f), zaxis, null);
         xaxis.normalise();
         Vector3f yaxis = Vector3f.cross(zaxis, xaxis, null);
         yaxis.normalise();
@@ -69,21 +72,9 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
         this.viewMatrix.m20 = zaxis.x;
         this.viewMatrix.m21 = zaxis.y;
         this.viewMatrix.m22 = zaxis.z;
-        this.viewMatrix.m30 = -Vector3f.dot(xaxis, eye);
-        this.viewMatrix.m31 = -Vector3f.dot(yaxis, eye);
-        this.viewMatrix.m32 = -Vector3f.dot(zaxis, eye);
-
-        this.viewInvertedMatrix = (Matrix4f) new Matrix4f(this.viewMatrix).invert();
-    }
-
-    @Override
-    public void computeMatrix() {
-        super.computeMatrix();
-
-        this.viewMatrix.setIdentity();
-        Matrix4f.mul(this.viewMatrix, MathUtils.quaternionToMatrix(getViewRotation()), this.viewMatrix);
-        this.viewMatrix.translate(this.getPosition().negate(null));
-
+        this.viewMatrix.m30 = -Vector3f.dot(xaxis, super.getPosition());
+        this.viewMatrix.m31 = -Vector3f.dot(yaxis, super.getPosition());
+        this.viewMatrix.m32 = -Vector3f.dot(zaxis, super.getPosition());
 
         this.viewInvertedMatrix = (Matrix4f) new Matrix4f(this.viewMatrix).invert();
     }

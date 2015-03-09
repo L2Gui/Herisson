@@ -138,16 +138,33 @@ public class MathUtils {
         return Vector3f.add(start, ((Vector3f) Vector3f.sub(end, start, null).scale(percent)), null);
     }
 
+
+    public static Quaternion quaternionFromEuler(Vector3f euler)
+    {
+        Vector3f vx = new Vector3f(1.0f, 0.0f, 0.0f);
+        Vector3f vy = new Vector3f(0.0f, 1.0f, 0.0f);
+        Vector3f vz = new Vector3f(0.0f, 0.0f, 1.0f);
+
+        Quaternion quatX = quaternionFromAxisAngle(vx, euler.x);
+        Quaternion quatY = quaternionFromAxisAngle(vy, euler.y);
+        Quaternion quatZ = quaternionFromAxisAngle(vz, euler.z);
+
+        Quaternion quatXY = Quaternion.mul(quatX, quatY, null);
+        Quaternion quat = Quaternion.mul(quatXY, quatZ, null);
+
+        return quat;
+    }
+
     public static Vector3f quaternionToEuler(Quaternion quat) {
         Vector3f euler = new Vector3f();
         float angle = (float) Math.acos(quat.getW()) * 2.0f;
 
-/* Récupération des composantes de l'axe de rotation */
+        /* Récupération des composantes de l'axe de rotation */
         euler.setX(quat.getX());
         euler.setY(quat.getY());
         euler.setZ(quat.getZ());
 
-/* Normalisation de l'axe de rotation */
+        /* Normalisation de l'axe de rotation */
         float norm = (float) Math.sqrt(euler.getX() * euler.getX() + euler.getY() * euler.getY() + euler.getZ() * euler.getZ());
         if (norm > 0.0005f)
         {
@@ -156,17 +173,17 @@ public class MathUtils {
             euler.z /= norm;
         }
 
-/* Calcul de la latitude */
+        /* Calcul de la latitude */
         float latitude = - (float) Math.asin(euler.y);
         float longitude;
 
-/* Calcul de la longitude */
+        /* Calcul de la longitude */
         if (euler.getX() * euler.getX() + euler.getZ() * euler.getZ() < 0.0005f)
             longitude = 0.0f;
         else
             longitude = (float) Math.atan2(euler.getX(), euler.getZ());
 
-/* Si la longitude est négative, on la ramène du côté positif */
+        /* Si la longitude est négative, on la ramène du côté positif */
         if (longitude < 0)
             longitude += 2.0f * Math.PI;
 

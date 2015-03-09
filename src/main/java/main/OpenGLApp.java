@@ -104,17 +104,14 @@ public class OpenGLApp {
             this.canvas.addDrawable(0, this.drawableObject);
             this.canvas.setCamera(this.camera);
 
-            Vector3f position = new Vector3f(1.0f, 2.0f, 5.0f);
-            Vector3f direction = new Vector3f(-1.0f, 0.0f, -5.0f);
-            Quaternion quat = MathUtils.quaternionLookRotation(direction);
-            Vector4f direction4f = Matrix4f.transform(MathUtils.quaternionToMatrix(quat), new Vector4f(0.0f, 0.0f, 1.0f, 0.0f), null);
-            Vector3f direction3f = new Vector3f(direction4f.x, direction4f.y, direction4f.z);
-            direction3f.normalise();
-            Vector3f target = Vector3f.add(position, direction3f, null);
+            Vector3f eye = new Vector3f(1.0f, 2.0f, 5.0f);
 
+            Quaternion rotation = this.camera.getRotation();
+            Quaternion look = MathUtils.quaternionFromAxisAngle(new Vector3f(0.0f, 1.0f, 0.0f), 0.05f);
+            rotation = Quaternion.mul(rotation, look, null);
 
-            //this.camera.lookAtRH(new Vector3f(1.0f, 2.0f, 5.0f), new Vector3f(0.0f, 2.0f, 0.0f), new Vector3f(0.0f, 1.0f, 0.0f));
-            this.camera.lookAtRH(position, target, new Vector3f(0.0f, 1.0f, 0.0f));
+            this.camera.setPosition(eye);
+            this.camera.setRotation(rotation);
 
         } catch (Exception e) {
             e.printStackTrace();
