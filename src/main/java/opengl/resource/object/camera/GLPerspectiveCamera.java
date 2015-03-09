@@ -3,10 +3,7 @@ package opengl.resource.object.camera;
 import opengl.resource.object.GLObject;
 import opengl.utils.GLRay;
 
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
+import org.lwjgl.util.vector.*;
 import utils.MathUtils;
 
 public class GLPerspectiveCamera extends GLObject implements IGLCamera {
@@ -45,12 +42,49 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
 		return Matrix4f.mul(this.projectionMatrix, this.viewMatrix, null);
 	}
 
+
+
+    @Override
+    public Quaternion getViewRotation() {
+        return MathUtils.invertQuaternion(super.getRotation());
+    }
+
+    @Override
+    public void lookAtRH( Vector3f eye, Vector3f target, Vector3f up )
+    {
+        Vector3f zaxis = Vector3f.sub(eye, target, null);
+        zaxis.normalise();
+        Vector3f xaxis = Vector3f.cross(up, zaxis, null);
+        xaxis.normalise();
+        Vector3f yaxis = Vector3f.cross(zaxis, xaxis, null);
+        yaxis.normalise();
+
+        this.viewMatrix = new Matrix4f();
+        this.viewMatrix.m00 = xaxis.x;
+        this.viewMatrix.m01 = xaxis.y;
+        this.viewMatrix.m02 = xaxis.z;
+        this.viewMatrix.m10 = yaxis.x;
+        this.viewMatrix.m11 = yaxis.y;
+        this.viewMatrix.m12 = yaxis.z;
+        this.viewMatrix.m20 = zaxis.x;
+        this.viewMatrix.m21 = zaxis.y;
+        this.viewMatrix.m22 = zaxis.z;
+        this.viewMatrix.m30 = -Vector3f.dot(xaxis, eye);
+        this.viewMatrix.m31 = -Vector3f.dot(yaxis, eye);
+        this.viewMatrix.m32 = -Vector3f.dot(zaxis, eye);
+
+        this.viewInvertedMatrix = (Matrix4f) new Matrix4f(this.viewMatrix).invert();
+    }
+
     @Override
     public void computeMatrix() {
         super.computeMatrix();
+
         this.viewMatrix.setIdentity();
-        Matrix4f.mul(this.viewMatrix, MathUtils.quaternionToMatrix(super.getRotation()), this.viewMatrix);
+        Matrix4f.mul(this.viewMatrix, MathUtils.quaternionToMatrix(getViewRotation()), this.viewMatrix);
         this.viewMatrix.translate(this.getPosition().negate(null));
+
+
         this.viewInvertedMatrix = (Matrix4f) new Matrix4f(this.viewMatrix).invert();
     }
 

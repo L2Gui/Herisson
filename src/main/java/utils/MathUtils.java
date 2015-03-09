@@ -2,6 +2,7 @@ package utils;
 
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Quaternion;
+import org.lwjgl.util.vector.Vector;
 import org.lwjgl.util.vector.Vector3f;
 
 public class MathUtils {
@@ -91,33 +92,36 @@ public class MathUtils {
         return q;
     }
 
-    public static Quaternion quaternionLookAt(Vector3f sourcePoint, Vector3f destPoint)
-    {
-        Vector3f forwardVector = Vector3f.sub(destPoint, sourcePoint, null);
-        forwardVector.normalise();
+    public static Quaternion quaternionLookRotation(Vector3f forward) {
+        Vector3f up = new Vector3f(0.0f, 1.0f, 0.0f);
+        forward.normalise();
 
-        float dot = Vector3f.dot(new Vector3f(0.0f, 0.0f, 1.0f), forwardVector);
+        Vector3f vector = new Vector3f(forward);
+        Vector3f vector2 = Vector3f.cross(up, vector, null);
+        vector2.normalise();
+        Vector3f vector3 = Vector3f.cross(vector, vector2, null);
+        vector3.normalise();
 
-        if (Math.abs(dot - (-1.0f)) < 0.000001f)
-        {
-            return new Quaternion(0.0f, 1.0f, 0.0f, 3.1415926535897932f);
-        }
-        if (Math.abs(dot - (1.0f)) < 0.000001f)
-        {
-            return new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
-        }
+        Matrix4f mat = new Matrix4f();
 
-        float rotAngle = (float)Math.acos(dot);
-        Vector3f rotAxis = Vector3f.cross(new Vector3f(0.0f, 0.0f, 1.0f), forwardVector, null);
-        rotAxis.normalise();
-        return quaternionFromAxisAngle(rotAxis, rotAngle);
+        mat.m00 = vector2.x;
+        mat.m01 = vector2.y;
+        mat.m02 = vector2.z;
+        mat.m10 = vector3.x;
+        mat.m11 = vector3.y;
+        mat.m12 = vector3.z;
+        mat.m20 = vector.x;
+        mat.m21 = vector.y;
+        mat.m22 = vector.z;
+
+        return quaternionFromMatrix(mat);
     }
 
     public static Quaternion invertQuaternion(Quaternion quat) {
         Quaternion newQuat = new Quaternion(quat);
-        newQuat.setX(- quat.getX());
+        newQuat.setX(-quat.getX());
         newQuat.setY(- quat.getY());
-        newQuat.setZ(- quat.getZ());
+        newQuat.setZ(-quat.getZ());
         return newQuat;
     }
 
@@ -134,18 +138,43 @@ public class MathUtils {
         return Vector3f.add(start, ((Vector3f) Vector3f.sub(end, start, null).scale(percent)), null);
     }
 
-    public static Quaternion quaternionAdd(Quaternion left, Quaternion right) {
-        return new Quaternion(left.x + right.x, left.y + right.y, left.z + right.z, left.w + right.w);
+    public static Vector3f quaternionToEuler(Quaternion quat) {
+        Vector3f euler = new Vector3f();
+        float angle = (float) Math.acos(quat.getW()) * 2.0f;
+
+/* Récupération des composantes de l'axe de rotation */
+        euler.setX(quat.getX());
+        euler.setY(quat.getY());
+        euler.setZ(quat.getZ());
+
+/* Normalisation de l'axe de rotation */
+        float norm = (float) Math.sqrt(euler.getX() * euler.getX() + euler.getY() * euler.getY() + euler.getZ() * euler.getZ());
+        if (norm > 0.0005f)
+        {
+            euler.x /= norm;
+            euler.y /= norm;
+            euler.z /= norm;
+        }
+
+/* Calcul de la latitude */
+        float latitude = - (float) Math.asin(euler.y);
+        float longitude;
+
+/* Calcul de la longitude */
+        if (euler.getX() * euler.getX() + euler.getZ() * euler.getZ() < 0.0005f)
+            longitude = 0.0f;
+        else
+            longitude = (float) Math.atan2(euler.getX(), euler.getZ());
+
+/* Si la longitude est négative, on la ramène du côté positif */
+        if (longitude < 0)
+            longitude += 2.0f * Math.PI;
+
+        return euler;
     }
 
-    public static Quaternion quaternionLerp(Quaternion start, Quaternion end, float percent) {
-        Quaternion lerpScratch = new Quaternion(end);
-        lerpScratch.scale(percent);
-
-        Quaternion result = new Quaternion(start);
-        result.scale(1.0f - percent);
-
-        return Quaternion.mul(lerpScratch, result, result);
+    public static Quaternion quaternionAdd(Quaternion left, Quaternion right) {
+        return new Quaternion(left.x + right.x, left.y + right.y, left.z + right.z, left.w + right.w);
     }
 
     public static Quaternion quaternionSlerp(Quaternion start, Quaternion end, float percent) {
@@ -158,7 +187,7 @@ public class MathUtils {
         }
 
         if (1.0f - dot < 0.000001f) {
-            return quaternionLerp(start, r, percent);
+            return new Quaternion(end);
         }
 
         float theta = (float) Math.acos(dot);

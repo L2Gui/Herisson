@@ -2,6 +2,7 @@ package opengl.resource.object.mesh;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,9 +11,10 @@ import opengl.resource.object.GLObjectUsage;
 import opengl.resource.texture.GLTextTexture;
 import opengl.vertex.GLTexturedVertex;
 
+import opengl.vertex.GLVertex;
 import org.lwjgl.util.vector.Vector3f;
 
-public class GLTextMesh implements IGLResource {
+public class GLTextMesh implements IGLMesh {
 	private GLTextTexture textTexture;
 	private GLTexturedMesh texturedMesh;
 	private float width;
@@ -84,4 +86,64 @@ public class GLTextMesh implements IGLResource {
 	public float getHeight() {
 		return this.height;
 	}
+
+    @Override
+    public int getIndicesCount() {
+        return this.texturedMesh.getIndicesCount();
+    }
+
+    @Override
+    public GLVertex getVertexFromIndice(int indice) {
+        return this.texturedMesh.getVertexFromIndice(indice);
+    }
+
+    @Override
+    public void bindVerticesArrayBuffer() {
+        this.texturedMesh.bindVerticesArrayBuffer();
+    }
+
+    @Override
+    public void bindVerticesBuffer() {
+        this.texturedMesh.bindVerticesBuffer();
+    }
+
+    @Override
+    public void bindIndicesBuffer() {
+        this.texturedMesh.bindIndicesBuffer();
+    }
+
+    @Override
+    public void unbind() {
+        this.texturedMesh.unbind();
+    }
+
+    @Override
+    public void updateVertices(List<? extends GLVertex> vertices, int elementCount) {
+        this.texturedMesh.updateVertices(vertices, elementCount);
+    }
+
+    @Override
+    public int getVertexStride() {
+        return this.texturedMesh.getVertexStride();
+    }
+
+    @Override
+    public FloatBuffer getVerticesBuffer() {
+        return this.texturedMesh.getVerticesBuffer();
+    }
+
+    @Override
+    public void attribVerticesPointer() {
+        this.texturedMesh.attribVerticesPointer();
+    }
+
+    @Override
+    public void enableVerticesPointer() {
+        this.texturedMesh.enableVerticesPointer();
+    }
+
+    @Override
+    public void disableVerticesPointer() {
+        this.texturedMesh.disableVerticesPointer();
+    }
 }

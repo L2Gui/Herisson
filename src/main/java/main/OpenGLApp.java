@@ -7,9 +7,12 @@ import opengl.resource.object.camera.GLPerspectiveCamera;
 import opengl.resource.object.camera.IGLCamera;
 import opengl.resource.object.drawable.GLDrawableObject;
 import opengl.resource.object.mesh.GLColoredMesh;
+import opengl.resource.object.mesh.GLTextMesh;
 import opengl.vertex.GLColoredVertex;
+import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Quaternion;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 import utils.MathUtils;
 
 import javax.swing.*;
@@ -21,8 +24,11 @@ public class OpenGLApp {
     private GLCanvas canvas;
     private JPanel panel;
     private JFrame frame;
+    private Font font;
     private GLColoredMesh mesh;
+    private GLTextMesh textMesh;
     private GLDrawableObject drawableObject;
+    private GLDrawableObject textObject;
     private IGLCamera camera;
 
     public static void main(String[] args) {
@@ -36,7 +42,9 @@ public class OpenGLApp {
             this.frame = new JFrame("Test");
             this.panel = new JPanel();
             this.mesh = new GLColoredMesh();
+            this.textMesh = new GLTextMesh();
             this.drawableObject = new GLDrawableObject();
+            this.textObject = new GLDrawableObject();
             this.camera = new GLPerspectiveCamera(70.0f, 0.01f, 100.0f);
 
             this.frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -48,7 +56,8 @@ public class OpenGLApp {
 
             this.frame.setVisible(true);
 
-            GLShader shader = new GLShader("color3D.vert", "color.frag");
+            GLShader colorShader = new GLShader("color3D.vert", "color.frag");
+            GLShader textureShader = new GLShader("texture3D.vert", "texture.frag");
 
             List<GLColoredVertex> vertices = new ArrayList<GLColoredVertex>();
 
@@ -77,35 +86,35 @@ public class OpenGLApp {
                 0, 2, 3
             };
 
-            this.mesh.setup(vertices, indices, GLObjectUsage.STATIC);
+            this.font = new Font("Arial", Font.PLAIN, 512);
 
-            this.drawableObject.setShader(shader);
+            this.mesh.setup(vertices, indices, GLObjectUsage.STATIC);
+            this.textMesh.setup("Test", this.font, 0.5f, GLObjectUsage.STATIC);
+
+            this.drawableObject.setShader(colorShader);
             this.drawableObject.setMesh(this.mesh);
 
-            this.canvas.addResource(shader);
+            this.textObject.setShader(textureShader);
+            this.textObject.setMesh(this.textMesh);
+
+            this.canvas.addResource(colorShader);
+            this.canvas.addResource(textureShader);
             this.canvas.addResource(this.mesh);
+            this.canvas.addResource(this.textMesh);
             this.canvas.addDrawable(0, this.drawableObject);
             this.canvas.setCamera(this.camera);
 
-            float speed = 0.01f;
-            Vector3f dest = new Vector3f(-5.0f, 2.0f, 5.0f);
+            Vector3f position = new Vector3f(1.0f, 2.0f, 5.0f);
+            Vector3f direction = new Vector3f(-1.0f, 0.0f, -5.0f);
+            Quaternion quat = MathUtils.quaternionLookRotation(direction);
+            Vector4f direction4f = Matrix4f.transform(MathUtils.quaternionToMatrix(quat), new Vector4f(0.0f, 0.0f, 1.0f, 0.0f), null);
+            Vector3f direction3f = new Vector3f(direction4f.x, direction4f.y, direction4f.z);
+            direction3f.normalise();
+            Vector3f target = Vector3f.add(position, direction3f, null);
 
-            while (this.frame.isVisible()) {
-                Vector3f position = this.camera.getPosition();
-                Vector3f newPosition = MathUtils.vectorLerp(position, dest, speed);
 
-                Quaternion cameraToObject = MathUtils.quaternionLookAt(position, dest);
-                Quaternion objectToCamera = MathUtils.invertQuaternion(cameraToObject);
-                Quaternion objectToCameraSlerped = MathUtils.quaternionSlerp(this.drawableObject.getRotation(), objectToCamera, speed);
-
-                this.camera.setRotation(cameraToObject);
-                this.drawableObject.setRotation(objectToCameraSlerped);
-
-                this.canvas.lockDraw();
-                this.camera.setPosition(newPosition);
-                this.canvas.unlockDraw();
-                Thread.sleep(16L);
-            }
+            //this.camera.lookAtRH(new Vector3f(1.0f, 2.0f, 5.0f), new Vector3f(0.0f, 2.0f, 0.0f), new Vector3f(0.0f, 1.0f, 0.0f));
+            this.camera.lookAtRH(position, target, new Vector3f(0.0f, 1.0f, 0.0f));
 
         } catch (Exception e) {
             e.printStackTrace();

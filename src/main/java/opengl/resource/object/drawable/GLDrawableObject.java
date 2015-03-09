@@ -2,7 +2,7 @@ package opengl.resource.object.drawable;
 
 import opengl.resource.GLShader;
 import opengl.resource.object.GLObject;
-import opengl.resource.object.mesh.GLMesh;
+import opengl.resource.object.mesh.IGLMesh;
 import opengl.utils.GLRay;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.*;
@@ -17,7 +17,7 @@ import java.nio.FloatBuffer;
  * Created by Clement on 08/03/2015.
  */
 public class GLDrawableObject extends GLObject implements IGLDrawable {
-    private GLMesh mesh;
+    private IGLMesh mesh;
     private GLShader shader;
     private Vector3f scale;
 
@@ -25,7 +25,7 @@ public class GLDrawableObject extends GLObject implements IGLDrawable {
         this.scale = new Vector3f(1.0f, 1.0f, 1.0f);
     }
 
-    public GLDrawableObject(GLShader shader, GLMesh mesh) {
+    public GLDrawableObject(GLShader shader, IGLMesh mesh) {
         this.shader = shader;
         this.mesh = mesh;
     }
@@ -39,7 +39,7 @@ public class GLDrawableObject extends GLObject implements IGLDrawable {
         this.shader = shader;
     }
 
-    public void setMesh(GLMesh mesh) {
+    public void setMesh(IGLMesh mesh) {
         this.mesh = mesh;
     }
 
