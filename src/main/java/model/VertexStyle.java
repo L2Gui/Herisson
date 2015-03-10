@@ -11,7 +11,7 @@ import java.util.Collection;
  * 
  */
 
-public class VertexStyle {
+public class VertexStyle implements IStyle {
 	private VertexShape shape;
 	private Collection<Vertex> vertices;
 	private float size;
@@ -20,6 +20,7 @@ public class VertexStyle {
 	private Color textColor;
 	private Color borderColor;
 	private Font font;
+    private int usageCount;
 	
 	VertexStyle(){
 		setVertices(new ArrayList<Vertex>());
@@ -88,8 +89,15 @@ public class VertexStyle {
 	public void setVertices(Collection<Vertex> vertices) {
 		this.vertices = vertices;
 	}
-	
-	
-	
-	
+
+
+    @Override
+    public int getUsageCount() {
+        return usageCount;
+    }
+
+    @Override
+    public void setUsageCount(int count) {
+        this.usageCount = count;
+    }
 }

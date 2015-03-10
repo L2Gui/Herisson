@@ -7,11 +7,14 @@
     <default>yellow</default>
   </key>
   <key id="d1" for="edge" attr.name="weight" attr.type="double"/>
+  <node-style id="s1">
+    <data key="e0"></data>
+  </node-style>
+
   <graph id="G" edgedefault="undirected">
-    <node id="n0">
-      <data key="d0">green</data>
+    <node id="n0" style="s1">
     </node>
-    <node id="n1"/>
+    <node id="n1" style=""/>
     <node id="n2">
       <data key="d0">blue</data>
     </node>

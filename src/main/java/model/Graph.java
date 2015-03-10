@@ -1,6 +1,8 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class Graph {
 	
@@ -9,7 +11,25 @@ public class Graph {
 	
 	private Collection<Edge> edges;
 	private Collection<Vertex> vertexs;
-	
+
+    private boolean isOriented;
+
+    public boolean isOriented() {
+        return isOriented;
+    }
+
+    public void setOriented(boolean isOriented) {
+        this.isOriented = isOriented;
+    }
+
+    public Graph()
+    {
+        name ="";
+        filename = "";
+        isOriented = false;
+        edges = new ArrayList<Edge>();
+        vertexs = new ArrayList<Vertex>();
+    }
 	
 	// Fonctions d'ajout dans les collections edges et vertexs.
 	
@@ -22,9 +42,11 @@ public class Graph {
 		 * la m�thode add renvoie vrai si l'argument a pu etre ajout� ou 
 		 * faux si l'�l�ment existe d�ja dans la Collection.
 		 */
-		if (!edges.add(edge)){
-			System.out.println("Edge already exists");
-		}
+        if (edge != null) {
+            if (!edges.add(edge)) {
+                System.out.println("Edge already exists");
+            }
+        }
 	}
 	
 	/**
