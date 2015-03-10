@@ -1,10 +1,13 @@
-package opengl.resource.object.camera;
+package oldOpenGL.resource.object.camera;
 
-import opengl.resource.object.GLObject;
-import opengl.utils.GLRay;
+import oldOpenGL.resource.object.GLObject;
+import oldOpenGL.resource.object.camera.*;
+import oldOpenGL.utils.GLRay;
 
-import org.lwjgl.util.vector.*;
-import utils.MathUtils;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 public class GLPerspectiveCamera extends GLObject implements IGLCamera {
 	private Matrix4f projectionMatrix;
@@ -13,7 +16,7 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
 	private float fov;
 	private float near;
 	private float far;
-    private Vector3f target;
+	private boolean isInitialized;
 	private Vector2f viewport;
 	
 	public GLPerspectiveCamera(float fov, float near, float far) {
@@ -22,70 +25,66 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
 		this.fov = fov;
 		this.near = near;
 		this.far = far;
+		this.isInitialized = false;
 		this.viewport = new Vector2f();
-        this.target = new Vector3f(0.0f, 0.0f, -1.0f);
+	}
 
-        Vector3f direction = new Vector3f(0.0f, 0.0f, -1.0f);
-        Quaternion quat = MathUtils.quaternionFromEuler(direction);
-        super.setRotation(quat);
-
-        float aspectRatio = 1.0f;
-
-        float y_scale = MathUtils.coTangent((float) Math.toRadians(this.fov / 2.0f));
+	@Override
+	public void init() {
+		float aspectRatio = 1.0f;
+        
+        float y_scale = coTangent((float) Math.toRadians(this.fov / 2.0f));
         float x_scale = y_scale / aspectRatio;
         float frustum_length = this.far - this.near;
-
+        
         this.projectionMatrix.m00 = x_scale;
         this.projectionMatrix.m11 = y_scale;
         this.projectionMatrix.m22 = -((this.far + this.near) / frustum_length);
         this.projectionMatrix.m23 = -1.0f;
         this.projectionMatrix.m32 = -((2.0f * this.near * this.far) / frustum_length);
         this.projectionMatrix.m33 = 0.0f;
+        
+        this.isInitialized = true;
+	}
+	
+	@Override
+	public boolean isInitialized() {
+		return this.isInitialized;
 	}
 	
 	@Override
 	public Matrix4f getProjectionViewMatrix() {
 		return Matrix4f.mul(this.projectionMatrix, this.viewMatrix, null);
 	}
-
-    @Override
-    public void computeMatrix() {
-        super.computeMatrix();
-
-        Vector3f direction = MathUtils.quaternionToEuler(super.getRotation());
-        Vector3f target = Vector3f.add(super.getPosition(), direction, null);
-
-        Vector3f zaxis = Vector3f.sub(super.getPosition(), target, null);
-        zaxis.normalise();
-        Vector3f xaxis = Vector3f.cross(new Vector3f(0.0f, 1.0f, 0.0f), zaxis, null);
-        xaxis.normalise();
-        Vector3f yaxis = Vector3f.cross(zaxis, xaxis, null);
-        yaxis.normalise();
-
-        this.viewMatrix = new Matrix4f();
-        this.viewMatrix.m00 = xaxis.x;
-        this.viewMatrix.m01 = xaxis.y;
-        this.viewMatrix.m02 = xaxis.z;
-        this.viewMatrix.m10 = yaxis.x;
-        this.viewMatrix.m11 = yaxis.y;
-        this.viewMatrix.m12 = yaxis.z;
-        this.viewMatrix.m20 = zaxis.x;
-        this.viewMatrix.m21 = zaxis.y;
-        this.viewMatrix.m22 = zaxis.z;
-        this.viewMatrix.m30 = -Vector3f.dot(xaxis, super.getPosition());
-        this.viewMatrix.m31 = -Vector3f.dot(yaxis, super.getPosition());
-        this.viewMatrix.m32 = -Vector3f.dot(zaxis, super.getPosition());
-
-        this.viewInvertedMatrix = (Matrix4f) new Matrix4f(this.viewMatrix).invert();
-    }
-
-    @Override
+	
+	@Override
+	public void translate(Vector3f pos) {
+		super.translate(pos);
+		this.viewMatrix.translate(pos.negate(null));
+		this.viewInvertedMatrix = (Matrix4f) new Matrix4f(this.viewMatrix).invert();
+	};
+	
+	@Override
+	public void rotate(float angle, Vector3f axis) {
+		super.rotate(angle, axis);
+		this.viewMatrix.rotate(-angle, axis);
+		this.viewInvertedMatrix = (Matrix4f) new Matrix4f(this.viewMatrix).invert();
+	};
+	
+	@Override
+	public void scale(Vector3f scale) {
+		super.scale(scale);
+		this.viewMatrix.scale(scale);
+		this.viewInvertedMatrix = (Matrix4f) new Matrix4f(this.viewMatrix).invert();
+	};
+	
+	@Override
 	public void updateViewport(float width, float height) {
 		this.viewport.x = width;
 		this.viewport.y = height;
 		
 		float aspectRatio = width / height;
-        float y_scale = MathUtils.coTangent((float) Math.toRadians(this.fov / 2.0f));
+        float y_scale = coTangent((float) Math.toRadians(this.fov / 2.0f));
         float x_scale = y_scale / aspectRatio;
         
         this.projectionMatrix.m00 = x_scale;
@@ -127,4 +126,8 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
 
 	    return new GLRay(rayPosition, rayDirection);
 	}
+	
+	private static float coTangent(float angle) {
+        return (float)(1f / Math.tan(angle));
+    }
 }
