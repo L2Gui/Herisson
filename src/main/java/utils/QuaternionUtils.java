@@ -79,11 +79,14 @@ public class QuaternionUtils {
         quaternion.z = 0.5f * num5;
         quaternion.w = (matrix.m01 - matrix.m10) * num2;
 
+        quaternion.normalise(null);
+
         return quaternion;
     }
 
     public static Quaternion quaternionFromAxisAngle(Vector3f axis, float angle)
     {
+        angle = (float) Math.toRadians((double) angle);
         float halfAngle = angle * .5f;
         float s = (float) Math.sin(halfAngle);
         Quaternion q = new Quaternion();
@@ -143,6 +146,26 @@ public class QuaternionUtils {
         return quat;
     }
 
+    public static Vector3f quaternionTransform(Quaternion quat, Vector3f vec){
+        float num = quat.x * 2f;
+        float num2 = quat.y * 2f;
+        float num3 = quat.z * 2f;
+        float num4 = quat.x * num;
+        float num5 = quat.y * num2;
+        float num6 = quat.z * num3;
+        float num7 = quat.x * num2;
+        float num8 = quat.x * num3;
+        float num9 = quat.y * num3;
+        float num10 = quat.w * num;
+        float num11 = quat.w * num2;
+        float num12 = quat.w * num3;
+        Vector3f result = new Vector3f();
+        result.x = (1f - (num5 + num6)) * vec.x + (num7 - num12) * vec.y + (num8 + num11) * vec.z;
+        result.y = (num7 + num12) * vec.x + (1f - (num4 + num6)) * vec.y + (num9 - num10) * vec.z;
+        result.z = (num8 - num11) * vec.x + (num9 + num10) * vec.y + (1f - (num4 + num5)) * vec.z;
+        return result;
+    }
+
     public static Vector3f quaternionToEuler(Quaternion quat) {
         Vector3f euler = new Vector3f();
         float angle = (float) Math.acos(quat.getW()) * 2.0f;
@@ -182,29 +205,35 @@ public class QuaternionUtils {
         return new Quaternion(left.x + right.x, left.y + right.y, left.z + right.z, left.w + right.w);
     }
 
-    public static Quaternion quaternionSlerp(Quaternion start, Quaternion end, float percent) {
-        float dot = Quaternion.dot(start, end);
+    public static Quaternion quaternionSlerp(Quaternion q1, Quaternion q2, double lambda)
+    {
+        Quaternion qr = new Quaternion();
+        float dotproduct = q1.x * q2.x + q1.y * q2.y + q1.z * q2.z + q1.w * q2.w;
 
-        Quaternion r = new Quaternion(end);
-        if (dot < 0.0) {
-            dot = -dot;
-            r.negate();
+        if (1.0f - dotproduct < 0.000001f) {
+            return new Quaternion(q2);
         }
 
-        if (1.0f - dot < 0.000001f) {
-            return new Quaternion(end);
-        }
+        float theta, st, sut, sout, coeff1, coeff2;
 
-        float theta = (float) Math.acos(dot);
+        // algorithm adapted from Shoemake's paper
+        lambda=lambda/2.0;
 
-        Quaternion slerpScaledP = new Quaternion(start);
-        slerpScaledP.scale((float) Math.sin((1.0f - percent) * theta));
+        theta = (float) Math.acos(dotproduct);
+        if (theta<0.0) theta=-theta;
 
-        Quaternion slerpScaledR = new Quaternion(r);
-        slerpScaledR.scale((float) Math.sin(percent * theta));
+        st = (float) Math.sin(theta);
+        sut = (float) Math.sin(lambda*theta);
+        sout = (float) Math.sin((1-lambda)*theta);
+        coeff1 = sout/st;
+        coeff2 = sut/st;
 
-        Quaternion result = quaternionAdd(slerpScaledP, slerpScaledR);
-        result.scale((float) (1.0f / Math.sin(theta)));
-        return result;
-    };
+        qr.x = coeff1*q1.x + coeff2*q2.x;
+        qr.y = coeff1*q1.y + coeff2*q2.y;
+        qr.z = coeff1*q1.z + coeff2*q2.z;
+        qr.w = coeff1*q1.w + coeff2*q2.w;
+
+        qr.normalise(null);
+        return qr;
+    }
 }
