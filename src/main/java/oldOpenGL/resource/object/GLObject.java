@@ -6,6 +6,7 @@ import org.lwjgl.util.vector.Quaternion;
 import org.lwjgl.util.vector.Vector3f;
 
 import utils.MathUtils;
+import utils.QuaternionUtils;
 
 public abstract class GLObject implements IGLObject {
 	private Matrix4f modelMatrix;
@@ -90,7 +91,7 @@ public abstract class GLObject implements IGLObject {
 	public void computeMatrix() {
 		this.modelMatrix.setIdentity();
 		this.modelMatrix.scale(scale);
-		Matrix4f.mul(this.modelMatrix, MathUtils.quaternionToMatrix(this.rotation), this.modelMatrix);
+		Matrix4f.mul(this.modelMatrix, QuaternionUtils.quaternionToMatrix(this.rotation), this.modelMatrix);
 		this.modelMatrix.translate(this.position);
 	}
 	

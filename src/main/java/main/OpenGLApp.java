@@ -14,6 +14,7 @@ import org.lwjgl.util.vector.Quaternion;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 import utils.MathUtils;
+import utils.QuaternionUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -104,14 +105,22 @@ public class OpenGLApp {
             this.canvas.addDrawable(0, this.drawableObject);
             this.canvas.setCamera(this.camera);
 
-            Vector3f eye = new Vector3f(1.0f, 2.0f, 5.0f);
+            Vector3f eye = new Vector3f(-1.0f, 0.5f, 4.0f);
+            Vector3f direction = eye.normalise(null);
+            Vector3f ndirection = eye.negate(null).normalise(null);
 
-            Quaternion rotation = this.camera.getRotation();
-            Quaternion look = MathUtils.quaternionFromAxisAngle(new Vector3f(0.0f, 1.0f, 0.0f), 0.05f);
-            rotation = Quaternion.mul(rotation, look, null);
+            Quaternion rotation = QuaternionUtils.quaternionLookRotation(ndirection);
+            Quaternion rotationDrawable = QuaternionUtils.quaternionLookRotation(direction);
 
             this.camera.setPosition(eye);
-            this.camera.setRotation(rotation);
+            //this.camera.setRotation(rotation);
+            this.drawableObject.setRotation(rotation);
+
+            /*while (frame.isVisible()) {
+                Vector3f intermediaire = MathUtils.vectorLerp(this.camera.getPosition(), eye, 0.02f);
+                this.camera.setPosition(intermediaire);
+                Thread.sleep(16L);
+            }*/
 
         } catch (Exception e) {
             e.printStackTrace();

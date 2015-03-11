@@ -31,6 +31,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 import utils.MathUtils;
+import utils.QuaternionUtils;
 
 public class OpenGLGraphic {
     private JFrame frame;
@@ -211,14 +212,14 @@ public class OpenGLGraphic {
 
             if (zDown.getState()) {
                 Quaternion quat = this.camera.getRotation();
-                Matrix4f quatMatrix = MathUtils.quaternionToMatrix(quat);
+                Matrix4f quatMatrix = QuaternionUtils.quaternionToMatrix(quat);
                 Vector4f translation = Matrix4f.transform(quatMatrix, new Vector4f(0.0f, 0.0f, -speed, 0.0f), null);
                 this.position.translate(translation.x, translation.y, translation.z);
                 this.camera.translate(new Vector3f(translation.x, translation.y, translation.z));
             }
             if (sDown.getState()) {
                 Quaternion quat = this.camera.getRotation();
-                Matrix4f quatMatrix = MathUtils.quaternionToMatrix(quat);
+                Matrix4f quatMatrix = QuaternionUtils.quaternionToMatrix(quat);
                 Vector4f translation = Matrix4f.transform(quatMatrix, new Vector4f(0.0f, 0.0f, speed, 0.0f), null);
                 this.position.translate(translation.x, translation.y, translation.z);
                 this.camera.translate(new Vector3f(translation.x, translation.y, translation.z));

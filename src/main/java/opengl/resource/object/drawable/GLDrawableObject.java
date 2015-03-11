@@ -10,6 +10,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 import utils.MathUtils;
+import utils.QuaternionUtils;
 
 import java.nio.FloatBuffer;
 
@@ -95,7 +96,7 @@ public class GLDrawableObject extends GLObject implements IGLDrawable {
     public void computeMatrix() {
         super.getModelMatrix().setIdentity();
         super.getModelMatrix().scale(scale);
-        Matrix4f.mul(super.getModelMatrix(), MathUtils.quaternionToMatrix(super.getRotation()), super.getModelMatrix());
+        Matrix4f.mul(super.getModelMatrix(), QuaternionUtils.quaternionToMatrix(super.getRotation()), super.getModelMatrix());
         super.getModelMatrix().translate(super.getPosition());
     }
 
