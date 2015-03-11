@@ -26,10 +26,8 @@ import opengl.resource.object.GLObjectUsage;
 import opengl.resource.object.camera.GLPerspectiveCamera;
 import opengl.resource.object.camera.IGLCamera;
 import opengl.resource.object.drawable.GLDrawableObject;
-import opengl.resource.object.drawable.IGLDrawable;;
+import opengl.resource.object.drawable.IGLDrawable;
 import opengl.resource.object.mesh.GLColoredMesh;
-import opengl.resource.object.mesh.GLTextMesh;
-import opengl.resource.texture.GLTexture;
 import opengl.utils.GLRay;
 import opengl.vertex.GLColoredVertex;
 import org.lwjgl.util.vector.Quaternion;
@@ -55,7 +53,6 @@ public class App {
     private float distance; //C
     private Vector3f translation; //C
     private int z_index = 0; //C
-    private GLTexture quadTexture; //C
     private Collection<IGLDrawable> drawables = new ArrayList<IGLDrawable>(); //C
     private GLColoredMesh mesh; //C
     private GLDrawableObject drawableObject; //C
@@ -82,6 +79,9 @@ public class App {
         this.mesh = new GLColoredMesh();//C
         this.drawableObject = new GLDrawableObject();//C
         this.camera = new GLPerspectiveCamera(70.0f, 0.01f, 100.0f);//C
+        //translation = new Vector3f(0.0f, 0.0f, - distance);
+        //camera.translate(translation);
+        //camera.setPosition(translation);
 		
         this.keyboardHandler.setCommandHandler(commandHandler);
 
@@ -127,8 +127,10 @@ public class App {
 
     private void createObject(int x, int y, float distance) { //C
 
-        GLShader colorShader = new GLShader("color3D.vert", "color.frag");
-        GLShader textureShader = new GLShader("texture3D.vert", "texture.frag");
+        y = App.this.canvas.getHeight() - y;
+        GLRay ray = App.this.camera.getCursorRay(new Vector2f(x, y));
+        Vector3f position = Vector3f.add(ray.getPosition(), (Vector3f) ray.getDirection().scale(-distance), null); //important
+        GLShader colorShader = new GLShader("color3D.vert", "color.frag"); //vert pour vertex, pas pour la couleur vert
 
         List<GLColoredVertex> vertices = new ArrayList<GLColoredVertex>();
 
@@ -143,9 +145,9 @@ public class App {
         v3.setPosition(0.5f, 0.5f, 0.0f);
 
         v0.setColor(Color.red);
-        v1.setColor(Color.blue);
-        v2.setColor(Color.green);
-        v3.setColor(Color.white);
+        v1.setColor(Color.red);
+        v2.setColor(Color.red);
+        v3.setColor(Color.red);
 
         vertices.add(v0);
         vertices.add(v1);
@@ -163,21 +165,14 @@ public class App {
         this.drawableObject.setMesh(this.mesh);
 
         this.canvas.addResource(colorShader);
-        this.canvas.addResource(textureShader);
         this.canvas.addResource(this.mesh);
         this.canvas.addDrawable(0, this.drawableObject);
         this.canvas.setCamera(this.camera);
 
-        Vector3f eye = new Vector3f(1.0f, 2.0f, 5.0f);
 
-        Quaternion rotation = this.camera.getRotation();
-        Quaternion look = MathUtils.quaternionFromAxisAngle(new Vector3f(0.0f, 1.0f, 0.0f), 0.05f);
-        rotation = Quaternion.mul(rotation, look, null);
-
-        this.camera.setPosition(eye);
-        this.camera.setRotation(rotation);
-
+        this.camera.setPosition(position);
     }
+
 
     private void createWindow() throws Exception {
     	frame = new JFrame("PT_Graphe_Hérisson");
