@@ -3,26 +3,14 @@ package main;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Objects;
+import java.util.*;
+import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JToolBar;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 
 import model.Graph;
 import model.IColorAlgorythm;
@@ -33,7 +21,23 @@ import controller.IOAlgorithm;
 import controller.IOHandler;
 import controller.KeyboardHandler;
 import opengl.GLCanvas;
+import opengl.resource.GLShader;
+import opengl.resource.object.GLObjectUsage;
+import opengl.resource.object.camera.GLPerspectiveCamera;
+import opengl.resource.object.camera.IGLCamera;
+import opengl.resource.object.drawable.GLDrawableObject;
+import opengl.resource.object.drawable.IGLDrawable;
+import opengl.resource.object.mesh.GLColoredMesh;
+import opengl.utils.GLRay;
+import opengl.vertex.GLColoredVertex;
+import org.lwjgl.util.vector.Quaternion;
+import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
+import utils.MathUtils;
 import view.IVisuAlgorythm;
+
+
+
 
 public class App {
 	private JFrame frame;
@@ -43,7 +47,16 @@ public class App {
 	private Collection<IOAlgorithm> ioAlgorithms;
 	private Collection<IVisuAlgorythm> visuAlgorithms;
 	private Collection<Graph> graphs;
-	
+
+    private IGLCamera camera; //C
+    private GLCanvas canvas; //C
+    private float distance; //C
+    private Vector3f translation; //C
+    private int z_index = 0; //C
+    private Collection<IGLDrawable> drawables = new ArrayList<IGLDrawable>(); //C
+    private GLColoredMesh mesh; //C
+    private GLDrawableObject drawableObject; //C
+
     public static void main(String args[]) {
         App app = new App();
         try {
@@ -62,13 +75,105 @@ public class App {
         this.ioAlgorithms = new ArrayList<IOAlgorithm>();
         this.visuAlgorithms = new ArrayList<IVisuAlgorythm>();
         this.graphs = new ArrayList<Graph>();
+
+        this.mesh = new GLColoredMesh();//C
+        this.drawableObject = new GLDrawableObject();//C
+        this.camera = new GLPerspectiveCamera(70.0f, 0.01f, 100.0f);//C
+        //translation = new Vector3f(0.0f, 0.0f, - distance);
+        //camera.translate(translation);
+        //camera.setPosition(translation);
 		
         this.keyboardHandler.setCommandHandler(commandHandler);
-        
+
+        canvas.setCamera(camera); //C
+
+        distance = 5.0f;
+        translation = new Vector3f(0.0f, 0.0f, - distance);
+
+
+
+        canvas.addMouseListener(new MouseListener(){ //C
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //Empty
+            }
+
+            @Override
+            public void mousePressed(MouseEvent arg0) {
+                if (arg0.getButton() == MouseEvent.BUTTON1) {
+                    App.this.createObject(arg0.getX(), arg0.getY(), distance);
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //Empty
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //Empty
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //Empty
+            }
+        });
+
         this.frame.addKeyListener(this.keyboardHandler);
 		this.frame.setVisible(true);
     }
-    
+
+    private void createObject(int x, int y, float distance) { //C
+
+        y = App.this.canvas.getHeight() - y;
+        GLRay ray = App.this.camera.getCursorRay(new Vector2f(x, y));
+        Vector3f position = Vector3f.add(ray.getPosition(), (Vector3f) ray.getDirection().scale(-distance), null); //important
+        GLShader colorShader = new GLShader("color3D.vert", "color.frag"); //vert pour vertex, pas pour la couleur vert
+
+        List<GLColoredVertex> vertices = new ArrayList<GLColoredVertex>();
+
+        GLColoredVertex v0 = new GLColoredVertex();
+        GLColoredVertex v1 = new GLColoredVertex();
+        GLColoredVertex v2 = new GLColoredVertex();
+        GLColoredVertex v3 = new GLColoredVertex();
+
+        v0.setPosition(-0.5f, -0.5f, 0.0f);
+        v1.setPosition(0.5f, -0.5f, 0.0f);
+        v2.setPosition(-0.5f, 0.5f, 0.0f);
+        v3.setPosition(0.5f, 0.5f, 0.0f);
+
+        v0.setColor(Color.red);
+        v1.setColor(Color.red);
+        v2.setColor(Color.red);
+        v3.setColor(Color.red);
+
+        vertices.add(v0);
+        vertices.add(v1);
+        vertices.add(v2);
+        vertices.add(v3);
+
+        int[] indices = {
+                0, 1, 3,
+                0, 2, 3
+        };
+
+        this.mesh.setup(vertices, indices, GLObjectUsage.STATIC);
+
+        this.drawableObject.setShader(colorShader);
+        this.drawableObject.setMesh(this.mesh);
+
+        this.canvas.addResource(colorShader);
+        this.canvas.addResource(this.mesh);
+        this.canvas.addDrawable(0, this.drawableObject);
+        this.canvas.setCamera(this.camera);
+
+
+        this.camera.setPosition(position);
+    }
+
+
     private void createWindow() throws Exception {
     	frame = new JFrame("PT_Graphe_Hérisson");
     	frame.setSize(600, 600);
@@ -83,7 +188,7 @@ public class App {
     		
     	frame.setJMenuBar(generateMenuBar(null, null, null));
     	frame.add(generateToolBar(null, null, null));
-    	GLCanvas canvas = new GLCanvas();
+    	canvas = new GLCanvas();
     	frame.getContentPane().setLayout(new BorderLayout());
 		frame.getContentPane().add(generateToolBar(null, null, null), BorderLayout.NORTH);
 		frame.getContentPane().add(canvas, BorderLayout.CENTER);

@@ -16,11 +16,17 @@ public class Edge {
 	private EdgeView mainView;
 	
 	private Graph graph;
-	
-	/**
-	 * 
-	 */
-	public boolean isTurnedToSource;
+
+
+    public Edge()
+    {
+        srcVertex = null;
+        dstVertex = null;
+
+        style = null;
+
+        mainView = null;
+    }
 		
 	/**
 	 * 
@@ -54,10 +60,6 @@ public class Edge {
 		this.dstVertex = dstVertex;
 	}
 
-	/**
-	 * 
-	 */
-	public boolean isTurnedToDest;
 	
 	// Setter and getter for field : style
 	
