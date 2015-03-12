@@ -30,56 +30,63 @@ public class VertexStyle implements IStyle {
 		return shape;
 	}
 
-	public void setShape(VertexShape shape) {
+	public VertexStyle setShape(VertexShape shape) {
 		this.shape = shape;
+        return this;
 	}
 
 	public float getSize() {
 		return size;
 	}
 
-	public void setSize(float size) {
+	public VertexStyle setSize(float size) {
 		this.size = size;
+        return this;
 	}
 
 	public float getBorderThickness() {
 		return borderThickness;
 	}
 
-	public void setBorderThickness(float borderThickness) {
+	public VertexStyle setBorderThickness(float borderThickness) {
 		this.borderThickness = borderThickness;
+        return this;
 	}
 
 	public Color getBackgroundColor() {
 		return backgroundColor;
 	}
 
-	public void setBackgroundColor(Color backgroundColor) {
+	public VertexStyle setBackgroundColor(Color backgroundColor) {
 		this.backgroundColor = backgroundColor;
+        return this;
 	}
 
 	public Color getTextColor() {
 		return textColor;
 	}
 
-	public void setTextColor(Color textColor) {
+	public VertexStyle setTextColor(Color textColor) {
 		this.textColor = textColor;
+        return this;
 	}
 
 	public Color getBorderColor() {
 		return borderColor;
 	}
 
-	public void setBorderColor(Color borderColor) {
+	public VertexStyle setBorderColor(Color borderColor) {
 		this.borderColor = borderColor;
+        return this;
 	}
 
 	public Font getFont() {
 		return font;
 	}
 
-	public void setFont(Font font) {
+	public VertexStyle setFont(Font font) {
 		this.font = font;
+        return this;
 	}
 
 	public Collection<Vertex> getVertices() {
