@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.lwjgl.util.vector.Vector3f;
@@ -16,7 +17,13 @@ public class Vertex {
 	private Graph graph;
 	private Vector3f position;
 	private String label;
-	
+
+
+    public Vertex()
+    {
+        edges = new ArrayList<Edge>();
+        
+    }
 	
 	public VertexView getMainView() {
 		return mainView;
@@ -168,5 +175,12 @@ public class Vertex {
 	{
 		this.style.setShape(shape);
 	}
-	
+
+    public Graph getGraph() {
+        return graph;
+    }
+
+    public void setGraph(Graph graph) {
+        this.graph = graph;
+    }
 }

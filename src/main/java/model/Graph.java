@@ -45,6 +45,9 @@ public class Graph {
         if (edge != null) {
             if (!edges.add(edge)) {
                 System.out.println("Edge already exists");
+            } else {
+                // On renseigne ici l'attribut graph du lien en l'ajoutant dans celui ci
+                edge.setGraph(this);
             }
         }
 	}
@@ -60,7 +63,10 @@ public class Graph {
 		 */
 		if (!vertexs.add(vertex)){
 			System.out.println("Vertex already exist");
-		}
+		} else {
+            // On renseigne ici l'attribut graph du noeud en l'ajoutant dans celui ci
+            vertex.setGraph(this);
+        }
 	}
 	
 	// Fonctions de suppression dans les collections edges et vertexs.
@@ -76,7 +82,10 @@ public class Graph {
 		 */
 		if (!edges.remove(edge)){
 			System.out.println("Edge suppression is impossible");
-		}
+		} else {
+            // forcer la destruction du edge
+            edge = null;
+        }
 	}
 	
 	/**
@@ -90,7 +99,10 @@ public class Graph {
 		 */
 		if (!vertexs.remove(vertex)){
 			System.out.println("Vertex suppression is impossible");
-		}
+		} else {
+            // forcer la destruction du vertex
+            vertex = null;
+        }
 	}
 	
 	/**

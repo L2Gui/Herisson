@@ -14,8 +14,10 @@ public class Edge {
 	private EdgeStyle style;
 	
 	private EdgeView mainView;
-	
-	private Graph graph;
+
+
+
+    private Graph graph;
 
 
     public Edge()
@@ -26,6 +28,22 @@ public class Edge {
         style = null;
 
         mainView = null;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Graph getGraph() {
+        return graph;
+    }
+
+    /**
+     *
+     * @param graph
+     */
+    public void setGraph(Graph graph) {
+        this.graph = graph;
     }
 		
 	/**
