@@ -14,6 +14,7 @@ import org.lwjgl.util.vector.Quaternion;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 import utils.MathUtils;
+import utils.QuaternionUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -104,14 +105,26 @@ public class OpenGLApp {
             this.canvas.addDrawable(0, this.drawableObject);
             this.canvas.setCamera(this.camera);
 
-            Vector3f eye = new Vector3f(1.0f, 2.0f, 5.0f);
+            Vector3f eye = new Vector3f(-1.0f, 2.0f, -4.0f);
+            Vector3f direction = Vector3f.sub(new Vector3f(0.0f, 0.0f, 0.0f), eye, null);
+            Vector3f idirection = new Vector3f(eye);
 
-            Quaternion rotation = this.camera.getRotation();
-            Quaternion look = MathUtils.quaternionFromAxisAngle(new Vector3f(0.0f, 1.0f, 0.0f), 0.05f);
-            rotation = Quaternion.mul(rotation, look, null);
+            Quaternion rotation = QuaternionUtils.quaternionLookRotation(direction);
+            Quaternion irotation = QuaternionUtils.quaternionLookRotation(idirection);
 
-            this.camera.setPosition(eye);
-            this.camera.setRotation(rotation);
+            while (frame.isVisible()) {
+
+                Vector3f intermPos = MathUtils.vectorLerp(this.camera.getPosition(), eye, 0.02f);
+                Quaternion intermRot = QuaternionUtils.quaternionSlerp(this.camera.getRotation(), rotation, 0.1f);
+                Quaternion intermIRot = QuaternionUtils.quaternionSlerp(this.drawableObject.getRotation(), irotation, 0.1f);
+
+                this.canvas.lockDraw();
+                this.camera.setPosition(intermPos);
+                this.camera.setRotation(intermRot);
+                this.drawableObject.setRotation(intermIRot);
+                this.canvas.unlockDraw();
+                Thread.sleep(16L);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
