@@ -5,6 +5,7 @@ import opengl.utils.GLRay;
 
 import org.lwjgl.util.vector.*;
 import utils.MathUtils;
+import utils.QuaternionUtils;
 
 public class GLPerspectiveCamera extends GLObject implements IGLCamera {
 	private Matrix4f projectionMatrix;
@@ -13,9 +14,10 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
 	private float fov;
 	private float near;
 	private float far;
-    private Vector3f target;
 	private Vector2f viewport;
-	
+
+    private Vector3f View;
+
 	public GLPerspectiveCamera(float fov, float near, float far) {
 		this.projectionMatrix = new Matrix4f();
 		this.viewMatrix = new Matrix4f();
@@ -23,11 +25,8 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
 		this.near = near;
 		this.far = far;
 		this.viewport = new Vector2f();
-        this.target = new Vector3f(0.0f, 0.0f, -1.0f);
 
-        Vector3f direction = new Vector3f(0.0f, 0.0f, -1.0f);
-        Quaternion quat = MathUtils.quaternionFromEuler(direction);
-        super.setRotation(quat);
+        this.View = new Vector3f(0.0f, 0.0f, 1.0f);
 
         float aspectRatio = 1.0f;
 
@@ -52,9 +51,14 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
     public void computeMatrix() {
         super.computeMatrix();
 
-        Vector3f direction = MathUtils.quaternionToEuler(super.getRotation());
-        Vector3f target = Vector3f.add(super.getPosition(), direction, null);
+        this.View = QuaternionUtils.quaternionTransform(super.getRotation(), new Vector3f(0.0f, 0.0f, 1.0f));
+        Vector3f target = Vector3f.add(super.getPosition(), this.View, null);
+        this.lookAt(target);
 
+        this.viewInvertedMatrix = (Matrix4f) new Matrix4f(this.viewMatrix).invert();
+    }
+
+    public void lookAt(Vector3f target) {
         Vector3f zaxis = Vector3f.sub(super.getPosition(), target, null);
         zaxis.normalise();
         Vector3f xaxis = Vector3f.cross(new Vector3f(0.0f, 1.0f, 0.0f), zaxis, null);
@@ -62,7 +66,7 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
         Vector3f yaxis = Vector3f.cross(zaxis, xaxis, null);
         yaxis.normalise();
 
-        this.viewMatrix = new Matrix4f();
+        this.viewMatrix.setIdentity();
         this.viewMatrix.m00 = xaxis.x;
         this.viewMatrix.m01 = xaxis.y;
         this.viewMatrix.m02 = xaxis.z;
@@ -75,8 +79,6 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
         this.viewMatrix.m30 = -Vector3f.dot(xaxis, super.getPosition());
         this.viewMatrix.m31 = -Vector3f.dot(yaxis, super.getPosition());
         this.viewMatrix.m32 = -Vector3f.dot(zaxis, super.getPosition());
-
-        this.viewInvertedMatrix = (Matrix4f) new Matrix4f(this.viewMatrix).invert();
     }
 
     @Override
