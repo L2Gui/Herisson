@@ -21,6 +21,7 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
 	public GLPerspectiveCamera(float fov, float near, float far) {
 		this.projectionMatrix = new Matrix4f();
 		this.viewMatrix = new Matrix4f();
+        this.viewInvertedMatrix = new Matrix4f();
 		this.fov = fov;
 		this.near = near;
 		this.far = far;

@@ -7,6 +7,7 @@ import opengl.resource.object.GLObjectUsage;
 import opengl.resource.object.drawable.GLDrawableObject;
 import opengl.resource.object.mesh.GLColoredMesh;
 import opengl.vertex.GLColoredVertex;
+import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import java.awt.*;
@@ -31,8 +32,10 @@ public class VertexView extends ViewElement {
         this.position = model.getPosition();
     }
 
-	public void paint()
+    @Override
+	public void render(Matrix4f projectionViewMatrix)
 	{
+        /*
         GLShader colorShader = new GLShader("color3D.vert", "color.frag"); //vert pour vertex, pas pour la couleur vert
 
         List<GLColoredVertex> vertices = new ArrayList<GLColoredVertex>();
@@ -69,8 +72,8 @@ public class VertexView extends ViewElement {
 
         app.getCanvas().addResource(colorShader);
         app.getCanvas().addResource(this.mesh);
-        app.getCanvas().addDrawable(0, this.drawableObject);
+        this.drawableObject.render(projectionViewMatrix);
 
-        System.out.println("paint appelée");
+        System.out.println("paint appelée");*/
 	}
 }

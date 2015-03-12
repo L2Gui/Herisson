@@ -107,9 +107,9 @@ public class App {
             }
         });
 
-        for (Vertex vertex : graph.getVertexs())
+        /*for (Vertex vertex : graph.getVertexs())
             vertex.getMainView().paint();
-
+        */
         this.frame.addKeyListener(this.keyboardHandler);
 		this.frame.setVisible(true);
     }
@@ -151,7 +151,7 @@ public class App {
     		
     	frame.setJMenuBar(generateMenuBar(null, null, null));
     	frame.add(generateToolBar(null, null, null));
-    	canvas = new GLCanvas();
+    	canvas = new AppCanvas();
     	frame.getContentPane().setLayout(new BorderLayout());
 		frame.getContentPane().add(generateToolBar(null, null, null), BorderLayout.NORTH);
 		frame.getContentPane().add(canvas, BorderLayout.CENTER);

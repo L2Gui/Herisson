@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.TreeMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import opengl.resource.GLShader;
 import opengl.resource.IGLResource;
@@ -17,67 +19,33 @@ import org.lwjgl.opengl.AWTGLCanvas;
 import org.lwjgl.opengl.GL11;
 
 import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
+import org.lwjgl.util.vector.Matrix4f;
 
-public class GLCanvas extends AWTGLCanvas {
+public abstract class GLCanvas extends AWTGLCanvas {
 	private static final long serialVersionUID = 7519333736764307525L;
 
-    /**
-     * Ensemble des ressources qui ne sont pas encore initialisées
-     */
-	private Set<IGLResource> uninitializedResources = new HashSet<IGLResource>();
-
-    /**
-     * Tableau associant à un entier représentant l'ordre d'affichage une instance de IGLDrawable
-     */
-	private Map<Integer, IGLDrawable> uninitializedDrawables = new TreeMap<Integer, IGLDrawable>();
-	private Map<Integer, IGLDrawable> drawables = new TreeMap<Integer, IGLDrawable>();
-
 	private IGLCamera camera;
-	private Mutex mutex;
-	
+	private Lock mutex;
+
+    public abstract void init();
+    public abstract void paint(Matrix4f projectionViewMatrix);
+
 	public GLCanvas() throws LWJGLException {
 		super();
-		this.mutex = new Mutex();
+		this.mutex = new ReentrantLock();
 	}
-	
-	public void setCamera(IGLCamera camera) {
+
+    public void setCamera(IGLCamera camera) {
 		this.camera = camera;
-	}
-	
-	public void addDrawable(int priority, IGLDrawable obj) {
-		this.uninitializedDrawables.put(priority, obj);
-	}
-	
-	public void addResource(IGLResource res) {
-		this.uninitializedResources.add(res);
 	}
 
     public void lockDraw() {
-        try {
-            this.mutex.acquire();
-        } catch (InterruptedException e) {
-            System.err.println("Exception thrown after having acquired a mutex :");
-            e.printStackTrace();
-        }
+        this.mutex.lock();
     }
 
     public void unlockDraw() {
-        this.mutex.release();
+        this.mutex.unlock();
     }
-	
-	private void initializeObjects() {
-		for (Map.Entry<Integer, IGLDrawable> obj : this.uninitializedDrawables.entrySet()) {
-			this.drawables.put(obj.getKey(), obj.getValue());
-		}
-		this.uninitializedDrawables.clear();
-	}
-	
-	private void initializeResources() {
-		for (IGLResource res : this.uninitializedResources) {
-			res.init();
-		}
-		this.uninitializedResources.clear();
-	}
 	
 	private void resizeGLView() {
 		GL11.glViewport(0, 0, getWidth(), getHeight());
@@ -96,32 +64,18 @@ public class GLCanvas extends AWTGLCanvas {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
 
-        this.initializeResources();
-        this.initializeObjects();
+        this.init();
         this.resizeGLView();
     }
 
     @Override
     public void paintGL() {
-        this.initializeResources();
-        this.initializeObjects();
-
         GL11.glClearColor(0.85f, 0.85f, 0.85f, 1.0f);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-        try {
-            this.mutex.acquire();
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        }
-
-        if (this.camera != null) {
-            for (Map.Entry<Integer, IGLDrawable> obj : this.drawables.entrySet()) {
-                obj.getValue().render(this.camera.getProjectionViewMatrix());
-            }
-        }
-
-        this.mutex.release();
+        this.mutex.lock();
+        this.paint(this.camera.getProjectionViewMatrix());
+        this.mutex.unlock();
 
         try {
             super.swapBuffers();
