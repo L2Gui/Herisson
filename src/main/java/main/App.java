@@ -119,7 +119,7 @@ public class App {
         GLRay ray = App.this.camera.getCursorRay(new Vector2f(x, y));
         Vector3f position = Vector3f.add(ray.getPosition(), (Vector3f) ray.getDirection().scale(distance), null);
 
-        graph.addVertex(new Vertex(position, this));
+        graph.addVertex(new Vertex(position));
 
 
 
@@ -151,7 +151,7 @@ public class App {
     		
     	frame.setJMenuBar(generateMenuBar(null, null, null));
     	frame.add(generateToolBar(null, null, null));
-    	canvas = new AppCanvas();
+    	//canvas = new AppCanvas();
     	frame.getContentPane().setLayout(new BorderLayout());
 		frame.getContentPane().add(generateToolBar(null, null, null), BorderLayout.NORTH);
 		frame.getContentPane().add(canvas, BorderLayout.CENTER);

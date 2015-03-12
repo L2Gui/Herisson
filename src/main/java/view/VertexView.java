@@ -1,40 +1,27 @@
 package view;
 
-import main.App;
 import model.Vertex;
-import opengl.resource.GLShader;
-import opengl.resource.object.GLObjectUsage;
-import opengl.resource.object.drawable.GLDrawableObject;
-import opengl.resource.object.mesh.GLColoredMesh;
-import opengl.vertex.GLColoredVertex;
 import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class VertexView extends ViewElement {
-
-    private App app;
 	private Vertex model;
-    private Vector3f position;
-    //private Vector3f translation; //C
-    //private int z_index = 0; //C
-    //private Collection<IGLDrawable> drawables = new ArrayList<IGLDrawable>(); //C
-    private GLColoredMesh mesh; //C
-    private GLDrawableObject drawableObject; //C
 
-    public VertexView(Vertex model, App app)
-    {
-        this.app = app;
+    public VertexView() {
+
+    }
+
+    public Vertex getModel() {
+        return model;
+    }
+
+    public void setModel(Vertex model) {
         this.model = model;
-        this.position = model.getPosition();
     }
 
     @Override
 	public void render(Matrix4f projectionViewMatrix)
 	{
+        super.render(projectionViewMatrix);
         /*
         GLShader colorShader = new GLShader("color3D.vert", "color.frag"); //vert pour vertex, pas pour la couleur vert
 

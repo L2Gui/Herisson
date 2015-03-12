@@ -32,9 +32,9 @@ public class Vertex {
     }
 
 
-    public Vertex(Vector3f position, App app) {
+    public Vertex(Vector3f position) {
         this.position = position;
-        mainView = new VertexView(this, app);
+        mainView = new VertexView();
     }
 
 
