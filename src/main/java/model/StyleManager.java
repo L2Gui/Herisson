@@ -58,6 +58,7 @@ public class StyleManager {
                 vertexStyles.remove(style);
             }
         }
+        update();
     }
 
     public void addStyle(IStyle style){
@@ -66,6 +67,7 @@ public class StyleManager {
         } else if (style instanceof VertexStyle){
             vertexStyles.add((VertexStyle)style);
         }
+        update();
     }
 
     public List<EdgeStyle> getEdgeStyles() {
