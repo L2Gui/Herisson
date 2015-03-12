@@ -24,9 +24,13 @@ public class Vertex {
     public Vertex()
     {
         edges = new ArrayList<Edge>();
-        
+        mainView = null;
+        style = null;
+        graph = null;
+        position = null;
+        label = "";
     }
-	
+
 
     public Vertex(Vector3f position, App app) {
         this.position = position;

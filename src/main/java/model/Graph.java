@@ -5,7 +5,8 @@ import java.util.Collection;
 import java.util.List;
 
 public class Graph {
-	
+
+    StyleManager styleManager;
 	private String name;
 	private String filename;
 	
@@ -29,6 +30,7 @@ public class Graph {
         isOriented = false;
         edges = new ArrayList<Edge>();
         vertexs = new ArrayList<Vertex>();
+        styleManager=new StyleManager();
     }
 	
 	// Fonctions d'ajout dans les collections edges et vertexs.

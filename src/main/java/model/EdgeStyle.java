@@ -17,32 +17,36 @@ public class EdgeStyle implements IStyle {
 		return thickness;
 	}
 	
-	public void setThickness(float thickness) {
+	public EdgeStyle setThickness(float thickness) {
 		this.thickness = thickness;
+        return this;
 	}
 	
 	public Color getColor() {
 		return color;
 	}
 	
-	public void setColor(Color color) {
+	public EdgeStyle setColor(Color color) {
 		this.color = color;
+        return this;
 	}
 	
 	public Color getTextColor() {
 		return textColor;
 	}
 	
-	public void setTextColor(Color textColor) {
+	public EdgeStyle setTextColor(Color textColor) {
 		this.textColor = textColor;
+        return this;
 	}
 	
 	public Font getFont() {
 		return font;
 	}
 	
-	public void setFont(Font font) {
+	public EdgeStyle setFont(Font font) {
 		this.font = font;
+        return this;
 	}
 	
 	public LineStyle getStyle() {
