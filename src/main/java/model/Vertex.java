@@ -4,21 +4,30 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.Collection;
 
+import main.App;
 import org.lwjgl.util.vector.Vector3f;
 
 import view.VertexView;
 
 public class Vertex {
-	
+
+    private App app;
 	private Collection<Edge> edges;
 	private VertexView mainView;
 	private VertexStyle style;
 	private Graph graph;
 	private Vector3f position;
 	private String label;
-	
-	
-	public VertexView getMainView() {
+
+    public Vertex(){}
+
+    public Vertex(Vector3f position, App app) {
+        this.position = position;
+        mainView = new VertexView(this, app);
+    }
+
+
+    public VertexView getMainView() {
 		return mainView;
 	}
 
