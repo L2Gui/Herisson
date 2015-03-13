@@ -13,7 +13,7 @@ public class TabbedGraph extends JTabbedPane {
     private GraphCanvas canvas = null;
     private int index=0;
 
-    private Vector<Graph> models= new Vector<>();
+    private Vector<Graph> models= new Vector<Graph>();
 
     /**
      * Constructeur de TabbedGraph. Prend un canvas en paramètre
