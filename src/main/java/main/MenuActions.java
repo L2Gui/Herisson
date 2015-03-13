@@ -6,11 +6,13 @@ import java.awt.event.KeyEvent;
 
 import main.MenuAction;
 
-public class MenuActions {
+public final class MenuActions {
+
+    private MenuActions(){}
     /**
      * Nouveau Fichier
      */
-    public static MenuAction newFile = new MenuAction("Nouveau fichier", "res/file16.png", KeyEvent.VK_N, 0) {
+    public static MenuAction newFile = new MenuAction("Nouveau Graphe", "res/file16.png", KeyEvent.VK_N, 0) {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Nouveau fichier ("+e.getSource().getClass().getName()+")");

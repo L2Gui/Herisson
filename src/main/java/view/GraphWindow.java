@@ -1,6 +1,7 @@
 package view;
 
 import main.MenuActions;
+import model.Graph;
 import model.IColorAlgorythm;
 import model.IDispoAlgorythm;
 import model.ISizeAlgorythm;
@@ -22,8 +23,9 @@ public class GraphWindow extends JFrame {
     private String title;
     private Dimension size;
     private JPanel contentPane;
+    private TabbedGraph tabs;
 
-    public GraphWindow(String title, Dimension size) {
+    public GraphWindow(String title, Dimension size, GraphCanvas canvas) {
         super(title);
         this.title = title;
         this.size = size;
@@ -42,8 +44,12 @@ public class GraphWindow extends JFrame {
 
         super.setJMenuBar(generateMenuBar(null, null, null));
         super.add(generateToolBar(null, null, null));
-        super.getContentPane().setLayout(new BorderLayout());
-        super.getContentPane().add(generateToolBar(null, null, null), BorderLayout.NORTH);
+        this.contentPane.setLayout(new BorderLayout());
+        this.contentPane.add(generateToolBar(null, null, null), BorderLayout.NORTH);
+        tabs = new TabbedGraph(canvas);
+        this.contentPane.add(tabs);
+
+
     }
 
     /**
@@ -221,5 +227,9 @@ public class GraphWindow extends JFrame {
             }
         }
         return toolBar;
+    }
+
+    public void addGraph(Graph g){
+        tabs.addGraphTab(g);
     }
 }
