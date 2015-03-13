@@ -1,9 +1,6 @@
 package main;
 
-import controller.CommandHandler;
-import controller.IOAlgorithm;
-import controller.IOHandler;
-import controller.KeyboardHandler;
+import controller.*;
 import model.Graph;
 import view.GraphCanvas;
 import view.GraphWindow;
@@ -13,12 +10,13 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
 public class App {
 	private GraphWindow frame;
 	private IOHandler ioHandler;
+    private CommandContext context;
 	private CommandHandler commandHandler;
 	private KeyboardHandler keyboardHandler;
+    private Collection<ICommand> commands;
 	private Collection<IOAlgorithm> ioAlgorithms;
 	private Collection<IVisuAlgorythm> visuAlgorithms;
 	private Collection<Graph> graphs;

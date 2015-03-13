@@ -181,7 +181,7 @@ public class GraphWindow extends JFrame {
         toolBar.setName("Raccourcis");
 
         toolBar.add(MenuActions.newFile);
-        //Aussi étonnant que ça puisse parraître, swing récupère de base l'attribut SMALL_ICON... Maaaaaaagic !
+        //Aussi étonnant que ça puisse paraître, swing récupère de base l'attribut SMALL_ICON... Maaaaaaagic !
         //JButton button = (JButton)toolBar.getComponentAtIndex(0);
         //button.setIcon((ImageIcon)MenuActions.newFile.getValue(MenuAction.SMALL_ICON));
         //button.setFocusPainted(false);
@@ -216,7 +216,7 @@ public class GraphWindow extends JFrame {
             try {
                 button = (JButton) c;
                 button.setFocusPainted(false);
-            }catch (ClassCastException e){
+            }catch (ClassCastException e) {
                 //Ne rien faire, on évite ainsi les JToolBarSeparators qui sont incastables en JButton
             }
         }

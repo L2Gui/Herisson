@@ -25,12 +25,12 @@ public class Graph {
 
     public Graph()
     {
-        name ="";
+        name = "";
         filename = "";
         isOriented = false;
         edges = new ArrayList<Edge>();
         vertexs = new ArrayList<Vertex>();
-        styleManager=new StyleManager();
+        styleManager = new StyleManager();
     }
 	
 	// Fonctions d'ajout dans les collections edges et vertexs.
