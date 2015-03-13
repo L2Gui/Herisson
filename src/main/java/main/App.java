@@ -45,8 +45,8 @@ public class App {
         this.keyboardHandler.setCommandHandler(commandHandler);
         this.canvas = new GraphCanvas();
 
-        frame = new GraphWindow("Hérisson", new Dimension(600, 600));
-        this.frame.getContentPane().add(this.canvas);
+        frame = new GraphWindow("Hérisson", new Dimension(600, 600), this.canvas);
+        frame.addGraph(new Graph());
         this.frame.addKeyListener(this.keyboardHandler);
 		this.frame.setVisible(true);
     }
