@@ -44,7 +44,11 @@ public class App {
         this.canvas = new GraphCanvas();
 
         frame = new GraphWindow("Hérisson", new Dimension(600, 600), this.canvas);
+
+        /* deux graphes bidon juste pour voir les onglets */
         frame.addGraph(new Graph());
+        frame.addGraph(new Graph());
+
         this.frame.addKeyListener(this.keyboardHandler);
 		this.frame.setVisible(true);
     }
