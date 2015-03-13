@@ -111,9 +111,11 @@ public class GraphWindow extends JFrame {
         edit.setMnemonic('E');
 
         JMenu newElem = new JMenu("Nouveau");
+        newElem.setMnemonic('N');
         newElem.add(MenuActions.newVertex);
         newElem.add(MenuActions.newEdge);
         JMenu editElem = new JMenu("Modifier");
+        newElem.setMnemonic('M');
         editElem.add(MenuActions.editVertex);
         editElem.add(MenuActions.editEdge);
 
@@ -129,10 +131,10 @@ public class GraphWindow extends JFrame {
         menu.add(edit);
 
         JMenu display = new JMenu("Affichage");
-        JMenuItem zoomIn = new JMenuItem("Zoom +");
-        JMenuItem zoomOut = new JMenuItem("Zoom -");
+        display.setMnemonic('A');
 
         JMenu disposition = new JMenu("Disposition");
+        disposition.setMnemonic('D');
         ButtonGroup dispositionGroup = new ButtonGroup();
         // on essaie d'ajouter les éléments de la liste
         try{
@@ -152,6 +154,7 @@ public class GraphWindow extends JFrame {
         disposition.add(dispositionPerso);
 
         JMenu color = new JMenu("Couleur des noeuds");
+        color.setMnemonic('C');
         ButtonGroup colorGroup = new ButtonGroup();
         // on essaie d'ajouter les éléments de la liste
         try{
@@ -171,6 +174,7 @@ public class GraphWindow extends JFrame {
         color.add(colorPerso);
 
         JMenu size = new JMenu("Taille des noeuds");
+        size.setMnemonic('T');
         ButtonGroup sizeGroup = new ButtonGroup();
         // on essaie d'ajouter les éléments de la liste
         try{
@@ -189,8 +193,8 @@ public class GraphWindow extends JFrame {
         sizePerso.setSelected(true);
         size.add(sizePerso);
 
-        display.add(zoomIn);
-        display.add(zoomOut);
+        display.add(MenuActions.zoomPlus);
+        display.add(MenuActions.zoomMoins);
         display.add(disposition);
         display.add(color);
         display.add(size);
@@ -198,6 +202,7 @@ public class GraphWindow extends JFrame {
         menu.add(display);
 
         JMenu help = new JMenu("Aide");
+        help.setMnemonic('h');
         help.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -252,6 +257,9 @@ public class GraphWindow extends JFrame {
         toolBar.add(MenuActions.remove);
 
         toolBar.addSeparator();
+
+        toolBar.add(MenuActions.zoomPlus);
+        toolBar.add(MenuActions.zoomMoins);
 
         JButton button;
         for(Component c : toolBar.getComponents()){

@@ -2,6 +2,7 @@ package main;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 public abstract class MenuAction extends AbstractAction {
     /**
@@ -18,17 +19,33 @@ public abstract class MenuAction extends AbstractAction {
             putValue(SMALL_ICON, smallIcon);
         }
         if(mnemonicKey!=null) {
-
-            putValue(SHORT_DESCRIPTION, name+" (alt+"+(char)mnemonicKey.byteValue()+")");
-            putValue(LONG_DESCRIPTION, name+" (alt+"+(char)mnemonicKey.byteValue()+")");
-            if(mnemonicIndex==null) {
-                putValue(Action.DISPLAYED_MNEMONIC_INDEX_KEY, mnemonicIndex);
+            switch (mnemonicKey){
+                case KeyEvent.VK_ADD:
+                    putValue(SHORT_DESCRIPTION, name+" (alt + '"+"+"+"')");
+                    putValue(LONG_DESCRIPTION, name+" (alt + '"+"+"+"')");
+                    putValue(Action.DISPLAYED_MNEMONIC_INDEX_KEY, mnemonicIndex);
+                    break;
+                case KeyEvent.VK_SUBTRACT:
+                    putValue(SHORT_DESCRIPTION, name+" (alt + '"+"-"+"')");
+                    putValue(LONG_DESCRIPTION, name+" (alt + '"+"-"+"')");
+                    putValue(Action.DISPLAYED_MNEMONIC_INDEX_KEY, mnemonicIndex);
+                    break;
+                default:
+                    putValue(SHORT_DESCRIPTION, name+" (alt+"+(char)mnemonicKey.byteValue()+")");
+                    putValue(LONG_DESCRIPTION, name+" (alt+"+(char)mnemonicKey.byteValue()+")");
+                    if(mnemonicIndex==null) {
+                        putValue(Action.DISPLAYED_MNEMONIC_INDEX_KEY, mnemonicIndex);
+                    }
+                    break;
             }
-            putValue(MNEMONIC_KEY, mnemonicKey);   // Alt+?
+
         }else{
             putValue(LONG_DESCRIPTION, name);
             putValue(SHORT_DESCRIPTION, name);
         }
+
+        putValue(MNEMONIC_KEY, mnemonicKey);   // Alt + valeur
+
         putValue(NAME, name);
     }
     @Override

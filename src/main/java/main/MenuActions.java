@@ -135,4 +135,23 @@ public final class MenuActions {
             System.out.println("restaurer ("+e.getSource().getClass().getName()+")");
         }
     };
+
+    /**
+     * Zoom +
+     */
+    public static MenuAction zoomPlus = new MenuAction("Zoom +", "res/zoom.png", KeyEvent.VK_ADD, 5) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("zoom ("+e.getSource().getClass().getName()+")");
+        }
+    };
+    /**
+     * Zoom -
+     */
+    public static MenuAction zoomMoins = new MenuAction("Zoom -", "res/dezoom.png", KeyEvent.VK_SUBTRACT, 5) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Dezoom ("+e.getSource().getClass().getName()+")");
+        }
+    };
 }
