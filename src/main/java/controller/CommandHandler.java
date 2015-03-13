@@ -2,13 +2,15 @@ package controller;
 
 import java.util.Stack;
 
-public class CommandHandler {	
+public class CommandHandler {
 	private Stack<ICommand> commandStack;
 	private Stack<ICommand> undoStack;
+    private CommandContext context;
 	
-	public CommandHandler() {
+	public CommandHandler(CommandContext context) {
 		this.commandStack = new Stack<ICommand>();
 		this.undoStack = new Stack<ICommand>();
+        this.context = context;
 	}
 	
 	public void undo() {
@@ -31,7 +33,8 @@ public class CommandHandler {
 		this.commandStack.push(command);
 	}
 	
-	public void executeCommand(ICommand command) {
+	public void executeCommand(Command command) {
+        command.setContext(context);
 		command.execute();
 		this.commandStack.push(command);
 		
