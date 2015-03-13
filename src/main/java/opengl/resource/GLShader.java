@@ -44,8 +44,8 @@ public class GLShader implements IGLResource {
 			this.vertexPath = "resource/shader/" + this.vertexPath;
 			this.fragmentPath = "resource/shader/" + this.fragmentPath;
 		} else {
-			this.vertexPath = "resource/shader/1.2" + this.vertexPath;
-			this.fragmentPath = "resource/shader/1.2" + this.fragmentPath;
+			this.vertexPath = "resource/shader/1.2/" + this.vertexPath;
+			this.fragmentPath = "resource/shader/1.2/" + this.fragmentPath;
 		}
 		
 		this.programv = createShader(this.vertexPath, GL_VERTEX_SHADER);
