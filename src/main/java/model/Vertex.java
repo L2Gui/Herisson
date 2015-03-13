@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import main.App;
+import opengl.resource.GLShader;
+import opengl.resource.object.mesh.GLColoredMesh;
+import opengl.resource.object.mesh.GLMesh;
 import org.lwjgl.util.vector.Vector3f;
 
 import view.VertexView;
@@ -17,6 +20,8 @@ public class Vertex {
 	private VertexView mainView;
 	private VertexStyle style;
 	private Graph graph;
+    private GLColoredMesh mesh;
+    private GLShader shader;
 	private Vector3f position;
 	private String label;
 
@@ -32,9 +37,11 @@ public class Vertex {
     }
 
 
-    public Vertex(Vector3f position) {
+    public Vertex(Vector3f position, GLColoredMesh mesh, GLShader shader) {
         this.position = position;
-        mainView = new VertexView();
+        this.mesh = mesh;
+        this.shader = shader;
+        mainView = new VertexView(this, mesh, shader);
     }
 
 
