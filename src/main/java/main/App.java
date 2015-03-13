@@ -1,16 +1,17 @@
 package main;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.*;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
 
 import model.*;
 import controller.CommandHandler;
@@ -23,22 +24,24 @@ import opengl.resource.object.camera.IGLCamera;
 import opengl.utils.GLRay;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import view.GraphCanvas;
+import view.GraphWindow;
 import view.IVisuAlgorythm;
 
 
 public class App {
-	private JFrame frame;
+	private GraphWindow frame;
 	private IOHandler ioHandler;
 	private CommandHandler commandHandler;
 	private KeyboardHandler keyboardHandler;
 	private Collection<IOAlgorithm> ioAlgorithms;
 	private Collection<IVisuAlgorythm> visuAlgorithms;
-	//private Collection<Graph> graphs; //C
-    private Graph graph;
+	private Collection<Graph> graphs;
+    private Graph currentGraph;
 
-    private IGLCamera camera; //C
-    private GLCanvas canvas; //C
-    private float distance; //C
+    private IGLCamera camera;
+    private GraphCanvas canvas;
+
 
 
     public static void main(String args[]) {
@@ -52,94 +55,24 @@ public class App {
     }
     
     public void run() throws Exception {
-        createWindow();
         this.ioHandler = new IOHandler();
         this.commandHandler = new CommandHandler();
         this.keyboardHandler = new KeyboardHandler();
         this.ioAlgorithms = new ArrayList<IOAlgorithm>();
         this.visuAlgorithms = new ArrayList<IVisuAlgorythm>();
-        //this.graphs = new ArrayList<Graph>();//C
-        this.graph = new Graph();//C
-
-
-        //this.mesh = new GLColoredMesh();//C
-        //this.drawableObject = new GLDrawableObject();//C
-        this.camera = new GLPerspectiveCamera(70.0f, 0.01f, 100.0f);//C*/
-        //translation = new Vector3f(0.0f, 0.0f, - distance);
-        //camera.translate(translation);
-        //camera.setPosition(translation);
+        this.graphs = new ArrayList<Graph>();
+        this.currentGraph = new Graph();
 
         this.keyboardHandler.setCommandHandler(commandHandler);
+        this.canvas = new GraphCanvas();
 
-        canvas.setCamera(camera);
-
-        //distance = 5.0f;
-        //translation = new Vector3f(0.0f, 0.0f, - distance);
-
-
-
-        canvas.addMouseListener(new MouseListener(){ //C
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                //Empty
-            }
-
-            @Override
-            public void mousePressed(MouseEvent arg0) {
-                if (arg0.getButton() == MouseEvent.BUTTON1) {
-                    App.this.createObject(arg0.getX(), arg0.getY(), distance);
-                }
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                //Empty
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                //Empty
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                //Empty
-            }
-        });
-
-        /*for (Vertex vertex : graph.getVertexs())
-            vertex.getMainView().paint();
-        */
+        createWindow();
         this.frame.addKeyListener(this.keyboardHandler);
 		this.frame.setVisible(true);
     }
 
-    private void createObject(int x, int y, float distance) { //C
-
-        GLRay ray = App.this.camera.getCursorRay(new Vector2f(x, y));
-        Vector3f position = Vector3f.add(ray.getPosition(), (Vector3f) ray.getDirection().scale(distance), null);
-
-        graph.addVertex(new Vertex(position));
-
-
-
-        /*y = App.this.canvas.getHeight() - y;
-        GLRay ray = App.this.camera.getCursorRay(new Vector2f(x, y));
-        Vector3f position = Vector3f.add(ray.getPosition(), (Vector3f) ray.getDirection().scale(-distance), null); //important
-
-
-
-        this.camera.setPosition(position);*/
-    }
-
-
-
-
-
-
     private void createWindow() throws Exception {
-    	frame = new JFrame("PT_Graphe_Hérisson");
-    	frame.setSize(600, 600);
+    	frame = new GraphWindow("PT_Graphe_Hérisson", new Dimension(600, 600));
     	frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     	frame.setLocationByPlatform(true);
         try {
@@ -266,12 +199,8 @@ public class App {
 			
 		menu.add(display);
 		
-		
-		
-		
-		
 		JMenu help = new JMenu("Aide");
-		help.addMouseListener(new MouseListener() {
+		help.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mousePressed(MouseEvent arg0) {
@@ -282,23 +211,6 @@ public class App {
 					System.err.println("Erreur ouverture site web");
 					e.printStackTrace();
 				}
-			}
-			
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				//Empty
-			}
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				//Empty
-			}
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				//Empty
-			}
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				//Empty
 			}
 		});
 		

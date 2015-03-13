@@ -78,6 +78,7 @@ public abstract class GLCanvas extends AWTGLCanvas {
         this.mutex.unlock();
 
         try {
+            // Double buffering ici !
             super.swapBuffers();
         } catch (LWJGLException e) {
             e.printStackTrace();
