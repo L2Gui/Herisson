@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import controller.Command;
+import controller.CommandContext;
 import org.junit.Test;
 
 import controller.CommandHandler;
@@ -10,7 +12,7 @@ public class CommandTest {
 	
 	@Test
 	public void CommandHandlerTest() {
-		ICommand command1 = new ICommand() {
+		Command command1 = new Command() {
 			@Override
 			public void execute() {
 				CommandTest.this.x += 7;
@@ -22,7 +24,7 @@ public class CommandTest {
 			}
 		};
 		
-		ICommand command2 = new ICommand() {
+		Command command2 = new Command() {
 			@Override
 			public void execute() {
 				CommandTest.this.x += 9;
@@ -35,7 +37,8 @@ public class CommandTest {
 		};
 
 		this.x = 0;
-		CommandHandler handler = new CommandHandler();
+        CommandContext context = new CommandContext();
+		CommandHandler handler = new CommandHandler(context);
 		
 		handler.executeCommand(command1);
 		assertEquals(7, this.x);

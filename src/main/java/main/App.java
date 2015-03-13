@@ -34,7 +34,8 @@ public class App {
     
     public void run() throws Exception {
         this.ioHandler = new IOHandler();
-        this.commandHandler = new CommandHandler();
+        this.context = new CommandContext();
+        this.commandHandler = new CommandHandler(context);
         this.keyboardHandler = new KeyboardHandler();
         this.ioAlgorithms = new ArrayList<IOAlgorithm>();
         this.visuAlgorithms = new ArrayList<IVisuAlgorythm>();

@@ -1,5 +1,6 @@
 package view;
 
+import controller.Command;
 import opengl.resource.object.drawable.GLDrawableObject;
 import opengl.resource.object.drawable.IGLDrawable;
 import opengl.resource.object.mesh.GLColoredMesh;
@@ -42,7 +43,7 @@ public abstract class ViewElement extends GLDrawableObject implements ICommandSe
 		this.commandHandler = commandHandler;
 	}
 	
-	protected void sendCommand(ICommand command) {
+	protected void sendCommand(Command command) {
 		this.commandHandler.executeCommand(command);
 	}
 }
