@@ -5,13 +5,15 @@ import model.Graph;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.util.Vector;
 
 
 public class TabbedGraph extends JTabbedPane {
-    GraphCanvas canvas = null;
+    private GraphCanvas canvas = null;
+    private int index=0;
 
-    Vector<Graph> models= new Vector<Graph>();
+    private Vector<Graph> models= new Vector<Graph>();
 
     /**
      * Constructeur de TabbedGraph. Prend un canvas en paramètre
@@ -23,7 +25,12 @@ public class TabbedGraph extends JTabbedPane {
         this.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                canvas.setGraph(models.elementAt(getSelectedIndex()));
+                if(getSelectedIndex()!=-1) {
+                    canvas.setGraph(models.elementAt(getSelectedIndex()));
+                    setComponentAt(index, new JPanel());
+                    setComponentAt(getSelectedIndex(), getEncapsulatedCanvas());
+                    index = getSelectedIndex();
+                }
             }
         });
     }
@@ -34,10 +41,20 @@ public class TabbedGraph extends JTabbedPane {
      * @param g le graphe à ajouter
      */
     public void addGraphTab(Graph g) {
-        JPanel p = new JPanel();
-        p.add(canvas);
         models.add(g);
+        super.addTab(g.getName(), getEncapsulatedCanvas());
+        setSelectedIndex(getTabCount()-1);
+        index=getSelectedIndex();
+    }
 
-        super.addTab(g.getName(), p);
+    /**
+     *
+     * @return le canvas encapsulé dans un JPanel
+     */
+    private JPanel getEncapsulatedCanvas(){
+        JPanel p = new JPanel();
+        p.setLayout(new BorderLayout());
+        p.add(canvas, BorderLayout.CENTER);
+        return p;
     }
 }

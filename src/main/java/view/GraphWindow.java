@@ -25,6 +25,13 @@ public class GraphWindow extends JFrame {
     private JPanel contentPane;
     private TabbedGraph tabs;
 
+
+    /**
+     *
+     * @param title
+     * @param size
+     * @param canvas
+     */
     public GraphWindow(String title, Dimension size, GraphCanvas canvas) {
         super(title);
         this.title = title;
@@ -41,13 +48,42 @@ public class GraphWindow extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        /**
+         * Hypothétique autre solution (je la laisse juste le temps que vous la voyez)
+         */
+        /********* GraphWindow *******************************
+         * ------------Barre menu----------------------------*
+         *                                                   *
+         *                                                   *
+         *   *******************ContentPane**************    *
+         *   *                                          *    *
+         *   *   *************************************  *    *
+         *   *   *           toolbarre               *  *    *
+         *   *   *************************************  *    *
+         *   *                                          *    *
+         *   *   *************JPANEL******************  *    *
+         *   *   *                                   *  *    *
+         *   *   *   ******************************  *  *    *
+         *   *   *   *        onglets             *  *  *    *
+         *   *   *   ******************************  *  *    *
+         *   *   *                                   *  *    *
+         *   *   *   ******************************  *  *    *
+         *   *   *   *                            *  *  *    *
+         *   *   *   *       CANVAS               *  *  *    *
+         *   *   *   *                            *  *  *    *
+         *   *   *   ******************************  *  *    *
+         *   *   *                                   *  *    *
+         *   *   *************************************  *    *
+         *   *                                          *    *
+         *   ********************************************    *
+         *                                                   *
+         * ***************************************************/
         super.setJMenuBar(generateMenuBar(null, null, null));
         super.add(generateToolBar(null, null, null));
         this.contentPane.setLayout(new BorderLayout());
         this.contentPane.add(generateToolBar(null, null, null), BorderLayout.NORTH);
-        tabs = new TabbedGraph(canvas);
-        this.contentPane.add(tabs);
+        tabs=new TabbedGraph(canvas);
+        this.contentPane.add(tabs, BorderLayout.CENTER);
 
 
     }
