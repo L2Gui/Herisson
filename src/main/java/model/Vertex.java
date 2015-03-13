@@ -14,8 +14,6 @@ import org.lwjgl.util.vector.Vector3f;
 import view.VertexView;
 
 public class Vertex {
-
-    private App app;
 	private Collection<Edge> edges;
 	private VertexView mainView;
 	private VertexStyle style;
@@ -62,13 +60,17 @@ public class Vertex {
 	}
 
 	
-	public void addEdge(Edge edge)
-	{
-		if (!edges.contains(edge))
-		{
+	public void addEdge(Edge edge) {
+		if (!edges.contains(edge)) {
 			edges.add(edge);
 		}
 	}
+
+    public void removeEdge(Edge edge) {
+        if (edges.contains(edge)) {
+            edges.remove(edge);
+        }
+    }
 	
 	/**
 	 * 
@@ -198,9 +200,5 @@ public class Vertex {
 
     public Graph getGraph() {
         return graph;
-    }
-
-    public void setGraph(Graph graph) {
-        this.graph = graph;
     }
 }

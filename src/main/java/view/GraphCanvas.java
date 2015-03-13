@@ -43,13 +43,14 @@ public class GraphCanvas extends GLCanvas {
     }
 
     public void setGraph(Graph graph) {
+        super.lockDraw();
         this.graph = graph;
         this.onGraphChange();
+        super.unlockDraw();
     }
 
     @Override
     public void init() {
-
         this.mesh = new GLColoredMesh();
         this.shader = new GLShader("color3D.vert", "color.frag");
 
@@ -111,6 +112,4 @@ public class GraphCanvas extends GLCanvas {
 
         this.graph.addVertex(new Vertex(position, mesh, shader));
     }
-
-
 }

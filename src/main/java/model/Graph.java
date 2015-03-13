@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 
 public class Graph {
-
     StyleManager styleManager;
 	private String name;
 	private String filename;
@@ -14,14 +13,6 @@ public class Graph {
 	private Collection<Vertex> vertexs;
 
     private boolean isOriented;
-
-    public boolean isOriented() {
-        return isOriented;
-    }
-
-    public void setOriented(boolean isOriented) {
-        this.isOriented = isOriented;
-    }
 
     public Graph()
     {
@@ -37,7 +28,7 @@ public class Graph {
 	
 	/**
 	 * 
-	 * @param edge : Correspond � l'�l�ment � ajouter � this.edges (Collection<Edge>)
+	 * @param edge : Correspond à l'élément à ajouter à this.edges (Collection<Edge>)
 	 */
 	public void addEdge(Edge edge){
 		/* Surrement � modifier, neanmoins on doit prendre en compte que 
@@ -135,7 +126,7 @@ public class Graph {
 	 * 
 	 * @return this.vertexs (Collection<Vertex>)
 	 */
-	public Collection<Vertex> getVertexs() {
+	public Collection<Vertex> getVertices() {
 		return vertexs;
 	}
 	

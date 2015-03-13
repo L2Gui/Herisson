@@ -1,7 +1,6 @@
 package controller.commands;
 
 import controller.Command;
-import controller.CommandContext;
 import model.Vertex;
 
 /**
@@ -10,16 +9,17 @@ import model.Vertex;
 public class CreateVertex extends Command {
     private Vertex vertex;
 
+    public CreateVertex() {
+        this.vertex = new Vertex();
+    }
+
     @Override
     public void execute() {
-        CommandContext context = super.getContext();
-
-
-        vertex = new Vertex();
+        super.getContext().getCurrentGraph().addVertex(this.vertex);
     }
 
     @Override
     public void undo() {
-
+        super.getContext().getCurrentGraph().removeVertex(this.vertex);
     }
 }

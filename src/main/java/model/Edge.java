@@ -8,25 +8,15 @@ import view.EdgeView;
 public class Edge {
 	
 	private Vertex srcVertex;
-	
 	private Vertex dstVertex;
-	
 	private EdgeStyle style;
-	
 	private EdgeView mainView;
-
-
-
     private Graph graph;
 
-
-    public Edge()
-    {
+    public Edge() {
         srcVertex = null;
         dstVertex = null;
-
         style = null;
-
         mainView = null;
     }
 
@@ -36,14 +26,6 @@ public class Edge {
      */
     public Graph getGraph() {
         return graph;
-    }
-
-    /**
-     *
-     * @param graph
-     */
-    public void setGraph(Graph graph) {
-        this.graph = graph;
     }
 		
 	/**
