@@ -35,7 +35,28 @@ public class GLShader implements IGLResource {
 	}
 	public void testCapabilities(){
         ContextCapabilities cp = GLContext.getCapabilities();
-        System.out.println("Shaders: "+cp.GL_AMD_vertex_shader_layer+ " "+cp.GL_AMD_multi_draw_indirect+" "+cp.GL_AMD_sample_positions+" "+cp.GL_AMD_vertex_shader_tessellator+" "+cp.GL_AMD_vertex_shader_viewport_index);
+        System.out.println("Shaders AMD: 1."+ cp.GL_AMD_vertex_shader_layer+ " 2."+
+                                            cp.GL_AMD_multi_draw_indirect+" 3."+
+                                            cp.GL_AMD_sample_positions+" 4."+
+                                            cp.GL_AMD_vertex_shader_tessellator+" 5."+
+                                            cp.GL_AMD_vertex_shader_viewport_index+ " 6."+
+                                            cp.GL_AMD_shader_trinary_minmax+" 7."+
+                                            cp.GL_AMD_shader_atomic_counter_ops+" 8."+
+                                            cp.GL_AMD_shader_stencil_export+" 9."+
+                                            cp.GL_AMD_transform_feedback3_lines_triangles+" 10."+
+                                            cp.GL_AMD_blend_minmax_factor+" 11."+
+                                            cp.GL_AMD_conservative_depth+" 12."+
+                                            cp.GL_AMD_debug_output+ " 13."+
+                                            cp.GL_AMD_depth_clamp_separate+ " 14."+
+                                            cp.GL_AMD_draw_buffers_blend+ " 15."+
+                                            cp.GL_AMD_interleaved_elements+" 16."+
+                                            cp.GL_AMD_pinned_memory+ " 17."+
+                                            cp.GL_AMD_query_buffer_object+ " 18."+
+                                            cp.GL_AMD_seamless_cubemap_per_texture+" 19."+
+                                            cp.GL_AMD_texture_texture4+" 21."+
+                                            cp.GL_AMD_stencil_operation_extended+" 21."+
+                                            cp.GL_AMD_sparse_texture);
+        System.out.println("Intel map texture "+ cp.GL_INTEL_map_texture);
         System.out.println("opengl 44: "+cp.OpenGL44);
         System.out.println("opengl 40: "+cp.OpenGL40);
         System.out.println("opengl 32: "+cp.OpenGL32);
