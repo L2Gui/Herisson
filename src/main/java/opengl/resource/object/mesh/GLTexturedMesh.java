@@ -50,6 +50,6 @@ public class GLTexturedMesh extends GLColoredMesh {
 	@Override
     public void disableVerticesPointer() {
 		super.disableVerticesPointer();
-
+        glDisableVertexAttribArray(this.textureLocation);
 	}
 }

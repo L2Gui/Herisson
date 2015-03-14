@@ -11,6 +11,4 @@ import org.lwjgl.util.vector.Vector3f;
 public interface IGLCamera extends IGLObject {
 	Matrix4f getTransformationMatrix();
 	void updateViewport(float width, float height);
-	GLRay getCursorRay(Vector2f cursorLocation);
-    void lookAt(Vector3f target);
 }
