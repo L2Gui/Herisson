@@ -5,7 +5,7 @@ import opengl.resource.GLShader;
 import opengl.resource.object.GLObjectUsage;
 import opengl.resource.object.camera.GLPerspectiveCamera;
 import opengl.resource.object.camera.IGLCamera;
-import opengl.resource.object.drawable.GLDrawableObject;
+import opengl.resource.object.GLDrawableObject;
 import opengl.resource.object.mesh.GLColoredMesh;
 import opengl.resource.object.mesh.GLTextMesh;
 import opengl.vertex.GLColoredVertex;
@@ -20,7 +20,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class OpenGLApp extends GLCanvas {
     private Lock mutex;

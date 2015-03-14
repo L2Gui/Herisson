@@ -5,15 +5,21 @@ import java.nio.IntBuffer;
 import java.util.List;
 
 import opengl.resource.GLShader;
+import opengl.vertex.GLColoredVertex;
 import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
+import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import opengl.GLHelper;
 import opengl.resource.object.GLObjectUsage;
 import opengl.vertex.GLVertex;
 
-public abstract class GLMesh implements IGLMesh {
+import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
+
+public class GLMesh implements IGLMesh {
 	private GLObjectUsage state;
 	protected List<? extends GLVertex> vertices;
 	private int[] indices;
@@ -22,12 +28,9 @@ public abstract class GLMesh implements IGLMesh {
 	private int iid;
 	private boolean isInitialized;
     private GLShader shader;
-	
-	public GLMesh() {
+    private int positionLocation;
 
-	}
-
-	protected void setupMesh(GLShader shader, List<? extends GLVertex> vertices, int[] indices, GLObjectUsage usage) {
+	public void setup(GLShader shader, List<? extends GLVertex> vertices, int[] indices, GLObjectUsage usage) {
 		this.vertices = vertices;
 		this.state = usage;
 		this.indices = indices;
@@ -71,17 +74,9 @@ public abstract class GLMesh implements IGLMesh {
     }
 
     @Override
-	public void bindVerticesArrayBuffer() {
+	public void bind() {
         GL30.glBindVertexArray(this.vaid);
-    }
-
-    @Override
-    public void bindVerticesBuffer() {
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.vid);
-    }
-
-    @Override
-    public void bindIndicesBuffer() {
         GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, this.iid);
     }
 
@@ -97,8 +92,8 @@ public abstract class GLMesh implements IGLMesh {
 		if (this.vertices.size() > vertices.size()) {
 			System.out.println("Warning: there's less vertices than before: indices could make the app crash");
 		}
-		
-		this.bindVerticesArrayBuffer();
+
+        GL30.glBindVertexArray(this.vaid);
 		
 		FloatBuffer verticesBuffer = BufferUtils.createFloatBuffer(elementCount * vertices.size());
 		
@@ -113,4 +108,30 @@ public abstract class GLMesh implements IGLMesh {
 		
 		this.vertices = vertices;
 	}
+
+    @Override
+    public int getVertexStride() {
+        return GLVertex.stride;
+    }
+
+    @Override
+    public FloatBuffer getVerticesBuffer() {
+        return GLHelper.makeVertexBuffer(this.vertices, GLVertex.elementCount);
+    }
+
+    @Override
+    public void attribVerticesPointer(GLShader shader) {
+        this.positionLocation = shader.getAttribLocation("in_Position");
+        GL20.glVertexAttribPointer(this.positionLocation, GLVertex.positionElementCount, GL11.GL_FLOAT, false, this.getVertexStride(), GLVertex.positionByteOffset);
+    }
+
+    @Override
+    public void enableVerticesPointer() {
+        glEnableVertexAttribArray(this.positionLocation);
+    }
+
+    @Override
+    public void disableVerticesPointer() {
+        glDisableVertexAttribArray(this.positionLocation);
+    }
 }

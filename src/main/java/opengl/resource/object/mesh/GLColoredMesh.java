@@ -11,18 +11,14 @@ import opengl.resource.GLShader;
 import opengl.resource.object.GLObjectUsage;
 import opengl.vertex.GLColoredVertex;
 
+import opengl.vertex.GLVertex;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
 public class GLColoredMesh extends GLMesh {
-	private int positionLocation;
     private int colorLocation;
-
-	public void setup(GLShader shader, List<GLColoredVertex> vertices, int[] indices, GLObjectUsage usage) {
-		super.setupMesh(shader, vertices, indices, usage);
-	}
 	
-	public void updateColoredVertices(List<GLColoredVertex> vertices) {
+	public void updateColoredVertices(List<? extends GLVertex> vertices) {
 		super.updateVertices(vertices, GLColoredVertex.elementCount);
 	}
 	
@@ -38,22 +34,22 @@ public class GLColoredMesh extends GLMesh {
 
 	@Override
     public void attribVerticesPointer(GLShader shader) {
-        this.positionLocation = shader.getAttribLocation("in_Position");
-        this.colorLocation = shader.getAttribLocation("in_Color");
+        super.attribVerticesPointer(shader);
 
-		GL20.glVertexAttribPointer(this.positionLocation, GLColoredVertex.positionElementCount, GL11.GL_FLOAT, false, this.getVertexStride(), GLColoredVertex.positionByteOffset);
+        this.colorLocation = shader.getAttribLocation("in_Color");
 		GL20.glVertexAttribPointer(this.colorLocation, GLColoredVertex.colorElementCount, GL11.GL_FLOAT, false, this.getVertexStride(), GLColoredVertex.colorByteOffset);
 	}
 
 	@Override
     public void enableVerticesPointer() {
-		glEnableVertexAttribArray(this.positionLocation);
+        super.enableVerticesPointer();
     	glEnableVertexAttribArray(this.colorLocation);
 	}
 
 	@Override
     public void disableVerticesPointer() {
+
 		glDisableVertexAttribArray(this.colorLocation);
-    	glDisableVertexAttribArray(this.positionLocation);
+        super.disableVerticesPointer();
 	}
 }

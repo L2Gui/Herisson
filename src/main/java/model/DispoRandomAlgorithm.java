@@ -1,8 +1,7 @@
 package model;
 
-import javafx.util.Pair;
+import org.javatuples.Pair;
 import org.lwjgl.util.vector.Vector3f;
-import utils.MathUtils;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -66,7 +66,7 @@ public class GLTextMesh implements IGLMesh {
 			2, 3, 0
 		};
 		
-		this.texturedMesh.setup(shader, this.textTexture, vertices, indices, usage);
+		this.texturedMesh.setup(shader, vertices, indices, usage);
 	}
 	
 	@Override
@@ -99,23 +99,15 @@ public class GLTextMesh implements IGLMesh {
     }
 
     @Override
-    public void bindVerticesArrayBuffer() {
-        this.texturedMesh.bindVerticesArrayBuffer();
-    }
-
-    @Override
-    public void bindVerticesBuffer() {
-        this.texturedMesh.bindVerticesBuffer();
-    }
-
-    @Override
-    public void bindIndicesBuffer() {
-        this.texturedMesh.bindIndicesBuffer();
+    public void bind() {
+        this.textTexture.bind();
+        this.texturedMesh.bind();
     }
 
     @Override
     public void unbind() {
         this.texturedMesh.unbind();
+        this.textTexture.unbind();
     }
 
     @Override

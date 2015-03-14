@@ -1,9 +1,9 @@
 package model;
 
+import org.javatuples.Pair;
 import org.lwjgl.util.vector.Vector3f;
 
 import java.util.Set;
-import javafx.util.Pair;
 
 public interface IDispoAlgorithm {
     /**
