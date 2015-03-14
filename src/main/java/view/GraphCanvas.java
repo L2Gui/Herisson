@@ -110,6 +110,6 @@ public class GraphCanvas extends GLCanvas {
         GLRay ray = this.camera.getCursorRay(new Vector2f(x, y));
         Vector3f position = Vector3f.add(ray.getPosition(), (Vector3f) ray.getDirection().scale(distance), null);
 
-        this.graph.addVertex(new Vertex(position, mesh, shader));
+        this.graph.addVertex(new Vertex(position, mesh, shader, graph));
     }
 }

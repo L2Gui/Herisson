@@ -5,7 +5,9 @@ import java.util.Collection;
 import java.util.List;
 
 public class Graph {
-    StyleManager styleManager;
+
+    private StyleManager styleManager;
+
 	private String name;
 	private String filename;
 	
@@ -129,6 +131,11 @@ public class Graph {
 	public Collection<Vertex> getVertices() {
 		return vertexs;
 	}
+
+    public StyleManager getStyleManager()
+    {
+        return styleManager;
+    }
 	
 	
 }

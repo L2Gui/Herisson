@@ -9,11 +9,11 @@ import java.util.List;
  */
 public class StyleManager {
 
-    static private List<EdgeStyle> edgeStyles;
-    static private List<VertexStyle> vertexStyles;
+    private List<EdgeStyle> edgeStyles;
+    private List<VertexStyle> vertexStyles;
 
-    EdgeStyle defaultEdgeStyle;
-    VertexStyle defaultVertexStyle;
+    private EdgeStyle defaultEdgeStyle;
+    private VertexStyle defaultVertexStyle;
 
     public StyleManager()
     {

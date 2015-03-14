@@ -23,8 +23,20 @@ public class VertexStyle implements IStyle {
     private int usageCount;
 	
 	VertexStyle(){
-		setVertices(new ArrayList<Vertex>());
+		vertices = new ArrayList<Vertex>();
 	}
+
+    public VertexStyle(VertexStyle vertexStyle){
+        this();
+        this.shape = vertexStyle.shape;
+        this.size = vertexStyle.size;
+        this.borderThickness = vertexStyle.borderThickness;
+        this.backgroundColor = vertexStyle.backgroundColor;
+        this.textColor = vertexStyle.textColor;
+        this.borderColor = vertexStyle.borderColor;
+        this.font = vertexStyle.font;
+        this.usageCount = 0;
+    }
 
 	public VertexShape getShape() {
 		return shape;
@@ -106,5 +118,15 @@ public class VertexStyle implements IStyle {
     @Override
     public void setUsageCount(int count) {
         this.usageCount = count;
+    }
+
+    @Override
+    public void incrementUsageCount() {
+        usageCount++;
+    }
+
+    @Override
+    public void decrementUsageCount() {
+        usageCount--;
     }
 }

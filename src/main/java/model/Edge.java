@@ -16,7 +16,7 @@ public class Edge {
     public Edge() {
         srcVertex = null;
         dstVertex = null;
-        style = null;
+        style = graph.getStyleManager().getDefaultEdgeStyle();
         mainView = null;
     }
 
@@ -115,8 +115,18 @@ public class Edge {
 	 * 
 	 * @param color est la nouvelle valeur de this.style.color
 	 */
-	public void setColor(Color color){
+	public Edge setColor(Color color){
 		//TODO
+        EdgeStyle newStyle = new EdgeStyle(this.style);
+        this.style.decrementUsageCount();
+
+        newStyle.setColor(color);
+        this.style = newStyle;
+        this.style.incrementUsageCount();
+
+        graph.getStyleManager().addStyle(this.style);
+
+        return this;
 	}
 	
 	/**
@@ -131,8 +141,10 @@ public class Edge {
 	 * 
 	 * @param thickness est la nouvelle valeur de this.style.thickness
 	 */
-	public void setThickness(float thickness){
+	public Edge setThickness(float thickness){
 		//TODO
+
+        return this;
 	}
 	
 	/**
@@ -163,8 +175,18 @@ public class Edge {
 	 * 
 	 * @param textColor est la nouvelle valeur de this.style.textColor
 	 */
-	public void setTextColor(Color textColor){
+	public Edge setTextColor(Color textColor){
 		//TODO
+        EdgeStyle newStyle = new EdgeStyle(this.style);
+        this.style.decrementUsageCount();
+
+        newStyle.setTextColor(textColor);
+        this.style = newStyle;
+        this.style.incrementUsageCount();
+
+        graph.getStyleManager().addStyle(this.style);
+
+        return this;
 	}
 	
 	/**
@@ -179,7 +201,17 @@ public class Edge {
 	 * 
 	 * @param font est la nouvelle valeur de this.style.font
 	 */
-	public void setFont(Font font){
+	public Edge setFont(Font font){
 		//TODO
+        EdgeStyle newStyle = new EdgeStyle(this.style);
+        this.style.decrementUsageCount();
+
+        newStyle.setFont(font);
+        this.style = newStyle;
+        this.style.incrementUsageCount();
+
+        graph.getStyleManager().addStyle(this.style);
+
+        return this;
 	}	
 }

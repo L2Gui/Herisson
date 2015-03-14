@@ -12,7 +12,22 @@ public class EdgeStyle implements IStyle {
 	private Font font;
 	private LineStyle style;
     private int usageCount;
-	
+
+    public EdgeStyle()
+    {
+
+    }
+
+    public EdgeStyle(EdgeStyle edgeStyle){
+        this();
+        this.thickness = edgeStyle.thickness;
+        this.color = edgeStyle.color;
+        this.textColor = edgeStyle.textColor;
+        this.font = edgeStyle.font;
+        this.style = edgeStyle.style;
+        usageCount = 0;
+    }
+
 	public float getThickness() {
 		return thickness;
 	}
@@ -65,5 +80,15 @@ public class EdgeStyle implements IStyle {
     @Override
     public void setUsageCount(int count) {
         this.usageCount = count;
+    }
+
+    @Override
+    public void incrementUsageCount() {
+        usageCount++;
+    }
+
+    @Override
+    public void decrementUsageCount() {
+        usageCount--;
     }
 }

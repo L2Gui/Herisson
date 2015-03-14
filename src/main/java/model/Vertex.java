@@ -35,11 +35,20 @@ public class Vertex {
     }
 
 
-    public Vertex(Vector3f position, GLColoredMesh mesh, GLShader shader) {
+    public Vertex(Vector3f position, GLColoredMesh mesh, GLShader shader, Graph graph) {
+        this.graph = graph;
+        this.style = graph.getStyleManager().getDefaultVertexStyle();
+        this.edges = new ArrayList<Edge>();
         this.position = position;
         this.mesh = mesh;
         this.shader = shader;
-        mainView = new VertexView(this, mesh, shader);
+        this.mainView = new VertexView(this, mesh, shader);
+    }
+
+    public Vertex(Graph graph){
+        this();
+        this.graph = graph;
+        this.style = this.graph.getStyleManager().getDefaultVertexStyle();
     }
 
 
@@ -84,8 +93,20 @@ public class Vertex {
 	 * 
 	 * @param thickness est la nouvelle valeur de this.style.borderThickness
 	 */
-	public void setThickness(float thickness){
+	public Vertex setThickness(float thickness){
 		//TODO
+        VertexStyle newStyle = new VertexStyle(this.style);
+        this.style.decrementUsageCount();
+        this.style.getVertices().remove(this);
+
+        newStyle.setBorderThickness(thickness);
+        this.style = newStyle;
+        this.style.incrementUsageCount();
+        this.style.getVertices().add(this);
+
+        graph.getStyleManager().addStyle(this.style);
+
+        return this;
 	}
 	
 	/**
@@ -94,14 +115,26 @@ public class Vertex {
 	 */
 	public float getSize(){
 		return this.style.getSize();
+
 	}
 	
 	/**
 	 * 
 	 * @param size
 	 */
-	public void setSize(float size){
+	public Vertex setSize(float size){
 		//TODO
+        VertexStyle newStyle = new VertexStyle(this.style);
+        this.style.decrementUsageCount();
+        this.style.getVertices().remove(this);
+
+        newStyle.setSize(size);
+        this.style = newStyle;
+        this.style.incrementUsageCount();
+        this.style.getVertices().add(this);
+
+        graph.getStyleManager().addStyle(this.style);
+        return this;
 	}
 	
 	/**
@@ -116,8 +149,20 @@ public class Vertex {
 	 * 
 	 * @param color
 	 */
-	public void setBackgroundColor( Color color){
+	public Vertex setBackgroundColor( Color color){
 		//TODO
+        VertexStyle newStyle = new VertexStyle(this.style);
+        this.style.decrementUsageCount();
+        this.style.getVertices().remove(this);
+
+        newStyle.setBackgroundColor(color);
+        this.style = newStyle;
+        this.style.incrementUsageCount();
+        this.style.getVertices().add(this);
+
+        graph.getStyleManager().addStyle(this.style);
+
+        return this;
 	}
 	
 	/**
@@ -148,8 +193,20 @@ public class Vertex {
 	 * 
 	 * @param textColor est la nouvelle valeur de this.style.textColor
 	 */
-	public void setTextColor(Color textColor){
+	public Vertex setTextColor(Color textColor){
 		//TODO
+        VertexStyle newStyle = new VertexStyle(this.style);
+        this.style.decrementUsageCount();
+        this.style.getVertices().remove(this);
+
+        newStyle.setTextColor(textColor);
+        this.style = newStyle;
+        this.style.incrementUsageCount();
+        this.style.getVertices().add(this);
+
+        graph.getStyleManager().addStyle(this.style);
+
+        return this;
 	}
 	
 	/**
@@ -164,8 +221,20 @@ public class Vertex {
 	 * 
 	 * @param font est la nouvelle valeur de this.style.font
 	 */
-	public void setFont(Font font){
+	public Vertex setFont(Font font){
 		//TODO
+        VertexStyle newStyle = new VertexStyle(this.style);
+        this.style.decrementUsageCount();
+        this.style.getVertices().remove(this);
+
+        newStyle.setFont(font);
+        this.style = newStyle;
+        this.style.incrementUsageCount();
+        this.style.getVertices().add(this);
+
+        graph.getStyleManager().addStyle(this.style);
+
+        return this;
 	}
 	
 	/**
@@ -176,8 +245,19 @@ public class Vertex {
 		return this.style.getBorderColor();
 	}
 	
-	public void setBorderColor(Color color){
+	public Vertex setBorderColor(Color color){
 		//TODO
+        VertexStyle newStyle = new VertexStyle(this.style);
+        this.style.decrementUsageCount();
+        this.style.getVertices().remove(this);
+
+        newStyle.setBorderColor(color);
+        this.style = newStyle;
+        this.style.incrementUsageCount();
+        this.style.getVertices().add(this);
+
+        graph.getStyleManager().addStyle(this.style);
+        return this;
 	}
 	
 	/**
@@ -193,9 +273,19 @@ public class Vertex {
 	 * 
 	 * @param shape
 	 */
-	public void setShape(VertexShape shape)
+	public Vertex setShape(VertexShape shape)
 	{
-		this.style.setShape(shape);
+        VertexStyle newStyle = new VertexStyle(this.style);
+        this.style.decrementUsageCount();
+        this.style.getVertices().remove(this);
+
+        newStyle.setShape(shape);
+        this.style = newStyle;
+        this.style.incrementUsageCount();
+        this.style.getVertices().add(this);
+
+        graph.getStyleManager().addStyle(this.style);
+        return this;
 	}
 
     public Graph getGraph() {
