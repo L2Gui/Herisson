@@ -41,9 +41,9 @@ public class VertexView extends ViewElement {
     }
 
     @Override
-	public void render(Matrix4f projectionViewMatrix)
+	public void render(Matrix4f transformationMatrix)
 	{
-        super.render(projectionViewMatrix);
+        super.render(transformationMatrix);
 
         this.setShader(shader);
         this.setMesh(this.mesh);

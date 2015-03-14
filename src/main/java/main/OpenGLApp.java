@@ -124,9 +124,9 @@ public class OpenGLApp extends GLCanvas {
     }
 
     @Override
-    public void paint(Matrix4f projectionViewMatrix) {
-        this.drawableObject.render(projectionViewMatrix);
-        this.textObject.render(projectionViewMatrix);
+    public void paint(Matrix4f transformationMatrix) {
+        this.drawableObject.render(transformationMatrix);
+        this.textObject.render(transformationMatrix);
     }
 
     private void run() {

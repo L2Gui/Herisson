@@ -1,6 +1,6 @@
 package view;
 
-import main.MenuActions;
+import controller.MenuActions;
 import model.Graph;
 import model.IColorAlgorythm;
 import model.IDispoAlgorythm;

@@ -44,7 +44,7 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
 	}
 	
 	@Override
-	public Matrix4f getProjectionViewMatrix() {
+	public Matrix4f getTransformationMatrix() {
 		return Matrix4f.mul(this.projectionMatrix, this.viewMatrix, null);
 	}
 

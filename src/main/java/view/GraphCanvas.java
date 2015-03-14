@@ -98,7 +98,7 @@ public class GraphCanvas extends GLCanvas {
     }
 
     @Override
-    public void paint(Matrix4f projectionViewMatrix) {
+    public void paint(Matrix4f transformationMatrix) {
 
     }
 

@@ -1,10 +1,7 @@
-package main;
+package controller;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-
-import main.MenuAction;
 
 public final class MenuActions {
 

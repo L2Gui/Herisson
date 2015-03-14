@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
+import controller.KeyAction;
+import controller.KeyBinding;
 import oldOpenGL.*;
 import oldOpenGL.resource.object.camera.*;
 import oldOpenGL.resource.object.drawable.GLColoredObject;
@@ -30,7 +32,6 @@ import org.lwjgl.util.vector.Quaternion;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
-import utils.MathUtils;
 import utils.QuaternionUtils;
 
 public class OpenGLGraphic {

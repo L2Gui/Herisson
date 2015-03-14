@@ -56,12 +56,12 @@ public class GLDrawableObject extends GLObject implements IGLDrawable {
     }
 
     @Override
-    public void render(Matrix4f projectionViewMatrix) {
+    public void render(Matrix4f transformationMatrix) {
         this.shader.bind();
 
         FloatBuffer matrix44Buffer = BufferUtils.createFloatBuffer(16);
 
-        Matrix4f transformMatrix = Matrix4f.mul(projectionViewMatrix, super.getModelMatrix(), null);
+        Matrix4f transformMatrix = Matrix4f.mul(transformationMatrix, super.getModelMatrix(), null);
         transformMatrix.store(matrix44Buffer);
         matrix44Buffer.flip();
         GL20.glUniformMatrix4(this.shader.getUniform("transformMatrix"), false, matrix44Buffer);

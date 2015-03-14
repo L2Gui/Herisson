@@ -1,4 +1,4 @@
-package main;
+package controller;
 
 public class KeyBinding {
 	private boolean state = false;

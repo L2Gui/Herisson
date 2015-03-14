@@ -9,7 +9,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 public interface IGLCamera extends IGLObject {
-	Matrix4f getProjectionViewMatrix();
+	Matrix4f getTransformationMatrix();
 	void updateViewport(float width, float height);
 	GLRay getCursorRay(Vector2f cursorLocation);
     void lookAt(Vector3f target);

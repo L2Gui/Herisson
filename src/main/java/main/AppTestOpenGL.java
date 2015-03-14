@@ -90,7 +90,7 @@ public class AppTestOpenGL extends GLCanvas {
     }
 
     @Override
-    public void paint(Matrix4f projectionViewMatrix) {
-        this.vertexView.render(projectionViewMatrix);
+    public void paint(Matrix4f transformationMatrix) {
+        this.vertexView.render(transformationMatrix);
     }
 }

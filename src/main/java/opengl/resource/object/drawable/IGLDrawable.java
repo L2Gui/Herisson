@@ -5,7 +5,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 public interface IGLDrawable {
-	void render(Matrix4f projectionViewMatrix);
+	void render(Matrix4f transformationMatrix);
 
     /**
      * Retourne les facteurs d'homothétie de l'objet

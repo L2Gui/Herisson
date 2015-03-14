@@ -2,23 +2,15 @@ package opengl;
 
 import java.awt.*;
 import java.awt.event.ComponentEvent;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.TreeMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import opengl.resource.GLShader;
-import opengl.resource.IGLResource;
 import opengl.resource.object.camera.IGLCamera;
-import opengl.resource.object.drawable.IGLDrawable;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.AWTGLCanvas;
 import org.lwjgl.opengl.GL11;
 
-import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
 import org.lwjgl.util.vector.Matrix4f;
 
 public abstract class GLCanvas extends AWTGLCanvas {
@@ -28,7 +20,7 @@ public abstract class GLCanvas extends AWTGLCanvas {
 	private Lock mutex;
 
     public abstract void init();
-    public abstract void paint(Matrix4f projectionViewMatrix);
+    public abstract void paint(Matrix4f transformationMatrix);
 
 	public GLCanvas() throws LWJGLException {
 		super();
@@ -49,10 +41,10 @@ public abstract class GLCanvas extends AWTGLCanvas {
 	
 	private void resizeGLView() {
 		GL11.glViewport(0, 0, getWidth(), getHeight());
-		this.computeProjectionMatrix();
+		this.computeTransformationMatrix();
 	}
 	
-	private void computeProjectionMatrix() {
+	private void computeTransformationMatrix() {
 		if (this.camera != null) {
 			this.camera.updateViewport((float) super.getWidth(), (float) super.getHeight());
 		}
@@ -74,7 +66,11 @@ public abstract class GLCanvas extends AWTGLCanvas {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
         this.mutex.lock();
-        this.paint(this.camera.getProjectionViewMatrix());
+        if (this.camera != null) {
+            this.paint(this.camera.getTransformationMatrix());
+        } else {
+            this.paint(new Matrix4f());
+        }
         this.mutex.unlock();
 
         try {
