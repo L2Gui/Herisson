@@ -1,10 +1,6 @@
 package model;
 
-import com.sun.javafx.geom.*;
-
-import java.awt.Color;
-import java.awt.Font;
-import java.text.CollationElementIterator;
+import java.awt.*;
 
 
 public class EdgeStyle implements IStyle {

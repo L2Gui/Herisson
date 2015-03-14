@@ -1,19 +1,17 @@
 package opengl.resource.object.mesh;
 
-import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
+import opengl.GLHelper;
+import opengl.resource.GLShader;
+import opengl.vertex.GLColoredVertex;
+import opengl.vertex.GLVertex;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
 
 import java.nio.FloatBuffer;
 import java.util.List;
 
-import opengl.GLHelper;
-import opengl.resource.GLShader;
-import opengl.resource.object.GLObjectUsage;
-import opengl.vertex.GLColoredVertex;
-
-import opengl.vertex.GLVertex;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
+import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 
 public class GLColoredMesh extends GLMesh {
     private int colorLocation;

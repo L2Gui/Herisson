@@ -1,27 +1,21 @@
 package oldOpenGL.resource.object.drawable;
 
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import java.util.List;
-
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-import org.lwjgl.opengl.GL15;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
-
 import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
-
 import oldOpenGL.GLHelper;
 import oldOpenGL.resource.GLShader;
 import oldOpenGL.resource.object.GLObject;
 import oldOpenGL.resource.object.GLObjectUsage;
 import oldOpenGL.utils.GLRay;
 import oldOpenGL.vertex.GLVertex;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.*;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
+
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.util.List;
 
 public abstract class GLDrawableObject extends GLObject implements IGLDrawable {
 	protected Mutex mutex;

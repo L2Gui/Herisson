@@ -1,16 +1,15 @@
 package opengl;
 
-import static org.lwjgl.opengl.GL15.glGenBuffers;
+import opengl.vertex.GLVertex;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL15;
+import org.lwjgl.util.vector.Matrix4f;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.Collection;
 
-import opengl.vertex.GLVertex;
-
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL15;
-import org.lwjgl.util.vector.Matrix4f;
+import static org.lwjgl.opengl.GL15.glGenBuffers;
  
 public class GLHelper {
 	 public static IntBuffer makeIntBuffer(int[] ibuf) {

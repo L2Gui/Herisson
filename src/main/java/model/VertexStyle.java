@@ -1,7 +1,6 @@
 package model;
 
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -22,7 +21,7 @@ public class VertexStyle implements IStyle {
 	private Font font;
     private int usageCount;
 	
-	VertexStyle(){
+	public VertexStyle(){
 		vertices = new ArrayList<Vertex>();
         this.shape = VertexShape.SQUARE;
         this.size = 4;

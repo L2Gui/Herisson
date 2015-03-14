@@ -1,38 +1,28 @@
 package main;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+import controller.KeyAction;
+import controller.KeyBinding;
+import oldOpenGL.GLCanvas;
+import oldOpenGL.resource.object.GLObjectUsage;
+import oldOpenGL.resource.object.camera.GLPerspectiveCamera;
+import oldOpenGL.resource.object.camera.IGLCamera;
+import oldOpenGL.resource.object.drawable.GLColoredObject;
+import oldOpenGL.resource.object.drawable.GLTexturedObject;
+import oldOpenGL.resource.object.drawable.IGLDrawable;
+import oldOpenGL.resource.texture.GLFileTexture;
+import oldOpenGL.resource.texture.GLTexture;
+import oldOpenGL.utils.GLRay;
+import oldOpenGL.vertex.GLColoredVertex;
+import oldOpenGL.vertex.GLTexturedVertex;
+import org.lwjgl.util.vector.*;
+import utils.QuaternionUtils;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import javax.swing.Action;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.KeyStroke;
-import javax.swing.WindowConstants;
-
-import controller.KeyAction;
-import controller.KeyBinding;
-import oldOpenGL.*;
-import oldOpenGL.resource.object.camera.*;
-import oldOpenGL.resource.object.drawable.GLColoredObject;
-import oldOpenGL.resource.object.drawable.GLTexturedObject;
-import oldOpenGL.resource.object.drawable.IGLDrawable;
-import oldOpenGL.resource.texture.*;
-import oldOpenGL.resource.object.*;
-
-
-import oldOpenGL.utils.GLRay;
-import oldOpenGL.vertex.GLColoredVertex;
-import oldOpenGL.vertex.GLTexturedVertex;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Quaternion;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
-import utils.QuaternionUtils;
 
 public class OpenGLGraphic {
     private JFrame frame;

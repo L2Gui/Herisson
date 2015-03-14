@@ -1,11 +1,9 @@
-import static org.junit.Assert.*;
-
 import controller.Command;
 import controller.CommandContext;
+import controller.CommandHandler;
 import org.junit.Test;
 
-import controller.CommandHandler;
-import controller.ICommand;
+import static org.junit.Assert.assertEquals;
 
 public class CommandTest {
 	private int x;

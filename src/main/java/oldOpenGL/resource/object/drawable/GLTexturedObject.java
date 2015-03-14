@@ -1,20 +1,19 @@
 package oldOpenGL.resource.object.drawable;
 
-import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
-
-import java.nio.FloatBuffer;
-import java.util.List;
-
 import oldOpenGL.GLHelper;
 import oldOpenGL.resource.GLShader;
 import oldOpenGL.resource.object.GLObjectUsage;
 import oldOpenGL.resource.texture.GLTexture;
 import oldOpenGL.vertex.GLTexturedVertex;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.vector.Matrix4f;
+
+import java.nio.FloatBuffer;
+import java.util.List;
+
+import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 
 public class GLTexturedObject extends GLColoredObject {	
 	private GLTexture texture;

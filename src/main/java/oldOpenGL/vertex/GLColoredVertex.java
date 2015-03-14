@@ -1,9 +1,8 @@
 package oldOpenGL.vertex;
 
-import java.awt.Color;
-
-import oldOpenGL.vertex.*;
 import utils.ArrayUtils;
+
+import java.awt.*;
 
 public class GLColoredVertex extends oldOpenGL.vertex.GLVertex {
 	private Color color;

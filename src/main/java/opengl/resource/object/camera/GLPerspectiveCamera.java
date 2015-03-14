@@ -2,8 +2,10 @@ package opengl.resource.object.camera;
 
 import opengl.resource.object.GLObject;
 import opengl.utils.GLRay;
-
-import org.lwjgl.util.vector.*;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 import utils.MathUtils;
 import utils.QuaternionUtils;
 

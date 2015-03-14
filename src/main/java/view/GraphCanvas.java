@@ -1,20 +1,13 @@
 package view;
 
 import model.Graph;
-import model.Vertex;
 import opengl.GLCanvas;
-import opengl.resource.GLShader;
-import opengl.resource.object.GLObjectUsage;
 import opengl.resource.object.camera.GLPerspectiveCamera;
-import opengl.resource.object.camera.IGLCamera;
-import opengl.resource.object.mesh.GLColoredMesh;
-import opengl.resource.object.mesh.GLMesh;
 import opengl.utils.GLRay;
 import opengl.vertex.GLColoredVertex;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
 
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
