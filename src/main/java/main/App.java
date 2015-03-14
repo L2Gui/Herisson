@@ -1,8 +1,7 @@
 package main;
 
 import controller.*;
-import model.Graph;
-import model.IVisuAlgorithm;
+import model.*;
 import view.GraphCanvas;
 import view.GraphWindow;
 
@@ -18,7 +17,9 @@ public class App {
 	private KeyboardHandler keyboardHandler;
     private Collection<ICommand> commands;
 	private Collection<IOAlgorithm> ioAlgorithms;
-	private Collection<IVisuAlgorithm> visuAlgorithms;
+	private Collection<IDispoAlgorithm> dispoAlgorithms;
+    private Collection<IColorAlgorithm> colorAlgorithms;
+    private Collection<ISizeAlgorithm> sizeAlgorithms;
 	private Collection<Graph> graphs;
     private GraphCanvas canvas;
 
@@ -38,13 +39,20 @@ public class App {
         this.commandHandler = new CommandHandler(context);
         this.keyboardHandler = new KeyboardHandler();
         this.ioAlgorithms = new ArrayList<IOAlgorithm>();
-        this.visuAlgorithms = new ArrayList<IVisuAlgorithm>();
+        this.dispoAlgorithms = new ArrayList<IDispoAlgorithm>();
+        this.colorAlgorithms = new ArrayList<IColorAlgorithm>();
+        this.sizeAlgorithms = new ArrayList<ISizeAlgorithm>();
         this.graphs = new ArrayList<Graph>();
+
+        /** Ajout des algorythmes **/
+        this.dispoAlgorithms.add(new DispoRandomAlgorithm("Disposition aléatoire"));
+
+        /** Fin ajout des algorythmes **/
 
         this.keyboardHandler.setCommandHandler(commandHandler);
         this.canvas = new GraphCanvas();
 
-        frame = new GraphWindow("Hérisson", new Dimension(600, 600), this.canvas);
+        frame = new GraphWindow("Hérisson", new Dimension(600, 600), this.canvas, dispoAlgorithms, colorAlgorithms, sizeAlgorithms);
 
         /* deux graphes bidon juste pour voir les onglets */
         frame.addGraph(new Graph());
