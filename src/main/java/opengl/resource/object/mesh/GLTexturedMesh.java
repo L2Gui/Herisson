@@ -17,6 +17,7 @@ import org.lwjgl.opengl.GL20;
 
 public class GLTexturedMesh extends GLColoredMesh {
 	private GLTexture texture;
+    private int textureLocation;
 	
 	public void setup(GLShader shader, GLTexture texture, List<GLTexturedVertex> vertices, int[] indices, GLObjectUsage usage) {
 		super.setupMesh(shader, vertices, indices, usage);
@@ -45,19 +46,19 @@ public class GLTexturedMesh extends GLColoredMesh {
     public void attribVerticesPointer(GLShader shader) {
 		super.attribVerticesPointer(shader);
 
-        int texture = shader.getAttribLocation("in_TextureCoord");
-		GL20.glVertexAttribPointer(texture, GLTexturedVertex.textureElementCount, GL11.GL_FLOAT, false, this.getVertexStride(), GLTexturedVertex.textureByteOffset);
+        this.textureLocation = shader.getAttribLocation("in_TextureCoord");
+		GL20.glVertexAttribPointer(this.textureLocation, GLTexturedVertex.textureElementCount, GL11.GL_FLOAT, false, this.getVertexStride(), GLTexturedVertex.textureByteOffset);
 	}
 	
 	@Override
     public void enableVerticesPointer() {
 		super.enableVerticesPointer();
-    	glEnableVertexAttribArray(2);
+    	glEnableVertexAttribArray(this.textureLocation);
 	}
 
 	@Override
     public void disableVerticesPointer() {
+        glDisableVertexAttribArray(this.textureLocation);
 		super.disableVerticesPointer();
-    	glDisableVertexAttribArray(0);
 	}
 }
