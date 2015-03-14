@@ -2,9 +2,9 @@ package view;
 
 import controller.MenuActions;
 import model.Graph;
-import model.IColorAlgorythm;
-import model.IDispoAlgorythm;
-import model.ISizeAlgorythm;
+import model.IColorAlgorithm;
+import model.IDispoAlgorithm;
+import model.ISizeAlgorithm;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -95,9 +95,9 @@ public class GraphWindow extends JFrame {
      * @param AlgoSize Collection des algos de taille
      * @return
      */
-    private JMenuBar generateMenuBar(Collection<IDispoAlgorythm> AlgoDispo,
-                                     Collection<IColorAlgorythm> AlgoColor,
-                                     Collection<ISizeAlgorythm> AlgoSize){
+    private JMenuBar generateMenuBar(Collection<IDispoAlgorithm> AlgoDispo,
+                                     Collection<IColorAlgorithm> AlgoColor,
+                                     Collection<ISizeAlgorithm> AlgoSize){
         JMenuBar menu = new JMenuBar();
         JMenu file = new JMenu("Fichier");
         file.setMnemonic('F');
@@ -138,7 +138,7 @@ public class GraphWindow extends JFrame {
         ButtonGroup dispositionGroup = new ButtonGroup();
         // on essaie d'ajouter les éléments de la liste
         try{
-            for (IDispoAlgorythm algo : AlgoDispo) {
+            for (IDispoAlgorithm algo : AlgoDispo) {
                 JRadioButtonMenuItem DispositionRadioBtn = new JRadioButtonMenuItem(algo.getName());
                 dispositionGroup.add(DispositionRadioBtn);
                 //TODO affecter une action au clic sur le bouton
@@ -158,7 +158,7 @@ public class GraphWindow extends JFrame {
         ButtonGroup colorGroup = new ButtonGroup();
         // on essaie d'ajouter les éléments de la liste
         try{
-            for (IColorAlgorythm algo : AlgoColor) {
+            for (IColorAlgorithm algo : AlgoColor) {
                 JRadioButtonMenuItem ColorRadioBtn = new JRadioButtonMenuItem(algo.getName());
                 colorGroup.add(ColorRadioBtn);
                 //TODO affecter une action au clic sur le bouton
@@ -178,7 +178,7 @@ public class GraphWindow extends JFrame {
         ButtonGroup sizeGroup = new ButtonGroup();
         // on essaie d'ajouter les éléments de la liste
         try{
-            for (ISizeAlgorythm algo : AlgoSize) {
+            for (ISizeAlgorithm algo : AlgoSize) {
                 JRadioButtonMenuItem SizeRadioBtn = new JRadioButtonMenuItem(algo.getName());
                 sizeGroup.add(SizeRadioBtn);
                 //TODO affecter une action au clic sur le bouton
@@ -221,9 +221,9 @@ public class GraphWindow extends JFrame {
         return menu;
     }
 
-    private JToolBar generateToolBar(Collection<IDispoAlgorythm> AlgoDispo,
-                                     Collection<IColorAlgorythm> AlgoColor,
-                                     Collection<ISizeAlgorythm> AlgoSize){
+    private JToolBar generateToolBar(Collection<IDispoAlgorithm> AlgoDispo,
+                                     Collection<IColorAlgorithm> AlgoColor,
+                                     Collection<ISizeAlgorithm> AlgoSize){
         JToolBar toolBar = new JToolBar();
         toolBar.setName("Raccourcis");
 

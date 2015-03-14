@@ -2,9 +2,9 @@ package main;
 
 import controller.*;
 import model.Graph;
+import model.IVisuAlgorithm;
 import view.GraphCanvas;
 import view.GraphWindow;
-import model.IVisuAlgorythm;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class App {
 	private KeyboardHandler keyboardHandler;
     private Collection<ICommand> commands;
 	private Collection<IOAlgorithm> ioAlgorithms;
-	private Collection<IVisuAlgorythm> visuAlgorithms;
+	private Collection<IVisuAlgorithm> visuAlgorithms;
 	private Collection<Graph> graphs;
     private GraphCanvas canvas;
 
@@ -38,7 +38,7 @@ public class App {
         this.commandHandler = new CommandHandler(context);
         this.keyboardHandler = new KeyboardHandler();
         this.ioAlgorithms = new ArrayList<IOAlgorithm>();
-        this.visuAlgorithms = new ArrayList<IVisuAlgorythm>();
+        this.visuAlgorithms = new ArrayList<IVisuAlgorithm>();
         this.graphs = new ArrayList<Graph>();
 
         this.keyboardHandler.setCommandHandler(commandHandler);

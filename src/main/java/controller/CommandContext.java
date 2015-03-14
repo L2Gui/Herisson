@@ -2,8 +2,8 @@ package controller;
 
 import model.EdgeStyle;
 import model.Graph;
+import model.IVisuAlgorithm;
 import model.VertexStyle;
-import model.IVisuAlgorythm;
 
 import java.util.Collection;
 
@@ -12,7 +12,7 @@ import java.util.Collection;
  */
 public class CommandContext {
     private Collection<IOAlgorithm> ioAlgorithms;
-    private Collection<IVisuAlgorythm> visuAlgorythms;
+    private Collection<IVisuAlgorithm> visuAlgorythms;
     private Collection<VertexStyle> vertexStyles;
     private Collection<EdgeStyle> edgesStyles;
     private Graph currentGraph;
@@ -27,11 +27,11 @@ public class CommandContext {
         this.ioAlgorithms = ioAlgorithms;
     }
 
-    public Collection<IVisuAlgorythm> getVisuAlgorythms() {
+    public Collection<IVisuAlgorithm> getVisuAlgorythms() {
         return visuAlgorythms;
     }
 
-    public void setVisuAlgorythms(Collection<IVisuAlgorythm> visuAlgorythms) {
+    public void setVisuAlgorythms(Collection<IVisuAlgorithm> visuAlgorythms) {
         this.visuAlgorythms = visuAlgorythms;
     }
 

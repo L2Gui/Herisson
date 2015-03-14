@@ -4,7 +4,7 @@ import view.VertexView;
 
 import java.util.Collection;
 
-public interface IVisuAlgorythm {
+public interface IVisuAlgorithm {
 	/**
 	 * @return Le nom d'affichage de l'algo
 	 */
