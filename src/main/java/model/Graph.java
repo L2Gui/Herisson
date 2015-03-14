@@ -42,6 +42,7 @@ public class Graph {
             } else {
                 // On renseigne ici l'attribut graph du lien en l'ajoutant dans celui ci
                 edge.setGraph(this);
+                edge.setStyle(this.styleManager.getDefaultEdgeStyle());
             }
         }
 	}
@@ -60,6 +61,7 @@ public class Graph {
 		} else {
             // On renseigne ici l'attribut graph du noeud en l'ajoutant dans celui ci
             vertex.setGraph(this);
+            vertex.setStyle(this.styleManager.getDefaultVertexStyle());
         }
 	}
 	
@@ -135,6 +137,20 @@ public class Graph {
     {
         return styleManager;
     }
-	
-	
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public boolean isOriented() {
+        return isOriented;
+    }
+
+    public void setOriented(boolean isOriented) {
+        this.isOriented = isOriented;
+    }
 }

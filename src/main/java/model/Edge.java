@@ -16,7 +16,7 @@ public class Edge {
     public Edge() {
         srcVertex = null;
         dstVertex = null;
-        style = graph.getStyleManager().getDefaultEdgeStyle();
+        style = null;
         mainView = null;
     }
 

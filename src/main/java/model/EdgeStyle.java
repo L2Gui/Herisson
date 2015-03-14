@@ -1,7 +1,10 @@
 package model;
 
+import com.sun.javafx.geom.*;
+
 import java.awt.Color;
 import java.awt.Font;
+import java.text.CollationElementIterator;
 
 
 public class EdgeStyle implements IStyle {
@@ -15,7 +18,12 @@ public class EdgeStyle implements IStyle {
 
     public EdgeStyle()
     {
-
+        this.thickness = 1;
+        this.color = Color.BLACK;
+        this.textColor = Color.BLACK;
+        this.font = null;
+        this.style = LineStyle.SOLID;
+        this.usageCount = 0;
     }
 
     public EdgeStyle(EdgeStyle edgeStyle){
@@ -68,8 +76,9 @@ public class EdgeStyle implements IStyle {
 		return style;
 	}
 	
-	public void setStyle(LineStyle style) {
+	public EdgeStyle setStyle(LineStyle style) {
 		this.style = style;
+        return this;
 	}
 
     @Override
@@ -78,17 +87,20 @@ public class EdgeStyle implements IStyle {
     }
 
     @Override
-    public void setUsageCount(int count) {
+    public EdgeStyle setUsageCount(int count) {
         this.usageCount = count;
+        return this;
     }
 
     @Override
-    public void incrementUsageCount() {
+    public EdgeStyle incrementUsageCount() {
         usageCount++;
+        return this;
     }
 
     @Override
-    public void decrementUsageCount() {
+    public EdgeStyle decrementUsageCount() {
         usageCount--;
+        return this;
     }
 }

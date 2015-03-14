@@ -5,7 +5,7 @@ package model;
  */
 public interface IStyle {
      public int getUsageCount();
-    public void setUsageCount(int count);
-    public void incrementUsageCount();
-    public void decrementUsageCount();
+    public IStyle setUsageCount(int count);
+    public IStyle incrementUsageCount();
+    public IStyle decrementUsageCount();
 }

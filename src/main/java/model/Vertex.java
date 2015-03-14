@@ -45,7 +45,7 @@ public class Vertex {
         this.graph = graph;
         this.style = this.graph.getStyleManager().getDefaultVertexStyle();
     }
-    
+
 	public Vector3f getPosition() {
 		return position;
 	}
@@ -283,5 +283,17 @@ public class Vertex {
 
     public void setGraph(Graph graph) {
         this.graph = graph;
+    }
+
+    public VertexStyle getStyle() {
+        return style;
+    }
+
+    public void setStyle(VertexStyle style) {
+        this.style = style;
+    }
+
+    public Collection<Edge> getEdges() {
+        return edges;
     }
 }
