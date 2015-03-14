@@ -72,7 +72,7 @@ public class GLShader implements IGLResource {
 			return;
 		}
 
-        testCapabilities();
+        //testCapabilities();
 
         if (GLContext.getCapabilities().OpenGL32) {
 			this.vertexPath = "resource/shader/" + this.vertexPath;
