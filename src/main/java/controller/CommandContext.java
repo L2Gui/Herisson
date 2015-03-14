@@ -3,7 +3,7 @@ package controller;
 import model.EdgeStyle;
 import model.Graph;
 import model.VertexStyle;
-import view.IVisuAlgorythm;
+import model.IVisuAlgorythm;
 
 import java.util.Collection;
 

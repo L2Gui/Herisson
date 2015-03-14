@@ -1,4 +1,6 @@
-package view;
+package model;
+
+import view.VertexView;
 
 import java.util.Collection;
 
@@ -16,7 +18,7 @@ public interface IVisuAlgorythm {
 	
 	/**
 	 * Applique l'algorithme sur la liste de sommets passés en paramètres
-	 * @param vertexes Liste de sommets sur lesquels appliquer l'algoritme
+	 * @param vertices Liste de sommets sur lesquels appliquer l'algoritme
 	 */
-	public void execute(Collection<VertexView> vertexes);
+	public void execute(Collection<VertexView> vertices);
 }

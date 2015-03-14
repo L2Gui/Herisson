@@ -4,7 +4,7 @@ import controller.*;
 import model.Graph;
 import view.GraphCanvas;
 import view.GraphWindow;
-import view.IVisuAlgorythm;
+import model.IVisuAlgorythm;
 
 import java.awt.*;
 import java.util.ArrayList;
