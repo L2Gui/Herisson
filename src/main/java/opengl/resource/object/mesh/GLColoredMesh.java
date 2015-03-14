@@ -7,6 +7,7 @@ import java.nio.FloatBuffer;
 import java.util.List;
 
 import opengl.GLHelper;
+import opengl.resource.GLShader;
 import opengl.resource.object.GLObjectUsage;
 import opengl.vertex.GLColoredVertex;
 
@@ -15,8 +16,8 @@ import org.lwjgl.opengl.GL20;
 
 public class GLColoredMesh extends GLMesh {
 	
-	public void setup(List<GLColoredVertex> vertices, int[] indices, GLObjectUsage usage) {
-		super.setupMesh(vertices, indices, usage);
+	public void setup(GLShader shader, List<GLColoredVertex> vertices, int[] indices, GLObjectUsage usage) {
+		super.setupMesh(shader, vertices, indices, usage);
 	}
 	
 	public void updateColoredVertices(List<GLColoredVertex> vertices) {
@@ -34,9 +35,12 @@ public class GLColoredMesh extends GLMesh {
 	}
 
 	@Override
-    public void attribVerticesPointer() {
-		GL20.glVertexAttribPointer(0, GLColoredVertex.positionElementCount, GL11.GL_FLOAT, false, this.getVertexStride(), GLColoredVertex.positionByteOffset);
-		GL20.glVertexAttribPointer(1, GLColoredVertex.colorElementCount, GL11.GL_FLOAT, false, this.getVertexStride(), GLColoredVertex.colorByteOffset);
+    public void attribVerticesPointer(GLShader shader) {
+        int position = shader.getAttribLocation("in_Position");
+        int color = shader.getAttribLocation("in_Color");
+
+		GL20.glVertexAttribPointer(position, GLColoredVertex.positionElementCount, GL11.GL_FLOAT, false, this.getVertexStride(), GLColoredVertex.positionByteOffset);
+		GL20.glVertexAttribPointer(color, GLColoredVertex.colorElementCount, GL11.GL_FLOAT, false, this.getVertexStride(), GLColoredVertex.colorByteOffset);
 	}
 
 	@Override

@@ -4,7 +4,7 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.List;
 
-import opengl.resource.IGLResource;
+import opengl.resource.GLShader;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
@@ -21,16 +21,18 @@ public abstract class GLMesh implements IGLMesh {
 	private int vid;
 	private int iid;
 	private boolean isInitialized;
+    private GLShader shader;
 	
 	public GLMesh() {
 
 	}
 
-	protected void setupMesh(List<? extends GLVertex> vertices, int[] indices, GLObjectUsage usage) {
+	protected void setupMesh(GLShader shader, List<? extends GLVertex> vertices, int[] indices, GLObjectUsage usage) {
 		this.vertices = vertices;
 		this.state = usage;
 		this.indices = indices;
 		this.isInitialized = false;
+        this.shader = shader;
 	}
 
 	@Override
@@ -45,7 +47,7 @@ public abstract class GLMesh implements IGLMesh {
 		GL30.glBindVertexArray(this.vaid);
     	GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.vid);
 
-    	this.attribVerticesPointer();
+    	this.attribVerticesPointer(shader);
 
     	GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		GL30.glBindVertexArray(0);

@@ -93,7 +93,7 @@ public class GraphCanvas extends GLCanvas {
                 0, 2, 3
         };
 
-        this.mesh.setup(vertices, indices, GLObjectUsage.STATIC);
+        this.mesh.setup(this.shader, vertices, indices, GLObjectUsage.STATIC);
         this.mesh.init();
     }
 

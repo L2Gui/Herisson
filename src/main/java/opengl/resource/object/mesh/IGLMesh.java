@@ -1,10 +1,8 @@
 package opengl.resource.object.mesh;
 
+import opengl.resource.GLShader;
 import opengl.resource.IGLResource;
 import opengl.vertex.GLVertex;
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL15;
-import org.lwjgl.opengl.GL30;
 
 import java.nio.FloatBuffer;
 import java.util.List;
@@ -22,7 +20,7 @@ public interface IGLMesh extends IGLResource {
     void updateVertices(List<? extends GLVertex> vertices, int elementCount);
     int getVertexStride();
     FloatBuffer getVerticesBuffer();
-    void attribVerticesPointer();
+    void attribVerticesPointer(GLShader shader);
     void enableVerticesPointer();
     void disableVerticesPointer();
 }

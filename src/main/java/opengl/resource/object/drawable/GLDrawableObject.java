@@ -64,7 +64,9 @@ public class GLDrawableObject extends GLObject implements IGLDrawable {
         Matrix4f transformMatrix = Matrix4f.mul(transformationMatrix, super.getModelMatrix(), null);
         transformMatrix.store(matrix44Buffer);
         matrix44Buffer.flip();
-        GL20.glUniformMatrix4(this.shader.getUniform("transformMatrix"), false, matrix44Buffer);
+
+        int transformationMatrixLocation = this.shader.getUniform("transformMatrix");
+        GL20.glUniformMatrix4(transformationMatrixLocation, false, matrix44Buffer);
 
         this.mesh.bindVerticesArrayBuffer();
         this.mesh.bindVerticesBuffer();

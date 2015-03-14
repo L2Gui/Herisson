@@ -75,7 +75,7 @@ public class AppTestOpenGL extends GLCanvas {
         };
 
         GLColoredMesh mesh = new GLColoredMesh();
-        mesh.setup(vertices, indices, GLObjectUsage.STATIC);
+        mesh.setup(shader, vertices, indices, GLObjectUsage.STATIC);
         mesh.init();
         this.mesh = mesh;
 

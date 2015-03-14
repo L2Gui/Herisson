@@ -7,6 +7,7 @@ import opengl.resource.object.drawable.GLDrawableObject;
 import opengl.resource.object.mesh.GLColoredMesh;
 import opengl.vertex.GLColoredVertex;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 
 import javax.swing.*;
@@ -75,7 +76,7 @@ public class TestAMD extends GLCanvas {
                 0, 2, 3
         };
 
-        this.mesh.setup(vertices, indices, GLObjectUsage.STATIC);
+        this.mesh.setup(colorShader, vertices, indices, GLObjectUsage.STATIC);
         this.mesh.init();
 
         this.object.setMesh(this.mesh);
@@ -84,6 +85,7 @@ public class TestAMD extends GLCanvas {
 
     @Override
     public void paint(Matrix4f transformationMatrix) {
+
         this.object.render(transformationMatrix);
     }
 }

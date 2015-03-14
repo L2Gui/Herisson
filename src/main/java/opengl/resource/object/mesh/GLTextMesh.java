@@ -6,6 +6,7 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import opengl.resource.GLShader;
 import opengl.resource.IGLResource;
 import opengl.resource.object.GLObjectUsage;
 import opengl.resource.texture.GLTextTexture;
@@ -24,7 +25,7 @@ public class GLTextMesh implements IGLMesh {
 		this.texturedMesh = new GLTexturedMesh();
 	}
 	
-	public void setup(String text, Font font, float height, GLObjectUsage usage) {
+	public void setup(GLShader shader, String text, Font font, float height, GLObjectUsage usage) {
 		this.textTexture = new GLTextTexture(text, font);
 		
 		float ratio = this.textTexture.getRatio();
@@ -65,7 +66,7 @@ public class GLTextMesh implements IGLMesh {
 			2, 3, 0
 		};
 		
-		this.texturedMesh.setup(this.textTexture, vertices, indices, usage);
+		this.texturedMesh.setup(shader, this.textTexture, vertices, indices, usage);
 	}
 	
 	@Override
@@ -133,8 +134,8 @@ public class GLTextMesh implements IGLMesh {
     }
 
     @Override
-    public void attribVerticesPointer() {
-        this.texturedMesh.attribVerticesPointer();
+    public void attribVerticesPointer(GLShader shader) {
+        this.texturedMesh.attribVerticesPointer(shader);
     }
 
     @Override
