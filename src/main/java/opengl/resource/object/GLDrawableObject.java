@@ -1,7 +1,6 @@
-package opengl.resource.object.drawable;
+package opengl.resource.object;
 
 import opengl.resource.GLShader;
-import opengl.resource.object.GLObject;
 import opengl.resource.object.mesh.IGLMesh;
 import opengl.utils.GLRay;
 import org.lwjgl.BufferUtils;
@@ -9,7 +8,6 @@ import org.lwjgl.opengl.*;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
-import utils.MathUtils;
 import utils.QuaternionUtils;
 
 import java.nio.FloatBuffer;
@@ -68,11 +66,9 @@ public class GLDrawableObject extends GLObject implements IGLDrawable {
         int transformationMatrixLocation = this.shader.getUniform("transformMatrix");
         GL20.glUniformMatrix4(transformationMatrixLocation, false, matrix44Buffer);
 
-        this.mesh.bindVerticesArrayBuffer();
-        this.mesh.bindVerticesBuffer();
+        this.mesh.bind();
 
         this.mesh.enableVerticesPointer();
-        this.mesh.bindIndicesBuffer();
         GL12.glDrawRangeElements(GL11.GL_TRIANGLES, 0, this.mesh.getIndicesCount(), this.mesh.getIndicesCount(), GL11.GL_UNSIGNED_INT, 0);
         this.mesh.disableVerticesPointer();
 

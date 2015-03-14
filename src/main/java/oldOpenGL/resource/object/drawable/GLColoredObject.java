@@ -9,7 +9,6 @@ import java.util.List;
 import oldOpenGL.GLHelper;
 import oldOpenGL.resource.GLShader;
 import oldOpenGL.resource.object.GLObjectUsage;
-import oldOpenGL.resource.object.drawable.GLDrawableObject;
 import oldOpenGL.vertex.GLColoredVertex;
 
 import org.lwjgl.opengl.GL11;

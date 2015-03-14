@@ -1,10 +1,10 @@
-package opengl.resource.object.drawable;
+package opengl.resource.object;
 
 import opengl.utils.GLRay;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-public interface IGLDrawable {
+public interface IGLDrawable extends IGLObject {
 	void render(Matrix4f transformationMatrix);
 
     /**

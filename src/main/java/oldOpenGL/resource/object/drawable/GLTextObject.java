@@ -7,7 +7,6 @@ import java.util.List;
 
 import oldOpenGL.resource.object.GLObject;
 import oldOpenGL.resource.object.GLObjectUsage;
-import oldOpenGL.resource.object.drawable.*;
 import oldOpenGL.resource.texture.GLTextTexture;
 import oldOpenGL.utils.GLRay;
 import oldOpenGL.vertex.GLTexturedVertex;

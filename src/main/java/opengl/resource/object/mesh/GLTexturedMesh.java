@@ -12,24 +12,15 @@ import opengl.resource.object.GLObjectUsage;
 import opengl.resource.texture.GLTexture;
 import opengl.vertex.GLTexturedVertex;
 
+import opengl.vertex.GLVertex;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
 public class GLTexturedMesh extends GLColoredMesh {
-	private GLTexture texture;
     private int textureLocation;
 	
-	public void setup(GLShader shader, GLTexture texture, List<GLTexturedVertex> vertices, int[] indices, GLObjectUsage usage) {
-		super.setupMesh(shader, vertices, indices, usage);
-		this.texture = texture;
-	}
-	
-	public void updateTexturedVertices(List<GLTexturedVertex> vertices) {
+	public void updateTexturedVertices(List<? extends GLVertex> vertices) {
 		super.updateVertices(vertices, GLTexturedVertex.elementCount);
-	}
-	
-	public void setTexture(GLTexture texture) {
-		this.texture = texture;
 	}
 	
 	@Override
@@ -58,7 +49,7 @@ public class GLTexturedMesh extends GLColoredMesh {
 
 	@Override
     public void disableVerticesPointer() {
-        glDisableVertexAttribArray(this.textureLocation);
 		super.disableVerticesPointer();
+        glDisableVertexAttribArray(this.textureLocation);
 	}
 }

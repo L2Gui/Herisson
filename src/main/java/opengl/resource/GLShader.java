@@ -35,7 +35,7 @@ public class GLShader implements IGLResource {
 	}
 	public void testCapabilities(){
         ContextCapabilities cp = GLContext.getCapabilities();
-        
+
         System.out.println("Shaders AMD: 1."+ cp.GL_AMD_vertex_shader_layer+ " 2."+
                                             cp.GL_AMD_multi_draw_indirect+" 3."+
                                             cp.GL_AMD_sample_positions+" 4."+

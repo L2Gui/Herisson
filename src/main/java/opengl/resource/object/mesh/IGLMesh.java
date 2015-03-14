@@ -13,9 +13,7 @@ import java.util.List;
 public interface IGLMesh extends IGLResource {
     int getIndicesCount();
     GLVertex getVertexFromIndice(int indice);
-    void bindVerticesArrayBuffer();
-    void bindVerticesBuffer();
-    void bindIndicesBuffer();
+    void bind();
     void unbind();
     void updateVertices(List<? extends GLVertex> vertices, int elementCount);
     int getVertexStride();

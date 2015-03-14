@@ -1,11 +1,8 @@
 package view;
 
 import controller.Command;
-import opengl.resource.object.drawable.GLDrawableObject;
-import opengl.resource.object.drawable.IGLDrawable;
-import opengl.resource.object.mesh.GLColoredMesh;
+import opengl.resource.object.GLDrawableObject;
 import controller.CommandHandler;
-import controller.ICommand;
 import controller.ICommandSender;
 
 public abstract class ViewElement extends GLDrawableObject implements ICommandSender {

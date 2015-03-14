@@ -5,10 +5,13 @@ import opengl.resource.GLShader;
 import opengl.resource.object.GLObjectUsage;
 import opengl.resource.object.camera.GLPerspectiveCamera;
 import opengl.resource.object.camera.IGLCamera;
-import opengl.resource.object.drawable.GLDrawableObject;
+import opengl.resource.object.GLDrawableObject;
+import opengl.resource.object.mesh.GLColorVariantMesh;
 import opengl.resource.object.mesh.GLColoredMesh;
+import opengl.resource.object.mesh.GLMesh;
 import opengl.resource.object.mesh.GLTextMesh;
 import opengl.vertex.GLColoredVertex;
+import opengl.vertex.GLVertex;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Quaternion;
 import org.lwjgl.util.vector.Vector3f;
@@ -20,12 +23,11 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class OpenGLApp extends GLCanvas {
     private Lock mutex;
     private Font font;
-    private GLColoredMesh mesh;
+    private GLColorVariantMesh mesh;
     private GLTextMesh textMesh;
     private GLDrawableObject drawableObject;
     private GLDrawableObject textObject;
@@ -56,31 +58,33 @@ public class OpenGLApp extends GLCanvas {
     @Override
     public void init() {
         try {
-            this.mesh = new GLColoredMesh();
+            this.mesh = new GLColorVariantMesh();
             this.textMesh = new GLTextMesh();
             this.drawableObject = new GLDrawableObject();
             this.textObject = new GLDrawableObject();
             this.camera = new GLPerspectiveCamera(70.0f, 0.01f, 100.0f);
 
-            GLShader colorShader = new GLShader("color3D.vert", "color.frag");
-            GLShader textureShader = new GLShader("texture3D.vert", "texture.frag");
+            GLShader colorShader = new GLShader("coloru3D.vert", "color.frag");
+            GLShader textureShader = new GLShader("textureu3D.vert", "texture.frag");
 
-            List<GLColoredVertex> vertices = new ArrayList<GLColoredVertex>();
+            //List<GLColoredVertex> vertices = new ArrayList<GLColoredVertex>();
+            List<GLVertex> vertices = new ArrayList<GLVertex>();
 
-            GLColoredVertex v0 = new GLColoredVertex();
-            GLColoredVertex v1 = new GLColoredVertex();
-            GLColoredVertex v2 = new GLColoredVertex();
-            GLColoredVertex v3 = new GLColoredVertex();
+            GLVertex v0 = new GLVertex();
+            GLVertex v1 = new GLVertex();
+            GLVertex v2 = new GLVertex();
+            GLVertex v3 = new GLVertex();
 
             v0.setPosition(-0.5f, -0.5f, 0.0f);
             v1.setPosition(0.5f, -0.5f, 0.0f);
             v2.setPosition(-0.5f, 0.5f, 0.0f);
             v3.setPosition(0.5f, 0.5f, 0.0f);
 
-            v0.setColor(Color.red);
+            this.mesh.setColor(Color.red);
+            /*v0.setColor(Color.red);
             v1.setColor(Color.blue);
             v2.setColor(Color.green);
-            v3.setColor(Color.white);
+            v3.setColor(Color.white);*/
 
             vertices.add(v0);
             vertices.add(v1);
@@ -96,6 +100,8 @@ public class OpenGLApp extends GLCanvas {
 
             this.mesh.setup(colorShader, vertices, indices, GLObjectUsage.STATIC);
             this.textMesh.setup(textureShader, "Test", this.font, 0.5f, GLObjectUsage.STATIC);
+
+            this.textMesh.setColor(Color.green);
 
             colorShader.init();
             textureShader.init();

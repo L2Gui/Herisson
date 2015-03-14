@@ -17,12 +17,12 @@ import org.lwjgl.util.vector.Vector3f;
 
 public class GLTextMesh implements IGLMesh {
 	private GLTextTexture textTexture;
-	private GLTexturedMesh texturedMesh;
+	private GLTextureColorVariantMesh texturedMesh;
 	private float width;
 	private float height;
 	
 	public GLTextMesh() {
-		this.texturedMesh = new GLTexturedMesh();
+		this.texturedMesh = new GLTextureColorVariantMesh();
 	}
 	
 	public void setup(GLShader shader, String text, Font font, float height, GLObjectUsage usage) {
@@ -66,8 +66,16 @@ public class GLTextMesh implements IGLMesh {
 			2, 3, 0
 		};
 		
-		this.texturedMesh.setup(shader, this.textTexture, vertices, indices, usage);
+		this.texturedMesh.setup(shader, vertices, indices, usage);
 	}
+
+    public void setColor(Color color) {
+        this.texturedMesh.setColor(color);
+    }
+
+    public Color getColor() {
+        return this.texturedMesh.getColor();
+    }
 	
 	@Override
 	public void init() {
@@ -99,23 +107,15 @@ public class GLTextMesh implements IGLMesh {
     }
 
     @Override
-    public void bindVerticesArrayBuffer() {
-        this.texturedMesh.bindVerticesArrayBuffer();
-    }
-
-    @Override
-    public void bindVerticesBuffer() {
-        this.texturedMesh.bindVerticesBuffer();
-    }
-
-    @Override
-    public void bindIndicesBuffer() {
-        this.texturedMesh.bindIndicesBuffer();
+    public void bind() {
+        this.textTexture.bind();
+        this.texturedMesh.bind();
     }
 
     @Override
     public void unbind() {
         this.texturedMesh.unbind();
+        this.textTexture.unbind();
     }
 
     @Override

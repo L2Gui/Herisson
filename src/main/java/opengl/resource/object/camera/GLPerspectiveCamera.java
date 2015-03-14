@@ -94,8 +94,7 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
         this.projectionMatrix.m00 = x_scale;
         this.projectionMatrix.m11 = y_scale;
 	}
-	
-	@Override
+
 	public GLRay getCursorRay(Vector2f cursorLocation) {
 		int mouseX = (int) cursorLocation.x;
 	    int mouseY = (int) (this.viewport.y - cursorLocation.y);
