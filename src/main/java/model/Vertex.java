@@ -17,8 +17,6 @@ public class Vertex {
 	private Collection<Edge> edges;
 	private VertexStyle style;
 	private Graph graph;
-    private GLColoredMesh mesh;
-    private GLShader shader;
 	private Vector3f position;
 	private String label;
 

@@ -1,25 +1,24 @@
 package view;
 
+import model.Edge;
 import model.Graph;
 import model.Vertex;
 import opengl.GLCanvas;
 import opengl.resource.GLShader;
 import opengl.resource.object.GLObjectUsage;
 import opengl.resource.object.camera.GLPerspectiveCamera;
-import opengl.resource.object.camera.IGLCamera;
-import opengl.resource.object.mesh.GLColoredMesh;
+import opengl.resource.object.mesh.GLColorVariantMesh;
 import opengl.resource.object.mesh.GLMesh;
 import opengl.utils.GLRay;
-import opengl.vertex.GLColoredVertex;
+import opengl.vertex.GLVertex;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
 
 import javax.swing.event.MouseInputAdapter;
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -28,6 +27,12 @@ import java.util.List;
 public class GraphCanvas extends GLCanvas {
     private Graph graph;
     private GLPerspectiveCamera camera;
+    private Collection<VertexView> vertexViews;
+    private Collection<EdgeView> edgeViews;
+    private GLColorVariantMesh vertexMesh;
+    private GLColorVariantMesh edgeMesh;
+    private GLShader labelShader;
+    private GLShader vertexEdgeShader;
 
     public GraphCanvas() throws LWJGLException {}
 
@@ -56,22 +61,20 @@ public class GraphCanvas extends GLCanvas {
             }
         });
 
-        List<GLColoredVertex> vertices = new ArrayList<GLColoredVertex>();
+        this.vertexEdgeShader = new GLShader("coloru3D.vert", "color.frag");
+        this.labelShader = new GLShader("textureu3D.vert", "texture.frag");
 
-        GLColoredVertex v0 = new GLColoredVertex();
-        GLColoredVertex v1 = new GLColoredVertex();
-        GLColoredVertex v2 = new GLColoredVertex();
-        GLColoredVertex v3 = new GLColoredVertex();
+        List<GLVertex> vertices = new ArrayList<GLVertex>();
+
+        GLVertex v0 = new GLVertex();
+        GLVertex v1 = new GLVertex();
+        GLVertex v2 = new GLVertex();
+        GLVertex v3 = new GLVertex();
 
         v0.setPosition(-0.5f, -0.5f, 0.0f);
         v1.setPosition(0.5f, -0.5f, 0.0f);
         v2.setPosition(-0.5f, 0.5f, 0.0f);
         v3.setPosition(0.5f, 0.5f, 0.0f);
-
-        v0.setColor(Color.red);
-        v1.setColor(Color.red);
-        v2.setColor(Color.red);
-        v3.setColor(Color.red);
 
         vertices.add(v0);
         vertices.add(v1);
@@ -79,18 +82,33 @@ public class GraphCanvas extends GLCanvas {
         vertices.add(v3);
 
         int[] indices = {
-                0, 1, 3,
-                0, 2, 3
+            0, 1, 3,
+            0, 2, 3
         };
+
+        this.vertexMesh = new GLColorVariantMesh();
+        this.edgeMesh = new GLColorVariantMesh();
+
+        this.vertexMesh.setup(this.vertexEdgeShader, vertices, indices, GLObjectUsage.STATIC);
+        this.edgeMesh.setup(this.vertexEdgeShader, vertices, indices, GLObjectUsage.STATIC);
+
+        this.vertexMesh.init();
+        this.edgeMesh.init();
     }
 
     @Override
     public void paint(Matrix4f transformationMatrix) {
+        for (VertexView vertexView : this.vertexViews) {
+            vertexView.render(transformationMatrix);
+        }
 
+        for (EdgeView edgeView : this.edgeViews) {
+            edgeView.render(transformationMatrix);
+        }
     }
 
     public void onGraphChange() {
-
+        this.loadGraph();
     }
 
     private void createObject(int x, int y) {
@@ -98,5 +116,22 @@ public class GraphCanvas extends GLCanvas {
         //Vector3f position = Vector3f.add(ray.getPosition(), (Vector3f) ray.getDirection().scale(distance), null);
 
         //this.graph.addVertex(new Vertex(position, mesh, shader, graph));
+    }
+
+    private void loadGraph() {
+        this.vertexViews = new ArrayList<VertexView>();
+        this.edgeViews = new ArrayList<EdgeView>();
+
+        for (Vertex vertex : this.graph.getVertices()) {
+            VertexView vertexView = new VertexView(vertex, this.labelShader);
+            vertexView.setMesh(this.vertexMesh);
+            vertexView.setShader(this.vertexEdgeShader);
+        }
+
+        for (Edge edge : this.graph.getEdges()) {
+            EdgeView edgeView = new EdgeView(edge, this.labelShader);
+            edgeView.setMesh(this.edgeMesh);
+            edgeView.setShader(this.vertexEdgeShader);
+        }
     }
 }

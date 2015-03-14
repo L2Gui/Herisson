@@ -6,18 +6,16 @@ import java.awt.Font;
 import view.EdgeView;
 
 public class Edge {
-	
 	private Vertex srcVertex;
 	private Vertex dstVertex;
+    private String label;
 	private EdgeStyle style;
-	private EdgeView mainView;
     private Graph graph;
 
     public Edge() {
         srcVertex = null;
         dstVertex = null;
         style = graph.getStyleManager().getDefaultEdgeStyle();
-        mainView = null;
     }
 
     /**
@@ -83,24 +81,6 @@ public class Edge {
 		this.style = style;
 	}
 
-	//Setter and getter for field : mainView
-	
-	/**
-	 * 
-	 * @return this.mainView (EdgeView)
-	 */
-	public EdgeView getMainView() {
-		return mainView;
-	}
-
-	/**
-	 * 
-	 * @param mainView est nouvelle valeur de this.mainView
-	 */
-	public void setMainView(EdgeView mainView) {
-		this.mainView = mainView;
-	}
-
 	// Modification methods for fields in style
 	
 	/**
@@ -145,22 +125,6 @@ public class Edge {
 		//TODO
 
         return this;
-	}
-	
-	/**
-	 * 
-	 * @return this.mainView.label (String)
-	 */
-	public String getLabel(){
-		return mainView.getLabel();
-	}
-	
-	/**
-	 * 
-	 * @param label est la nouvelle valeur de this.mainView.label
-	 */
-	public void setLabel(String label){
-		mainView.setLabel(label);
 	}
 	
 	/**
@@ -213,5 +177,13 @@ public class Edge {
         graph.getStyleManager().addStyle(this.style);
 
         return this;
-	}	
+	}
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 }

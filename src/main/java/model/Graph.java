@@ -109,7 +109,7 @@ public class Graph {
 	
 	/**
 	 * Modifie le champs this.name
-	 * @param name est le nouveau nom du Graph courrant.
+	 * @param name est le nouveau nom du Graph courant.
 	 */
 	public void setName(String name) {
 		this.name = name;

@@ -67,7 +67,6 @@ public class OpenGLApp extends GLCanvas {
             GLShader colorShader = new GLShader("coloru3D.vert", "color.frag");
             GLShader textureShader = new GLShader("textureu3D.vert", "texture.frag");
 
-            //List<GLColoredVertex> vertices = new ArrayList<GLColoredVertex>();
             List<GLVertex> vertices = new ArrayList<GLVertex>();
 
             GLVertex v0 = new GLVertex();
@@ -81,10 +80,6 @@ public class OpenGLApp extends GLCanvas {
             v3.setPosition(0.5f, 0.5f, 0.0f);
 
             this.mesh.setColor(Color.red);
-            /*v0.setColor(Color.red);
-            v1.setColor(Color.blue);
-            v2.setColor(Color.green);
-            v3.setColor(Color.white);*/
 
             vertices.add(v0);
             vertices.add(v1);

@@ -25,6 +25,7 @@ public class GLDrawableObject extends GLObject implements IGLDrawable {
     }
 
     public GLDrawableObject(GLShader shader, IGLMesh mesh) {
+        this();
         this.shader = shader;
         this.mesh = mesh;
     }
