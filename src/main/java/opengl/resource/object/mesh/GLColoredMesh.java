@@ -7,6 +7,7 @@ import java.nio.FloatBuffer;
 import java.util.List;
 
 import opengl.GLHelper;
+import opengl.resource.GLShader;
 import opengl.resource.object.GLObjectUsage;
 import opengl.vertex.GLColoredVertex;
 
@@ -14,9 +15,11 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
 public class GLColoredMesh extends GLMesh {
-	
-	public void setup(List<GLColoredVertex> vertices, int[] indices, GLObjectUsage usage) {
-		super.setupMesh(vertices, indices, usage);
+	private int positionLocation;
+    private int colorLocation;
+
+	public void setup(GLShader shader, List<GLColoredVertex> vertices, int[] indices, GLObjectUsage usage) {
+		super.setupMesh(shader, vertices, indices, usage);
 	}
 	
 	public void updateColoredVertices(List<GLColoredVertex> vertices) {
@@ -34,20 +37,23 @@ public class GLColoredMesh extends GLMesh {
 	}
 
 	@Override
-    public void attribVerticesPointer() {
-		GL20.glVertexAttribPointer(0, GLColoredVertex.positionElementCount, GL11.GL_FLOAT, false, this.getVertexStride(), GLColoredVertex.positionByteOffset);
-		GL20.glVertexAttribPointer(1, GLColoredVertex.colorElementCount, GL11.GL_FLOAT, false, this.getVertexStride(), GLColoredVertex.colorByteOffset);
+    public void attribVerticesPointer(GLShader shader) {
+        this.positionLocation = shader.getAttribLocation("in_Position");
+        this.colorLocation = shader.getAttribLocation("in_Color");
+
+		GL20.glVertexAttribPointer(this.positionLocation, GLColoredVertex.positionElementCount, GL11.GL_FLOAT, false, this.getVertexStride(), GLColoredVertex.positionByteOffset);
+		GL20.glVertexAttribPointer(this.colorLocation, GLColoredVertex.colorElementCount, GL11.GL_FLOAT, false, this.getVertexStride(), GLColoredVertex.colorByteOffset);
 	}
 
 	@Override
     public void enableVerticesPointer() {
-		glEnableVertexAttribArray(0);
-    	glEnableVertexAttribArray(1);
+		glEnableVertexAttribArray(this.positionLocation);
+    	glEnableVertexAttribArray(this.colorLocation);
 	}
 
 	@Override
     public void disableVerticesPointer() {
-		glDisableVertexAttribArray(1);
-    	glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(this.colorLocation);
+    	glDisableVertexAttribArray(this.positionLocation);
 	}
 }

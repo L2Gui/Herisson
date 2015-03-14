@@ -15,7 +15,6 @@ import view.VertexView;
 
 public class Vertex {
 	private Collection<Edge> edges;
-	private VertexView mainView;
 	private VertexStyle style;
 	private Graph graph;
     private GLColoredMesh mesh;
@@ -23,19 +22,15 @@ public class Vertex {
 	private Vector3f position;
 	private String label;
 
-
-    public Vertex()
-    {
+    public Vertex() {
         edges = new ArrayList<Edge>();
-        mainView = null;
         style = null;
         graph = null;
         position = null;
         label = "";
     }
 
-
-    public Vertex(Vector3f position, GLColoredMesh mesh, GLShader shader, Graph graph) {
+    /*public Vertex(Vector3f position, GLColoredMesh mesh, GLShader shader, Graph graph) {
         this.graph = graph;
         this.style = graph.getStyleManager().getDefaultVertexStyle();
         this.edges = new ArrayList<Edge>();
@@ -43,23 +38,14 @@ public class Vertex {
         this.mesh = mesh;
         this.shader = shader;
         this.mainView = new VertexView(this, mesh, shader);
-    }
+    }*/
 
     public Vertex(Graph graph){
         this();
         this.graph = graph;
         this.style = this.graph.getStyleManager().getDefaultVertexStyle();
     }
-
-
-    public VertexView getMainView() {
-		return mainView;
-	}
-
-	public void setMainView(VertexView mainView) {
-		this.mainView = mainView;
-	}
-
+    
 	public Vector3f getPosition() {
 		return position;
 	}
@@ -85,7 +71,7 @@ public class Vertex {
 	 * 
 	 * @return this.style.borderThickness (float)
 	 */
-	public float getThickness(){
+	public float getThickness() {
 		return style.getBorderThickness();
 	}
 	
@@ -93,7 +79,9 @@ public class Vertex {
 	 * 
 	 * @param thickness est la nouvelle valeur de this.style.borderThickness
 	 */
+
 	public Vertex setThickness(float thickness){
+
 		//TODO
         VertexStyle newStyle = new VertexStyle(this.style);
         this.style.decrementUsageCount();
@@ -123,6 +111,7 @@ public class Vertex {
 	 * @param size
 	 */
 	public Vertex setSize(float size){
+
 		//TODO
         VertexStyle newStyle = new VertexStyle(this.style);
         this.style.decrementUsageCount();
@@ -141,7 +130,7 @@ public class Vertex {
 	 * 
 	 * @return
 	 */
-	public Color getBackgroundColor(){
+	public Color getBackgroundColor() {
 		return this.style.getBackgroundColor();
 	}
 	
@@ -150,6 +139,7 @@ public class Vertex {
 	 * @param color
 	 */
 	public Vertex setBackgroundColor( Color color){
+
 		//TODO
         VertexStyle newStyle = new VertexStyle(this.style);
         this.style.decrementUsageCount();
@@ -169,23 +159,23 @@ public class Vertex {
 	 * 
 	 * @return this.mainView.label (String)
 	 */
-	public String getLabel(){
-		return mainView.getLabel();
+	public String getLabel() {
+		return this.label;
 	}
 	
 	/**
 	 * 
 	 * @param label est la nouvelle valeur de this.mainView.label
 	 */
-	public void setLabel(String label){
-		mainView.setLabel(label);
+	public void setLabel(String label) {
+		this.label = label;
 	}
 	
 	/**
 	 * 
 	 * @return this.style.textColor (Color)
 	 */
-	public Color getTextColor(){
+	public Color getTextColor() {
 		return style.getTextColor();
 	}
 	
@@ -213,7 +203,7 @@ public class Vertex {
 	 * 
 	 * @return this.style.font (Font)
 	 */
-	public Font getFont(){
+	public Font getFont() {
 		return style.getFont();
 	}
 	
@@ -241,10 +231,10 @@ public class Vertex {
 	 * 
 	 * @return
 	 */
-	public Color getBorderColor(){
+	public Color getBorderColor() {
 		return this.style.getBorderColor();
 	}
-	
+
 	public Vertex setBorderColor(Color color){
 		//TODO
         VertexStyle newStyle = new VertexStyle(this.style);
@@ -264,8 +254,7 @@ public class Vertex {
 	 * 
 	 * @return
 	 */
-	public VertexShape getShape()
-	{
+	public VertexShape getShape() {
 		return this.style.getShape();
 	}
 	

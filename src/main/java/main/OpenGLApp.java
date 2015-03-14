@@ -94,8 +94,8 @@ public class OpenGLApp extends GLCanvas {
 
             this.font = new Font("Arial", Font.PLAIN, 512);
 
-            this.mesh.setup(vertices, indices, GLObjectUsage.STATIC);
-            this.textMesh.setup("Test", this.font, 0.5f, GLObjectUsage.STATIC);
+            this.mesh.setup(colorShader, vertices, indices, GLObjectUsage.STATIC);
+            this.textMesh.setup(textureShader, "Test", this.font, 0.5f, GLObjectUsage.STATIC);
 
             colorShader.init();
             textureShader.init();
