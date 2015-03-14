@@ -1,5 +1,7 @@
-package model;
+package modelTest;
 
+import model.Graph;
+import model.Vertex;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,7 +11,7 @@ import org.junit.Test;
 public class VertexTest {
 
     @Test
-    public void Vertex_Test(){
+    public void VertexTest(){
         Vertex vertex = new Vertex();
 
         Assert.assertEquals(vertex.getLabel(), "");
@@ -21,7 +23,7 @@ public class VertexTest {
     }
 
     @Test
-    public void VertexWithOneArg_Test(){
+    public void VertexWithOneArgTest(){
         Graph graph = new Graph();
         Vertex vertex = new Vertex(graph);
 

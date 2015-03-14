@@ -1,5 +1,8 @@
-package model;
+package modelTest;
 
+import model.Edge;
+import model.Graph;
+import model.Vertex;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,7 +12,7 @@ import org.junit.Test;
 public class GraphTest {
 
     @Test
-    public void Graph_Test(){
+    public void GraphTest(){
         Graph graph = new Graph();
 
         Assert.assertEquals(graph.getName(), "");
@@ -23,7 +26,7 @@ public class GraphTest {
     }
 
     @Test
-    public void addEdge_Test(){
+    public void addEdgeTest(){
         Graph graph = new Graph();
 
         Edge edge = new Edge();
@@ -33,7 +36,7 @@ public class GraphTest {
     }
 
     @Test
-    public void removeEdge_Test(){
+    public void removeEdgeTest(){
         Graph graph = new Graph();
 
         Edge edge = new Edge();
@@ -47,7 +50,7 @@ public class GraphTest {
     }
 
     @Test
-    public void addVertex_Test(){
+    public void addVertexTest(){
         Graph graph = new Graph();
 
         Vertex vertex = new Vertex();
@@ -57,7 +60,7 @@ public class GraphTest {
     }
 
     @Test
-    public void removeVertex_Test(){
+    public void removeVertexTest(){
         Graph graph = new Graph();
 
         Vertex vertex = new Vertex();

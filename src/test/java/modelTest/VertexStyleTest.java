@@ -1,5 +1,7 @@
-package model;
+package modelTest;
 
+import model.VertexShape;
+import model.VertexStyle;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,7 +12,7 @@ import java.awt.*;
  */
 public class VertexStyleTest {
     @Test
-    public void VertexStyle_Test(){
+    public void VertexStyleTest(){
         VertexStyle vertexStyle = new VertexStyle();
 
         Assert.assertEquals(vertexStyle.getBackgroundColor(), Color.GRAY);
@@ -23,7 +25,7 @@ public class VertexStyleTest {
     }
 
     @Test
-    public void VertexStyleWithOneArg_Test(){
+    public void VertexStyleWithOneArgTest(){
         VertexStyle model = new VertexStyle().setUsageCount(5)
                                             .setBackgroundColor(Color.GREEN)
                                             .setBorderColor(Color.YELLOW)

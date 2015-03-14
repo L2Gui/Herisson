@@ -1,5 +1,7 @@
-package model;
+package modelTest;
 
+import model.EdgeStyle;
+import model.LineStyle;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,7 +13,7 @@ import java.awt.*;
 public class EdgeStyleTest {
 
     @Test
-    public void EdgeStyle_Test(){
+    public void EdgeStyleTest(){
         EdgeStyle edgeStyle = new EdgeStyle();
 
         Assert.assertEquals(edgeStyle.getColor(), Color.BLACK);
@@ -23,7 +25,7 @@ public class EdgeStyleTest {
     }
 
     @Test
-    public void EdgeStyleWithOneArg_Test(){
+    public void EdgeStyleWithOneArgTest(){
         EdgeStyle model = new EdgeStyle().setColor(Color.RED)
                                             .setTextColor(Color.GREEN)
                                             .setThickness(4)

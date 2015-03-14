@@ -1,5 +1,9 @@
-package model;
+package modelTest;
 
+import model.EdgeStyle;
+import model.StyleManager;
+import model.VertexShape;
+import model.VertexStyle;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,7 +15,7 @@ import java.awt.*;
 public class StyleManagerTest {
 
     @Test
-    public void StyleManager_Test(){
+    public void StyleManagerTest(){
         StyleManager styleManager = new StyleManager();
 
         Assert.assertEquals(styleManager.getDefaultEdgeStyle().getColor(), Color.BLACK);
@@ -27,7 +31,7 @@ public class StyleManagerTest {
     }
 
     @Test
-    public void addStyle(){
+    public void addStyleTest(){
         StyleManager styleManager = new StyleManager();
 
         Assert.assertTrue(styleManager.getEdgeStyles().size() == 0);
@@ -50,7 +54,7 @@ public class StyleManagerTest {
     }
 
     @Test
-    public void removeStyle(){
+    public void removeStyleTest(){
         StyleManager styleManager = new StyleManager();
 
         Assert.assertTrue(styleManager.getEdgeStyles().size() == 0);
@@ -78,7 +82,7 @@ public class StyleManagerTest {
     }
 
     @Test
-    public void update()
+    public void updateTest()
     {
         StyleManager styleManager = new StyleManager();
 
