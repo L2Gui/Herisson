@@ -8,9 +8,11 @@ import java.util.Set;
 
 public class DispoCircleAlgorithm implements IDispoAlgorithm {
     private String name;
+    private float maxSize;
 
     public DispoCircleAlgorithm(String name){
         this.name=name;
+        maxSize=0;
     }
     /**
      * Dispose les sommets en cercle (en prenant soin de ne pas avoir de chevauchement)
@@ -23,15 +25,12 @@ public class DispoCircleAlgorithm implements IDispoAlgorithm {
         Set set = new HashSet();
 
         //on récupère la taille du plus gros noeud pour éviter tout chevauchement
-        float maxSize=0;
-
-        for( Vertex v : g.getVertices()){
-            maxSize = Math.max(maxSize, v.getSize());
-        }
+        getMaxVertexSize(g);
 
         //attribution des nouvelles positions
         double angleBetweenTwoVertices = (2*Math.PI)/(g.getVertices().size());
-        double radius=Math.sqrt(4*maxSize*maxSize);
+        // cf: al kashi
+        double radius=Math.sqrt((2*maxSize*maxSize)/(2*(1-Math.cos(angleBetweenTwoVertices))));
         double currentAngle=0;
         Vector3f newPos;
 
@@ -47,6 +46,25 @@ public class DispoCircleAlgorithm implements IDispoAlgorithm {
         return set;
     }
 
+    /**
+     * Récupère la taille du plus gros sommet présent dans le grahe g
+     * @param g le graphe en question
+     */
+    private void getMaxVertexSize(Graph g){
+        maxSize=0;
+
+        for( Vertex v : g.getVertices()){
+            maxSize = Math.max(maxSize, v.getSize());
+        }
+    }
+
+    /**
+     * Retourne la taille du plus gros sommet présent dans le dernier graphe sur lequel l'algorythme a été appliqué
+     * @return 0 si l'algorythme n'a jamais été appliqué
+     */
+    public float getMaxSize(){
+        return maxSize;
+    }
     /**
      * @return Le nom d'affichage de l'algo
      */

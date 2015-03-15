@@ -1,8 +1,6 @@
 package view;
 
-import model.Edge;
-import model.Graph;
-import model.Vertex;
+import model.*;
 import opengl.GLCanvas;
 import opengl.resource.GLShader;
 import opengl.resource.object.GLObjectUsage;
@@ -10,6 +8,7 @@ import opengl.resource.object.camera.GLPerspectiveCamera;
 import opengl.resource.object.mesh.GLColorVariantMesh;
 import opengl.utils.GLRay;
 import opengl.vertex.GLVertex;
+import org.javatuples.Pair;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
@@ -19,6 +18,7 @@ import javax.swing.event.MouseInputAdapter;
 import java.awt.event.MouseEvent;
 import java.util.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Clement on 13/03/2015.
@@ -156,13 +156,13 @@ public class GraphCanvas extends GLCanvas {
         Graph g = new Graph();
         g.setName("graphe test");
         Vertex v0 = new Vertex();
-        v0.setPosition(new Vector3f(2f, 0f, 0f));
+        v0.setPosition(new Vector3f(5f, 5f, 0f));
         v0.setLabel("Coucou");
         Vertex v1 = new Vertex();
         v1.setPosition(new Vector3f(4f,-3f,0f));
         v1.setLabel("Tranquille ?");
         Vertex v2 = new Vertex();
-        v2.setPosition(new Vector3f(-4f,3f,0f));
+        v2.setPosition(new Vector3f(-4f, 3f, 0f));
         Vertex v3 = new Vertex();
         v3.setPosition(new Vector3f(0f,0f,0f));
         Vertex v4 = new Vertex();
@@ -178,6 +178,17 @@ public class GraphCanvas extends GLCanvas {
         g.addVertex(v4);
         g.addEdge(edge);
 
+        for (int i = 0; i < 5; i++) {
+            Vertex v = new Vertex();
+            v.setPosition(new Vector3f(0f,0f,0f));
+            v.setLabel("Noeud "+(i+4));
+            g.addVertex(v);
+        }
+        DispoRandomAlgorithm algorithm = new DispoRandomAlgorithm("nom");
+
+        for (Pair<Vertex, Vector3f> p : algorithm.execute(g)){
+            p.getValue0().setPosition(p.getValue1());
+        }
         return g;
     }
 }

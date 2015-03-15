@@ -8,7 +8,7 @@
   </key>
   <key id="d1" for="edge" attr.name="weight" attr.type="double"/>
   <node-style id="s1">
-    <data key="e0"></data>
+    <data key="e0" attr.name="<data>"></data>
   </node-style>
 
   <graph id="G" edgedefault="undirected">

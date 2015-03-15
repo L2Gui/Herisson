@@ -18,8 +18,6 @@ public class VertexView extends ViewElement {
     private GLColorVariantMesh mesh;
     private GLDrawableObject textDrawable;
 
-    private static Font font = new Font("Arial", Font.PLAIN, 128);
-
     public VertexView(Vertex vertexModel, GLColorVariantMesh mesh, GLShader labelShader) {
         this.vertexModel = vertexModel;
 
@@ -30,7 +28,7 @@ public class VertexView extends ViewElement {
         super.setMesh(this.mesh);
 
         String label = this.vertexModel.getLabel();
-        //Font font = this.vertexModel.getFont();
+        Font font = this.vertexModel.getFont();
         float height = 0.2f;
 
         this.labelMesh.setup(labelShader, label, font, height, GLObjectUsage.STATIC);

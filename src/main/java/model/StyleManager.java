@@ -22,14 +22,16 @@ public class StyleManager {
 
         defaultEdgeStyle = new EdgeStyle().setColor(Color.BLACK)
                                           .setTextColor(Color.BLACK)
-                                          .setThickness(0.2f);
+                                          .setThickness(0.2f)
+                                          .setFont(new Font("Verdana", Font.PLAIN, 128));
 
         defaultVertexStyle = new VertexStyle().setBackgroundColor(Color.GRAY)
                                               .setBorderColor(Color.BLACK)
                                               .setBorderThickness(1)
                                               .setSize(2)
                                               .setTextColor(Color.BLACK)
-                                              .setShape(VertexShape.SQUARE);
+                                              .setShape(VertexShape.SQUARE)
+                                              .setFont(new Font("Verdana", Font.PLAIN, 128));
     }
 
     public VertexStyle getDefaultVertexStyle() {

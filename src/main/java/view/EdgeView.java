@@ -19,8 +19,6 @@ public class EdgeView extends ViewElement {
     private GLColorVariantMesh mesh;
     private GLDrawableObject textDrawable;
 
-    private static Font font = new Font("Arial", Font.PLAIN, 256);
-
     public EdgeView(Edge edgeModel, GLColorVariantMesh mesh, GLShader labelShader) {
         this.edgeModel = edgeModel;
         this.mesh = mesh;
@@ -31,7 +29,7 @@ public class EdgeView extends ViewElement {
         super.setMesh(this.mesh);
 
         String label = this.edgeModel.getLabel();
-        //Font font = this.edgeModel.getFont();
+        Font font = this.edgeModel.getFont();
         float height = 0.2f;
 
         this.labelMesh.setup(labelShader, label, font, height, GLObjectUsage.STATIC);
