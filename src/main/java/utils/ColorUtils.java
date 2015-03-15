@@ -38,7 +38,22 @@ import java.util.HashMap;
  *
  */
 
+
 public class ColorUtils {
+
+    public static String colorToString(Color color){
+        return color.getBlue()+","+color.getGreen()+","+color.getRed();
+    }
+
+    public static Color RGBStringToColor(String rgbString) {
+        String[] RGB = rgbString.split(",");
+
+        if (RGB.length == 3)
+            return new Color(Integer.parseInt(RGB[0]),Integer.parseInt(RGB[1]),Integer.parseInt(RGB[2]));
+        else
+            return Color.black;
+    }
+
 	 private static final HashMap knownColorNamesByColor;
 
 	  private static final HashMap knownColorsByName;
