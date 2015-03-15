@@ -151,4 +151,13 @@ public final class MenuActions {
             System.out.println("Dezoom ("+e.getSource().getClass().getName()+")");
         }
     };
+    /**
+     * Mode déplacement
+     */
+    public static MenuAction move = new MenuAction("Mode déplacement", "res/move.png", KeyEvent.VK_D, 5) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Passage en mode déplacement ("+e.getSource().getClass().getName()+")");
+        }
+    };
 }

@@ -1,5 +1,6 @@
 package view;
 
+import controller.MenuAction;
 import controller.MenuActions;
 import model.Graph;
 import model.IColorAlgorithm;
@@ -18,9 +19,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Collection;
 
-/**
- * Created by Clement on 13/03/2015.
- */
+
 public class GraphWindow extends JFrame {
     private String title;
     private Dimension size;
@@ -272,7 +271,7 @@ public class GraphWindow extends JFrame {
         toolBar.add(MenuActions.paste);
 
         toolBar.addSeparator();
-
+        toolBar.add(MenuActions.move);
         toolBar.add(MenuActions.newEdge);
         toolBar.add(MenuActions.newVertex);
 
