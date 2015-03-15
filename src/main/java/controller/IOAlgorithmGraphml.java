@@ -7,6 +7,7 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import utils.ColorUtils;
+import utils.FontUtils;
 
 import java.awt.*;
 import java.io.File;
@@ -142,36 +143,69 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
 
         org.jdom2.Document gDoc = new org.jdom2.Document(graphml);
 
-        HashMap<String, VertexStyle> vertexStylesMap = new HashMap<String, VertexStyle>();
-        HashMap<String, EdgeStyle> edgeStylesMap = new HashMap<String, EdgeStyle>();
+        HashMap<VertexStyle, String> vertexStylesMap = new HashMap<VertexStyle, String>();
+        HashMap<EdgeStyle, String> edgeStylesMap = new HashMap<EdgeStyle, String>();
 
         int nodeStyleCount = 0;
         Element defaultNodeStyle = constructNodeStyleKey(null, graph.getStyleManager().getDefaultVertexStyle(), nodeStyleCount);
         graphml.addContent(defaultNodeStyle);
-        vertexStylesMap.put(defaultNodeStyle.getAttributeValue("id"), graph.getStyleManager().getDefaultVertexStyle());
+        vertexStylesMap.put(graph.getStyleManager().getDefaultVertexStyle(), defaultNodeStyle.getAttributeValue("id"));
         nodeStyleCount++;
         for(VertexStyle style : graph.getStyleManager().getVertexStyles())
         {
             Element nodeStyle = constructNodeStyleKey(null, style, nodeStyleCount);
             graphml.addContent(nodeStyle);
-            vertexStylesMap.put(nodeStyle.getAttributeValue("id"), style);
+            vertexStylesMap.put(style, nodeStyle.getAttributeValue("id"));
             nodeStyleCount++;
         }
 
         int edgeStyleCount = 0;
         Element defaultEdgeStyle = constructEdgeStyleKey(null, graph.getStyleManager().getDefaultEdgeStyle(), edgeStyleCount);
         graphml.addContent(defaultEdgeStyle);
-        edgeStylesMap.put(defaultEdgeStyle.getAttributeValue("id"), graph.getStyleManager().getDefaultEdgeStyle());
+        edgeStylesMap.put(graph.getStyleManager().getDefaultEdgeStyle(), defaultEdgeStyle.getAttributeValue("id"));
         edgeStyleCount++;
         for(EdgeStyle style : graph.getStyleManager().getEdgeStyles())
         {
             Element nodeStyle = constructEdgeStyleKey(null, style, nodeStyleCount);
             graphml.addContent(nodeStyle);
-            edgeStylesMap.put(nodeStyle.getAttributeValue("id"), style);
+            edgeStylesMap.put(style, nodeStyle.getAttributeValue("id"));
             edgeStyleCount++;
         }
 
-        HashMap<String, Vertex> vertexKeysMap = new HashMap<String, Vertex>();
+        Element graphxml;
+        if (graph.getName() != "" && graph.getName() != null)
+            graphxml = new Element("graph").setAttribute("id", graph.getName());
+        else
+            graphxml = new Element("graph").setAttribute("id", "g");
+
+        if (graph.isOriented())
+            graphxml.setAttribute("edgedefault", "directed");
+        else
+            graphxml.setAttribute("edgedefault", "undirected");
+
+
+        HashMap<Vertex, String> vertexKeysMap = new HashMap<Vertex, String>();
+
+        int nodeCount = 0;
+        for (Vertex v: graph.getVertices())
+        {
+            Element node = new Element("node").setAttribute("id", "n"+nodeCount).setAttribute("style", vertexStylesMap.get(v.getStyle()));
+            vertexKeysMap.put(v, node.getAttributeValue("id"));
+            graphxml.addContent(node);
+            nodeCount++;
+        }
+
+        int edgeCount = 0;
+        for (Edge e : graph.getEdges())
+        {
+            Element edge = new Element("edge")
+                                .setAttribute("id", "e"+edgeCount)
+                                .setAttribute("style", edgeStylesMap.get(e.getStyle()))
+                                .setAttribute("source", vertexKeysMap.get(e.getSrcVertex()))
+                                .setAttribute("target", vertexKeysMap.get(e.getDstVertex()));
+            graphxml.addContent(edge);
+            edgeCount++;
+        }
 
         //génération des key
 
@@ -187,6 +221,8 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
         //pos x
         //pos y
         //label
+
+        graphml.addContent(graphxml);
 
         XMLOutputter xmlOutput = new XMLOutputter();
 
@@ -223,7 +259,7 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
                                     .setText(ColorUtils.colorToString(vertexStyle.getBorderColor())));
             base.addContent(new Element("data")
                                     .setAttribute("key", "font")
-                                    .setText(vertexStyle.getFont().toString()));
+                                    .setText(FontUtils.fontToString(vertexStyle.getFont())));
         }
 
         return base;
@@ -242,7 +278,7 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
                 .setText(ColorUtils.colorToString(edgeStyle.getColor())));
         base.addContent(new Element("data")
                 .setAttribute("key", "font")
-                .setText(edgeStyle.getFont().toString()));
+                .setText(FontUtils.fontToString(edgeStyle.getFont())));
         base.addContent(new Element("data")
                 .setAttribute("key", "line-style")
                 .setText(edgeStyle.getStyle().toString()));
