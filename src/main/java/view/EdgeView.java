@@ -7,6 +7,7 @@ import opengl.resource.object.GLObjectUsage;
 import opengl.resource.object.mesh.GLColorVariantMesh;
 import opengl.resource.object.mesh.GLTextMesh;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Quaternion;
 import org.lwjgl.util.vector.Vector3f;
 import utils.QuaternionUtils;
 
@@ -36,6 +37,21 @@ public class EdgeView extends ViewElement {
         this.labelMesh.setup(labelShader, label, font, height, GLObjectUsage.STATIC);
         this.labelMesh.init();
         this.labelMesh.setColor(this.edgeModel.getTextColor());
+
+        Quaternion rotationZ = QuaternionUtils.quaternionLookRotation(new Vector3f(0.0f, 0.0f, 1.0f));
+        Vector3f directionXY = Vector3f.sub(this.edgeModel.getDstVertex().getPosition(), this.edgeModel.getSrcVertex().getPosition(), null);
+
+        float angle = (float) Math.toDegrees(Math.atan(directionXY.y / directionXY.x));
+        Quaternion rotationXY = QuaternionUtils.quaternionFromAxisAngle(new Vector3f(0.0f, 0.0f, 1.0f), -angle);
+        Quaternion rotation = Quaternion.mul(rotationZ, rotationXY, null);
+
+        Vector3f center = Vector3f.add(this.edgeModel.getDstVertex().getPosition(), this.edgeModel.getSrcVertex().getPosition(), null);
+        center.scale(0.5f);
+
+        this.setPosition(center);
+        this.setRotation(rotation);
+        this.setScale(new Vector3f(directionXY.length(), this.edgeModel.getThickness(), 1.0f));
+
         this.computeMatrix();
     }
 
@@ -55,8 +71,10 @@ public class EdgeView extends ViewElement {
     public void render(Matrix4f transformationMatrix)
     {
         this.mesh.setColor(this.edgeModel.getColor());
-
         super.render(transformationMatrix);
+    }
+
+    public void renderText(Matrix4f transformationMatrix) {
         this.textDrawable.render(transformationMatrix);
     }
 

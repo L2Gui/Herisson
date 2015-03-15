@@ -2,10 +2,7 @@ package opengl.resource.object.camera;
 
 import opengl.resource.object.GLObject;
 import opengl.utils.GLRay;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
+import org.lwjgl.util.vector.*;
 import utils.MathUtils;
 import utils.QuaternionUtils;
 
@@ -61,7 +58,11 @@ public class GLPerspectiveCamera extends GLObject implements IGLCamera {
         this.viewInvertedMatrix = (Matrix4f) new Matrix4f(this.viewMatrix).invert();
     }
 
-    public void lookAt(Vector3f target) {
+    public void lookToDirection(Vector3f direction) {
+        super.setRotation(QuaternionUtils.quaternionLookRotation(direction));
+    }
+
+    private void lookAt(Vector3f target) {
         Vector3f zaxis = Vector3f.sub(super.getPosition(), target, null);
         zaxis.normalise();
         Vector3f xaxis = Vector3f.cross(new Vector3f(0.0f, 1.0f, 0.0f), zaxis, null);

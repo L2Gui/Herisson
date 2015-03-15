@@ -22,7 +22,7 @@ public class StyleManager {
 
         defaultEdgeStyle = new EdgeStyle().setColor(Color.BLACK)
                                           .setTextColor(Color.BLACK)
-                                          .setThickness(2);
+                                          .setThickness(0.2f);
 
         defaultVertexStyle = new VertexStyle().setBackgroundColor(Color.GRAY)
                                               .setBorderColor(Color.BLACK)
