@@ -57,8 +57,12 @@ public class App {
         frame = new GraphWindow("Hérisson", new Dimension(600, 600), this.canvas, dispoAlgorithms, colorAlgorithms, sizeAlgorithms);
 
         /* deux graphes bidon juste pour voir les onglets */
-        frame.addGraph(new Graph());
-        frame.addGraph(new Graph());
+        Graph g1 = new Graph();
+        g1.setName("swappez d'onglet pour");
+        frame.addGraph(g1);
+        Graph g2 = new Graph();
+        g2.setName("charger un graphe random");
+        frame.addGraph(g2);
 /*
         Graph g = new Graph();
         g.setName("graphe test");

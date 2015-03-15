@@ -1,9 +1,6 @@
 package view;
 
-import model.DispoCircleAlgorithm;
-import model.Edge;
-import model.Graph;
-import model.Vertex;
+import model.*;
 import opengl.GLCanvas;
 import opengl.resource.GLShader;
 import opengl.resource.object.GLObjectUsage;
@@ -152,7 +149,7 @@ public class GraphCanvas extends GLCanvas {
         Graph g = new Graph();
         g.setName("graphe test");
         Vertex v0 = new Vertex();
-        v0.setPosition(new Vector3f(2f, 0f, 0f));
+        v0.setPosition(new Vector3f(5f, 5f, 0f));
         v0.setLabel("Coucou");
         Vertex v1 = new Vertex();
         v1.setPosition(new Vector3f(4f,-3f,0f));
@@ -162,7 +159,7 @@ public class GraphCanvas extends GLCanvas {
         Vertex v3 = new Vertex();
         v3.setPosition(new Vector3f(0f,0f,0f));
         Vertex v4 = new Vertex();
-        v4.setPosition(new Vector3f(2f,5f,0f));
+        v4.setPosition(new Vector3f(-5f,-5f,0f));
 
         g.addVertex(v0);
         g.addVertex(v1);
@@ -176,7 +173,7 @@ public class GraphCanvas extends GLCanvas {
             v.setLabel("Noeud "+(i+4));
             g.addVertex(v);
         }
-        DispoCircleAlgorithm algorithm = new DispoCircleAlgorithm("nom");
+        DispoRandomAlgorithm algorithm = new DispoRandomAlgorithm("nom");
 
         for (Pair<Vertex, Vector3f> p : algorithm.execute(g)){
             p.getValue0().setPosition(p.getValue1());
