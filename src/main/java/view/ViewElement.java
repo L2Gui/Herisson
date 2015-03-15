@@ -1,9 +1,9 @@
 package view;
 
 import controller.Command;
-import opengl.resource.object.GLDrawableObject;
 import controller.CommandHandler;
 import controller.ICommandSender;
+import opengl.resource.object.GLDrawableObject;
 
 public abstract class ViewElement extends GLDrawableObject implements ICommandSender {
 	private CommandHandler commandHandler;

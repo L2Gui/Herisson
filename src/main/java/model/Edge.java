@@ -1,9 +1,8 @@
 package model;
 
-import java.awt.Color;
-import java.awt.Font;
-
 import view.EdgeView;
+
+import java.awt.*;
 
 public class Edge {
 	private Vertex srcVertex;

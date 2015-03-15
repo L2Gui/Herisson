@@ -2,7 +2,6 @@ package oldOpenGL.resource.object.camera;
 
 import oldOpenGL.resource.object.IGLObject;
 import oldOpenGL.utils.GLRay;
-
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 

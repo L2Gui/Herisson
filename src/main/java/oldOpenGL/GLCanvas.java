@@ -1,21 +1,19 @@
 package oldOpenGL;
 
-import java.awt.event.ComponentEvent;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.TreeMap;
-
+import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
 import oldOpenGL.resource.GLShader;
 import oldOpenGL.resource.IGLResource;
 import oldOpenGL.resource.object.camera.IGLCamera;
 import oldOpenGL.resource.object.drawable.IGLDrawable;
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.AWTGLCanvas;
 import org.lwjgl.opengl.GL11;
 
-import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
+import java.awt.event.ComponentEvent;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class GLCanvas extends AWTGLCanvas {
 	private static final long serialVersionUID = 7519333736764307525L;

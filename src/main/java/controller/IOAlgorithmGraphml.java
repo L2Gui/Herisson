@@ -1,19 +1,14 @@
 package controller;
 
-import model.*;
+import model.Edge;
+import model.Graph;
+import model.Vertex;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
 
-import java.awt.Color;
-import java.io.*;
-
-import org.jdom2.*;
-import org.jdom2.input.*;
-import org.jdom2.filter.*;
-
-import utils.*;
-
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Iterator;
 import java.util.Map.Entry;
 
 public class IOAlgorithmGraphml implements IOAlgorithm {

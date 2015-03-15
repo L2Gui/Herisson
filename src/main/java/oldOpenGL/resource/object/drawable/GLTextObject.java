@@ -1,18 +1,16 @@
 package oldOpenGL.resource.object.drawable;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.List;
-
 import oldOpenGL.resource.object.GLObject;
 import oldOpenGL.resource.object.GLObjectUsage;
 import oldOpenGL.resource.texture.GLTextTexture;
 import oldOpenGL.utils.GLRay;
 import oldOpenGL.vertex.GLTexturedVertex;
-
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GLTextObject extends GLObject implements IGLDrawable {
 	private GLTextTexture textTexture;

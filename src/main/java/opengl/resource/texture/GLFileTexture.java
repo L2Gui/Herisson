@@ -1,14 +1,13 @@
 package opengl.resource.texture;
 
+import de.matthiasmann.twl.utils.PNGDecoder;
+import de.matthiasmann.twl.utils.PNGDecoder.Format;
+import org.lwjgl.opengl.GL13;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
-
-import org.lwjgl.opengl.GL13;
-
-import de.matthiasmann.twl.utils.PNGDecoder;
-import de.matthiasmann.twl.utils.PNGDecoder.Format;
 
 
 public class GLFileTexture extends GLTexture {

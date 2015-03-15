@@ -1,8 +1,8 @@
 package opengl.vertex;
 
-import java.awt.Color;
-
 import utils.ArrayUtils;
+
+import java.awt.*;
 
 public class GLColoredVertex extends GLVertex {
 	private Color color;

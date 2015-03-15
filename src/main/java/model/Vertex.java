@@ -1,17 +1,12 @@
 package model;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import main.App;
 import opengl.resource.GLShader;
 import opengl.resource.object.mesh.GLColoredMesh;
-import opengl.resource.object.mesh.GLMesh;
 import org.lwjgl.util.vector.Vector3f;
 
-import view.VertexView;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class Vertex {
 	private Collection<Edge> edges;
@@ -43,7 +38,7 @@ public class Vertex {
         this.graph = graph;
         this.style = this.graph.getStyleManager().getDefaultVertexStyle();
     }
-    
+
 	public Vector3f getPosition() {
 		return position;
 	}
@@ -281,5 +276,17 @@ public class Vertex {
 
     public void setGraph(Graph graph) {
         this.graph = graph;
+    }
+
+    public VertexStyle getStyle() {
+        return style;
+    }
+
+    public void setStyle(VertexStyle style) {
+        this.style = style;
+    }
+
+    public Collection<Edge> getEdges() {
+        return edges;
     }
 }

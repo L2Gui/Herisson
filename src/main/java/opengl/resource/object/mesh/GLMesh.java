@@ -1,20 +1,18 @@
 package opengl.resource.object.mesh;
 
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import java.util.List;
-
+import opengl.GLHelper;
 import opengl.resource.GLShader;
-import opengl.vertex.GLColoredVertex;
+import opengl.resource.object.GLObjectUsage;
+import opengl.vertex.GLVertex;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
-import opengl.GLHelper;
-import opengl.resource.object.GLObjectUsage;
-import opengl.vertex.GLVertex;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;

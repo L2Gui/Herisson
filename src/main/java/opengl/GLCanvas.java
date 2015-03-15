@@ -1,17 +1,15 @@
 package opengl;
 
+import opengl.resource.object.camera.IGLCamera;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.AWTGLCanvas;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Matrix4f;
+
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
-import opengl.resource.object.camera.IGLCamera;
-
-import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.AWTGLCanvas;
-import org.lwjgl.opengl.GL11;
-
-import org.lwjgl.util.vector.Matrix4f;
 
 public abstract class GLCanvas extends AWTGLCanvas {
 	private static final long serialVersionUID = 7519333736764307525L;

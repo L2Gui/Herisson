@@ -1,6 +1,5 @@
 package oldOpenGL.vertex;
 
-import oldOpenGL.vertex.*;
 import utils.ArrayUtils;
 
 public class GLTexturedVertex extends oldOpenGL.vertex.GLColoredVertex {

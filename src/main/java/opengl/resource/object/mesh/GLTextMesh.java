@@ -1,19 +1,16 @@
 package opengl.resource.object.mesh;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.nio.FloatBuffer;
-import java.util.ArrayList;
-import java.util.List;
-
 import opengl.resource.GLShader;
-import opengl.resource.IGLResource;
 import opengl.resource.object.GLObjectUsage;
 import opengl.resource.texture.GLTextTexture;
 import opengl.vertex.GLTexturedVertex;
-
 import opengl.vertex.GLVertex;
 import org.lwjgl.util.vector.Vector3f;
+
+import java.awt.*;
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GLTextMesh implements IGLMesh {
 	private GLTextTexture textTexture;

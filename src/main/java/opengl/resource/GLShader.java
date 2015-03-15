@@ -1,11 +1,8 @@
 package opengl.resource;
 
-import static org.lwjgl.opengl.GL20.*;
-
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.ContextCapabilities;
 import org.lwjgl.opengl.GL20;
- 
-
 import org.lwjgl.opengl.GLContext;
 
 import java.io.BufferedReader;
@@ -13,14 +10,8 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
- 
 
-
-
-
-
-
-import org.lwjgl.BufferUtils;
+import static org.lwjgl.opengl.GL20.*;
  
 public class GLShader implements IGLResource {
 	private String vertexPath;

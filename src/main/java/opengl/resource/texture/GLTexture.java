@@ -1,12 +1,11 @@
 package opengl.resource.texture;
 
-import java.nio.ByteBuffer;
-
 import opengl.resource.IGLResource;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL30;
+
+import java.nio.ByteBuffer;
 
 
 public abstract class GLTexture implements IGLResource {

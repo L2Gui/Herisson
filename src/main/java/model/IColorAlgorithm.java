@@ -2,7 +2,6 @@ package model;
 
 
 import java.awt.*;
-import java.util.Collection;
 
 public interface IColorAlgorithm{
     /**

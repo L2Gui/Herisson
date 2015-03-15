@@ -3,8 +3,6 @@ package opengl.resource.object;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Quaternion;
 import org.lwjgl.util.vector.Vector3f;
-
-import utils.MathUtils;
 import utils.QuaternionUtils;
 
 public abstract class GLObject implements IGLObject {

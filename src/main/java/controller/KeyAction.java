@@ -1,8 +1,7 @@
 package controller;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
 
 public class KeyAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;

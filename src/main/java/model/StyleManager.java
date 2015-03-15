@@ -1,8 +1,8 @@
 package model;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by Arnaud on 09/03/2015.
@@ -17,14 +17,14 @@ public class StyleManager {
 
     public StyleManager()
     {
-        edgeStyles = new ArrayList<EdgeStyle>();
-        vertexStyles = new ArrayList<VertexStyle>();
+        edgeStyles = new CopyOnWriteArrayList<EdgeStyle>();
+        vertexStyles = new CopyOnWriteArrayList<VertexStyle>();
 
         defaultEdgeStyle = new EdgeStyle().setColor(Color.BLACK)
                                           .setTextColor(Color.BLACK)
                                           .setThickness(2);
 
-        defaultVertexStyle = new VertexStyle().setBackgroundColor(Color.BLACK)
+        defaultVertexStyle = new VertexStyle().setBackgroundColor(Color.GRAY)
                                               .setBorderColor(Color.BLACK)
                                               .setBorderThickness(1)
                                               .setSize(4)
@@ -58,7 +58,6 @@ public class StyleManager {
                 vertexStyles.remove(style);
             }
         }
-        update();
     }
 
     public void addStyle(IStyle style){
@@ -67,7 +66,6 @@ public class StyleManager {
         } else if (style instanceof VertexStyle){
             vertexStyles.add((VertexStyle)style);
         }
-        update();
     }
 
     public List<EdgeStyle> getEdgeStyles() {
