@@ -14,7 +14,7 @@ public class Edge {
     public Edge() {
         srcVertex = null;
         dstVertex = null;
-        style = graph.getStyleManager().getDefaultEdgeStyle();
+        this.label = "";
     }
 
     /**
@@ -27,6 +27,7 @@ public class Edge {
 
     public void setGraph(Graph graph) {
         this.graph = graph;
+        this.style = graph.getStyleManager().getDefaultEdgeStyle();
     }
 		
 	/**

@@ -18,8 +18,6 @@ public class VertexView extends ViewElement {
     private GLColorVariantMesh mesh;
     private GLDrawableObject textDrawable;
 
-    private static Font font = new Font("Arial", Font.PLAIN, 256);
-
     public VertexView(Vertex vertexModel, GLColorVariantMesh mesh, GLShader labelShader) {
         this.vertexModel = vertexModel;
 
@@ -30,14 +28,14 @@ public class VertexView extends ViewElement {
         super.setMesh(this.mesh);
 
         String label = this.vertexModel.getLabel();
-        //Font font = this.vertexModel.getFont();
+        Font font = this.vertexModel.getFont();
         float height = 0.2f;
 
         this.labelMesh.setup(labelShader, label, font, height, GLObjectUsage.STATIC);
         this.labelMesh.init();
         this.labelMesh.setColor(this.vertexModel.getTextColor());
 
-        this.textDrawable.scale(- this.vertexModel.getSize(), this.vertexModel.getSize(), 1.0f);
+        this.textDrawable.scale(this.vertexModel.getSize(), this.vertexModel.getSize(), 1.0f);
         super.setPosition(vertexModel.getPosition());
     }
 
@@ -45,7 +43,7 @@ public class VertexView extends ViewElement {
     public void computeMatrix() {
         super.computeMatrix();
         //Vector3f.add(super.getPosition(), new Vector3f(this.vertexModel.getSize() / 2.0f, - this.vertexModel.getSize() / 2.0f, 0.0f), null)
-        Vector3f position = Vector3f.add(super.getPosition(), new Vector3f(this.vertexModel.getSize() / 2.0f, this.vertexModel.getSize() / 2.0f, -0.001f), null);
+        Vector3f position = Vector3f.add(super.getPosition(), new Vector3f(this.vertexModel.getSize() / 4.0f, - this.vertexModel.getSize() / 4.0f, 0.001f), null);
         this.textDrawable.setPosition(position);
     }
 
@@ -53,8 +51,10 @@ public class VertexView extends ViewElement {
     public void render(Matrix4f transformationMatrix)
     {
         this.mesh.setColor(this.vertexModel.getBackgroundColor());
-
         super.render(transformationMatrix);
+    }
+
+    public void renderText(Matrix4f transformationMatrix) {
         this.textDrawable.render(transformationMatrix);
     }
 

@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class Graph {
 
@@ -10,8 +11,8 @@ public class Graph {
 	private String name;
 	private String filename;
 	
-	private Collection<Edge> edges;
-	private Collection<Vertex> vertices;
+	private List<Edge> edges;
+	private List<Vertex> vertices;
 
     private boolean isOriented;
 
@@ -29,7 +30,7 @@ public class Graph {
 	
 	/**
 	 * 
-	 * @param edge : Correspond à l'élément à ajouter à this.edges (Collection<Edge>)
+	 * @param edge : Correspond à l'élément à ajouter à this.edges (List<Edge>)
 	 */
 	public void addEdge(Edge edge){
 		/* Surrement � modifier, neanmoins on doit prendre en compte que 
@@ -49,7 +50,7 @@ public class Graph {
 	
 	/**
 	 * 
-	 * @param vertex : Correspond � l'�l�ment � ajouter � this.vertices (Collection<Vertex>)
+	 * @param vertex : Correspond � l'�l�ment � ajouter � this.vertices (List<Vertex>)
 	 */
 	public void addVertex(Vertex vertex){
 		/* Surrement � modifier, neanmoins on doit prendre en compte que 
@@ -119,17 +120,17 @@ public class Graph {
 	
 	/**
 	 * 
-	 * @return this.edges (Collection<Edge>)
+	 * @return this.edges (List<Edge>)
 	 */
-	public Collection<Edge> getEdges() {
+	public List<Edge> getEdges() {
 		return edges;
 	}
 	
 	/**
 	 * 
-	 * @return this.vertices (Collection<Vertex>)
+	 * @return this.vertices (List<Vertex>)
 	 */
-	public Collection<Vertex> getVertices() {
+	public List<Vertex> getVertices() {
 		return vertices;
 	}
 

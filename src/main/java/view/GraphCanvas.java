@@ -1,9 +1,6 @@
 package view;
 
-import model.DispoCircleAlgorithm;
-import model.Edge;
-import model.Graph;
-import model.Vertex;
+import model.*;
 import opengl.GLCanvas;
 import opengl.resource.GLShader;
 import opengl.resource.object.GLObjectUsage;
@@ -18,10 +15,8 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import javax.swing.event.MouseInputAdapter;
-import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 import java.util.List;
 import java.util.Set;
 
@@ -31,8 +26,8 @@ import java.util.Set;
 public class GraphCanvas extends GLCanvas {
     private Graph graph;
     private GLPerspectiveCamera camera;
-    private Collection<VertexView> vertexViews;
-    private Collection<EdgeView> edgeViews;
+    private Map<Vertex, VertexView> vertexViews;
+    private Map<Edge, EdgeView> edgeViews;
     private GLColorVariantMesh vertexMesh;
     private GLColorVariantMesh edgeMesh;
     private GLShader labelShader;
@@ -52,6 +47,7 @@ public class GraphCanvas extends GLCanvas {
     @Override
     public void init() {
         this.camera = new GLPerspectiveCamera(70.0f, 0.01f, 100.0f);
+        this.camera.lookToDirection(new Vector3f(0.0f, 0.0f, -1.0f));
         super.setCamera(this.camera);
 
         super.addMouseListener(new MouseInputAdapter() {
@@ -102,17 +98,25 @@ public class GraphCanvas extends GLCanvas {
         this.graph = GraphCanvas.getSampleGraph();
         this.loadGraph();
 
-        this.camera.setPosition(0.0f, 0.0f, -10.0f);
+        this.camera.setPosition(0.0f, 0.0f, 10.0f);
     }
 
     @Override
     public void paint(Matrix4f transformationMatrix) {
-        for (VertexView vertexView : this.vertexViews) {
-            vertexView.render(transformationMatrix);
+        for (Map.Entry<Vertex, VertexView> vertexEntry : this.vertexViews.entrySet()) {
+            vertexEntry.getValue().render(transformationMatrix);
         }
 
-        for (EdgeView edgeView : this.edgeViews) {
-            edgeView.render(transformationMatrix);
+        for (Map.Entry<Edge, EdgeView> edgeEntry : this.edgeViews.entrySet()) {
+            edgeEntry.getValue().render(transformationMatrix);
+        }
+
+        for (Map.Entry<Vertex, VertexView> vertexEntry : this.vertexViews.entrySet()) {
+            vertexEntry.getValue().renderText(transformationMatrix);
+        }
+
+        for (Map.Entry<Edge, EdgeView> edgeEntry : this.edgeViews.entrySet()) {
+            edgeEntry.getValue().renderText(transformationMatrix);
         }
     }
 
@@ -130,19 +134,19 @@ public class GraphCanvas extends GLCanvas {
     private void loadGraph() {
         super.lockDraw();
 
-        this.vertexViews = new ArrayList<VertexView>();
-        this.edgeViews = new ArrayList<EdgeView>();
+        this.vertexViews = new HashMap<Vertex, VertexView>();
+        this.edgeViews = new HashMap<Edge, EdgeView>();
 
         for (Vertex vertex : this.graph.getVertices()) {
             VertexView vertexView = new VertexView(vertex, this.vertexMesh, this.labelShader);
             vertexView.setShader(this.vertexEdgeShader);
-            this.vertexViews.add(vertexView);
+            this.vertexViews.put(vertex, vertexView);
         }
 
         for (Edge edge : this.graph.getEdges()) {
             EdgeView edgeView = new EdgeView(edge, this.edgeMesh, this.labelShader);
             edgeView.setShader(this.vertexEdgeShader);
-            this.edgeViews.add(edgeView);
+            this.edgeViews.put(edge, edgeView);
         }
 
         super.unlockDraw();
@@ -152,7 +156,7 @@ public class GraphCanvas extends GLCanvas {
         Graph g = new Graph();
         g.setName("graphe test");
         Vertex v0 = new Vertex();
-        v0.setPosition(new Vector3f(2f, 0f, 0f));
+        v0.setPosition(new Vector3f(5f, 5f, 0f));
         v0.setLabel("Coucou");
         Vertex v1 = new Vertex();
         v1.setPosition(new Vector3f(4f,-3f,0f));
@@ -163,12 +167,16 @@ public class GraphCanvas extends GLCanvas {
         v3.setPosition(new Vector3f(0f,0f,0f));
         Vertex v4 = new Vertex();
         v4.setPosition(new Vector3f(2f,5f,0f));
+        Edge edge = new Edge();
+        edge.setSrcVertex(v0);
+        edge.setDstVertex(v1);
 
         g.addVertex(v0);
         g.addVertex(v1);
         g.addVertex(v2);
         g.addVertex(v3);
         g.addVertex(v4);
+        g.addEdge(edge);
 
         for (int i = 0; i < 5; i++) {
             Vertex v = new Vertex();
@@ -176,7 +184,7 @@ public class GraphCanvas extends GLCanvas {
             v.setLabel("Noeud "+(i+4));
             g.addVertex(v);
         }
-        DispoCircleAlgorithm algorithm = new DispoCircleAlgorithm("nom");
+        DispoRandomAlgorithm algorithm = new DispoRandomAlgorithm("nom");
 
         for (Pair<Vertex, Vector3f> p : algorithm.execute(g)){
             p.getValue0().setPosition(p.getValue1());
