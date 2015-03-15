@@ -96,9 +96,9 @@ public class GLDrawableObject extends GLObject implements IGLDrawable {
     @Override
     public void computeMatrix() {
         super.getModelMatrix().setIdentity();
-        super.getModelMatrix().scale(scale);
         Matrix4f.mul(super.getModelMatrix(), QuaternionUtils.quaternionToMatrix(super.getRotation()), super.getModelMatrix());
         super.getModelMatrix().translate(super.getPosition());
+        super.getModelMatrix().scale(scale);
     }
 
     @Override

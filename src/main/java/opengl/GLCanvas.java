@@ -60,7 +60,7 @@ public abstract class GLCanvas extends AWTGLCanvas {
 
     @Override
     public void paintGL() {
-        GL11.glClearColor(0.85f, 0.85f, 0.85f, 1.0f);
+        GL11.glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
         this.mutex.lock();

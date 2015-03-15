@@ -25,6 +25,10 @@ public class GLTextTexture extends GLTexture {
 		FontMetrics metrics = graphics.getFontMetrics(this.font);
 		int hgt = metrics.getHeight();
 		int adv = metrics.stringWidth(this.text);
+        if (adv == 0) {
+            adv = 1;
+        }
+
 		this.des = metrics.getDescent();
 		this.size = new Dimension(adv, hgt);
 	}

@@ -13,8 +13,10 @@ import opengl.vertex.GLVertex;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
 
 import javax.swing.event.MouseInputAdapter;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,10 +42,8 @@ public class GraphCanvas extends GLCanvas {
     }
 
     public void setGraph(Graph graph) {
-        super.lockDraw();
         this.graph = graph;
         this.onGraphChange();
-        super.unlockDraw();
     }
 
     @Override
@@ -62,6 +62,8 @@ public class GraphCanvas extends GLCanvas {
 
         this.vertexEdgeShader = new GLShader("coloru3D.vert", "color.frag");
         this.labelShader = new GLShader("textureu3D.vert", "texture.frag");
+        this.vertexEdgeShader.init();
+        this.labelShader.init();
 
         List<GLVertex> vertices = new ArrayList<GLVertex>();
 
@@ -93,6 +95,11 @@ public class GraphCanvas extends GLCanvas {
 
         this.vertexMesh.init();
         this.edgeMesh.init();
+
+        this.graph = GraphCanvas.getSampleGraph();
+        this.loadGraph();
+
+        this.camera.setPosition(0.0f, 0.0f, -10.0f);
     }
 
     @Override
@@ -118,19 +125,48 @@ public class GraphCanvas extends GLCanvas {
     }
 
     private void loadGraph() {
+        super.lockDraw();
+
         this.vertexViews = new ArrayList<VertexView>();
         this.edgeViews = new ArrayList<EdgeView>();
 
         for (Vertex vertex : this.graph.getVertices()) {
-            VertexView vertexView = new VertexView(vertex, this.labelShader);
-            vertexView.setMesh(this.vertexMesh);
+            VertexView vertexView = new VertexView(vertex, this.vertexMesh, this.labelShader);
             vertexView.setShader(this.vertexEdgeShader);
+            this.vertexViews.add(vertexView);
         }
 
         for (Edge edge : this.graph.getEdges()) {
-            EdgeView edgeView = new EdgeView(edge, this.labelShader);
-            edgeView.setMesh(this.edgeMesh);
+            EdgeView edgeView = new EdgeView(edge, this.edgeMesh, this.labelShader);
             edgeView.setShader(this.vertexEdgeShader);
+            this.edgeViews.add(edgeView);
         }
+
+        super.unlockDraw();
+    }
+
+    private static Graph getSampleGraph() {
+        Graph g = new Graph();
+        g.setName("graphe test");
+        Vertex v0 = new Vertex();
+        v0.setPosition(new Vector3f(2f, 0f, 0f));
+        v0.setLabel("Coucou");
+        Vertex v1 = new Vertex();
+        v1.setPosition(new Vector3f(4f,-3f,0f));
+        v1.setLabel("Tranquille ?");
+        Vertex v2 = new Vertex();
+        v2.setPosition(new Vector3f(-4f,3f,0f));
+        Vertex v3 = new Vertex();
+        v3.setPosition(new Vector3f(0f,0f,0f));
+        Vertex v4 = new Vertex();
+        v4.setPosition(new Vector3f(2f,5f,0f));
+
+        g.addVertex(v0);
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v3);
+        g.addVertex(v4);
+
+        return g;
     }
 }

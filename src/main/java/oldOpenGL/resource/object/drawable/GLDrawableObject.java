@@ -1,6 +1,5 @@
 package oldOpenGL.resource.object.drawable;
 
-import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
 import oldOpenGL.GLHelper;
 import oldOpenGL.resource.GLShader;
 import oldOpenGL.resource.object.GLObject;
@@ -16,9 +15,11 @@ import org.lwjgl.util.vector.Vector4f;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public abstract class GLDrawableObject extends GLObject implements IGLDrawable {
-	protected Mutex mutex;
+	protected Lock mutex;
 	private GLObjectUsage state;
 	private GLShader shader;
 	protected List<? extends GLVertex> vertices;
@@ -30,7 +31,7 @@ public abstract class GLDrawableObject extends GLObject implements IGLDrawable {
 	private boolean isInitialized;
 	
 	public GLDrawableObject() {
-		this.mutex = new Mutex();
+		this.mutex = new ReentrantLock();
 	}
 	
 	protected void setupObject(GLShader shader, List<? extends GLVertex> vertices, int[] indices, GLObjectUsage usage) {
@@ -90,16 +91,12 @@ public abstract class GLDrawableObject extends GLObject implements IGLDrawable {
     	GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.vid);
 		
     	this.enableVerticesPointer();
-    	
-    	try {
-    		this.mutex.acquire();
-        	GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, this.iid);
-        	GL12.glDrawRangeElements(GL11.GL_TRIANGLES, 0, this.indicesCount, this.indicesCount, GL11.GL_UNSIGNED_INT, 0);
-        	GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
-        	this.mutex.release();
-    	} catch(InterruptedException ex) {
-    		ex.printStackTrace();
-    	}
+
+        this.mutex.lock();
+        GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, this.iid);
+        GL12.glDrawRangeElements(GL11.GL_TRIANGLES, 0, this.indicesCount, this.indicesCount, GL11.GL_UNSIGNED_INT, 0);
+        GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
+        this.mutex.unlock();
     	
     	this.disableVerticesPointer();
     	
@@ -137,13 +134,9 @@ public abstract class GLDrawableObject extends GLObject implements IGLDrawable {
 	
 	@Override
 	public void computeMatrix() {
-		try {
-			this.mutex.acquire();
-			super.computeMatrix();
-			this.mutex.release();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+        this.mutex.lock();
+        super.computeMatrix();
+        this.mutex.unlock();
 	}
 	
 	@Override

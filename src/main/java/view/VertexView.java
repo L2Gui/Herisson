@@ -7,6 +7,7 @@ import opengl.resource.object.GLObjectUsage;
 import opengl.resource.object.mesh.GLColorVariantMesh;
 import opengl.resource.object.mesh.GLTextMesh;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector;
 import org.lwjgl.util.vector.Vector3f;
 
 import java.awt.*;
@@ -14,32 +15,45 @@ import java.awt.*;
 public class VertexView extends ViewElement {
 	private Vertex vertexModel;
     private GLTextMesh labelMesh;
+    private GLColorVariantMesh mesh;
     private GLDrawableObject textDrawable;
 
-    public VertexView(Vertex vertexModel, GLShader labelShader) {
+    private static Font font = new Font("Arial", Font.PLAIN, 256);
+
+    public VertexView(Vertex vertexModel, GLColorVariantMesh mesh, GLShader labelShader) {
         this.vertexModel = vertexModel;
 
         this.labelMesh = new GLTextMesh();
+        this.mesh = mesh;
         this.textDrawable = new GLDrawableObject(labelShader, labelMesh);
 
+        super.setMesh(this.mesh);
+
         String label = this.vertexModel.getLabel();
-        Font font = this.vertexModel.getFont();
+        //Font font = this.vertexModel.getFont();
         float height = 0.2f;
 
         this.labelMesh.setup(labelShader, label, font, height, GLObjectUsage.STATIC);
-        this.computeMatrix();
+        this.labelMesh.init();
+        this.labelMesh.setColor(this.vertexModel.getTextColor());
+
+        this.textDrawable.scale(- this.vertexModel.getSize(), this.vertexModel.getSize(), 1.0f);
+        super.setPosition(vertexModel.getPosition());
     }
 
     @Override
     public void computeMatrix() {
         super.computeMatrix();
-
-        this.textDrawable.setPosition(Vector3f.add(super.getPosition(), new Vector3f(this.vertexModel.getSize() / 2.0f, - this.vertexModel.getSize() / 2.0f, 0.0f), null));
+        //Vector3f.add(super.getPosition(), new Vector3f(this.vertexModel.getSize() / 2.0f, - this.vertexModel.getSize() / 2.0f, 0.0f), null)
+        Vector3f position = Vector3f.add(super.getPosition(), new Vector3f(this.vertexModel.getSize() / 2.0f, this.vertexModel.getSize() / 2.0f, -0.001f), null);
+        this.textDrawable.setPosition(position);
     }
 
     @Override
     public void render(Matrix4f transformationMatrix)
     {
+        this.mesh.setColor(this.vertexModel.getBackgroundColor());
+
         super.render(transformationMatrix);
         this.textDrawable.render(transformationMatrix);
     }
