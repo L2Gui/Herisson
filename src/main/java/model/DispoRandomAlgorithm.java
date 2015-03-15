@@ -43,7 +43,7 @@ public class DispoRandomAlgorithm implements IDispoAlgorithm {
                 max.z=Math.max(max.z, current.z);
             }
         }
-        //attribution de nouvelles positions
+        //attribution des nouvelles positions
         Vector3f newPos;
         for( Vertex v : g.getVertices()){
             newPos=new Vector3f((float)(Math.random()*max.x)+min.x,
@@ -65,7 +65,7 @@ public class DispoRandomAlgorithm implements IDispoAlgorithm {
     }
 
     /**
-     * Affecte à l'algo un nouveau nom d'affichage, et le retourne
+     * Affecte à l'algo un nouveau nom d'affichage
      *
      * @param newName Le nouveau nom de l'algo
      */
