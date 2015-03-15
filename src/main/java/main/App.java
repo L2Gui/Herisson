@@ -2,6 +2,7 @@ package main;
 
 import controller.*;
 import model.*;
+import org.lwjgl.util.vector.Vector3f;
 import view.GraphCanvas;
 import view.GraphWindow;
 
@@ -46,6 +47,7 @@ public class App {
 
         /** Ajout des algorythmes **/
         this.dispoAlgorithms.add(new DispoRandomAlgorithm("Disposition aléatoire"));
+        this.dispoAlgorithms.add(new DispoCircleAlgorithm("Disposition en cercle"));
 
         /** Fin ajout des algorythmes **/
 
@@ -57,6 +59,29 @@ public class App {
         /* deux graphes bidon juste pour voir les onglets */
         frame.addGraph(new Graph());
         frame.addGraph(new Graph());
+/*
+        Graph g = new Graph();
+        g.setName("graphe test");
+        Vertex v0 = new Vertex(g);
+        v0.setPosition(new Vector3f(0f, 2f, 0f));
+        Vertex v1 = new Vertex(g);
+        v1.setPosition(new Vector3f(4f,-3f,0f));
+        Vertex v2 = new Vertex(g);
+        v2.setPosition(new Vector3f(-4f,3f,0f));
+        Vertex v3 = new Vertex(g);
+        v3.setPosition(new Vector3f(0f,0f,0f));
+        Vertex v4 = new Vertex(g);
+        v4.setPosition(new Vector3f(2f,5f,0f));
+        Vertex v5 = new Vertex(g);
+        v5.setPosition(new Vector3f(-3f,-2f,5f));
+
+        g.addVertex(v0);
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v3);
+        g.addVertex(v4);
+        g.addVertex(v5);
+        //frame.addGraph(g);*/
 
         this.frame.addKeyListener(this.keyboardHandler);
 		this.frame.setVisible(true);

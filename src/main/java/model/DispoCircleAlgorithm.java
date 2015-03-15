@@ -29,7 +29,8 @@ public class DispoCircleAlgorithm implements IDispoAlgorithm {
 
         //attribution des nouvelles positions
         double angleBetweenTwoVertices = (2*Math.PI)/(g.getVertices().size());
-        double radius=Math.sqrt(4*maxSize*maxSize);
+        // cf: al kashi
+        double radius=Math.sqrt((2*maxSize*maxSize)/(2*(1-Math.cos(angleBetweenTwoVertices))));
         double currentAngle=0;
         Vector3f newPos;
 
