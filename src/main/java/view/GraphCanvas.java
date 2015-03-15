@@ -1,5 +1,6 @@
 package view;
 
+import model.DispoCircleAlgorithm;
 import model.Edge;
 import model.Graph;
 import model.Vertex;
@@ -10,6 +11,7 @@ import opengl.resource.object.camera.GLPerspectiveCamera;
 import opengl.resource.object.mesh.GLColorVariantMesh;
 import opengl.utils.GLRay;
 import opengl.vertex.GLVertex;
+import org.javatuples.Pair;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
@@ -21,6 +23,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Clement on 13/03/2015.
@@ -155,7 +158,7 @@ public class GraphCanvas extends GLCanvas {
         v1.setPosition(new Vector3f(4f,-3f,0f));
         v1.setLabel("Tranquille ?");
         Vertex v2 = new Vertex();
-        v2.setPosition(new Vector3f(-4f,3f,0f));
+        v2.setPosition(new Vector3f(-4f, 3f, 0f));
         Vertex v3 = new Vertex();
         v3.setPosition(new Vector3f(0f,0f,0f));
         Vertex v4 = new Vertex();
@@ -167,6 +170,17 @@ public class GraphCanvas extends GLCanvas {
         g.addVertex(v3);
         g.addVertex(v4);
 
+        for (int i = 0; i < 5; i++) {
+            Vertex v = new Vertex();
+            v.setPosition(new Vector3f(0f,0f,0f));
+            v.setLabel("Noeud "+(i+4));
+            g.addVertex(v);
+        }
+        DispoCircleAlgorithm algorithm = new DispoCircleAlgorithm("nom");
+
+        for (Pair<Vertex, Vector3f> p : algorithm.execute(g)){
+            p.getValue0().setPosition(p.getValue1());
+        }
         return g;
     }
 }
