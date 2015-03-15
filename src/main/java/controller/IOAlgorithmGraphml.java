@@ -171,6 +171,7 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
             edgeStyleCount++;
         }
 
+        HashMap<String, Vertex> vertexKeysMap = new HashMap<String, Vertex>();
 
         //génération des key
 
