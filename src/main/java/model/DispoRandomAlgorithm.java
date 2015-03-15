@@ -47,7 +47,7 @@ public class DispoRandomAlgorithm implements IDispoAlgorithm {
         Vector3f newPos;
         for( Vertex v : g.getVertices()){
             newPos=new Vector3f((float)(Math.random()*(max.x-min.x))+min.x,
-                                (float)(Math.random()*(max.y-min.x))+min.y,
+                                (float)(Math.random()*(max.y-min.y))+min.y,
                                 (float)(Math.random()*(max.z-min.z))+min.z);
 
             set.add(new Pair<Vertex, Vector3f>(v, newPos));
