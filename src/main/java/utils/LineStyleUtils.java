@@ -7,18 +7,18 @@ public class LineStyleUtils {
 	public static LineStyle stringToLineStyle(String value)
 	{
 		LineStyle style = LineStyle.SOLID;
-		
-		/*switch (value.toLowerCase()){
-			case "solid" :
-				style = LineStyle.SOLID;
-				break;
-			case "dotted":
-				style = LineStyle.DOTTED;
-				break;
-			case "dashed":
-				style = LineStyle.DASHED;
-				break;
-		}*/
+
+        String testable = value.toLowerCase();
+
+        if (testable ==  "solid") {
+            style = LineStyle.SOLID;
+        }
+        if (testable == "dotted") {
+            style = LineStyle.DOTTED;
+        }
+        if (testable == "dashed"){
+			style = LineStyle.DASHED;
+		}
 		
 		return style;
 	}

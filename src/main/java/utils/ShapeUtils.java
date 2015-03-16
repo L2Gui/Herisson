@@ -6,21 +6,17 @@ public class ShapeUtils {
 	public static VertexShape stringToShape(String value){
 		
 		VertexShape shape = VertexShape.SQUARE;
-		/*
-		switch (value.toLowerCase())
-		{
-			case "square":
-				shape = VertexShape.SQUARE;
-				break;
-			case "circle":
-				shape = VertexShape.CIRCLE;
-				break;
-			case "diamond":
-				shape = VertexShape.DIAMOND;
-				break;
-			default :
-				break;
-		}*/
+
+        String testable = value.toLowerCase();
+		if (testable == "square") {
+            shape = VertexShape.SQUARE;
+        }
+        if (testable == "circle") {
+            shape = VertexShape.CIRCLE;
+        }
+        if (testable == "diamond"){
+			shape = VertexShape.DIAMOND;
+        }
 		
 		return shape;
 	}

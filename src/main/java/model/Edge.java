@@ -100,7 +100,6 @@ public class Edge {
 	 * @param color est la nouvelle valeur de this.style.color
 	 */
 	public Edge setColor(Color color){
-		//TODO
         EdgeStyle newStyle = new EdgeStyle(this.style);
         this.style.decrementUsageCount();
 
@@ -126,7 +125,6 @@ public class Edge {
 	 * @param thickness est la nouvelle valeur de this.style.thickness
 	 */
 	public Edge setThickness(float thickness){
-		//TODO
         EdgeStyle newStyle = new EdgeStyle(this.style);
         this.style.decrementUsageCount();
 
@@ -152,7 +150,6 @@ public class Edge {
 	 * @param textColor est la nouvelle valeur de this.style.textColor
 	 */
 	public Edge setTextColor(Color textColor){
-		//TODO
         EdgeStyle newStyle = new EdgeStyle(this.style);
         this.style.decrementUsageCount();
 
@@ -178,7 +175,6 @@ public class Edge {
 	 * @param font est la nouvelle valeur de this.style.font
 	 */
 	public Edge setFont(Font font){
-		//TODO
         EdgeStyle newStyle = new EdgeStyle(this.style);
         this.style.decrementUsageCount();
 

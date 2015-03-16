@@ -65,7 +65,6 @@ public class Vertex {
 
 	public Vertex setThickness(float thickness){
 
-		//TODO
         VertexStyle newStyle = new VertexStyle(this.style);
         this.style.decrementUsageCount();
         this.style.getVertices().remove(this);
@@ -94,7 +93,6 @@ public class Vertex {
 	 */
 	public Vertex setSize(float size){
 
-		//TODO
         VertexStyle newStyle = new VertexStyle(this.style);
         this.style.decrementUsageCount();
         this.style.getVertices().remove(this);
@@ -122,7 +120,6 @@ public class Vertex {
 	 */
 	public Vertex setBackgroundColor( Color color){
 
-		//TODO
         VertexStyle newStyle = new VertexStyle(this.style);
         this.style.decrementUsageCount();
         this.style.getVertices().remove(this);
@@ -166,7 +163,7 @@ public class Vertex {
 	 * @param textColor est la nouvelle valeur de this.style.textColor
 	 */
 	public Vertex setTextColor(Color textColor){
-		//TODO
+
         VertexStyle newStyle = new VertexStyle(this.style);
         this.style.decrementUsageCount();
         this.style.getVertices().remove(this);
@@ -194,7 +191,7 @@ public class Vertex {
 	 * @param font est la nouvelle valeur de this.style.font
 	 */
 	public Vertex setFont(Font font){
-		//TODO
+
         VertexStyle newStyle = new VertexStyle(this.style);
         this.style.decrementUsageCount();
         this.style.getVertices().remove(this);
@@ -218,7 +215,7 @@ public class Vertex {
 	}
 
 	public Vertex setBorderColor(Color color){
-		//TODO
+
         VertexStyle newStyle = new VertexStyle(this.style);
         this.style.decrementUsageCount();
         this.style.getVertices().remove(this);

@@ -57,6 +57,9 @@ public class GraphCanvas extends GLCanvas {
             @Override
             public void mousePressed(MouseEvent arg0) {
                 if (arg0.getButton() == MouseEvent.BUTTON1) {
+
+
+
                     GraphCanvas.this.createObject(arg0.getX(), arg0.getY());
                 }
             }
@@ -128,10 +131,22 @@ public class GraphCanvas extends GLCanvas {
     }
 
     private void createObject(int x, int y) {
-        GLRay ray = this.camera.getCursorRay(new Vector2f(x, y));
-        //Vector3f position = Vector3f.add(ray.getPosition(), (Vector3f) ray.getDirection().scale(distance), null);
 
-        //this.graph.addVertex(new Vertex(position, mesh, shader, graph));
+        System.out.println("Clic");
+
+        GLRay ray = this.camera.getCursorRay(new Vector2f(x, y));
+        Vector3f position = Vector3f.add(ray.getPosition(), (Vector3f) ray.getDirection().scale(5f), null);
+
+        Vertex v = new Vertex();
+        v.setPosition(position);
+        v.setLabel("COCA-COLA");
+
+        VertexView vv = new VertexView(v, this.vertexMesh, this.labelShader);
+
+        this.vertexViews.put(v, vv);
+        //this.paintGL();
+        //graph.addVertex(v);
+        //onGraphChange();
     }
 
     private void loadGraph() {
