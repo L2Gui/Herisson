@@ -7,11 +7,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class DispoRandomAlgorithm implements IDispoAlgorithm {
-    private String name;
-
-    public DispoRandomAlgorithm(String name){
-        this.name=name;
-    }
     /**
      * Dispose les sommets de manière aléatoire (en prenant en compte la taille du graphe actuel)
      *
@@ -54,23 +49,5 @@ public class DispoRandomAlgorithm implements IDispoAlgorithm {
         }
 
         return set;
-    }
-
-    /**
-     * @return Le nom d'affichage de l'algo
-     */
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Affecte à l'algo un nouveau nom d'affichage
-     *
-     * @param newName Le nouveau nom de l'algo
-     */
-    @Override
-    public void setName(String newName) {
-        this.name=newName;
     }
 }

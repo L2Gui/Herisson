@@ -1,38 +1,55 @@
 package controller;
 
-import model.EdgeStyle;
-import model.Graph;
-import model.VertexStyle;
+import model.*;
 
+import java.awt.event.ActionEvent;
 import java.util.Collection;
 
 /**
  * Created by Clement on 13/03/2015.
  */
-public class CommandContext {
+public class CommandContext extends ActionEvent {
     private Collection<IOAlgorithm> ioAlgorithms;
-    //private Collection<IVisuAlgorithm> visuAlgorythms;
-    private Collection<VertexStyle> vertexStyles;
-    private Collection<EdgeStyle> edgesStyles;
+    private Collection<IDispoAlgorithm> dispoAlgorythms;
+    private Collection<IColorAlgorithm> colorAlgorythms;
+    private Collection<ISizeAlgorithm> sizeAlgorythms;
     private Graph currentGraph;
-    private VertexStyle currentVertexStyle;
-    private EdgeStyle currentEdgeStyle;
+
+    public CommandContext(ActionEvent e) {
+        super(e.getSource(), e.getID(), e.getActionCommand());
+    }
 
     public Collection<IOAlgorithm> getIoAlgorithms() {
         return ioAlgorithms;
     }
 
+    public Collection<IDispoAlgorithm> getDispoAlgorythms() {
+        return dispoAlgorythms;
+    }
+
+    public void setDispoAlgorythms(Collection<IDispoAlgorithm> dispoAlgorythms) {
+        this.dispoAlgorythms = dispoAlgorythms;
+    }
+
+    public Collection<IColorAlgorithm> getColorAlgorythms() {
+        return colorAlgorythms;
+    }
+
+    public void setColorAlgorythms(Collection<IColorAlgorithm> colorAlgorythms) {
+        this.colorAlgorythms = colorAlgorythms;
+    }
+
+    public Collection<ISizeAlgorithm> getSizeAlgorythms() {
+        return sizeAlgorythms;
+    }
+
+    public void setSizeAlgorythms(Collection<ISizeAlgorithm> sizeAlgorythms) {
+        this.sizeAlgorythms = sizeAlgorythms;
+    }
+
     public void setIoAlgorithms(Collection<IOAlgorithm> ioAlgorithms) {
         this.ioAlgorithms = ioAlgorithms;
     }
-
-    /*public Collection<IVisuAlgorithm> getVisuAlgorythms() {
-        return visuAlgorythms;
-    }
-
-    public void setVisuAlgorythms(Collection<IVisuAlgorithm> visuAlgorythms) {
-        this.visuAlgorythms = visuAlgorythms;
-    }*/
 
     public Graph getCurrentGraph() {
         return currentGraph;
@@ -40,37 +57,5 @@ public class CommandContext {
 
     public void setCurrentGraph(Graph currentGraph) {
         this.currentGraph = currentGraph;
-    }
-
-    public Collection<VertexStyle> getVertexStyles() {
-        return vertexStyles;
-    }
-
-    public void setVertexStyles(Collection<VertexStyle> vertexStyles) {
-        this.vertexStyles = vertexStyles;
-    }
-
-    public Collection<EdgeStyle> getEdgesStyles() {
-        return edgesStyles;
-    }
-
-    public void setEdgesStyles(Collection<EdgeStyle> edgesStyles) {
-        this.edgesStyles = edgesStyles;
-    }
-
-    public VertexStyle getCurrentVertexStyle() {
-        return currentVertexStyle;
-    }
-
-    public void setCurrentVertexStyle(VertexStyle currentVertexStyle) {
-        this.currentVertexStyle = currentVertexStyle;
-    }
-
-    public EdgeStyle getCurrentEdgeStyle() {
-        return currentEdgeStyle;
-    }
-
-    public void setCurrentEdgeStyle(EdgeStyle currentEdgeStyle) {
-        this.currentEdgeStyle = currentEdgeStyle;
     }
 }

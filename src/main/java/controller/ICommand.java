@@ -1,7 +1,8 @@
 package controller;
 
+import model.Graph;
+
 public interface ICommand {
-    boolean isUndoable();
-	void execute();
 	void undo();
+    void execute(Graph graph);
 }
