@@ -17,6 +17,12 @@ public class Edge {
         this.label = "";
     }
 
+
+    public Edge(Graph graph) {
+        this();
+        this.graph = graph;
+        this.style = graph.getStyleManager().getDefaultEdgeStyle();
+    }
     /**
      *
      * @return

@@ -96,7 +96,6 @@ public class Vertex {
 	 */
 	public float getSize(){
 		return this.style.getSize();
-
 	}
 	
 	/**
