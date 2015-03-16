@@ -49,6 +49,7 @@ public class Controller {
         for (Graph graph : this.graphs) {
             this.window.addGraph(graph);
         }
+        this.window.setAlgorithms(this.dispoAlgorithms, this.colorAlgorithms, this.sizeAlgorithms);
     }
 
     public void addGraph(Graph graph) {
