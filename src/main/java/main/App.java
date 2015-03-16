@@ -9,18 +9,17 @@ import view.GraphWindow;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class App {
 	private GraphWindow frame;
 	private IOHandler ioHandler;
-    private CommandContext context;
-	private CommandHandler commandHandler;
-	private KeyboardHandler keyboardHandler;
     private Collection<ICommand> commands;
 	private Collection<IOAlgorithm> ioAlgorithms;
-	private Collection<IDispoAlgorithm> dispoAlgorithms;
-    private Collection<IColorAlgorithm> colorAlgorithms;
-    private Collection<ISizeAlgorithm> sizeAlgorithms;
+	private Map<String, IDispoAlgorithm> dispoAlgorithms;
+    private Map<String, IColorAlgorithm> colorAlgorithms;
+    private Map<String, ISizeAlgorithm> sizeAlgorithms;
 	private Collection<Graph> graphs;
     private GraphCanvas canvas;
 
@@ -36,22 +35,19 @@ public class App {
     
     public void run() throws Exception {
         this.ioHandler = new IOHandler();
-        this.context = new CommandContext();
-        this.commandHandler = new CommandHandler(context);
-        this.keyboardHandler = new KeyboardHandler();
         this.ioAlgorithms = new ArrayList<IOAlgorithm>();
-        this.dispoAlgorithms = new ArrayList<IDispoAlgorithm>();
-        this.colorAlgorithms = new ArrayList<IColorAlgorithm>();
-        this.sizeAlgorithms = new ArrayList<ISizeAlgorithm>();
+        this.dispoAlgorithms = new HashMap<String, IDispoAlgorithm>();
+        this.colorAlgorithms = new HashMap<String, IColorAlgorithm>();
+        this.sizeAlgorithms = new HashMap<String, ISizeAlgorithm>();
         this.graphs = new ArrayList<Graph>();
 
         /** Ajout des algorythmes **/
-        this.dispoAlgorithms.add(new DispoRandomAlgorithm("Disposition aléatoire"));
-        this.dispoAlgorithms.add(new DispoCircleAlgorithm("Disposition en cercle"));
+        this.dispoAlgorithms.put("Disposition aléatoire", new DispoRandomAlgorithm());
+        this.dispoAlgorithms.put("Disposition en cercle", new DispoCircleAlgorithm());
 
         /** Fin ajout des algorythmes **/
 
-        this.keyboardHandler.setCommandHandler(commandHandler);
+        //this.keyboardHandler.setCommandHandler(commandHandler);
         this.canvas = new GraphCanvas();
 
         frame = new GraphWindow("Hérisson", new Dimension(600, 600), this.canvas, dispoAlgorithms, colorAlgorithms, sizeAlgorithms);
@@ -87,7 +83,6 @@ public class App {
         g.addVertex(v5);
         //frame.addGraph(g);*/
 
-        this.frame.addKeyListener(this.keyboardHandler);
 		this.frame.setVisible(true);
     }
 }

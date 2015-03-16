@@ -1,16 +1,18 @@
 package controller;
 
+import model.Graph;
+
 import java.util.Stack;
 
 public class CommandHandler {
 	private Stack<ICommand> commandStack;
 	private Stack<ICommand> undoStack;
-    private CommandContext context;
+    private Graph graph;
 	
-	public CommandHandler(CommandContext context) {
+	public CommandHandler(Graph graph) {
 		this.commandStack = new Stack<ICommand>();
 		this.undoStack = new Stack<ICommand>();
-        this.context = context;
+        this.graph = graph;
 	}
 	
 	public void undo() {
@@ -29,20 +31,17 @@ public class CommandHandler {
 		}
 		
 		ICommand command = this.undoStack.pop();
-		command.execute();
+		command.execute(this.graph);
 		this.commandStack.push(command);
 	}
 	
-	public void executeCommand(Command command) {
-        command.setContext(context);
-		command.execute();
+	public void executeCommand(ICommand command) {
+		command.execute(this.graph);
 
-        if (command.isUndoable()) {
-            this.commandStack.push(command);
+        this.commandStack.push(command);
 
-            if (!this.undoStack.empty()) {
-                this.undoStack.clear();
-            }
+        if (!this.undoStack.empty()) {
+            this.undoStack.clear();
         }
 	}
 }

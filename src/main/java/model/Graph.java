@@ -1,11 +1,13 @@
 package model;
 
+import controller.CommandHandler;
+import controller.ICommand;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class Graph {
-
+    private CommandHandler commandHandler;
     private StyleManager styleManager;
 
 	private String name;
@@ -17,12 +19,13 @@ public class Graph {
     private boolean isOriented;
 
     public Graph(){
-        name = "";
-        filename = "";
-        isOriented = false;
-        edges = new ArrayList<Edge>();
-        vertices = new ArrayList<Vertex>();
-        styleManager = new StyleManager();
+        this.name = "";
+        this.filename = "";
+        this.isOriented = false;
+        this.edges = new ArrayList<Edge>();
+        this.vertices = new ArrayList<Vertex>();
+        this.styleManager = new StyleManager();
+        this.commandHandler = new CommandHandler(this);
     }
 	
 	// Fonctions d'ajout dans les collections edges et vertices.
@@ -152,5 +155,9 @@ public class Graph {
 
     public void setOriented(boolean isOriented) {
         this.isOriented = isOriented;
+    }
+
+    public void executeCommand(ICommand command) {
+        this.commandHandler.executeCommand(command);
     }
 }
