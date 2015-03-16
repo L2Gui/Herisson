@@ -151,8 +151,7 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
         graphml.addContent(defaultNodeStyle);
         vertexStylesMap.put(graph.getStyleManager().getDefaultVertexStyle(), defaultNodeStyle.getAttributeValue("id"));
         nodeStyleCount++;
-        for(VertexStyle style : graph.getStyleManager().getVertexStyles())
-        {
+        for(VertexStyle style : graph.getStyleManager().getVertexStyles()){
             Element nodeStyle = constructNodeStyleKey(null, style, nodeStyleCount);
             graphml.addContent(nodeStyle);
             vertexStylesMap.put(style, nodeStyle.getAttributeValue("id"));
@@ -164,8 +163,7 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
         graphml.addContent(defaultEdgeStyle);
         edgeStylesMap.put(graph.getStyleManager().getDefaultEdgeStyle(), defaultEdgeStyle.getAttributeValue("id"));
         edgeStyleCount++;
-        for(EdgeStyle style : graph.getStyleManager().getEdgeStyles())
-        {
+        for(EdgeStyle style : graph.getStyleManager().getEdgeStyles()){
             Element nodeStyle = constructEdgeStyleKey(null, style, nodeStyleCount);
             graphml.addContent(nodeStyle);
             edgeStylesMap.put(style, nodeStyle.getAttributeValue("id"));
@@ -173,15 +171,19 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
         }
 
         Element graphxml;
-        if (graph.getName() != "" && graph.getName() != null)
+        if (graph.getName() != "" && graph.getName() != null) {
             graphxml = new Element("graph").setAttribute("id", graph.getName());
-        else
+        }
+        else {
             graphxml = new Element("graph").setAttribute("id", "g");
+        }
 
-        if (graph.isOriented())
+        if (graph.isOriented()) {
             graphxml.setAttribute("edgedefault", "directed");
-        else
+        }
+        else{
             graphxml.setAttribute("edgedefault", "undirected");
+        }
 
 
         HashMap<Vertex, String> vertexKeysMap = new HashMap<Vertex, String>();
@@ -190,6 +192,33 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
         for (Vertex v: graph.getVertices())
         {
             Element node = new Element("node").setAttribute("id", "n"+nodeCount).setAttribute("style", vertexStylesMap.get(v.getStyle()));
+
+            Element position  = new Element("position");
+            Element x = new Element("posx");
+            Element y = new Element("posy");
+            Element z = new Element("posz");
+            if (v.getPosition() != null) {
+                x.setText(String.valueOf(v.getPosition().getX()));
+                y.setText(String.valueOf(v.getPosition().getY()));
+                z.setText(String.valueOf(v.getPosition().getZ()));
+            } else{
+                x.setText("0");
+                y.setText("0");
+                z.setText("0");
+            }
+
+            position.addContent(x).addContent(y).addContent(z);
+
+            Element label = new Element("label");
+            if (v.getLabel() != null){
+                label.setText(v.getLabel());
+            }
+            else {
+                label.setText("");
+            }
+
+            node.addContent(position).addContent(label);
+
             vertexKeysMap.put(v, node.getAttributeValue("id"));
             graphxml.addContent(node);
             nodeCount++;
@@ -203,6 +232,17 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
                                 .setAttribute("style", edgeStylesMap.get(e.getStyle()))
                                 .setAttribute("source", vertexKeysMap.get(e.getSrcVertex()))
                                 .setAttribute("target", vertexKeysMap.get(e.getDstVertex()));
+
+            Element label = new Element("label");
+            if (e.getLabel() != null){
+                label.setText(e.getLabel());
+            }
+            else {
+                label.setText("");
+            }
+
+            edge.addContent(label);
+
             graphxml.addContent(edge);
             edgeCount++;
         }
