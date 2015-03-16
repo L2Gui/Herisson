@@ -28,6 +28,9 @@ public class GraphCanvas extends GLCanvas {
     private GLPerspectiveCamera camera;
     private Map<Vertex, VertexView> vertexViews;
     private Map<Edge, EdgeView> edgeViews;
+    private List<VertexView> vertexViewsOrdonned;
+    private List<EdgeView> edgeViewsOrdonned;
+
     private GLColorVariantMesh vertexMesh;
     private GLColorVariantMesh edgeMesh;
     private GLShader labelShader;
@@ -134,11 +137,18 @@ public class GraphCanvas extends GLCanvas {
     private void loadGraph() {
         super.lockDraw();
 
+        float z = 0.0f;
+        float dz = 0.00000001f;
+
         this.vertexViews = new HashMap<Vertex, VertexView>();
         this.edgeViews = new HashMap<Edge, EdgeView>();
+        this.vertexViewsOrdonned = new ArrayList<VertexView>();
+        this.edgeViewsOrdonned = new ArrayList<EdgeView>();
 
         for (Vertex vertex : this.graph.getVertices()) {
             VertexView vertexView = new VertexView(vertex, this.vertexMesh, this.labelShader);
+            //vertexView.setPosition();
+
             vertexView.setShader(this.vertexEdgeShader);
             this.vertexViews.put(vertex, vertexView);
         }

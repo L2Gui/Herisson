@@ -43,7 +43,7 @@ public class VertexView extends ViewElement {
     public void computeMatrix() {
         super.computeMatrix();
         //Vector3f.add(super.getPosition(), new Vector3f(this.vertexModel.getSize() / 2.0f, - this.vertexModel.getSize() / 2.0f, 0.0f), null)
-        Vector3f position = Vector3f.add(super.getPosition(), new Vector3f(this.vertexModel.getSize() / 4.0f, - this.vertexModel.getSize() / 4.0f, 0.001f), null);
+        Vector3f position = Vector3f.add(super.getPosition(), new Vector3f(this.vertexModel.getSize() / 4.0f, - this.vertexModel.getSize() / 4.0f, super.getPosition().z), null);
         this.textDrawable.setPosition(position);
     }
 
