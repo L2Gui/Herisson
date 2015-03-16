@@ -23,16 +23,6 @@ public class Vertex {
         label = "";
     }
 
-    /*public Vertex(Vector3f position, GLColoredMesh mesh, GLShader shader, Graph graph) {
-        this.graph = graph;
-        this.style = graph.getStyleManager().getDefaultVertexStyle();
-        this.edges = new ArrayList<Edge>();
-        this.position = position;
-        this.mesh = mesh;
-        this.shader = shader;
-        this.mainView = new VertexView(this, mesh, shader);
-    }*/
-
     public Vertex(Graph graph){
         this();
         this.graph = graph;
@@ -254,8 +244,7 @@ public class Vertex {
 	 * 
 	 * @param shape
 	 */
-	public Vertex setShape(VertexShape shape)
-	{
+	public Vertex setShape(VertexShape shape){
         VertexStyle newStyle = new VertexStyle(this.style);
         this.style.decrementUsageCount();
         this.style.getVertices().remove(this);

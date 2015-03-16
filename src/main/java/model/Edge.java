@@ -1,7 +1,5 @@
 package model;
 
-import view.EdgeView;
-
 import java.awt.*;
 
 public class Edge {
@@ -129,6 +127,14 @@ public class Edge {
 	 */
 	public Edge setThickness(float thickness){
 		//TODO
+        EdgeStyle newStyle = new EdgeStyle(this.style);
+        this.style.decrementUsageCount();
+
+        newStyle.setThickness(thickness);
+        this.style = newStyle;
+        this.style.incrementUsageCount();
+
+        graph.getStyleManager().addStyle(this.style);
 
         return this;
 	}
