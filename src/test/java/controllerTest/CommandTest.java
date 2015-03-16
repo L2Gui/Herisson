@@ -1,8 +1,8 @@
 package controllerTest;
 
-import controller.Command;
-import controller.CommandContext;
 import controller.CommandHandler;
+import controller.ICommand;
+import model.Graph;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -12,14 +12,9 @@ public class CommandTest {
 
 	@Test
 	public void CommandHandlerTest() {
-		Command command1 = new Command() {
+		ICommand command1 = new ICommand() {
             @Override
-            public boolean isUndoable() {
-                return true;
-            }
-
-            @Override
-			public void execute() {
+			public void execute(Graph graph) {
 				CommandTest.this.x += 7;
 			}
 
@@ -29,14 +24,9 @@ public class CommandTest {
 			}
 		};
 		
-		Command command2 = new Command() {
-            @Override
-            public boolean isUndoable() {
-                return true;
-            }
-
+		ICommand command2 = new ICommand() {
 			@Override
-			public void execute() {
+			public void execute(Graph graph) {
 				CommandTest.this.x += 9;
 			}
 
@@ -47,8 +37,7 @@ public class CommandTest {
 		};
 
 		this.x = 0;
-        CommandContext context = new CommandContext();
-		CommandHandler handler = new CommandHandler(context);
+		CommandHandler handler = new CommandHandler(null);
 		
 		handler.executeCommand(command1);
 		assertEquals(7, this.x);

@@ -54,7 +54,7 @@ public class DispoRandomAlgorithmTest {
         Vector3f minTh = new Vector3f(-4f,-3f,0f);
         Vector3f maxTh = new Vector3f(4f,5f,0f);
 
-        DispoRandomAlgorithm algorithm = new DispoRandomAlgorithm("algo");
+        DispoRandomAlgorithm algorithm = new DispoRandomAlgorithm();
         Set<Pair<Vertex, Vector3f>> real;
         for(int i=0; i<100; i++){
             real = algorithm.execute(g);
@@ -68,7 +68,7 @@ public class DispoRandomAlgorithmTest {
     @Test
     public void RandomDistribChangeVerticesLocation() {
 
-        DispoRandomAlgorithm algorithm = new DispoRandomAlgorithm("algo");
+        DispoRandomAlgorithm algorithm = new DispoRandomAlgorithm();
         Set<Pair<Vertex, Vector3f>> real;
         boolean posChanged = false;
         for(int i=0; i<100 && !posChanged; i++){

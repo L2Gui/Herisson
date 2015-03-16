@@ -70,7 +70,7 @@ public class DispoCircleAlgorithmTest {
 
 
 
-        DispoCircleAlgorithm algorithm = new DispoCircleAlgorithm("algo");
+        DispoCircleAlgorithm algorithm = new DispoCircleAlgorithm();
         Set<Pair<Vertex, Vector3f>> real;
         for(int i=0; i<100; i++){
             real = algorithm.execute(g);
@@ -99,7 +99,7 @@ public class DispoCircleAlgorithmTest {
 
         g.addVertex(v);
 
-        DispoCircleAlgorithm algorithm = new DispoCircleAlgorithm("algo");
+        DispoCircleAlgorithm algorithm = new DispoCircleAlgorithm();
         for(int i=0; i<100; i++){
             algorithm.execute(g);
             assertEquals(maxSize, algorithm.getMaxSize(), 0.01);
