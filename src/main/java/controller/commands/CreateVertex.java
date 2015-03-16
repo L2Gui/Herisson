@@ -4,8 +4,6 @@ import controller.ICommand;
 import model.Graph;
 import model.Vertex;
 
-import java.awt.event.ActionEvent;
-
 /**
  * Created by Clement on 13/03/2015.
  */

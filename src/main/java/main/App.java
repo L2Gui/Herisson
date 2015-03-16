@@ -13,76 +13,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class App {
-	private GraphWindow frame;
-	private IOHandler ioHandler;
-    private Collection<ICommand> commands;
-	private Collection<IOAlgorithm> ioAlgorithms;
-	private Map<String, IDispoAlgorithm> dispoAlgorithms;
-    private Map<String, IColorAlgorithm> colorAlgorithms;
-    private Map<String, ISizeAlgorithm> sizeAlgorithms;
-	private Collection<Graph> graphs;
-    private GraphCanvas canvas;
-
     public static void main(String args[]) {
-        App app = new App();
         try {
-        	app.run();
+            // Model
+            /* deux graphes bidon juste pour voir les onglets */
+            Graph g1 = new Graph();
+            g1.setName("swappez d'onglet pour");
+            Graph g2 = new Graph();
+            g2.setName("charger un graphe random");
+
+            // View
+            GraphCanvas canvas = new GraphCanvas();
+            GraphWindow window = new GraphWindow("Hérisson", new Dimension(600, 600), canvas);
+
+            // Controller
+            Controller controller = new Controller();
+            controller.addGraph(g1);
+            controller.addGraph(g2);
+            controller.setGraphWindow(window);
+
+            window.setVisible(true);
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);
         }
-    }
-    
-    public void run() throws Exception {
-        this.ioHandler = new IOHandler();
-        this.ioAlgorithms = new ArrayList<IOAlgorithm>();
-        this.dispoAlgorithms = new HashMap<String, IDispoAlgorithm>();
-        this.colorAlgorithms = new HashMap<String, IColorAlgorithm>();
-        this.sizeAlgorithms = new HashMap<String, ISizeAlgorithm>();
-        this.graphs = new ArrayList<Graph>();
-
-        /** Ajout des algorythmes **/
-        this.dispoAlgorithms.put("Disposition aléatoire", new DispoRandomAlgorithm());
-        this.dispoAlgorithms.put("Disposition en cercle", new DispoCircleAlgorithm());
-
-        /** Fin ajout des algorythmes **/
-
-        //this.keyboardHandler.setCommandHandler(commandHandler);
-        this.canvas = new GraphCanvas();
-
-        frame = new GraphWindow("Hérisson", new Dimension(600, 600), this.canvas, dispoAlgorithms, colorAlgorithms, sizeAlgorithms);
-
-        /* deux graphes bidon juste pour voir les onglets */
-        Graph g1 = new Graph();
-        g1.setName("swappez d'onglet pour");
-        frame.addGraph(g1);
-        Graph g2 = new Graph();
-        g2.setName("charger un graphe random");
-        frame.addGraph(g2);
-/*
-        Graph g = new Graph();
-        g.setName("graphe test");
-        Vertex v0 = new Vertex(g);
-        v0.setPosition(new Vector3f(0f, 2f, 0f));
-        Vertex v1 = new Vertex(g);
-        v1.setPosition(new Vector3f(4f,-3f,0f));
-        Vertex v2 = new Vertex(g);
-        v2.setPosition(new Vector3f(-4f,3f,0f));
-        Vertex v3 = new Vertex(g);
-        v3.setPosition(new Vector3f(0f,0f,0f));
-        Vertex v4 = new Vertex(g);
-        v4.setPosition(new Vector3f(2f,5f,0f));
-        Vertex v5 = new Vertex(g);
-        v5.setPosition(new Vector3f(-3f,-2f,5f));
-
-        g.addVertex(v0);
-        g.addVertex(v1);
-        g.addVertex(v2);
-        g.addVertex(v3);
-        g.addVertex(v4);
-        g.addVertex(v5);
-        //frame.addGraph(g);*/
-
-		this.frame.setVisible(true);
     }
 }

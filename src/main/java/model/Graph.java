@@ -141,6 +141,10 @@ public class Graph {
         return styleManager;
     }
 
+    public CommandHandler getCommandHandler() {
+        return commandHandler;
+    }
+
     public String getFilename() {
         return filename;
     }
@@ -155,9 +159,5 @@ public class Graph {
 
     public void setOriented(boolean isOriented) {
         this.isOriented = isOriented;
-    }
-
-    public void executeCommand(ICommand command) {
-        this.commandHandler.executeCommand(command);
     }
 }

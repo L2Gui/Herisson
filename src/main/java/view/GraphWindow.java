@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import controller.MenuAction;
 import controller.MenuActions;
 import model.Graph;
@@ -27,20 +28,14 @@ public class GraphWindow extends JFrame {
     private JPanel contentPane;
     private TabbedGraph tabs;
     private GraphCanvas canvas;
-
+    private Controller controller;
 
     /**
      *  @param title
      * @param size
      * @param canvas
-     * @param dispoAlgorithms
-     * @param colorAlgorithms
-     * @param sizeAlgorithms
      */
-    public GraphWindow(String title, Dimension size, GraphCanvas canvas,
-                       Map<String, IDispoAlgorithm> dispoAlgorithms,
-                       Map<String, IColorAlgorithm> colorAlgorithms,
-                       Map<String, ISizeAlgorithm> sizeAlgorithms) {
+    public GraphWindow(String title, Dimension size, GraphCanvas canvas) {
         super(title);
         this.title = title;
         this.size = size;
@@ -87,13 +82,25 @@ public class GraphWindow extends JFrame {
          *   ********************************************    *
          *                                                   *
          * ***************************************************/
-        super.setJMenuBar(generateMenuBar(dispoAlgorithms, colorAlgorithms, sizeAlgorithms));
         this.contentPane.setLayout(new BorderLayout());
         this.contentPane.add(generateToolBar(), BorderLayout.NORTH);
         tabs=new TabbedGraph(canvas);
         this.contentPane.add(tabs, BorderLayout.CENTER);
+    }
 
+    public GraphCanvas getCanvas() {
+        return this.canvas;
+    }
 
+    /**
+     * @param dispoAlgorithms
+     * @param colorAlgorithms
+     * @param sizeAlgorithms
+     */
+    public void setAlgorithms(Map<String, IDispoAlgorithm> dispoAlgorithms,
+                              Map<String, IColorAlgorithm> colorAlgorithms,
+                              Map<String, ISizeAlgorithm> sizeAlgorithms) {
+        super.setJMenuBar(generateMenuBar(dispoAlgorithms, colorAlgorithms, sizeAlgorithms));
     }
 
     /**
