@@ -50,6 +50,7 @@ public class Controller {
             this.window.addGraph(graph);
         }
         this.window.setAlgorithms(this.dispoAlgorithms, this.colorAlgorithms, this.sizeAlgorithms);
+        this.window.setController(this);
     }
 
     public void addGraph(Graph graph) {

@@ -103,6 +103,10 @@ public class GraphWindow extends JFrame {
         super.setJMenuBar(generateMenuBar(dispoAlgorithms, colorAlgorithms, sizeAlgorithms));
     }
 
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
     /**
      * Génère la barre de menu en incorporant les algos dans leurs menus respectifs
      * @param dispoAlgorithms Map des algos de disposition
