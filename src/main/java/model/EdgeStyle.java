@@ -12,8 +12,7 @@ public class EdgeStyle implements IStyle {
 	private LineStyle style;
     private int usageCount;
 
-    public EdgeStyle()
-    {
+    public EdgeStyle(){
         this.thickness = 1;
         this.color = Color.BLACK;
         this.textColor = Color.BLACK;

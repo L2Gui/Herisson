@@ -16,8 +16,7 @@ public class Graph {
 
     private boolean isOriented;
 
-    public Graph()
-    {
+    public Graph(){
         name = "";
         filename = "";
         isOriented = false;

@@ -15,8 +15,7 @@ public class StyleManager {
     private EdgeStyle defaultEdgeStyle;
     private VertexStyle defaultVertexStyle;
 
-    public StyleManager()
-    {
+    public StyleManager(){
         edgeStyles = new CopyOnWriteArrayList<EdgeStyle>();
         vertexStyles = new CopyOnWriteArrayList<VertexStyle>();
 
