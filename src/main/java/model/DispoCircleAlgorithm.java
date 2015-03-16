@@ -17,7 +17,7 @@ public class DispoCircleAlgorithm implements IDispoAlgorithm {
     /**
      * Dispose les sommets en cercle (en prenant soin de ne pas avoir de chevauchement)
      *
-     * @param g graphe
+     * @param g le graphe sur lequel appliquer l'algorythme
      * @return un Set< Pair<Vertex, Vector3f> > avec les nouvelles coordonnées par sommet
      */
     @Override
