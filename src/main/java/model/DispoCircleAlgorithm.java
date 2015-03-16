@@ -7,11 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class DispoCircleAlgorithm implements IDispoAlgorithm {
-    private String name;
     private float maxSize;
 
-    public DispoCircleAlgorithm(String name){
-        this.name=name;
+    public DispoCircleAlgorithm(){
         maxSize=0;
     }
     /**
@@ -64,22 +62,5 @@ public class DispoCircleAlgorithm implements IDispoAlgorithm {
      */
     public float getMaxSize(){
         return maxSize;
-    }
-    /**
-     * @return Le nom d'affichage de l'algo
-     */
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Affecte à l'algo un nouveau nom d'affichage
-     *
-     * @param newName Le nouveau nom de l'algo
-     */
-    @Override
-    public void setName(String newName) {
-        this.name=newName;
     }
 }

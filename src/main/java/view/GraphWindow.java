@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Collection;
+import java.util.Map;
 
 
 public class GraphWindow extends JFrame {
@@ -36,7 +37,10 @@ public class GraphWindow extends JFrame {
      * @param colorAlgorithms
      * @param sizeAlgorithms
      */
-    public GraphWindow(String title, Dimension size, GraphCanvas canvas, Collection<IDispoAlgorithm> dispoAlgorithms, Collection<IColorAlgorithm> colorAlgorithms, Collection<ISizeAlgorithm> sizeAlgorithms) {
+    public GraphWindow(String title, Dimension size, GraphCanvas canvas,
+                       Map<String, IDispoAlgorithm> dispoAlgorithms,
+                       Map<String, IColorAlgorithm> colorAlgorithms,
+                       Map<String, ISizeAlgorithm> sizeAlgorithms) {
         super(title);
         this.title = title;
         this.size = size;
@@ -94,14 +98,14 @@ public class GraphWindow extends JFrame {
 
     /**
      * Génère la barre de menu en incorporant les algos dans leurs menus respectifs
-     * @param AlgoDispo	Collection des algos de disposition
-     * @param AlgoColor Collection des algos de couleur
-     * @param AlgoSize Collection des algos de taille
+     * @param dispoAlgorithms Map des algos de disposition
+     * @param colorAlgorithms Map des algos de couleur
+     * @param sizeAlgorithms Map des algos de taille
      * @return
      */
-    private JMenuBar generateMenuBar(Collection<IDispoAlgorithm> AlgoDispo,
-                                     Collection<IColorAlgorithm> AlgoColor,
-                                     Collection<ISizeAlgorithm> AlgoSize){
+    private JMenuBar generateMenuBar(Map<String, IDispoAlgorithm> dispoAlgorithms,
+                                     Map<String, IColorAlgorithm> colorAlgorithms,
+                                     Map<String, ISizeAlgorithm> sizeAlgorithms){
         JMenuBar menu = new JMenuBar();
         JMenu file = new JMenu("Fichier");
         file.setMnemonic('F');
@@ -142,14 +146,14 @@ public class GraphWindow extends JFrame {
         ButtonGroup dispositionGroup = new ButtonGroup();
         // on essaie d'ajouter les éléments de la liste
         try{
-            for (final IDispoAlgorithm algo : AlgoDispo) {
-                JRadioButtonMenuItem dispositionRadioButton = new JRadioButtonMenuItem(algo.getName());
+            for (final Map.Entry<String, IDispoAlgorithm> algo : dispoAlgorithms.entrySet()) {
+                JRadioButtonMenuItem dispositionRadioButton = new JRadioButtonMenuItem(algo.getKey());
                 dispositionGroup.add(dispositionRadioButton);
                 //TODO affecter une action au clic sur le bouton
                 dispositionRadioButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Appliquer sur le graphe '"+canvas.getGraph().getName()+"' l'algo "+algo.getName());
+                        System.out.println("Appliquer sur le graphe '"+canvas.getGraph().getName()+"' l'algo "+ algo.getKey());
                     }
                 });
                 disposition.add(dispositionRadioButton);
@@ -168,14 +172,14 @@ public class GraphWindow extends JFrame {
         ButtonGroup colorGroup = new ButtonGroup();
         // on essaie d'ajouter les éléments de la liste
         try{
-            for (final IColorAlgorithm algo : AlgoColor) {
-                JRadioButtonMenuItem colorRadioBtn = new JRadioButtonMenuItem(algo.getName());
+            for (final Map.Entry<String, IColorAlgorithm> algo : colorAlgorithms.entrySet()) {
+                JRadioButtonMenuItem colorRadioBtn = new JRadioButtonMenuItem(algo.getKey());
                 colorGroup.add(colorRadioBtn);
                 //TODO affecter une action au clic sur le bouton
                 colorRadioBtn.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Appliquer sur le graphe '"+canvas.getGraph().getName()+"' l'algo "+algo.getName());
+                        System.out.println("Appliquer sur le graphe '"+canvas.getGraph().getName()+"' l'algo "+algo.getKey());
                     }
                 });
                 color.add(colorRadioBtn);
@@ -194,14 +198,14 @@ public class GraphWindow extends JFrame {
         ButtonGroup sizeGroup = new ButtonGroup();
         // on essaie d'ajouter les éléments de la liste
         try{
-            for (final ISizeAlgorithm algo : AlgoSize) {
-                JRadioButtonMenuItem sizeRadioBtn = new JRadioButtonMenuItem(algo.getName());
+            for (final Map.Entry<String, ISizeAlgorithm> algo : sizeAlgorithms.entrySet()) {
+                JRadioButtonMenuItem sizeRadioBtn = new JRadioButtonMenuItem(algo.getKey());
                 sizeGroup.add(sizeRadioBtn);
                 //TODO affecter une action au clic sur le bouton
                 sizeRadioBtn.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Appliquer sur le graphe '" + canvas.getGraph().getName() + "' l'algo " + algo.getName());
+                        System.out.println("Appliquer sur le graphe '" + canvas.getGraph().getName() + "' l'algo " + algo.getKey());
                     }
                 });
                 size.add(sizeRadioBtn);

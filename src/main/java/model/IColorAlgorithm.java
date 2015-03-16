@@ -3,17 +3,7 @@ package model;
 
 import java.awt.*;
 
-public interface IColorAlgorithm{
-    /**
-     * @return Le nom d'affichage de l'algo
-     */
-    public String getName();
-    /**
-     * Affecte à l'algo un nouveau nom d'affichage, et le retourne
-     * @param newName Le nouveau nom de l'algo
-     */
-    public void setName(String newName);
-
+public interface IColorAlgorithm {
     /**
      *
      * @return la couleur qu'aura un élément dont l'attribut paramètre est au maximum

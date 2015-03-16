@@ -209,7 +209,7 @@ public class GraphCanvas extends GLCanvas {
             v.setLabel("Noeud "+(i+4));
             g.addVertex(v);
         }
-        DispoRandomAlgorithm algorithm = new DispoRandomAlgorithm("nom");
+        DispoRandomAlgorithm algorithm = new DispoRandomAlgorithm();
 
         for (Pair<Vertex, Vector3f> p : algorithm.execute(g)){
             p.getValue0().setPosition(p.getValue1());

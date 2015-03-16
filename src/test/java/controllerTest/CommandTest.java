@@ -9,11 +9,16 @@ import static org.junit.Assert.assertEquals;
 
 public class CommandTest {
 	private int x;
-	
+
 	@Test
 	public void CommandHandlerTest() {
 		Command command1 = new Command() {
-			@Override
+            @Override
+            public boolean isUndoable() {
+                return true;
+            }
+
+            @Override
 			public void execute() {
 				CommandTest.this.x += 7;
 			}
@@ -25,6 +30,11 @@ public class CommandTest {
 		};
 		
 		Command command2 = new Command() {
+            @Override
+            public boolean isUndoable() {
+                return true;
+            }
+
 			@Override
 			public void execute() {
 				CommandTest.this.x += 9;

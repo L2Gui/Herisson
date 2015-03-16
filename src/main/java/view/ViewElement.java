@@ -1,12 +1,8 @@
 package view;
 
-import controller.Command;
-import controller.CommandHandler;
-import controller.ICommandSender;
 import opengl.resource.object.GLDrawableObject;
 
-public abstract class ViewElement extends GLDrawableObject implements ICommandSender {
-	private CommandHandler commandHandler;
+public abstract class ViewElement extends GLDrawableObject {
 	private String label;
 	private int index;
 	private boolean isSelected;
@@ -33,14 +29,5 @@ public abstract class ViewElement extends GLDrawableObject implements ICommandSe
 	
 	public void setSelected(boolean isSelected) {
 		this.isSelected = isSelected;
-	}
-	
-	@Override
-	public void setCommandHandler(CommandHandler commandHandler) {
-		this.commandHandler = commandHandler;
-	}
-	
-	protected void sendCommand(Command command) {
-		this.commandHandler.executeCommand(command);
 	}
 }
