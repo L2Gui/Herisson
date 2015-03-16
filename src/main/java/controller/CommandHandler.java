@@ -36,10 +36,13 @@ public class CommandHandler {
 	public void executeCommand(Command command) {
         command.setContext(context);
 		command.execute();
-		this.commandStack.push(command);
-		
-		if (!this.undoStack.empty()) {
-			this.undoStack.clear();
-		}
+
+        if (command.isUndoable()) {
+            this.commandStack.push(command);
+
+            if (!this.undoStack.empty()) {
+                this.undoStack.clear();
+            }
+        }
 	}
 }

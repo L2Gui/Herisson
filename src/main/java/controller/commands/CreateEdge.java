@@ -19,6 +19,11 @@ public class CreateEdge extends Command {
     }
 
     @Override
+    public boolean isUndoable() {
+        return true;
+    }
+
+    @Override
     public void execute() {
         super.getContext().getCurrentGraph().addEdge(this.edge);
         src.addEdge(this.edge);

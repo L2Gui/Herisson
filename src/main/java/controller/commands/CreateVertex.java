@@ -14,6 +14,11 @@ public class CreateVertex extends Command {
     }
 
     @Override
+    public boolean isUndoable() {
+        return true;
+    }
+
+    @Override
     public void execute() {
         super.getContext().getCurrentGraph().addVertex(this.vertex);
     }
