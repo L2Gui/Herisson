@@ -6,8 +6,11 @@ import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import org.lwjgl.util.vector.Vector3f;
 import utils.ColorUtils;
 import utils.FontUtils;
+import utils.LineStyleUtils;
+import utils.ShapeUtils;
 
 import java.awt.*;
 import java.io.File;
@@ -38,7 +41,10 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
 		
 		HashMap<String, Vertex> vertices = new HashMap<String, Vertex>();
 		HashMap<String, Edge> edges = new HashMap<String, Edge>();
-		
+
+        HashMap<String, VertexStyle> vertexStylesMap = new HashMap<String, VertexStyle>();
+        HashMap<String, EdgeStyle> edgeStylesMap = new HashMap<String, EdgeStyle>();
+
 		for (Element key : keyRacine){
 			if (key.getAttribute("for").getValue() == "node"){
 				nodeKeyMap.put(key.getAttributeValue("id"), key.getAttributeValue("attr.name"));
@@ -47,88 +53,163 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
 				edgeKeyMap.put(key.getAttributeValue("id"), key.getAttributeValue("attr.name"));
 			}
 		}
-		
+
+        List<Element> nodeStyles = document.getRootElement().getChildren("node-style");
+        List<Element> edgeStyles = document.getRootElement().getChildren("edge-style");
+        int nodeStyleCount = 0;
+        for (Element nodeStyle : nodeStyles){
+            VertexStyle style = constructVertexStyleFromElement(nodeStyle);
+            if (nodeStyleCount == 0) {
+
+                graph.getStyleManager().setDefaultVertexStyle(style);
+            }else{
+                graph.getStyleManager().addStyle(style);
+            }
+            vertexStylesMap.put(nodeStyle.getAttributeValue("id"), style);
+            nodeStyleCount++;
+        }
+
+        int edgeStyleCount = 0;
+        for (Element edgeStyle : edgeStyles){
+            EdgeStyle style = constructEdgeStyleFromElement(edgeStyle);
+            if (edgeStyleCount == 0){
+                graph.getStyleManager().setDefaultEdgeStyle(style);
+            }else{
+                graph.getStyleManager().addStyle(style);
+            }
+            edgeStylesMap.put(edgeStyle.getAttributeValue("id"), style);
+            edgeStyleCount++;
+        }
+
 		for (Element node : graphRacine.getChildren("node")){
 			String id = node.getAttributeValue("id");
 			Vertex vertex = new Vertex();
-			/*
-			for (Element data : node.getChildren("data")){
-				switch (nodeKeyMap.get(data.getAttributeValue("id"))){
-					case "color":
-						vertex.setBackgroundColor(ColorUtils.convertColor(data.getTextNormalize(), Color.black));
-						break;
-					case "border-thickness":
-						vertex.setThickness(Float.parseFloat(data.getTextNormalize()));
-						break;
-					case "text-color":
-						vertex.setTextColor(ColorUtils.convertColor(data.getTextNormalize(), Color.black));
-						break;
-					case "border-color":
-						vertex.setBorderColor(ColorUtils.convertColor(data.getTextNormalize(), Color.black));
-						break;
-					case "shape":
-						vertex.setShape(ShapeUtils.stringToShape(data.getTextNormalize()));
-						break;
-					case "label":
-						vertex.setLabel(data.getTextNormalize());
-						break;
-				}
-			}*/
+
+            Element position = node.getChild("position");
+            Element label = node.getChild("label");
+            if (position != null){
+                Vector3f pos = new Vector3f(Float.parseFloat(position.getChild("posx").getText()),
+                                            Float.parseFloat(position.getChild("posy").getText()),
+                                            Float.parseFloat(position.getChild("posz").getText()));
+
+                vertex.setPosition(pos);
+            } else{
+                vertex.setPosition(new Vector3f(0,0,0));
+            }
+            if (label != null){
+                vertex.setLabel(label.getText());
+            } else{
+                vertex.setLabel("");
+            }
+
+            if (node.getAttribute("style") != null){
+                vertex.setStyle(vertexStylesMap.get(node.getAttributeValue("style")));
+            }else {
+                for (Element data : node.getChildren("data")){
+                    String idValue = data.getAttributeValue("id");
+                    if (idValue == "color") {
+                        vertex.setBackgroundColor(ColorUtils.convertColor(data.getTextNormalize(), Color.black));
+                    }
+                    if (idValue == "border-thickness") {
+                        vertex.setThickness(Float.parseFloat(data.getTextNormalize()));
+                    }
+                    if (idValue == "text-color") {
+                        vertex.setTextColor(ColorUtils.convertColor(data.getTextNormalize(), Color.black));
+                    }
+                    if (idValue == "border-color") {
+                        vertex.setBorderColor(ColorUtils.convertColor(data.getTextNormalize(), Color.black));
+                    }
+                    if (idValue == "shape") {
+                        vertex.setShape(ShapeUtils.stringToShape(data.getTextNormalize()));
+                    }
+                    if (idValue == "label"){
+                        vertex.setLabel(data.getTextNormalize());
+                    }
+                }
+            }
 			vertices.put(id, vertex);
 		}
-		
-		for (Element edg : graphRacine.getChildren("node")){
+
+		for (Element edg : graphRacine.getChildren("edge")){
 			String id = edg.getAttributeValue("id");
 			Edge edge = new Edge();
-			
 			String src = edg.getAttributeValue("source");
 			String dst = edg.getAttributeValue("target");
-			
-			
-			/*
-			for (Element data : edg.getChildren("data")){
-				switch (nodeKeyMap.get(data.getAttributeValue("id"))){
-					case "color":
-						edge.setColor(ColorUtils.convertColor(data.getTextNormalize(), Color.black));
-						break;
-					case "thickness":
-						edge.setThickness(Float.parseFloat(data.getTextNormalize()));
-						break;
-					case "text-color":
-						edge.setTextColor(ColorUtils.convertColor(data.getTextNormalize(), Color.black));
-						break;
-					case "line-style":
-						edge.getStyle().setStyle(LineStyleUtils.stringToLineStyle(data.getTextNormalize()));
-						break;
-					case "label":
-						edge.setLabel(data.getTextNormalize());
-						break;
-				}
-			}*/
-			
+
+            Element label = edg.getChild("label");
+            if (label != null){
+                edge.setLabel(label.getText());
+            } else{
+                edge.setLabel("");
+            }
+            if (edg.getAttribute("style") != null){
+                edge.setStyle(edgeStylesMap.get(edg.getAttributeValue("style")));
+            }else {
+                for (Element data : edg.getChildren("data")) {
+
+                    String idValue = data.getAttributeValue("id");
+                    if (idValue == "color") {
+                        edge.setColor(ColorUtils.convertColor(data.getTextNormalize(), Color.black));
+                    }
+                    if (idValue == "thickness") {
+                        edge.setThickness(Float.parseFloat(data.getTextNormalize()));
+                    }
+                    if (idValue == "text-color") {
+                        edge.setTextColor(ColorUtils.convertColor(data.getTextNormalize(), Color.black));
+                    }
+                    if (idValue == "line-style") {
+                        edge.getStyle().setStyle(LineStyleUtils.stringToLineStyle(data.getTextNormalize()));
+                    }
+                    if (idValue == "label") {
+                        edge.setLabel(data.getTextNormalize());
+                    }
+                }
+            }
+
 			if (src != null){
 				edge.setSrcVertex(vertices.get(src));
 				vertices.get(src).addEdge(edge);
 			}
+
 			if (dst != null){
 				edge.setDstVertex(vertices.get(dst));
 				vertices.get(src).addEdge(edge);
 			}
-			
+
 			edges.put(id, edge);
 		}
-		
-		for (Entry<String, Edge> e : edges.entrySet())
-		{
+		for (Entry<String, Edge> e : edges.entrySet()) {
 			graph.addEdge(e.getValue());
 		}
-		for (Entry<String, Vertex> e : vertices.entrySet())
-		{
+		for (Entry<String, Vertex> e : vertices.entrySet()) {
 			graph.addVertex(e.getValue());
 		}
-		
 		return graph;
 	}
+
+    private VertexStyle constructVertexStyleFromElement (Element elt){
+        VertexStyle vertexStyle = new VertexStyle()
+                                        .setBackgroundColor(ColorUtils.RGBStringToColor(elt.getChild("background-color").getText()))
+                                        .setBorderColor(ColorUtils.RGBStringToColor(elt.getChild("border-color").getText()))
+                                        .setBorderThickness(Float.parseFloat(elt.getChild("border-thickness").getText()))
+                                        .setTextColor(ColorUtils.RGBStringToColor(elt.getChild("text-color").getText()))
+                                        .setFont(FontUtils.stringToFont(elt.getChild("font").getText()))
+                                        .setShape(ShapeUtils.stringToShape(elt.getChild("shape").toString()))
+                                        .setSize(Float.parseFloat(elt.getChild("size").getText()));
+
+        return vertexStyle;
+    }
+
+    private EdgeStyle constructEdgeStyleFromElement(Element elt){
+        EdgeStyle edgeStyle = new EdgeStyle()
+                                    .setColor(ColorUtils.RGBStringToColor(elt.getChild("color").getText()))
+                                    .setTextColor(ColorUtils.RGBStringToColor(elt.getChild("text-color").getText()))
+                                    .setStyle(LineStyleUtils.stringToLineStyle(elt.getChild("line-style").getText()))
+                                    .setThickness(Float.parseFloat(elt.getChild("thickness").getText()))
+                                    .setFont(FontUtils.stringToFont(elt.getChild("font").getText()));
+
+        return edgeStyle;
+    }
 
 	@Override
 	public void save(String filename, Graph graph) {
@@ -279,26 +360,19 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
     private Element constructNodeStyleKey(Element base, VertexStyle vertexStyle, int count){
         if (base == null){
             base = new Element("node-style").setAttribute("id", "ns"+count);
-            base.addContent(new Element("data")
-                                    .setAttribute("key", "shape")
+            base.addContent(new Element("shape")
                                     .setText(vertexStyle.getShape().toString()));
-            base.addContent(new Element("data")
-                                    .setAttribute("key", "size")
+            base.addContent(new Element("size")
                                     .setText(String.valueOf(vertexStyle.getSize())));
-            base.addContent(new Element("data")
-                                    .setAttribute("key", "border-thickness")
-                    .setText(String.valueOf(vertexStyle.getBorderThickness())));
-            base.addContent(new Element("data")
-                                    .setAttribute("key", "background-color")
+            base.addContent(new Element("border-thickness")
+                                    .setText(String.valueOf(vertexStyle.getBorderThickness())));
+            base.addContent(new Element("background-color")
                                     .setText(ColorUtils.colorToString(vertexStyle.getBackgroundColor())));
-            base.addContent(new Element("data")
-                                    .setAttribute("key", "text-color")
+            base.addContent(new Element("text-color")
                                     .setText(ColorUtils.colorToString(vertexStyle.getTextColor())));
-            base.addContent(new Element("data")
-                                    .setAttribute("key", "border-color")
+            base.addContent(new Element("border-color")
                                     .setText(ColorUtils.colorToString(vertexStyle.getBorderColor())));
-            base.addContent(new Element("data")
-                                    .setAttribute("key", "font")
+            base.addContent(new Element("font")
                                     .setText(FontUtils.fontToString(vertexStyle.getFont())));
         }
 
@@ -310,17 +384,15 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
             base = new Element("edge-style").setAttribute("id", "es"+count);
         }
 
-        base.addContent(new Element("data")
-                .setAttribute("key", "thickness")
+        base.addContent(new Element("thickness")
                 .setText(String.valueOf(edgeStyle.getThickness())));
-        base.addContent(new Element("data")
-                .setAttribute("key", "color")
+        base.addContent(new Element("color")
                 .setText(ColorUtils.colorToString(edgeStyle.getColor())));
-        base.addContent(new Element("data")
-                .setAttribute("key", "font")
+        base.addContent(new Element("text-color")
+                .setText(ColorUtils.colorToString(edgeStyle.getTextColor())));
+        base.addContent(new Element("font")
                 .setText(FontUtils.fontToString(edgeStyle.getFont())));
-        base.addContent(new Element("data")
-                .setAttribute("key", "line-style")
+        base.addContent(new Element("line-style")
                 .setText(edgeStyle.getStyle().toString()));
 
         return base;
