@@ -51,6 +51,7 @@ public class GraphCanvas extends GLCanvas {
     public void init() {
         this.camera = new GLPerspectiveCamera(70.0f, 0.01f, 100.0f);
         this.camera.lookToDirection(new Vector3f(0.0f, 0.0f, -1.0f));
+        GraphCanvas.this.camera.rotate(30, new Vector3f(0, 1, 0));
         super.setCamera(this.camera);
 
         super.addMouseListener(new MouseInputAdapter() {
@@ -141,7 +142,23 @@ public class GraphCanvas extends GLCanvas {
         System.out.println("Clic");
 
         GLRay ray = this.camera.getCursorRay(new Vector2f(x, super.getSize().height - y));
-        Vector3f position = Vector3f.add(ray.getPosition(), (Vector3f) ray.getDirection().scale(10f), null);
+
+        /**
+         * La partie suivante sert à trouver
+         */
+        Vector3f vecDirection = ray.getDirection(); //vecteur direction clic souris
+        Vector3f vecCamera = new Vector3f(0,0, -this.camera.getPosition().getZ());
+
+        vecDirection = vecDirection.normalise(null);
+        vecCamera = vecCamera.normalise(null);
+
+        double alpha; //angle entre les deux vecteurs (camera et direction du clic)
+        float hypothenuse;
+
+        alpha = Math.acos(Vector3f.dot(vecCamera, vecDirection)); //produit scalaire entre les deux vecteurs !
+        hypothenuse = this.camera.getPosition().getZ() / (float)Math.cos(alpha);
+
+        Vector3f position = Vector3f.add(ray.getPosition(), (Vector3f) ray.getDirection().scale(hypothenuse), null);
 
         Vertex v = new Vertex(graph);
         v.setPosition(position);
