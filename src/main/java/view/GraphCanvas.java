@@ -1,5 +1,7 @@
 package view;
 
+import controller.actions.EditEdgeAction;
+import controller.actions.EditVertexAction;
 import model.*;
 import opengl.GLCanvas;
 import opengl.resource.GLShader;
@@ -14,6 +16,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.event.MouseEvent;
 import java.util.*;
@@ -81,7 +84,11 @@ public class GraphCanvas extends GLCanvas {
                     }
 
                     if (over) {
-                        System.out.println("INTERSECTION !!!!");
+                            JPopupMenu popup;
+                            popup = new JPopupMenu();
+                            popup.add(new EditVertexAction());
+                            popup.add(new EditEdgeAction());
+                            popup.show(arg0.getComponent(), arg0.getX(), arg0.getY());
                     } else {
                         System.out.println("PAS INTERSECTION !!!!");
                     }
