@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 public abstract class MenuAction extends AbstractAction {
+
+    private Controller controller;
+
     /**
      * Constructeur de MenuAction
      *
@@ -19,27 +22,26 @@ public abstract class MenuAction extends AbstractAction {
             putValue(SMALL_ICON, smallIcon);
         }
         if(mnemonicKey!=null) {
-            switch (mnemonicKey){
+            switch (mnemonicKey) {
                 case KeyEvent.VK_ADD:
-                    putValue(SHORT_DESCRIPTION, name+" (alt + '"+"+"+"')");
-                    putValue(LONG_DESCRIPTION, name+" (alt + '"+"+"+"')");
+                    putValue(SHORT_DESCRIPTION, name+" (alt + '" + "+" + "')");
+                    putValue(LONG_DESCRIPTION, name+" (alt + '" + "+" + "')");
                     putValue(Action.DISPLAYED_MNEMONIC_INDEX_KEY, mnemonicIndex);
                     break;
                 case KeyEvent.VK_SUBTRACT:
-                    putValue(SHORT_DESCRIPTION, name+" (alt + '"+"-"+"')");
-                    putValue(LONG_DESCRIPTION, name+" (alt + '"+"-"+"')");
+                    putValue(SHORT_DESCRIPTION, name+" (alt + '" + "-" + "')");
+                    putValue(LONG_DESCRIPTION, name+" (alt + '" + "-" + "')");
                     putValue(Action.DISPLAYED_MNEMONIC_INDEX_KEY, mnemonicIndex);
                     break;
                 default:
-                    putValue(SHORT_DESCRIPTION, name+" (alt+"+(char)mnemonicKey.byteValue()+")");
-                    putValue(LONG_DESCRIPTION, name+" (alt+"+(char)mnemonicKey.byteValue()+")");
-                    if(mnemonicIndex==null) {
+                    putValue(SHORT_DESCRIPTION, name+" (alt+" + (char)mnemonicKey.byteValue() + ")");
+                    putValue(LONG_DESCRIPTION, name+" (alt+" + (char)mnemonicKey.byteValue() + ")");
+                    if(mnemonicIndex == null) {
                         putValue(Action.DISPLAYED_MNEMONIC_INDEX_KEY, mnemonicIndex);
                     }
                     break;
             }
-
-        }else{
+        } else {
             putValue(LONG_DESCRIPTION, name);
             putValue(SHORT_DESCRIPTION, name);
         }
@@ -48,6 +50,11 @@ public abstract class MenuAction extends AbstractAction {
 
         putValue(NAME, name);
     }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
     @Override
     public abstract void actionPerformed(ActionEvent e);
 }

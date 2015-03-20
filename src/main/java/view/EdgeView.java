@@ -66,8 +66,7 @@ public class EdgeView extends ViewElement {
     }
 
     @Override
-    public void render(Matrix4f transformationMatrix)
-    {
+    public void render(Matrix4f transformationMatrix) {
         this.mesh.setColor(this.edgeModel.getColor());
         super.render(transformationMatrix);
     }
