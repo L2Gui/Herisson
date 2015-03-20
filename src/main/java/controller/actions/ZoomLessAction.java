@@ -7,16 +7,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 
-public class ZoomMoinsAction extends MenuAction{
+public class ZoomLessAction extends MenuAction{
 
-    public ZoomMoinsAction() {
+    public ZoomLessAction() {
         this(null);
     }
     
     /**
      * Constructeur de Zoom - Action
      */
-    public ZoomMoinsAction(Controller controller) {
+    public ZoomLessAction(Controller controller) {
         super(controller, "Zoom -", "res/dezoom.png", KeyEvent.VK_SUBTRACT, 5);
     }
 

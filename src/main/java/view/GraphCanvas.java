@@ -1,7 +1,6 @@
 package view;
 
-import controller.actions.EditEdgeAction;
-import controller.actions.EditVertexAction;
+import controller.actions.*;
 import model.*;
 import opengl.GLCanvas;
 import opengl.resource.GLShader;
@@ -73,22 +72,15 @@ public class GraphCanvas extends GLCanvas {
                     y = GraphCanvas.this.getHeight() - y;
                     GLRay ray = GraphCanvas.this.camera.getCursorRay(new Vector2f(x, y));
 
-                    boolean over = false;
-                    for (VertexView vertexView : vertexViewsOrdonned) {
-                        if (vertexView.isIntersected(ray)) {
-                            over = true;
-                        }
-                        if (over) {
-                            break;
+                    VertexView intersectedVertex = null;
+                    for (int i = 0; i < vertexViewsOrdonned.size() && intersectedVertex==null; i++) {
+                        if (vertexViewsOrdonned.get(i).isIntersected(ray)) {
+                            intersectedVertex = vertexViewsOrdonned.get(i);
                         }
                     }
 
-                    if (over) {
-                            JPopupMenu popup;
-                            popup = new JPopupMenu();
-                            popup.add(new EditVertexAction());
-                            popup.add(new EditEdgeAction());
-                            popup.show(arg0.getComponent(), arg0.getX(), arg0.getY());
+                    if (intersectedVertex != null) {
+                            getPopupOnVertex(intersectedVertex).show(arg0.getComponent(), x, arg0.getY());
                     } else {
                         System.out.println("PAS INTERSECTION !!!!");
                     }
@@ -202,7 +194,17 @@ public class GraphCanvas extends GLCanvas {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+    ////////////////////////////////////////// GENERATION DES POPUPS //////////////////////////////////////////
+    private JPopupMenu getPopupOnVertex(VertexView vertexView){
+        JPopupMenu contextMenu = new JPopupMenu();
+        contextMenu.add(new EditVertexAction());    // passer le vertexview en question en param
+        contextMenu.add(new JPopupMenu.Separator());
+        contextMenu.add(new UndoAction());
+        contextMenu.add(new RedoAction());
+        contextMenu.add(new ZoomPlusAction());
+        contextMenu.add(new ZoomLessAction());
+        return contextMenu;
+    }
 
     private void loadGraph() {
         super.lockDraw();
@@ -272,4 +274,5 @@ public class GraphCanvas extends GLCanvas {
         }
         return g;
     }
+
 }
