@@ -18,7 +18,6 @@ import javax.swing.event.MouseInputAdapter;
 import java.awt.event.MouseEvent;
 import java.util.*;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Clement on 13/03/2015.
@@ -51,19 +50,41 @@ public class GraphCanvas extends GLCanvas {
     public void init() {
         this.camera = new GLPerspectiveCamera(70.0f, 0.01f, 100.0f);
         this.camera.lookToDirection(new Vector3f(0.0f, 0.0f, -1.0f));
-        GraphCanvas.this.camera.rotate(30, new Vector3f(0, 1, 0));
+        //GraphCanvas.this.camera.rotate(30, new Vector3f(0, 1, 0));
         super.setCamera(this.camera);
 
         super.addMouseListener(new MouseInputAdapter() {
             @Override
             public void mousePressed(MouseEvent arg0) {
+                try {
+                    GraphCanvas.this.makeCurrent();
+                } catch (LWJGLException e) {
+                    e.printStackTrace();
+                }
                 if (arg0.getButton() == MouseEvent.BUTTON1) {
-                    try {
-                        GraphCanvas.this.makeCurrent();
-                    } catch (LWJGLException e) {
-                        e.printStackTrace();
-                    }
                     GraphCanvas.this.createObject(arg0.getX(), arg0.getY());
+                } else if (arg0.getButton() == MouseEvent.BUTTON3) {
+                    int x = arg0.getX();
+                    int y = arg0.getY();
+
+                    y = GraphCanvas.this.getHeight() - y;
+                    GLRay ray = GraphCanvas.this.camera.getCursorRay(new Vector2f(x, y));
+
+                    boolean over = false;
+                    for (VertexView vertexView : vertexViewsOrdonned) {
+                        if (vertexView.isIntersected(ray)) {
+                            over = true;
+                        }
+                        if (over) {
+                            break;
+                        }
+                    }
+
+                    if (over) {
+                        System.out.println("INTERSECTION !!!!");
+                    } else {
+                        System.out.println("PAS INTERSECTION !!!!");
+                    }
                 }
             }
         });
@@ -144,7 +165,8 @@ public class GraphCanvas extends GLCanvas {
         GLRay ray = this.camera.getCursorRay(new Vector2f(x, super.getSize().height - y));
 
         /**
-         * La partie suivante sert à trouver
+         * La partie suivante sert à trouver la distance à laquelle afficher le sommet de manière à ce qu'il soit sur le même plan 2D que les autres.
+         * Pour comprendre la démonstration mathématique, demandez à Louis, Corentin ou Clément
          */
         Vector3f vecDirection = ray.getDirection(); //vecteur direction clic souris
         Vector3f vecCamera = new Vector3f(0,0, -this.camera.getPosition().getZ());
@@ -162,12 +184,13 @@ public class GraphCanvas extends GLCanvas {
 
         Vertex v = new Vertex(graph);
         v.setPosition(position);
-        //v.setLabel("COCA-COLA");
+        //v.setLabel("sommet");
 
         VertexView vv = new VertexView(v, this.vertexMesh, this.labelShader);
         vv.setShader(this.vertexEdgeShader);
 
         this.vertexViews.put(v, vv);
+        this.vertexViewsOrdonned.add(vv);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,6 +214,7 @@ public class GraphCanvas extends GLCanvas {
 
             vertexView.setShader(this.vertexEdgeShader);
             this.vertexViews.put(vertex, vertexView);
+            this.vertexViewsOrdonned.add(vertexView);
         }
 
         for (Edge edge : this.graph.getEdges()) {
