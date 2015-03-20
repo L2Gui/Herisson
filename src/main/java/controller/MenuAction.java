@@ -16,7 +16,7 @@ public abstract class MenuAction extends AbstractAction {
      * @param mnemonicKey   La touche mnemonique a affecter (utiliser KeyEvent.***) (peut être null)
      * @param mnemonicIndex L'index du nom qui sera souligné pour indiquer le mnemonic (peut être null)
      */
-    public MenuAction(String name, String icon, Integer mnemonicKey, Integer mnemonicIndex) {
+    public MenuAction(Controller controller, String name, String icon, Integer mnemonicKey, Integer mnemonicIndex) {
         if(icon!=null) {
             ImageIcon smallIcon = new ImageIcon(icon);
             putValue(SMALL_ICON, smallIcon);

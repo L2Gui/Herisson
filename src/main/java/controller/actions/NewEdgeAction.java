@@ -1,5 +1,6 @@
 package controller.actions;
 
+import controller.Controller;
 import controller.MenuAction;
 
 import java.awt.event.ActionEvent;
@@ -9,8 +10,8 @@ public class NewEdgeAction extends MenuAction{
     /**
      * Constructeur de NewEdge Action
      */
-    public NewEdgeAction() {
-        super("Nouveau trait", "res/edge3.png", null, null);
+    public NewEdgeAction(Controller controller) {
+        super(controller, "Nouveau trait", "res/edge3.png", null, null);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package controller.actions;
 
+import controller.Controller;
 import controller.MenuAction;
 
 import java.awt.event.ActionEvent;
@@ -10,8 +11,8 @@ public class CutAction extends MenuAction{
     /**
      * Constructeur de Cut Action
      */
-    public CutAction() {
-        super("Couper", "res/cut.png", KeyEvent.VK_X, null);
+    public CutAction(Controller controller) {
+        super(controller, "Couper", "res/cut.png", KeyEvent.VK_X, null);
     }
 
     @Override

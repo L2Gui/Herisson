@@ -1,17 +1,17 @@
 package controller.actions;
 
+import controller.Controller;
 import controller.MenuAction;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-
-public class ZoomPlusAction extends MenuAction{
+public class ZoomPlusAction extends MenuAction {
     /**
      * Constructeur de Zoom + Action
      */
-    public ZoomPlusAction() {
-        super("Zoom +", "res/zoom.png", KeyEvent.VK_ADD, 5);
+    public ZoomPlusAction(Controller controller) {
+        super(controller, "Zoom +", "res/zoom.png", KeyEvent.VK_ADD, 5);
     }
 
     @Override

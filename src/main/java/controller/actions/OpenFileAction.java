@@ -1,5 +1,6 @@
 package controller.actions;
 
+import controller.Controller;
 import controller.MenuAction;
 
 import java.awt.event.ActionEvent;
@@ -10,8 +11,8 @@ public class OpenFileAction extends MenuAction{
     /**
      * Constructeur de OpenFile Action
      */
-    public OpenFileAction() {
-        super("Ouvrir", null, KeyEvent.VK_O, 0);
+    public OpenFileAction(Controller controller) {
+        super(controller, "Ouvrir", null, KeyEvent.VK_O, 0);
     }
 
     @Override

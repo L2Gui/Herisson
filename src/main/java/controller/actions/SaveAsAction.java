@@ -1,5 +1,6 @@
 package controller.actions;
 
+import controller.Controller;
 import controller.MenuAction;
 
 import java.awt.event.ActionEvent;
@@ -10,8 +11,8 @@ public class SaveAsAction extends MenuAction{
     /**
      * Constructeur de SaveAs Action
      */
-    public SaveAsAction() {
-        super("Enregistrer sous", null, null, null);
+    public SaveAsAction(Controller controller) {
+        super(controller, "Enregistrer sous", null, null, null);
     }
 
     @Override

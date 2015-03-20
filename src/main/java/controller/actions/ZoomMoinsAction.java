@@ -1,5 +1,6 @@
 package controller.actions;
 
+import controller.Controller;
 import controller.MenuAction;
 
 import java.awt.event.ActionEvent;
@@ -10,8 +11,8 @@ public class ZoomMoinsAction extends MenuAction{
     /**
      * Constructeur de Zoom - Action
      */
-    public ZoomMoinsAction() {
-        super("Zoom -", "res/dezoom.png", KeyEvent.VK_SUBTRACT, 5);
+    public ZoomMoinsAction(Controller controller) {
+        super(controller, "Zoom -", "res/dezoom.png", KeyEvent.VK_SUBTRACT, 5);
     }
 
     @Override

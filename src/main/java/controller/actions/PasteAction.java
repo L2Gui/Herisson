@@ -1,5 +1,6 @@
 package controller.actions;
 
+import controller.Controller;
 import controller.MenuAction;
 
 import java.awt.event.ActionEvent;
@@ -10,8 +11,8 @@ public class PasteAction extends MenuAction{
     /**
      * Constructeur de Paste Action
      */
-    public PasteAction() {
-        super("Coller", "res/paste.png", KeyEvent.VK_V, null);
+    public PasteAction(Controller controller) {
+        super(controller, "Coller", "res/paste.png", KeyEvent.VK_V, null);
     }
 
     @Override

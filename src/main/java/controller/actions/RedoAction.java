@@ -1,5 +1,6 @@
 package controller.actions;
 
+import controller.Controller;
 import controller.MenuAction;
 
 import java.awt.event.ActionEvent;
@@ -10,8 +11,8 @@ public class RedoAction extends MenuAction{
     /**
      * Constructeur de Redo Action
      */
-    public RedoAction() {
-        super("Restaurer", "res/next.png", KeyEvent.VK_Y, null);
+    public RedoAction(Controller controller) {
+        super(controller, "Restaurer", "res/next.png", KeyEvent.VK_Y, null);
     }
 
     @Override

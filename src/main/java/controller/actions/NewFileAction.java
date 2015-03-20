@@ -1,5 +1,6 @@
 package controller.actions;
 
+import controller.Controller;
 import controller.MenuAction;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -9,8 +10,8 @@ public class NewFileAction extends MenuAction{
     /**
      * Constructeur de NewFile Action
      */
-    public NewFileAction() {
-        super("Nouveau Graphe", "res/file16.png", KeyEvent.VK_N, 0);
+    public NewFileAction(Controller controller) {
+        super(controller, "Nouveau Graphe", "res/file16.png", KeyEvent.VK_N, 0);
     }
 
     @Override

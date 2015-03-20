@@ -1,5 +1,6 @@
 package controller.actions;
 
+import controller.Controller;
 import controller.MenuAction;
 
 import java.awt.event.ActionEvent;
@@ -10,8 +11,8 @@ public class CopyAction extends MenuAction{
     /**
      * Constructeur de Copy Action
      */
-    public CopyAction() {
-        super("Copier", "res/copy.png", KeyEvent.VK_C, 0);
+    public CopyAction(Controller controller) {
+        super(controller, "Copier", "res/copy.png", KeyEvent.VK_C, 0);
     }
 
     @Override

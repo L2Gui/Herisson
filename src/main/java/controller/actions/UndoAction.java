@@ -1,5 +1,6 @@
 package controller.actions;
 
+import controller.Controller;
 import controller.MenuAction;
 
 import java.awt.event.ActionEvent;
@@ -10,8 +11,8 @@ public class UndoAction extends MenuAction{
     /**
      * Constructeur de Undo Action
      */
-    public UndoAction() {
-        super("Annuler", "res/prev.png", KeyEvent.VK_Z, null);
+    public UndoAction(Controller controller) {
+        super(controller, "Annuler", "res/prev.png", KeyEvent.VK_Z, null);
     }
 
     @Override

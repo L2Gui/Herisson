@@ -1,5 +1,6 @@
 package controller.actions;
 
+import controller.Controller;
 import controller.MenuAction;
 
 import java.awt.event.ActionEvent;
@@ -10,8 +11,8 @@ public class RemoveAction extends MenuAction{
     /**
      * Constructeur de Remove Action
      */
-    public RemoveAction() {
-        super("Supprimer", "res/cancel.png", KeyEvent.VK_R, 4);
+    public RemoveAction(Controller controller) {
+        super(controller, "Supprimer", "res/cancel.png", KeyEvent.VK_R, 4);
     }
 
     @Override
