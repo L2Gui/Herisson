@@ -3,6 +3,7 @@ package view;
 import controller.Controller;
 import controller.MenuAction;
 import controller.MenuActions;
+import controller.actions.*;
 import model.Graph;
 import model.IColorAlgorithm;
 import model.IDispoAlgorithm;
@@ -30,23 +31,23 @@ public class GraphWindow extends JFrame {
     private GraphCanvas canvas;
     private Controller controller;
 
-    private MenuAction newFile;
-    private MenuAction openFile;
-    private MenuAction save;
-    private MenuAction saveAs;
-    private MenuAction newVertex;
-    private MenuAction newEdge;
-    private MenuAction editVertex;
-    private MenuAction editEdge;
-    private MenuAction copy;
-    private MenuAction cut;
-    private MenuAction paste;
-    private MenuAction remove;
-    private MenuAction undo;
-    private MenuAction redo;
-    private MenuAction zoomPlus;
-    private MenuAction zoomMoins;
-    private MenuAction move;
+    private MenuAction newFile = new NewFileAction();
+    private MenuAction openFile = new OpenFileAction();
+    private MenuAction save = new SaveAction();
+    private MenuAction saveAs = new SaveAsAction();
+    private MenuAction newVertex = new NewVertexAction();
+    private MenuAction newEdge = new NewEdgeAction();
+    private MenuAction editVertex = new EditVertexAction();
+    private MenuAction editEdge = new EditEdgeAction();
+    private MenuAction copy = new CopyAction();
+    private MenuAction cut = new CutAction();
+    private MenuAction paste = new PasteAction();
+    private MenuAction remove = new RemoveAction();
+    private MenuAction undo = new UndoAction();
+    private MenuAction redo = new RedoAction();
+    private MenuAction zoomPlus = new ZoomPlusAction();
+    private MenuAction zoomMoins = new ZoomMoinsAction();
+    private MenuAction move = new MoveAction();
 
     /**
      *  @param title
