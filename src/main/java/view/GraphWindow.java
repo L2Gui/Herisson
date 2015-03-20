@@ -3,6 +3,7 @@ package view;
 import controller.Controller;
 import controller.MenuAction;
 import controller.MenuActions;
+import controller.actions.*;
 import model.Graph;
 import model.IColorAlgorithm;
 import model.IDispoAlgorithm;
@@ -29,6 +30,24 @@ public class GraphWindow extends JFrame {
     private TabbedGraph tabs;
     private GraphCanvas canvas;
     private Controller controller;
+
+    private MenuAction newFile = new NewFileAction();
+    private MenuAction openFile = new OpenFileAction();
+    private MenuAction save = new SaveAction();
+    private MenuAction saveAs = new SaveAsAction();
+    private MenuAction newVertex = new NewVertexAction();
+    private MenuAction newEdge = new NewEdgeAction();
+    private MenuAction editVertex = new EditVertexAction();
+    private MenuAction editEdge = new EditEdgeAction();
+    private MenuAction copy = new CopyAction();
+    private MenuAction cut = new CutAction();
+    private MenuAction paste = new PasteAction();
+    private MenuAction remove = new RemoveAction();
+    private MenuAction undo = new UndoAction();
+    private MenuAction redo = new RedoAction();
+    private MenuAction zoomPlus = new ZoomPlusAction();
+    private MenuAction zoomMoins = new ZoomMoinsAction();
+    private MenuAction move = new MoveAction();
 
     /**
      *  @param title
@@ -120,10 +139,10 @@ public class GraphWindow extends JFrame {
         JMenuBar menu = new JMenuBar();
         JMenu file = new JMenu("Fichier");
         file.setMnemonic('F');
-        file.add(MenuActions.newFile);
-        file.add(MenuActions.openFile);
-        file.add(MenuActions.save);
-        file.add(MenuActions.saveAs);
+        file.add(this.newFile);
+        file.add(this.openFile);
+        file.add(this.save);
+        file.add(this.saveAs);
         menu.add(file);
 
         JMenu edit = new JMenu("Edition");
@@ -131,21 +150,21 @@ public class GraphWindow extends JFrame {
 
         JMenu newElem = new JMenu("Nouveau");
         newElem.setMnemonic('N');
-        newElem.add(MenuActions.newVertex);
-        newElem.add(MenuActions.newEdge);
+        newElem.add(this.newVertex);
+        newElem.add(this.newEdge);
         JMenu editElem = new JMenu("Modifier");
         newElem.setMnemonic('M');
-        editElem.add(MenuActions.editVertex);
-        editElem.add(MenuActions.editEdge);
+        editElem.add(this.editVertex);
+        editElem.add(this.editEdge);
 
-        edit.add(MenuActions.copy);
-        edit.add(MenuActions.cut);
-        edit.add(MenuActions.paste);
+        edit.add(this.copy);
+        edit.add(this.cut);
+        edit.add(this.paste);
         edit.add(newElem);
-        edit.add(MenuActions.remove);
+        edit.add(this.remove);
         edit.add(editElem);
-        edit.add(MenuActions.undo);
-        edit.add(MenuActions.redo);
+        edit.add(this.undo);
+        edit.add(this.redo);
 
         menu.add(edit);
 
@@ -230,8 +249,8 @@ public class GraphWindow extends JFrame {
         sizePerso.setSelected(true);
         size.add(sizePerso);
 
-        display.add(MenuActions.zoomPlus);
-        display.add(MenuActions.zoomMoins);
+        display.add(this.zoomPlus);
+        display.add(this.zoomMoins);
         display.add(disposition);
         display.add(color);
         display.add(size);
@@ -266,39 +285,39 @@ public class GraphWindow extends JFrame {
         JToolBar toolBar = new JToolBar();
         toolBar.setName("Raccourcis");
 
-        toolBar.add(MenuActions.newFile);
+        toolBar.add(this.newFile);
         //Aussi étonnant que ça puisse paraître, swing récupère de base l'attribut SMALL_ICON... Maaaaaaagic !
         //JButton button = (JButton)toolBar.getComponentAtIndex(0);
-        //button.setIcon((ImageIcon)MenuActions.newFile.getValue(MenuAction.SMALL_ICON));
+        //button.setIcon((ImageIcon)this.newFile.getValue(MenuAction.SMALL_ICON));
         //button.setFocusPainted(false);
 
-        toolBar.add(MenuActions.save);
+        toolBar.add(this.save);
 
         toolBar.addSeparator();
 
-        toolBar.add(MenuActions.undo);
-        toolBar.add(MenuActions.redo);
+        toolBar.add(this.undo);
+        toolBar.add(this.redo);
 
         toolBar.addSeparator();
 
-        toolBar.add(MenuActions.copy);
-        toolBar.add(MenuActions.cut);
-        toolBar.add(MenuActions.paste);
+        toolBar.add(this.copy);
+        toolBar.add(this.cut);
+        toolBar.add(this.paste);
 
         toolBar.addSeparator();
-        toolBar.add(MenuActions.move);
-        toolBar.add(MenuActions.newEdge);
-        toolBar.add(MenuActions.newVertex);
+        toolBar.add(this.move);
+        toolBar.add(this.newEdge);
+        toolBar.add(this.newVertex);
 
-        toolBar.add(MenuActions.editEdge);
-        toolBar.add(MenuActions.editVertex);
+        toolBar.add(this.editEdge);
+        toolBar.add(this.editVertex);
 
-        toolBar.add(MenuActions.remove);
+        toolBar.add(this.remove);
 
         toolBar.addSeparator();
 
-        toolBar.add(MenuActions.zoomPlus);
-        toolBar.add(MenuActions.zoomMoins);
+        toolBar.add(this.zoomPlus);
+        toolBar.add(this.zoomMoins);
 
         JButton button;
         for(Component c : toolBar.getComponents()){

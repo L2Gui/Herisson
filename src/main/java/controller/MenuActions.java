@@ -13,6 +13,7 @@ public final class MenuActions {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Nouveau fichier ("+e.getSource().getClass().getName()+")");
+
         }
     };
     /**
