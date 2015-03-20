@@ -28,7 +28,7 @@ public class VertexView extends ViewElement {
         super.setMesh(this.mesh);
 
         String label = this.vertexModel.getLabel();
-        Font font = this.vertexModel.getFont();
+        Font font = new Font("Verdana", Font.PLAIN, 32); //normalement, on va chercher l'info dans model;
         float height = 0.2f;
 
         this.labelMesh.setup(labelShader, label, font, height, GLObjectUsage.STATIC);
@@ -42,7 +42,6 @@ public class VertexView extends ViewElement {
     @Override
     public void computeMatrix() {
         super.computeMatrix();
-        //Vector3f.add(super.getPosition(), new Vector3f(this.vertexModel.getSize() / 2.0f, - this.vertexModel.getSize() / 2.0f, 0.0f), null)
         Vector3f position = Vector3f.add(super.getPosition(), new Vector3f(this.vertexModel.getSize() / 4.0f, - this.vertexModel.getSize() / 4.0f, super.getPosition().z), null);
         this.textDrawable.setPosition(position);
     }
