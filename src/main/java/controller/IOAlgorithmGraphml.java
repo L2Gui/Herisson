@@ -2,6 +2,7 @@ package controller;
 
 import model.*;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
@@ -38,8 +39,12 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
 		
 		graphRacine = document.getRootElement().getChild("graph");
 		keyRacine = document.getRootElement().getChildren("key");
-		
-		HashMap<String, Vertex> vertices = new HashMap<String, Vertex>();
+
+        if (graphRacine.getAttributeValue("id") != null) {
+            graph.setName(graphRacine.getAttributeValue("id"));
+        }
+
+        HashMap<String, Vertex> vertices = new HashMap<String, Vertex>();
 		HashMap<String, Edge> edges = new HashMap<String, Edge>();
 
         HashMap<String, VertexStyle> vertexStylesMap = new HashMap<String, VertexStyle>();
@@ -400,8 +405,27 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
 
 	@Override
 	public boolean isConform(String filname) {
-		// TODO Auto-generated method stub
-		return false;
+
+        SAXBuilder sxb = new SAXBuilder();
+
+        org.jdom2.Document document = null;
+        try {
+            document = sxb.build(new File(filname));
+        } catch (JDOMException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        if (document != null) {
+            if (document.getRootElement().getName() == "graphml"){
+                return true;
+            }
+        }
+
+        return false;
 	}
 
 }
