@@ -4,7 +4,10 @@ import java.awt.*;
 
 
 public class EdgeStyle implements IStyle {
-	
+
+    private long id;
+    private static long idCount = 0;
+
 	private float thickness;
 	private Color color; 
 	private Color textColor;
@@ -13,6 +16,9 @@ public class EdgeStyle implements IStyle {
     private int usageCount;
 
     public EdgeStyle(){
+        id = idCount;
+        idCount++;
+
         this.thickness = 1;
         this.color = Color.BLACK;
         this.textColor = Color.BLACK;
@@ -97,5 +103,10 @@ public class EdgeStyle implements IStyle {
     public EdgeStyle decrementUsageCount() {
         usageCount--;
         return this;
+    }
+
+    @Override
+    public long getId() {
+        return this.id;
     }
 }

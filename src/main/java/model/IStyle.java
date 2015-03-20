@@ -8,4 +8,5 @@ public interface IStyle {
     public IStyle setUsageCount(int count);
     public IStyle incrementUsageCount();
     public IStyle decrementUsageCount();
+    public long getId();
 }

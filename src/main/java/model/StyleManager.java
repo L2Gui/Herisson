@@ -63,9 +63,13 @@ public class StyleManager {
 
     public void addStyle(IStyle style){
         if (style instanceof EdgeStyle){
-            edgeStyles.add((EdgeStyle)style);
+            if (!edgeStyles.contains(style)) {
+                edgeStyles.add((EdgeStyle) style);
+            }
         } else if (style instanceof VertexStyle){
-            vertexStyles.add((VertexStyle)style);
+            if (!vertexStyles.contains(style)) {
+                vertexStyles.add((VertexStyle) style);
+            }
         }
     }
 
@@ -96,5 +100,33 @@ public class StyleManager {
                 vertexStyles.remove(v);
             }
         }
+    }
+
+    /**
+     * Return the EdgeStyle with the corresponding id
+     * @param id of the style
+     * @return null if no EdgeStyle with the corresponding id does not exist
+     */
+    public EdgeStyle getEdgeStyle(long id){
+        for (EdgeStyle style : edgeStyles) {
+            if (style.getId() == id) {
+                return style;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Return the VertexStyle with the corresponding id
+     * @param id of the style
+     * @return null if no VertexStyle with the corresponding id does not exist
+     */
+    public VertexStyle getVertexStyle(long id){
+        for (VertexStyle style : vertexStyles){
+            if (style.getId() == id){
+                return style;
+            }
+        }
+        return null;
     }
 }

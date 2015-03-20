@@ -61,29 +61,25 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
 
         List<Element> nodeStyles = document.getRootElement().getChildren("node-style");
         List<Element> edgeStyles = document.getRootElement().getChildren("edge-style");
-        int nodeStyleCount = 0;
         for (Element nodeStyle : nodeStyles){
             VertexStyle style = constructVertexStyleFromElement(nodeStyle);
-            if (nodeStyleCount == 0) {
+            if (nodeStyle.getAttributeValue("default") == "true") {
 
                 graph.getStyleManager().setDefaultVertexStyle(style);
-            }else{
+            }else if (nodeStyle.getAttributeValue("default") == "false"){
                 graph.getStyleManager().addStyle(style);
             }
             vertexStylesMap.put(nodeStyle.getAttributeValue("id"), style);
-            nodeStyleCount++;
         }
 
-        int edgeStyleCount = 0;
         for (Element edgeStyle : edgeStyles){
             EdgeStyle style = constructEdgeStyleFromElement(edgeStyle);
-            if (edgeStyleCount == 0){
+            if (edgeStyle.getAttributeValue("default") == "true"){
                 graph.getStyleManager().setDefaultEdgeStyle(style);
-            }else{
+            }else if (edgeStyle.getAttributeValue("default") == "false"){
                 graph.getStyleManager().addStyle(style);
             }
             edgeStylesMap.put(edgeStyle.getAttributeValue("id"), style);
-            edgeStyleCount++;
         }
 
 		for (Element node : graphRacine.getChildren("node")){
@@ -218,7 +214,6 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
 
 	@Override
 	public void save(String filename, Graph graph) {
-		// TODO Auto-generated method stub
         Element graphml = new Element("graphml", "http://graphml.graphdrawing.org/xmlns");
 
 
@@ -233,24 +228,24 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
         HashMap<EdgeStyle, String> edgeStylesMap = new HashMap<EdgeStyle, String>();
 
         int nodeStyleCount = 0;
-        Element defaultNodeStyle = constructNodeStyleKey(null, graph.getStyleManager().getDefaultVertexStyle(), nodeStyleCount);
+        Element defaultNodeStyle = constructNodeStyleKey(null, graph.getStyleManager().getDefaultVertexStyle(), nodeStyleCount).setAttribute("default", "true");
         graphml.addContent(defaultNodeStyle);
         vertexStylesMap.put(graph.getStyleManager().getDefaultVertexStyle(), defaultNodeStyle.getAttributeValue("id"));
         nodeStyleCount++;
         for(VertexStyle style : graph.getStyleManager().getVertexStyles()){
-            Element nodeStyle = constructNodeStyleKey(null, style, nodeStyleCount);
+            Element nodeStyle = constructNodeStyleKey(null, style, nodeStyleCount).setAttribute("default", "false");
             graphml.addContent(nodeStyle);
             vertexStylesMap.put(style, nodeStyle.getAttributeValue("id"));
             nodeStyleCount++;
         }
 
         int edgeStyleCount = 0;
-        Element defaultEdgeStyle = constructEdgeStyleKey(null, graph.getStyleManager().getDefaultEdgeStyle(), edgeStyleCount);
+        Element defaultEdgeStyle = constructEdgeStyleKey(null, graph.getStyleManager().getDefaultEdgeStyle(), edgeStyleCount).setAttribute("default", "true");
         graphml.addContent(defaultEdgeStyle);
         edgeStylesMap.put(graph.getStyleManager().getDefaultEdgeStyle(), defaultEdgeStyle.getAttributeValue("id"));
         edgeStyleCount++;
         for(EdgeStyle style : graph.getStyleManager().getEdgeStyles()){
-            Element nodeStyle = constructEdgeStyleKey(null, style, nodeStyleCount);
+            Element nodeStyle = constructEdgeStyleKey(null, style, nodeStyleCount).setAttribute("default", "false");
             graphml.addContent(nodeStyle);
             edgeStylesMap.put(style, nodeStyle.getAttributeValue("id"));
             edgeStyleCount++;

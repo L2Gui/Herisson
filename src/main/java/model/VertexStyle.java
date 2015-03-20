@@ -11,6 +11,10 @@ import java.util.Collection;
  */
 
 public class VertexStyle implements IStyle {
+
+    private long id;
+    private static long idCount = 0;
+
 	private VertexShape shape;
 	private Collection<Vertex> vertices;
 	private float size;
@@ -22,6 +26,9 @@ public class VertexStyle implements IStyle {
     private int usageCount;
 	
 	public VertexStyle(){
+        id = idCount;
+        idCount++;
+
 		vertices = new ArrayList<Vertex>();
         this.shape = VertexShape.SQUARE;
         this.size = 4;
@@ -139,4 +146,11 @@ public class VertexStyle implements IStyle {
         usageCount--;
         return this;
     }
+
+    @Override
+    public long getId() {
+        return this.id;
+    }
+
+
 }
