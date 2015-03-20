@@ -183,7 +183,11 @@ public class Vertex {
 	 * @return this.style.font (Font)
 	 */
 	public Font getFont() {
-		return style.getFont();
+        /*if (style.getFont() == null);
+            style.setFont(new Font("Verdana", Font.PLAIN, 32));*/
+
+        return style.getFont();
+        //return new Font("Verdana", Font.PLAIN, 32);
 	}
 	
 	/**

@@ -51,15 +51,18 @@ public class GraphCanvas extends GLCanvas {
     public void init() {
         this.camera = new GLPerspectiveCamera(70.0f, 0.01f, 100.0f);
         this.camera.lookToDirection(new Vector3f(0.0f, 0.0f, -1.0f));
+        GraphCanvas.this.camera.rotate(30, new Vector3f(0, 1, 0));
         super.setCamera(this.camera);
 
         super.addMouseListener(new MouseInputAdapter() {
             @Override
             public void mousePressed(MouseEvent arg0) {
                 if (arg0.getButton() == MouseEvent.BUTTON1) {
-
-
-
+                    try {
+                        GraphCanvas.this.makeCurrent();
+                    } catch (LWJGLException e) {
+                        e.printStackTrace();
+                    }
                     GraphCanvas.this.createObject(arg0.getX(), arg0.getY());
                 }
             }
@@ -130,24 +133,46 @@ public class GraphCanvas extends GLCanvas {
         this.loadGraph();
     }
 
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     private void createObject(int x, int y) {
 
         System.out.println("Clic");
 
-        GLRay ray = this.camera.getCursorRay(new Vector2f(x, y));
-        Vector3f position = Vector3f.add(ray.getPosition(), (Vector3f) ray.getDirection().scale(5f), null);
+        GLRay ray = this.camera.getCursorRay(new Vector2f(x, super.getSize().height - y));
 
-        Vertex v = new Vertex();
+        /**
+         * La partie suivante sert à trouver
+         */
+        Vector3f vecDirection = ray.getDirection(); //vecteur direction clic souris
+        Vector3f vecCamera = new Vector3f(0,0, -this.camera.getPosition().getZ());
+
+        vecDirection = vecDirection.normalise(null);
+        vecCamera = vecCamera.normalise(null);
+
+        double alpha; //angle entre les deux vecteurs (camera et direction du clic)
+        float hypothenuse;
+
+        alpha = Math.acos(Vector3f.dot(vecCamera, vecDirection)); //produit scalaire entre les deux vecteurs !
+        hypothenuse = this.camera.getPosition().getZ() / (float)Math.cos(alpha);
+
+        Vector3f position = Vector3f.add(ray.getPosition(), (Vector3f) ray.getDirection().scale(hypothenuse), null);
+
+        Vertex v = new Vertex(graph);
         v.setPosition(position);
-        v.setLabel("COCA-COLA");
+        //v.setLabel("COCA-COLA");
 
         VertexView vv = new VertexView(v, this.vertexMesh, this.labelShader);
+        vv.setShader(this.vertexEdgeShader);
 
         this.vertexViews.put(v, vv);
-        //this.paintGL();
-        //graph.addVertex(v);
-        //onGraphChange();
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
     private void loadGraph() {
         super.lockDraw();
