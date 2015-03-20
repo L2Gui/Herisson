@@ -8,6 +8,11 @@ import java.awt.event.KeyEvent;
 
 
 public class CopyAction extends MenuAction{
+
+    public CopyAction() {
+        this(null);
+    }
+
     /**
      * Constructeur de Copy Action
      */

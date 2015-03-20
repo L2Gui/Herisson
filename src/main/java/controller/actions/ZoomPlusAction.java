@@ -7,6 +7,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 public class ZoomPlusAction extends MenuAction {
+
+    public ZoomPlusAction() {
+        this(null);
+    }
+
     /**
      * Constructeur de Zoom + Action
      */

@@ -8,6 +8,11 @@ import java.awt.event.KeyEvent;
 
 
 public class RemoveAction extends MenuAction{
+
+    public RemoveAction() {
+        this(null);
+    }
+
     /**
      * Constructeur de Remove Action
      */

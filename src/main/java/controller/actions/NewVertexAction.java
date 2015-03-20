@@ -8,6 +8,11 @@ import java.awt.event.KeyEvent;
 
 
 public class NewVertexAction extends MenuAction{
+
+    public NewVertexAction() {
+        this(null);
+    }
+    
     /**
      * Constructeur de NewVertex Action
      */

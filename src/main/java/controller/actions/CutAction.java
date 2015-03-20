@@ -8,6 +8,11 @@ import java.awt.event.KeyEvent;
 
 
 public class CutAction extends MenuAction{
+
+    public CutAction() {
+        this(null);
+    }
+
     /**
      * Constructeur de Cut Action
      */

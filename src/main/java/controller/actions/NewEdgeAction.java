@@ -7,6 +7,11 @@ import java.awt.event.ActionEvent;
 
 
 public class NewEdgeAction extends MenuAction{
+
+    public NewEdgeAction() {
+        this(null);
+    }
+
     /**
      * Constructeur de NewEdge Action
      */

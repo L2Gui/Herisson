@@ -8,6 +8,11 @@ import java.awt.event.KeyEvent;
 
 
 public class ZoomMoinsAction extends MenuAction{
+
+    public ZoomMoinsAction() {
+        this(null);
+    }
+    
     /**
      * Constructeur de Zoom - Action
      */

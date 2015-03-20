@@ -2,7 +2,6 @@ package view;
 
 import controller.Controller;
 import controller.MenuAction;
-import controller.MenuActions;
 import controller.actions.*;
 import model.Graph;
 import model.IColorAlgorithm;
@@ -19,7 +18,6 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Collection;
 import java.util.Map;
 
 
@@ -124,6 +122,23 @@ public class GraphWindow extends JFrame {
 
     public void setController(Controller controller) {
         this.controller = controller;
+        this.newFile.setController(controller);
+        this.openFile.setController(controller);
+        this.save.setController(controller);
+        this.saveAs.setController(controller);
+        this.newVertex.setController(controller);
+        this.newEdge.setController(controller);
+        this.editVertex.setController(controller);
+        this.editEdge.setController(controller);
+        this.copy.setController(controller);
+        this.cut.setController(controller);
+        this.paste.setController(controller);
+        this.remove.setController(controller);
+        this.undo.setController(controller);
+        this.redo.setController(controller);
+        this.zoomPlus.setController(controller);
+        this.zoomMoins.setController(controller);
+        this.move.setController(controller);
     }
 
     /**

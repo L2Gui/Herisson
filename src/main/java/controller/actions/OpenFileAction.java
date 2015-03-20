@@ -8,6 +8,11 @@ import java.awt.event.KeyEvent;
 
 
 public class OpenFileAction extends MenuAction{
+
+    public OpenFileAction() {
+        this(null);
+    }
+    
     /**
      * Constructeur de OpenFile Action
      */

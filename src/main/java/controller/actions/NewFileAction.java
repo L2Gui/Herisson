@@ -7,6 +7,11 @@ import java.awt.event.KeyEvent;
 
 
 public class NewFileAction extends MenuAction{
+
+    public NewFileAction() {
+        this(null);
+    }
+
     /**
      * Constructeur de NewFile Action
      */

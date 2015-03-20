@@ -8,6 +8,11 @@ import java.awt.event.KeyEvent;
 
 
 public class PasteAction extends MenuAction{
+
+    public PasteAction() {
+        this(null);
+    }
+
     /**
      * Constructeur de Paste Action
      */

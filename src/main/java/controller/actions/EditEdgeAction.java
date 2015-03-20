@@ -7,6 +7,11 @@ import java.awt.event.ActionEvent;
 
 
 public class EditEdgeAction extends MenuAction{
+
+    public EditEdgeAction() {
+        this(null);
+    }
+
     /**
      * Constructeur de Edit Edge
      */

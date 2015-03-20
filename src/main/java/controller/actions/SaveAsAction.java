@@ -8,6 +8,11 @@ import java.awt.event.KeyEvent;
 
 
 public class SaveAsAction extends MenuAction{
+
+    public SaveAsAction() {
+        this(null);
+    }
+
     /**
      * Constructeur de SaveAs Action
      */

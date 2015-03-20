@@ -8,6 +8,11 @@ import java.awt.event.KeyEvent;
 
 
 public class RedoAction extends MenuAction{
+
+    public RedoAction() {
+        this(null);
+    }
+
     /**
      * Constructeur de Redo Action
      */

@@ -8,6 +8,10 @@ import java.awt.event.KeyEvent;
 
 
 public class MoveAction extends MenuAction{
+    public MoveAction() {
+        this(null);
+    }
+
     /**
      * Constructeur de Move Action
      */

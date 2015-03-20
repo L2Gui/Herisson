@@ -8,6 +8,11 @@ import java.awt.event.KeyEvent;
 
 
 public class UndoAction extends MenuAction{
+
+    public UndoAction() {
+        this(null);
+    }
+
     /**
      * Constructeur de Undo Action
      */
