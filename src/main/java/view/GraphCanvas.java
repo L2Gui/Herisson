@@ -37,6 +37,8 @@ public class GraphCanvas extends GLCanvas {
     private GLShader labelShader;
     private GLShader vertexEdgeShader;
 
+    private boolean isMousePressed = false;
+
     public GraphCanvas() throws LWJGLException {}
 
     public Graph getGraph() {
@@ -63,30 +65,32 @@ public class GraphCanvas extends GLCanvas {
                 } catch (LWJGLException e) {
                     e.printStackTrace();
                 }
-                if (arg0.getButton() == MouseEvent.BUTTON1) {
-                    GraphCanvas.this.createObject(arg0.getX(), arg0.getY());
-                } else if (arg0.getButton() == MouseEvent.BUTTON3) {
-                    int x = arg0.getX();
-                    int y = arg0.getY();
+                if (arg0.getButton() == MouseEvent.BUTTON1) { //clic gauche
 
-                    y = GraphCanvas.this.getHeight() - y;
-                    GLRay ray = GraphCanvas.this.camera.getCursorRay(new Vector2f(x, y));
-
-                    VertexView intersectedVertex = null;
-                    for (int i = 0; i < vertexViewsOrdonned.size() && intersectedVertex==null; i++) {
-                        if (vertexViewsOrdonned.get(i).isIntersected(ray)) {
-                            intersectedVertex = vertexViewsOrdonned.get(i);
-                        }
+                    VertexView intersectedVertex = getIntersectedVertexView(arg0.getX(), arg0.getY());
+                    if (intersectedVertex != null) {
+                        System.out.println("INTERSECTION");
+                    } else {
+                        GraphCanvas.this.createObject(arg0.getX(), arg0.getY());
                     }
 
+                } else if (arg0.getButton() == MouseEvent.BUTTON3) { //clic droit
+
+                    VertexView intersectedVertex = getIntersectedVertexView(arg0.getX(), arg0.getY());
                     if (intersectedVertex != null) {
-                            getPopupOnVertex(intersectedVertex).show(arg0.getComponent(), x, arg0.getY());
+                            getPopupOnVertex(intersectedVertex).show(arg0.getComponent(), arg0.getX(), arg0.getY());
                     } else {
                         System.out.println("PAS INTERSECTION !!!!");
                     }
                 }
             }
+
+            @Override
+            public void mouseReleased(MouseEvent arg0) {
+                
+            }
         });
+
 
         this.vertexEdgeShader = new GLShader("coloru3D.vert", "color.frag");
         this.labelShader = new GLShader("textureu3D.vert", "texture.frag");
@@ -155,8 +159,7 @@ public class GraphCanvas extends GLCanvas {
 
 
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    ////////////////////////////// CREATION D'UN NOEUD //////////////////////////////////////////////////////
     private void createObject(int x, int y) {
 
         System.out.println("Clic");
@@ -192,7 +195,18 @@ public class GraphCanvas extends GLCanvas {
         this.vertexViewsOrdonned.add(vv);
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////// RETOURNE VERTEX VIEW INTERSECTED //////////////////////////////////////////
+    private VertexView getIntersectedVertexView(int x, int y) {
+        y = GraphCanvas.this.getHeight() - y; //car y swing et y canvas sont inversés
+        GLRay ray = GraphCanvas.this.camera.getCursorRay(new Vector2f(x, y));
+
+        VertexView intersectedVertex = null;
+        for (int i = 0; i < vertexViewsOrdonned.size() && intersectedVertex==null; i++) {
+            if (vertexViewsOrdonned.get(i).isIntersected(ray))
+                intersectedVertex = vertexViewsOrdonned.get(i);
+            }
+        return intersectedVertex;
+    }
 
     ////////////////////////////////////////// GENERATION DES POPUPS //////////////////////////////////////////
     private JPopupMenu getPopupOnVertex(VertexView vertexView){
