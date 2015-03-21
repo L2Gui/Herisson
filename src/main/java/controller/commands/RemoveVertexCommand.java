@@ -30,5 +30,9 @@ public class RemoveVertexCommand implements ICommand{
     @Override
     public void undo() {
         this.graph.addVertex(this.vertex);
+        for(Edge edge : this.vertex.getEdges())
+        {
+            this.graph.addEdge(edge);
+        }
     }
 }

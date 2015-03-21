@@ -5,7 +5,6 @@ import controller.actions.*;
 import controller.commands.MoveVertexCommand;
 import controller.commands.RemoveEdgeCommand;
 import controller.commands.RemoveVertexCommand;
-import model.*;
 import opengl.GLCanvas;
 import opengl.resource.object.camera.GLPerspectiveCamera;
 import opengl.utils.GLRay;
@@ -28,6 +27,7 @@ public class GraphCanvas extends GLCanvas {
     private GLPerspectiveCamera camera;
 
     //attributs utilitaires
+    private Object pasteBuffer;
     private boolean isMousePressed = false;
     private VertexView selectedVertex;
     private EdgeView selectedEdge;
@@ -305,5 +305,13 @@ public class GraphCanvas extends GLCanvas {
         contextMenu.add(new ZoomPlusAction());
         contextMenu.add(new ZoomLessAction());
         return contextMenu;
+    }
+
+    public Object getPasteBuffer() {
+        return pasteBuffer;
+    }
+
+    public void setPasteBuffer(Object pasteBuffer) {
+        this.pasteBuffer = pasteBuffer;
     }
 }
