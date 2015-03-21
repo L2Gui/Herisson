@@ -22,6 +22,13 @@ public class Vertex {
         position = null;
         label = "";
     }
+    public Vertex(Vertex v){
+        this.edges = new ArrayList<Edge>(v.getEdges());
+        this.style = new VertexStyle(v.getStyle());
+        this.graph = v.getGraph();
+        this.position = new Vector3f(v.getPosition());
+        this.label = new String(v.getLabel());
+    }
 
     public Vertex(Graph graph){
         this();

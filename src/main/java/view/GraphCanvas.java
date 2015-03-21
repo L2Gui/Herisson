@@ -246,7 +246,7 @@ public class GraphCanvas extends GLCanvas {
     ////////////////////////////////////////// GENERATION DES POPUPS //////////////////////////////////////////
     private JPopupMenu getPopupOnVertex(VertexView vertexView){
         JPopupMenu contextMenu = new JPopupMenu();
-        contextMenu.add(new EditVertexAction());    // passer le vertexview en question en param
+        contextMenu.add(new EditVertexNowAction(null, vertexView));    // passer le vertexview en question en param
         contextMenu.add(new JPopupMenu.Separator());
         contextMenu.add(new UndoAction());
         contextMenu.add(new RedoAction());

@@ -273,18 +273,11 @@ public class GraphWindow extends JFrame {
         menu.add(display);
 
         JMenu help = new JMenu("Aide");
-        help.setMnemonic('h');
         help.addMouseListener(new MouseAdapter() {
 
             @Override
             public void mousePressed(MouseEvent arg0) {
-                try {
-                    URI uri = URI.create("https://docs.google.com/document/d/1O6I38bpy3eshSb-ov9bVoirzjHJtZEO15fjJBlTmeho/edit?usp=sharing");
-                    Desktop.getDesktop().browse(uri);
-                } catch (IOException e) {
-                    System.err.println("Erreur ouverture site web");
-                    e.printStackTrace();
-                }
+                new HelpAction().actionPerformed(new ActionEvent(arg0.getSource(), arg0.getID(), "help us !"));
             }
         });
 
@@ -320,14 +313,36 @@ public class GraphWindow extends JFrame {
         toolBar.add(this.paste);
 
         toolBar.addSeparator();
-        toolBar.add(this.move);
-        toolBar.add(this.newEdge);
-        toolBar.add(this.newVertex);
+        ButtonGroup modes = new ButtonGroup();
+        JToggleButton toggleMove = new JToggleButton(this.move);
+        toggleMove.setText("");
+        toolBar.add(toggleMove);
+        modes.add(toggleMove);
 
-        toolBar.add(this.editEdge);
-        toolBar.add(this.editVertex);
+        JToggleButton toggleNewEdge = new JToggleButton(this.newEdge);
+        toggleNewEdge.setText("");
+        toolBar.add(toggleNewEdge);
+        modes.add(toggleNewEdge);
 
-        toolBar.add(this.remove);
+        JToggleButton toggleNewVertex = new JToggleButton(this.newVertex);
+        toggleNewVertex.setText("");
+        toolBar.add(toggleNewVertex);
+        modes.add(toggleNewVertex);
+
+        JToggleButton toggleEditEdge = new JToggleButton(this.editEdge);
+        toggleEditEdge.setText("");
+        toolBar.add(toggleEditEdge);
+        modes.add(toggleEditEdge);
+
+        JToggleButton toggleEditVertex = new JToggleButton(this.editVertex);
+        toggleEditVertex.setText("");
+        toolBar.add(toggleEditVertex);
+        modes.add(toggleEditVertex);
+
+        JToggleButton toggleDeletion = new JToggleButton(this.remove);
+        toggleDeletion.setText("");
+        toolBar.add(toggleDeletion);
+        modes.add(toggleDeletion);
 
         toolBar.addSeparator();
 
