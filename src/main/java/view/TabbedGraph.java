@@ -20,7 +20,7 @@ public class TabbedGraph extends JTabbedPane {
      *
      * @param canvas le canvas qui sera utilisé par tous les graphes
      */
-    public TabbedGraph(GraphCanvas canvas){
+    public TabbedGraph(GraphCanvas canvas) {
         this.canvas = canvas;
         this.addChangeListener(new ChangeListener() {
             @Override

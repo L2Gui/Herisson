@@ -21,6 +21,7 @@ public class Controller {
 
     // Model
     private List<Graph> graphs;
+    private Map<Graph, GraphView> graphViews;
     private Graph currentGraph;
 
     // View
@@ -35,6 +36,7 @@ public class Controller {
         this.setupSizeAlgorithms();
 
         this.graphs = new ArrayList<Graph>();
+        this.graphViews = new HashMap<Graph, GraphView>();
         this.state = ControllerState.VERTEX_CREATION;
     }
 
@@ -57,7 +59,16 @@ public class Controller {
     }
 
     public void addGraph(Graph graph) {
+        GraphView graphView = new GraphView();
+        graphView.setGraph(graph);
+        graphView.setController(this);
+        this.canvas.setGraphView(graphView);
         this.graphs.add(graph);
+        this.graphViews.put(graph, graphView);
+
+        if (this.window != null) {
+            this.window.addGraph(graph.getName());
+        }
     }
 
     public void selectGraph(int graphID) {
@@ -70,9 +81,10 @@ public class Controller {
 
     public void setCurrentGraph(Graph graph) {
         if (!this.graphs.contains(graph)) {
-            this.graphs.add(graph);
+            this.addGraph(graph);
         }
         this.currentGraph = graph;
+        this.canvas.setGraphView(graphViews.get(graph));
     }
 
     private void setupIOAlgorithm() {
@@ -103,49 +115,5 @@ public class Controller {
         this.state = state;
     }
 
-    public GraphView createSampleGraph() {
-        Graph g = new Graph();
-        g.setName("graphe test");
-        Vertex v0 = new Vertex();
-        v0.setPosition(new Vector3f(5f, 5f, 0f));
-        v0.setLabel("Coucou");
-        Vertex v1 = new Vertex();
-        v1.setPosition(new Vector3f(4f,-3f,0f));
-        v1.setLabel("Tranquille ?");
-        Vertex v2 = new Vertex();
-        v2.setPosition(new Vector3f(-4f, 3f, 0f));
-        Vertex v3 = new Vertex();
-        v3.setPosition(new Vector3f(0f,0f,0f));
-        Vertex v4 = new Vertex();
-        v4.setPosition(new Vector3f(2f,5f,0f));
-        Edge edge = new Edge();
-        edge.setSrcVertex(v0);
-        edge.setDstVertex(v1);
 
-        g.addVertex(v0);
-        g.addVertex(v1);
-        g.addVertex(v2);
-        g.addVertex(v3);
-        g.addVertex(v4);
-        g.addEdge(edge);
-
-        for (int i = 0; i < 5; i++) {
-            Vertex v = new Vertex();
-            v.setPosition(new Vector3f(0f,0f,0f));
-            v.setLabel("Noeud "+(i+4));
-            g.addVertex(v);
-        }
-
-        DispoRandomAlgorithm algorithm = new DispoRandomAlgorithm();
-
-        for (Pair<Vertex, Vector3f> p : algorithm.execute(g)){
-            p.getValue0().setPosition(p.getValue1());
-        }
-
-        this.graphs.add(g);
-        GraphView view = new GraphView();
-        view.setController(this);
-        g.addObserver(view);
-        return view;
-    }
 }

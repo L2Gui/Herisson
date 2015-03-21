@@ -22,6 +22,7 @@ import java.util.*;
  */
 public class GraphView implements Observer {
     private Controller controller;
+    private Graph graph;
 
     private Map<Vertex, VertexView> vertexViews;
     private Map<Edge, EdgeView> edgeViews;
@@ -33,11 +34,21 @@ public class GraphView implements Observer {
     private GLShader labelShader;
     private GLShader vertexEdgeShader;
 
+    private boolean isInitialized;
+
     public GraphView() {
         this.vertexViews = new HashMap<Vertex, VertexView>();
         this.edgeViews = new HashMap<Edge, EdgeView>();
         this.vertexViewsOrdonned = new ArrayList<VertexView>();
         this.edgeViewsOrdonned = new ArrayList<EdgeView>();
+        this.isInitialized = false;
+    }
+
+    public void setGraph(Graph graph) {
+        this.graph = graph;
+        if (this.isInitialized) {
+            this.loadGraph(graph);
+        }
     }
 
     public void setController(Controller controller) {
@@ -46,8 +57,10 @@ public class GraphView implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
-        Graph graph = (Graph) observable;
-        this.loadGraph(graph);
+        if (this.isInitialized) {
+            Graph graph = (Graph) observable;
+            this.loadGraph(graph);
+        }
     }
 
     public void init() {
@@ -86,6 +99,11 @@ public class GraphView implements Observer {
 
         this.vertexMesh.init();
         this.edgeMesh.init();
+
+        if (this.graph != null) {
+            this.loadGraph(this.graph);
+        }
+        this.isInitialized = true;
     }
 
     public void paint(Matrix4f transformationMatrix) {
