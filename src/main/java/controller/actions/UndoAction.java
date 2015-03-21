@@ -2,6 +2,7 @@ package controller.actions;
 
 import controller.Controller;
 import controller.MenuAction;
+import org.lwjgl.LWJGLException;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -23,6 +24,11 @@ public class UndoAction extends MenuAction{
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("undo ("+e.getSource().getClass().getName()+")");
+        try {
+            this.getController().getCanvas().makeCurrent();
+        } catch (LWJGLException e1) {
+            e1.printStackTrace();
+        }
         this.getController().getCurrentGraph().getCommandHandler().undo();
     }
 }
