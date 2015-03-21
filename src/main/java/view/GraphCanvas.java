@@ -304,20 +304,20 @@ public class GraphCanvas extends GLCanvas {
         contextMenu.add(new EditVertexNowAction(this.controller, vertexView));    // passer le vertexview en question en param
         contextMenu.add(new CopyNowAction(this.controller, vertexView));
         contextMenu.add(new JPopupMenu.Separator());
-        contextMenu.add(new UndoAction());
-        contextMenu.add(new RedoAction());
-        contextMenu.add(new ZoomPlusAction());
-        contextMenu.add(new ZoomLessAction());
+        contextMenu.add(new UndoAction(this.controller));
+        contextMenu.add(new RedoAction(this.controller));
+        contextMenu.add(new ZoomPlusAction(this.controller));
+        contextMenu.add(new ZoomLessAction(this.controller));
         return contextMenu;
     }
     private JPopupMenu getPopupOnNothing(int x, int y){
         JPopupMenu contextMenu = new JPopupMenu();
         contextMenu.add(new PasteNowAction(this.controller, x, y));
         contextMenu.add(new JPopupMenu.Separator());
-        contextMenu.add(new UndoAction());
-        contextMenu.add(new RedoAction());
-        contextMenu.add(new ZoomPlusAction());
-        contextMenu.add(new ZoomLessAction());
+        contextMenu.add(new UndoAction(this.controller));
+        contextMenu.add(new RedoAction(this.controller));
+        contextMenu.add(new ZoomPlusAction(this.controller));
+        contextMenu.add(new ZoomLessAction(this.controller));
         return contextMenu;
     }
     ////////////////////////////////////////////////  ANIMATION //////////////////////////////////////////////
