@@ -11,13 +11,14 @@ public class CreateVertexCommand implements ICommand {
     private Vertex vertex;
     private Graph graph;
 
-    public CreateVertexCommand() {
-        this.vertex = new Vertex();
+    public CreateVertexCommand(Vertex vertex) {
+        this.vertex = vertex;
     }
 
     @Override
     public void execute(Graph graph) {
         this.graph = graph;
+        this.vertex.setGraph(graph);
         this.graph.addVertex(this.vertex);
     }
 
