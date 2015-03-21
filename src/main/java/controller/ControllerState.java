@@ -1,6 +1,6 @@
 package controller;
 
-public enum State {
+public enum ControllerState {
     VERTEX_CREATION,
     EDGE_CREATION,
     VERTEX_EDITION,

@@ -1,6 +1,7 @@
 package controller.actions;
 
 import controller.Controller;
+import controller.ControllerState;
 import controller.MenuAction;
 
 import java.awt.event.ActionEvent;
@@ -21,6 +22,6 @@ public class MoveAction extends MenuAction{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("passage en mode deplacement ("+e.getSource().getClass().getName()+")");
+        super.getController().setState(ControllerState.MOVE);
     }
 }
