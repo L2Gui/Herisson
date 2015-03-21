@@ -32,7 +32,8 @@ public class RemoveVertexCommand implements ICommand{
         this.graph.addVertex(this.vertex);
         for(Edge edge : this.vertex.getEdges())
         {
-            this.graph.addEdge(edge);
+            if (edge.getDstVertex() != null && edge.getSrcVertex() != null)
+                this.graph.addEdge(edge);
         }
     }
 }

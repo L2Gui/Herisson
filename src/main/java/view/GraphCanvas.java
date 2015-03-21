@@ -12,7 +12,6 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
-import utils.MathUtils;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
