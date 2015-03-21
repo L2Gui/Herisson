@@ -3,6 +3,7 @@ package view;
 import controller.Controller;
 import controller.actions.*;
 import controller.commands.MoveVertexCommand;
+import controller.commands.RemoveVertexCommand;
 import model.*;
 import opengl.GLCanvas;
 import opengl.resource.object.camera.GLPerspectiveCamera;
@@ -112,10 +113,9 @@ public class GraphCanvas extends GLCanvas {
                             break;
 
                         case DELETION:
-                            /*if(intersectedVertex != null) {
-                                ViewElement viewElement = intersectedVertex;
-                                GraphCanvas.this.deleteElement(viewElement);
-                            }*/
+                            if(intersectedVertexView != null) {
+                                GraphCanvas.this.controller.executeCommand(new RemoveVertexCommand(selectedVertex.getModel()));
+                            }
                             break;
 
                         default:
