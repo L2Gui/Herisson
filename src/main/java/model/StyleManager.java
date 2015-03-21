@@ -21,7 +21,7 @@ public class StyleManager {
 
         defaultEdgeStyle = new EdgeStyle().setColor(Color.BLACK)
                                           .setTextColor(Color.BLACK)
-                                          .setThickness(0.2f)
+                                          .setThickness(0.1f)
                                           .setFont(new Font("Verdana", Font.PLAIN, 32));
 
         defaultVertexStyle = new VertexStyle().setBackgroundColor(Color.GRAY)
