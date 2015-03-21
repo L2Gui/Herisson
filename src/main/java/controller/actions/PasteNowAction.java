@@ -12,15 +12,15 @@ import java.util.Collection;
 public class PasteNowAction extends MenuAction{
     Collection<Object> objects;
     public PasteNowAction() {
-        this(null, null);
+        this(null, 0, 0);
     }
 
     /**
      * Constructeur de Paste now Action
      */
-    public PasteNowAction(Controller controller, Collection<Object> objects) {
+    public PasteNowAction(Controller controller, int x, int y) {
         super(controller, "Coller", "res/paste.png", KeyEvent.VK_V, null);
-        this.objects = objects;
+        //this.objects = objects;
     }
 
     @Override
