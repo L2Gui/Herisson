@@ -139,6 +139,7 @@ public class GraphWindow extends JFrame {
         this.zoomPlus.setController(controller);
         this.zoomMoins.setController(controller);
         this.move.setController(controller);
+        this.tabs.setController(controller);
     }
 
     /**
@@ -198,7 +199,7 @@ public class GraphWindow extends JFrame {
                 dispositionRadioButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Appliquer sur le graphe '"+canvas.getGraph().getName()+"' l'algo "+ algo.getKey());
+                        System.out.println("Appliquer sur le graphe '"+ controller.getCurrentGraph().getName()+"' l'algo "+ algo.getKey());
                     }
                 });
                 disposition.add(dispositionRadioButton);
@@ -224,7 +225,7 @@ public class GraphWindow extends JFrame {
                 colorRadioBtn.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Appliquer sur le graphe '"+canvas.getGraph().getName()+"' l'algo "+algo.getKey());
+                        System.out.println("Appliquer sur le graphe '"+controller.getCurrentGraph().getName()+"' l'algo "+algo.getKey());
                     }
                 });
                 color.add(colorRadioBtn);
@@ -250,7 +251,7 @@ public class GraphWindow extends JFrame {
                 sizeRadioBtn.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Appliquer sur le graphe '" + canvas.getGraph().getName() + "' l'algo " + algo.getKey());
+                        System.out.println("Appliquer sur le graphe '" + controller.getCurrentGraph().getName() + "' l'algo " + algo.getKey());
                     }
                 });
                 size.add(sizeRadioBtn);
@@ -369,7 +370,7 @@ public class GraphWindow extends JFrame {
         return toolBar;
     }
 
-    public void addGraph(Graph g){
-        tabs.addGraphTab(g);
+    public void addGraph(String name){
+        tabs.addGraphTab(name);
     }
 }

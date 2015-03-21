@@ -10,28 +10,24 @@ import model.Vertex;
  */
 public class CreateEdgeCommand implements ICommand {
     private Edge edge;
-    private Vertex src;
-    private Vertex dst;
     private Graph graph;
 
-    public CreateEdgeCommand(Vertex src, Vertex dst) {
-        this.edge = new Edge();
-        this.edge.setSrcVertex(src);
-        this.edge.setDstVertex(dst);
+    public CreateEdgeCommand(Edge edge) {
+        this.edge = edge;
     }
 
     @Override
     public void execute(Graph graph) {
         this.graph = graph;
         this.graph.addEdge(this.edge);
-        this.src.addEdge(this.edge);
-        this.dst.addEdge(this.edge);
+        this.edge.getSrcVertex().addEdge(this.edge);
+        this.edge.getDstVertex().addEdge(this.edge);
     }
 
     @Override
     public void undo() {
         this.graph.removeEdge(this.edge);
-        this.src.removeEdge(this.edge);
-        this.dst.removeEdge(this.edge);
+        this.edge.getSrcVertex().removeEdge(this.edge);
+        this.edge.getDstVertex().removeEdge(this.edge);
     }
 }

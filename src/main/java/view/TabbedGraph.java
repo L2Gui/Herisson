@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import model.Graph;
 
 import javax.swing.*;
@@ -10,23 +11,22 @@ import java.util.Vector;
 
 
 public class TabbedGraph extends JTabbedPane {
-    private GraphCanvas canvas = null;
+    private Controller controller = null;
+    private GraphCanvas canvas;
     private int index=0;
-
-    private Vector<Graph> models= new Vector<Graph>();
 
     /**
      * Constructeur de TabbedGraph. Prend un canvas en paramètre
      *
      * @param canvas le canvas qui sera utilisé par tous les graphes
      */
-    public TabbedGraph(final GraphCanvas canvas){
-        this.canvas=canvas;
+    public TabbedGraph(GraphCanvas canvas){
+        this.canvas = canvas;
         this.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 if(getSelectedIndex()!=-1) {
-                    canvas.setGraph(models.elementAt(getSelectedIndex()));
+                    TabbedGraph.this.controller.selectGraph(getSelectedIndex());
                     setComponentAt(index, new JPanel());
                     setComponentAt(getSelectedIndex(), getEncapsulatedCanvas());
                     index = getSelectedIndex();
@@ -35,14 +35,17 @@ public class TabbedGraph extends JTabbedPane {
         });
     }
 
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
     /**
      * Ajoute un nouvel onglet avec le graphe passé en paramètre
      *
-     * @param g le graphe à ajouter
+     * @param name le graphe à ajouter
      */
-    public void addGraphTab(Graph g) {
-        models.add(g);
-        super.addTab(g.getName(), getEncapsulatedCanvas());
+    public void addGraphTab(String name) {
+        super.addTab(name, getEncapsulatedCanvas());
         setSelectedIndex(getTabCount()-1);
         index=getSelectedIndex();
     }
