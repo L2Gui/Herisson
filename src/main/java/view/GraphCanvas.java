@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import controller.actions.*;
 import model.*;
 import opengl.GLCanvas;
@@ -11,6 +12,7 @@ import opengl.utils.GLRay;
 import opengl.vertex.GLVertex;
 import org.javatuples.Pair;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
@@ -26,6 +28,7 @@ import java.util.List;
  */
 public class GraphCanvas extends GLCanvas {
     private Graph graph;
+    private Controller controller;
     private GLPerspectiveCamera camera;
     private Map<Vertex, VertexView> vertexViews;
     private Map<Edge, EdgeView> edgeViews;
@@ -37,7 +40,9 @@ public class GraphCanvas extends GLCanvas {
     private GLShader labelShader;
     private GLShader vertexEdgeShader;
 
+    //attributs utilitaires
     private boolean isMousePressed = false;
+    VertexView selectedVertex;
 
     public GraphCanvas() throws LWJGLException {}
 
@@ -50,32 +55,43 @@ public class GraphCanvas extends GLCanvas {
         this.onGraphChange();
     }
 
+    public Controller getController() {
+        return controller;
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
     @Override
     public void init() {
         this.camera = new GLPerspectiveCamera(70.0f, 0.01f, 100.0f);
         this.camera.lookToDirection(new Vector3f(0.0f, 0.0f, -1.0f));
-        //GraphCanvas.this.camera.rotate(30, new Vector3f(0, 1, 0));
+        //this.camera.rotate(30, new Vector3f(0, 1, 0));
         super.setCamera(this.camera);
 
         super.addMouseListener(new MouseInputAdapter() {
-            @Override
-            public void mousePressed(MouseEvent arg0) {
+            public void initGraphCanvas() {
                 try {
                     GraphCanvas.this.makeCurrent();
                 } catch (LWJGLException e) {
                     e.printStackTrace();
                 }
-                if (arg0.getButton() == MouseEvent.BUTTON1) { //clic gauche
+            }
 
+            @Override
+            public void mousePressed(MouseEvent arg0) {
+
+                initGraphCanvas();
+                if (arg0.getButton() == MouseEvent.BUTTON1) { //clic gauche
                     VertexView intersectedVertex = getIntersectedVertexView(arg0.getX(), arg0.getY());
                     if (intersectedVertex != null) {
-                        System.out.println("INTERSECTION");
+                        GraphCanvas.this.selectedVertex = intersectedVertex;
+                        isMousePressed = true;
                     } else {
-                        GraphCanvas.this.createObject(arg0.getX(), arg0.getY());
+                        GraphCanvas.this.createVertex(arg0.getX(), arg0.getY());
                     }
-
                 } else if (arg0.getButton() == MouseEvent.BUTTON3) { //clic droit
-
                     VertexView intersectedVertex = getIntersectedVertexView(arg0.getX(), arg0.getY());
                     if (intersectedVertex != null) {
                             getPopupOnVertex(intersectedVertex).show(arg0.getComponent(), arg0.getX(), arg0.getY());
@@ -87,7 +103,13 @@ public class GraphCanvas extends GLCanvas {
 
             @Override
             public void mouseReleased(MouseEvent arg0) {
-                
+
+                initGraphCanvas();
+                isMousePressed = false;
+                VertexView intersectedVertex = getIntersectedVertexView(arg0.getX(), arg0.getY());
+
+                if (intersectedVertex != null)
+                    createEdge(GraphCanvas.this.selectedVertex, intersectedVertex);
             }
         });
 
@@ -136,13 +158,19 @@ public class GraphCanvas extends GLCanvas {
 
     @Override
     public void paint(Matrix4f transformationMatrix) {
-        for (Map.Entry<Vertex, VertexView> vertexEntry : this.vertexViews.entrySet()) {
-            vertexEntry.getValue().render(transformationMatrix);
-        }
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
 
         for (Map.Entry<Edge, EdgeView> edgeEntry : this.edgeViews.entrySet()) {
             edgeEntry.getValue().render(transformationMatrix);
         }
+
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+
+        for (Map.Entry<Vertex, VertexView> vertexEntry : this.vertexViews.entrySet()) {
+            vertexEntry.getValue().render(transformationMatrix);
+        }
+
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
 
         for (Map.Entry<Vertex, VertexView> vertexEntry : this.vertexViews.entrySet()) {
             vertexEntry.getValue().renderText(transformationMatrix);
@@ -151,17 +179,16 @@ public class GraphCanvas extends GLCanvas {
         for (Map.Entry<Edge, EdgeView> edgeEntry : this.edgeViews.entrySet()) {
             edgeEntry.getValue().renderText(transformationMatrix);
         }
+
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
     }
 
     public void onGraphChange() {
         this.loadGraph();
     }
 
-
-
     ////////////////////////////// CREATION D'UN NOEUD //////////////////////////////////////////////////////
-    private void createObject(int x, int y) {
-
+    private void createVertex(int x, int y) {
         System.out.println("Clic");
 
         GLRay ray = this.camera.getCursorRay(new Vector2f(x, super.getSize().height - y));
@@ -195,6 +222,23 @@ public class GraphCanvas extends GLCanvas {
         this.vertexViewsOrdonned.add(vv);
     }
 
+    ////////////////////////////// CREATION D'UNE ARETE //////////////////////////////////////////////////////
+    private void createEdge(VertexView source, VertexView dest) {
+
+        Vertex srcVertex = source.getModel();
+        Vertex dstVertex = dest.getModel();
+
+        Edge edge = new Edge(graph, srcVertex, dstVertex);
+
+        EdgeView edgeView = new EdgeView(edge, this.vertexMesh, this.labelShader);
+        edgeView.setShader(this.vertexEdgeShader);
+
+        //il faut trouver comment ajouter les edges aux attribyt de la classe Vertex (sans doute dans constructeur edge)
+
+        this.edgeViews.put(edge, edgeView);
+        this.edgeViewsOrdonned.add(edgeView);
+    }
+
     /////////////////////////////// RETOURNE VERTEX VIEW INTERSECTED //////////////////////////////////////////
     private VertexView getIntersectedVertexView(int x, int y) {
         y = GraphCanvas.this.getHeight() - y; //car y swing et y canvas sont inversés
@@ -223,9 +267,6 @@ public class GraphCanvas extends GLCanvas {
     private void loadGraph() {
         super.lockDraw();
 
-        float z = 0.0f;
-        float dz = 0.00000001f;
-
         this.vertexViews = new HashMap<Vertex, VertexView>();
         this.edgeViews = new HashMap<Edge, EdgeView>();
         this.vertexViewsOrdonned = new ArrayList<VertexView>();
@@ -233,8 +274,6 @@ public class GraphCanvas extends GLCanvas {
 
         for (Vertex vertex : this.graph.getVertices()) {
             VertexView vertexView = new VertexView(vertex, this.vertexMesh, this.labelShader);
-            //vertexView.setPosition();
-
             vertexView.setShader(this.vertexEdgeShader);
             this.vertexViews.put(vertex, vertexView);
             this.vertexViewsOrdonned.add(vertexView);
@@ -244,6 +283,7 @@ public class GraphCanvas extends GLCanvas {
             EdgeView edgeView = new EdgeView(edge, this.edgeMesh, this.labelShader);
             edgeView.setShader(this.vertexEdgeShader);
             this.edgeViews.put(edge, edgeView);
+            this.edgeViewsOrdonned.add(edgeView);
         }
 
         super.unlockDraw();
@@ -288,5 +328,4 @@ public class GraphCanvas extends GLCanvas {
         }
         return g;
     }
-
 }

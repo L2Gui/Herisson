@@ -8,13 +8,13 @@ import model.Vertex;
 /**
  * Created by Clement on 13/03/2015.
  */
-public class CreateEdge implements ICommand {
+public class CreateEdgeCommand implements ICommand {
     private Edge edge;
     private Vertex src;
     private Vertex dst;
     private Graph graph;
 
-    public CreateEdge(Vertex src, Vertex dst) {
+    public CreateEdgeCommand(Vertex src, Vertex dst) {
         this.edge = new Edge();
         this.edge.setSrcVertex(src);
         this.edge.setDstVertex(dst);
