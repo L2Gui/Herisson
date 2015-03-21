@@ -22,6 +22,6 @@ public class UndoAction extends MenuAction{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        this.getController().getCurrentGraph().getCommandHandler().undo();
     }
 }

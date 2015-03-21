@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 import controller.actions.*;
+import controller.commands.MoveVertexCommand;
 import model.*;
 import opengl.GLCanvas;
 import opengl.resource.object.camera.GLPerspectiveCamera;
@@ -13,12 +14,8 @@ import org.lwjgl.util.vector.Vector3f;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Created by Clement on 13/03/2015.
@@ -68,6 +65,8 @@ public class GraphCanvas extends GLCanvas {
         if (this.graphView != null)
             this.graphView.init();
 
+        final Vector3f[] positions = new Vector3f[2]; //obligé pour commande MoveVertexCommand
+
         /** MouseListener **/
         super.addMouseListener(new MouseInputAdapter() {
             public void initGraphCanvas() {
@@ -87,13 +86,12 @@ public class GraphCanvas extends GLCanvas {
 
                     VertexView intersectedVertexView = getIntersectedVertexView(arg0.getX(), arg0.getY());
                     if (intersectedVertexView != null) {
-                        GraphCanvas.this.selectedVertex = intersectedVertexView;
+                        selectedVertex = intersectedVertexView;
                         isMousePressed = true;
                     }
-                    switch(GraphCanvas.this.controller.getState())
-                    {
+                    switch (GraphCanvas.this.controller.getState()) {
                         case VERTEX_CREATION:
-                            if(intersectedVertexView == null) {
+                            if (intersectedVertexView == null) {
                                 GraphCanvas.this.createVertex(arg0.getX(), arg0.getY());
                             }
                             break;
@@ -108,6 +106,10 @@ public class GraphCanvas extends GLCanvas {
                             break;
 
                         case MOVE:
+                            if (selectedVertex != null) {
+                                positions[0] = selectedVertex.getModel().getPosition();
+                                System.out.println("START : " + positions[0].toString());
+                            }
                             break;
 
                         case DELETION:
@@ -124,8 +126,7 @@ public class GraphCanvas extends GLCanvas {
                 } else if (arg0.getButton() == MouseEvent.BUTTON3) { // CLIC DROIT
 
                     VertexView intersectedVertexView = getIntersectedVertexView(arg0.getX(), arg0.getY());
-                    switch(GraphCanvas.this.controller.getState())
-                    {
+                    switch (GraphCanvas.this.controller.getState()) {
                         case VERTEX_CREATION:
 
                             break;
@@ -162,8 +163,7 @@ public class GraphCanvas extends GLCanvas {
                 initGraphCanvas();
                 isMousePressed = false;
                 VertexView intersectedVertexView = getIntersectedVertexView(arg0.getX(), arg0.getY());
-                switch(GraphCanvas.this.controller.getState())
-                {
+                switch (GraphCanvas.this.controller.getState()) {
                     case VERTEX_CREATION:
                         break;
 
@@ -179,7 +179,14 @@ public class GraphCanvas extends GLCanvas {
                         break;
 
                     case MOVE:
-                        break;
+                       if (selectedVertex != null) {
+                           positions[1] = selectedVertex.getModel().getPosition();
+                           System.out.println("END : " + positions[1].toString());
+                           GraphCanvas.this.controller.executeCommand(new MoveVertexCommand(selectedVertex.getModel(), positions[0], positions[1]));
+                           positions[0] = null;
+                           positions[1] = null;
+                           selectedVertex = null;
+                       }break;
 
                     case DELETION:
                         break;
@@ -199,13 +206,14 @@ public class GraphCanvas extends GLCanvas {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void mouseDragged(MouseEvent arg0) {
                 // ici, la souris est forcément appuyée
 
                 initGraphCanvas();
 
-                switch(GraphCanvas.this.getController().getState()) {
+                switch (GraphCanvas.this.getController().getState()) {
                     case MOVE:
                         if (selectedVertex != null) {
                             selectedVertex.setPosition(getLookAtPosition(arg0.getX(), arg0.getY()));
@@ -215,12 +223,10 @@ public class GraphCanvas extends GLCanvas {
                         } else {
                             System.out.print(".");
                         }
-                    break;
+                        break;
                 }
             }
         });
-
-        this.graphView.init();
     }
 
     @Override
