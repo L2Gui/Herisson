@@ -68,7 +68,7 @@ public class VertexView extends ViewElement implements Observer {
     }
 
     private void refreshTransform() {
-        this.textDrawable.scale(this.vertexModel.getSize(), this.vertexModel.getSize(), 1.0f);
+        this.textDrawable.setScale(this.vertexModel.getSize(), this.vertexModel.getSize(), 1.0f);
         super.setPosition(vertexModel.getPosition());
     }
 
