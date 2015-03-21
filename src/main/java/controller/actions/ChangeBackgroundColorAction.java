@@ -25,10 +25,9 @@ public class ChangeBackgroundColorAction extends MenuAction{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Color color = JColorChooser.showDialog(this.getController().getCanvas(), "Choisissez la nouvelle couleur de fond", this.getController().getCanvas().getBackgroundColor());
+        Color color = JColorChooser.showDialog(this.getController().getCanvas(), "Choisissez la nouvelle couleur de fond", this.getController().getCurrentGraph().getBackgroundColor());
         if(color != null){
-            this.getController().getCanvas().setBackgroundColor(color);
-            this.getController().getCanvas().setBackground(color);
+            this.getController().setCurrentGraphBackgroundColor(color);
         }
     }
 }
