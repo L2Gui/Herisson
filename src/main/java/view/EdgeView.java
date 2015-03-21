@@ -29,7 +29,7 @@ public class EdgeView extends ViewElement {
         super.setMesh(this.mesh);
 
         String label = this.edgeModel.getLabel();
-        Font font = this.edgeModel.getFont();
+        Font font = new Font("Verdana", Font.PLAIN, 32); //normalement, on va chercher l'info dans model :  Font font = this.edgeModel.getFont();
         float height = 0.2f;
 
         this.labelMesh.setup(labelShader, label, font, height, GLObjectUsage.STATIC);

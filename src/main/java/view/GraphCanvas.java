@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import controller.actions.*;
 import model.*;
 import opengl.GLCanvas;
@@ -26,6 +27,7 @@ import java.util.List;
  */
 public class GraphCanvas extends GLCanvas {
     private Graph graph;
+    private Controller controller;
     private GLPerspectiveCamera camera;
     private Map<Vertex, VertexView> vertexViews;
     private Map<Edge, EdgeView> edgeViews;
@@ -37,7 +39,9 @@ public class GraphCanvas extends GLCanvas {
     private GLShader labelShader;
     private GLShader vertexEdgeShader;
 
+    //attributs utilitaires
     private boolean isMousePressed = false;
+    VertexView selectedVertex;
 
     public GraphCanvas() throws LWJGLException {}
 
@@ -52,26 +56,34 @@ public class GraphCanvas extends GLCanvas {
 
     @Override
     public void init() {
+
+        this.controller = new Controller();
         this.camera = new GLPerspectiveCamera(70.0f, 0.01f, 100.0f);
         this.camera.lookToDirection(new Vector3f(0.0f, 0.0f, -1.0f));
         //GraphCanvas.this.camera.rotate(30, new Vector3f(0, 1, 0));
         super.setCamera(this.camera);
 
         super.addMouseListener(new MouseInputAdapter() {
-            @Override
-            public void mousePressed(MouseEvent arg0) {
+            public void initGraphCanvas() {
                 try {
                     GraphCanvas.this.makeCurrent();
                 } catch (LWJGLException e) {
                     e.printStackTrace();
                 }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent arg0) {
+
+                initGraphCanvas();
                 if (arg0.getButton() == MouseEvent.BUTTON1) { //clic gauche
 
                     VertexView intersectedVertex = getIntersectedVertexView(arg0.getX(), arg0.getY());
                     if (intersectedVertex != null) {
-                        System.out.println("INTERSECTION");
+                        GraphCanvas.this.selectedVertex = intersectedVertex;
+                        isMousePressed = true;
                     } else {
-                        GraphCanvas.this.createObject(arg0.getX(), arg0.getY());
+                        GraphCanvas.this.createVertex(arg0.getX(), arg0.getY());
                     }
 
                 } else if (arg0.getButton() == MouseEvent.BUTTON3) { //clic droit
@@ -87,7 +99,13 @@ public class GraphCanvas extends GLCanvas {
 
             @Override
             public void mouseReleased(MouseEvent arg0) {
-                
+
+                initGraphCanvas();
+                isMousePressed = false;
+                VertexView intersectedVertex = getIntersectedVertexView(arg0.getX(), arg0.getY());
+
+                if (intersectedVertex != null)
+                    createEdge(GraphCanvas.this.selectedVertex, intersectedVertex);
             }
         });
 
@@ -160,7 +178,7 @@ public class GraphCanvas extends GLCanvas {
 
 
     ////////////////////////////// CREATION D'UN NOEUD //////////////////////////////////////////////////////
-    private void createObject(int x, int y) {
+    private void createVertex(int x, int y) {
 
         System.out.println("Clic");
 
@@ -193,6 +211,23 @@ public class GraphCanvas extends GLCanvas {
 
         this.vertexViews.put(v, vv);
         this.vertexViewsOrdonned.add(vv);
+    }
+
+    ////////////////////////////// CREATION D'UNE ARRETE //////////////////////////////////////////////////////
+    private void createEdge(VertexView source, VertexView dest) {
+
+        Vertex srcVertex = source.getModel();
+        Vertex dstVertex = dest.getModel();
+
+        Edge edge = new Edge(graph, srcVertex, dstVertex);
+
+        EdgeView edgeView = new EdgeView(edge, this.vertexMesh, this.labelShader);
+        edgeView.setShader(this.vertexEdgeShader);
+
+        //il faut trouver comment ajouter les edges aux attribyt de la classe Vertex (sans doute dans constructeur edge)
+
+        this.edgeViews.put(edge, edgeView);
+        this.edgeViewsOrdonned.add(edgeView);
     }
 
     /////////////////////////////// RETOURNE VERTEX VIEW INTERSECTED //////////////////////////////////////////
