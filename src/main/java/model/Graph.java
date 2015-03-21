@@ -40,6 +40,7 @@ public class Graph extends Observable {
 		 * la m�thode add renvoie vrai si l'argument a pu etre ajout� ou 
 		 * faux si l'�l�ment existe d�ja dans la Collection.
 		 */
+
         if (edge != null) {
             if (!edges.add(edge)) {
                 System.out.println("Edge already exists");
@@ -47,10 +48,9 @@ public class Graph extends Observable {
                 // On renseigne ici l'attribut graph du lien en l'ajoutant dans celui ci
                 edge.setGraph(this);
                 edge.setStyle(this.styleManager.getDefaultEdgeStyle());
+                this.update(new GraphUpdate(GraphUpdate.UpdateType.ADD_EDGE, edge));
             }
         }
-
-        this.update();
 	}
 	
 	/**
@@ -62,15 +62,15 @@ public class Graph extends Observable {
 		 * la m�thode add renvoie vrai si l'argument a pu etre ajout� ou 
 		 * faux si l'�l�ment existe d�ja dans la Collection.
 		 */
+
 		if (!vertices.add(vertex)){
 			System.out.println("Vertex already exist");
 		} else {
             // On renseigne ici l'attribut graph du noeud en l'ajoutant dans celui ci
             vertex.setGraph(this);
             vertex.setStyle(this.styleManager.getDefaultVertexStyle());
+            this.update(new GraphUpdate(GraphUpdate.UpdateType.ADD_VERTEX, vertex));
         }
-
-        this.update();
 	}
 	
 	// Fonctions de suppression dans les collections edges et vertices.
@@ -84,14 +84,14 @@ public class Graph extends Observable {
 		 * la m�thode remove renvoie vrai si l'argument a pu etre supprim� ou 
 		 * faux sinon.
 		 */
+
 		if (!edges.remove(edge)){
 			System.out.println("Edge suppression is impossible");
 		} else {
+            this.update(new GraphUpdate(GraphUpdate.UpdateType.REMOVE_EDGE, edge));
             // forcer la destruction du edge
             edge = null;
         }
-
-        this.update();
 	}
 	
 	/**
@@ -103,14 +103,14 @@ public class Graph extends Observable {
 		 * la m�thode remove renvoie vrai si l'argument a pu etre supprim� ou 
 		 * faux sinon.
 		 */
+
 		if (!vertices.remove(vertex)){
 			System.out.println("Vertex suppression is impossible");
 		} else {
+            this.update(new GraphUpdate(GraphUpdate.UpdateType.REMOVE_VERTEX, vertex));
             // forcer la destruction du vertex
             vertex = null;
         }
-
-        this.update();
 	}
 	
 	/**
@@ -137,9 +137,9 @@ public class Graph extends Observable {
 		return edges;
 	}
 
-    public void update() {
+    public void update(GraphUpdate update) {
         super.setChanged();
-        super.notifyObservers(this);
+        super.notifyObservers(update);
     }
 	
 	/**

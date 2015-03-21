@@ -5,6 +5,7 @@ import controller.commands.CreateEdgeCommand;
 import controller.commands.CreateVertexCommand;
 import model.Edge;
 import model.Graph;
+import model.GraphUpdate;
 import model.Vertex;
 import opengl.resource.GLShader;
 import opengl.resource.object.GLObjectUsage;
@@ -14,6 +15,7 @@ import opengl.vertex.GLVertex;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
+import utils.MathUtils;
 
 import java.util.*;
 
@@ -28,15 +30,18 @@ public class GraphView implements Observer {
     private Map<Edge, EdgeView> edgeViews;
     private List<VertexView> vertexViewsOrdonned;
     private List<EdgeView> edgeViewsOrdonned;
+    private Collection<VertexView> createdVertices;
 
     private GLColorVariantMesh vertexMesh;
     private GLColorVariantMesh edgeMesh;
     private GLShader labelShader;
     private GLShader vertexEdgeShader;
 
+    private float animationSpeed = 0.05f;
     private boolean isInitialized;
 
     public GraphView() {
+        this.createdVertices = new ArrayList<VertexView>();
         this.vertexViews = new HashMap<Vertex, VertexView>();
         this.edgeViews = new HashMap<Edge, EdgeView>();
         this.vertexViewsOrdonned = new ArrayList<VertexView>();
@@ -59,7 +64,15 @@ public class GraphView implements Observer {
     public void update(Observable observable, Object o) {
         if (this.isInitialized) {
             Graph graph = (Graph) observable;
-            this.loadGraph(graph);
+            GraphUpdate update = (GraphUpdate) o;
+
+            switch (update.getType()) {
+            case ADD_VERTEX: addVertex((Vertex) update.getSubject()); break;
+            case ADD_EDGE: addEdge((Edge) update.getSubject()); break;
+            case REMOVE_VERTEX: removeVertex((Vertex) update.getSubject()); break;
+            case REMOVE_EDGE: removeEdge((Edge) update.getSubject()); break;
+            default: break;
+            }
         }
     }
 
@@ -135,7 +148,19 @@ public class GraphView implements Observer {
 
         VertexView vertexView = new VertexView(vertex, this.vertexMesh, this.labelShader);
         vertexView.setShader(this.vertexEdgeShader);
+        vertexView.setPosition(vertexView.getPosition().x, vertexView.getPosition().y, 3.0f);
 
+        this.createdVertices.add(vertexView);
+        this.vertexViews.put(vertex, vertexView);
+        this.vertexViewsOrdonned.add(vertexView);
+    }
+
+    public void addVertex(Vertex vertex) {
+        VertexView vertexView = new VertexView(vertex, this.vertexMesh, this.labelShader);
+        vertexView.setShader(this.vertexEdgeShader);
+        vertexView.setPosition(vertexView.getPosition().x, vertexView.getPosition().y, 3.0f);
+
+        this.createdVertices.add(vertexView);
         this.vertexViews.put(vertex, vertexView);
         this.vertexViewsOrdonned.add(vertexView);
     }
@@ -151,6 +176,24 @@ public class GraphView implements Observer {
 
         this.edgeViews.put(edge, edgeView);
         this.edgeViewsOrdonned.add(edgeView);
+    }
+
+    public void addEdge(Edge edge) {
+        EdgeView edgeView = new EdgeView(edge, this.vertexMesh, this.labelShader);
+        edgeView.setShader(this.vertexEdgeShader);
+
+        this.edgeViews.put(edge, edgeView);
+        this.edgeViewsOrdonned.add(edgeView);
+    }
+
+    private void removeVertex(Vertex vertex) {
+        this.vertexViews.remove(vertex);
+        this.vertexViewsOrdonned.remove(vertex);
+    }
+
+    private void removeEdge(Edge edge) {
+        this.edgeViews.remove(edge);
+        this.edgeViewsOrdonned.remove(edge);
     }
 
     public VertexView getIntersectedVertexView(GLRay ray) {
@@ -197,5 +240,23 @@ public class GraphView implements Observer {
 
     public List<EdgeView> getEdgeViewsOrdonned() {
         return edgeViewsOrdonned;
+    }
+
+    public void animate() {
+        Collection<VertexView> finishedVertices = new ArrayList<VertexView>();
+
+        for (VertexView vertexView : this.createdVertices) {
+            if (vertexView.getPosition().z < 0.01f) {
+                finishedVertices.add(vertexView);
+            } else {
+                Vector3f position = vertexView.getPosition();
+                Vector3f target = new Vector3f(position);
+                target.z = 0.0f;
+                Vector3f interm = MathUtils.vectorLerp(position, target, this.animationSpeed);
+                vertexView.setPosition(interm);
+            }
+        }
+
+        this.createdVertices.removeAll(finishedVertices);
     }
 }

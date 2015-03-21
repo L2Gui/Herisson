@@ -34,6 +34,11 @@ public class App {
             controller.addGraph(graph2);
 
             window.setVisible(true);
+
+            while (window.isShowing()) {
+                canvas.animationLoop();
+                Thread.sleep(16L);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);

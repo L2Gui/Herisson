@@ -11,6 +11,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import utils.MathUtils;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
@@ -79,7 +80,7 @@ public class GraphCanvas extends GLCanvas {
 
             @Override
             public void mousePressed(MouseEvent arg0) {
-
+                lockDraw();
                 initGraphCanvas();
 
                 if (arg0.getButton() == MouseEvent.BUTTON1) { // CLIC GAUCHE
@@ -156,10 +157,12 @@ public class GraphCanvas extends GLCanvas {
                         System.out.println("PAS INTERSECTION !!!!");
                     }
                 }
+                unlockDraw();
             }
 
             @Override
             public void mouseReleased(MouseEvent arg0) {
+                lockDraw();
                 initGraphCanvas();
                 isMousePressed = false;
                 VertexView intersectedVertexView = getIntersectedVertexView(arg0.getX(), arg0.getY());
@@ -195,6 +198,7 @@ public class GraphCanvas extends GLCanvas {
                     default:
                         break;
                 }
+                unlockDraw();
             }
         });
 
@@ -211,7 +215,7 @@ public class GraphCanvas extends GLCanvas {
             @Override
             public void mouseDragged(MouseEvent arg0) {
                 // ici, la souris est forcément appuyée
-
+                lockDraw();
                 initGraphCanvas();
 
                 switch (GraphCanvas.this.getController().getState()) {
@@ -226,6 +230,7 @@ public class GraphCanvas extends GLCanvas {
                         }
                         break;
                 }
+                unlockDraw();
             }
         });
     }
@@ -286,5 +291,11 @@ public class GraphCanvas extends GLCanvas {
         contextMenu.add(new ZoomPlusAction());
         contextMenu.add(new ZoomLessAction());
         return contextMenu;
+    }
+
+    public void animationLoop() {
+        lockDraw();
+        graphView.animate();
+        unlockDraw();
     }
 }
