@@ -13,7 +13,12 @@ import org.lwjgl.util.vector.Vector3f;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by Clement on 13/03/2015.
@@ -25,7 +30,7 @@ public class GraphCanvas extends GLCanvas {
 
     //attributs utilitaires
     private boolean isMousePressed = false;
-    private Vertex selectedVertex;
+    private VertexView selectedVertex;
 
     public GraphCanvas() throws LWJGLException {}
 
@@ -60,10 +65,10 @@ public class GraphCanvas extends GLCanvas {
         this.camera.setPosition(new Vector3f(0.0f, 0.0f, 10.0f));
         super.setCamera(this.camera);
 
-        if (this.graphView != null) {
+        if (this.graphView != null)
             this.graphView.init();
-        }
 
+        /** MouseListener **/
         super.addMouseListener(new MouseInputAdapter() {
             public void initGraphCanvas() {
                 try {
@@ -82,7 +87,7 @@ public class GraphCanvas extends GLCanvas {
 
                     VertexView intersectedVertexView = getIntersectedVertexView(arg0.getX(), arg0.getY());
                     if (intersectedVertexView != null) {
-                        GraphCanvas.this.selectedVertex = intersectedVertexView.getModel();
+                        GraphCanvas.this.selectedVertex = intersectedVertexView;
                         isMousePressed = true;
                     }
                     switch(GraphCanvas.this.controller.getState())
@@ -164,7 +169,7 @@ public class GraphCanvas extends GLCanvas {
 
                     case EDGE_CREATION:
                         if (intersectedVertexView != null && selectedVertex != null)
-                            GraphCanvas.this.graphView.addEdge(GraphCanvas.this.selectedVertex, intersectedVertexView.getModel());
+                            GraphCanvas.this.graphView.addEdge(GraphCanvas.this.selectedVertex.getModel(), intersectedVertexView.getModel());
                         break;
 
                     case VERTEX_EDITION:
@@ -184,6 +189,42 @@ public class GraphCanvas extends GLCanvas {
                 }
             }
         });
+
+        super.addMouseMotionListener(new MouseMotionAdapter() {
+
+            public void initGraphCanvas() {
+                try {
+                    GraphCanvas.this.makeCurrent();
+                } catch (LWJGLException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void mouseDragged(MouseEvent arg0) {
+                // ici, la souris est forcément appuyée
+
+                initGraphCanvas();
+
+                switch(GraphCanvas.this.getController().getState()) {
+                    case MOVE:
+                        if (selectedVertex != null) {
+                            selectedVertex.setPosition(getLookAtPosition(arg0.getX(), arg0.getY()));
+                            Collection<Edge> edgesOfVertex = selectedVertex.getModel().getEdges();
+                            for (Edge edge : edgesOfVertex) {
+                                edge.setSrcVertex(selectedVertex.getModel());
+
+                            }
+                        } else if (false) {
+                            //TODO Si on est sur les bords, rotation de la caméra
+                        } else {
+                            System.out.print(".");
+                        }
+                    break;
+                }
+            }
+        });
+
+        this.graphView.init();
     }
 
     @Override
@@ -195,8 +236,12 @@ public class GraphCanvas extends GLCanvas {
 
     ////////////////////////////// CREATION D'UN NOEUD //////////////////////////////////////////////////////
     private void createVertex(int x, int y) {
-        System.out.println("Clic");
 
+        this.graphView.addVertex(getLookAtPosition(x, y));
+    }
+
+    ////////////////////////////// RECUPERE POSITION PLAN 2D //////////////////////////////////////////////////////
+    private Vector3f getLookAtPosition(int x, int y){
         GLRay ray = this.camera.getCursorRay(new Vector2f(x, super.getSize().height - y));
 
         /**
@@ -216,7 +261,8 @@ public class GraphCanvas extends GLCanvas {
         hypothenuse = this.camera.getPosition().getZ() / (float)Math.cos(alpha);
 
         Vector3f position = Vector3f.add(ray.getPosition(), (Vector3f) ray.getDirection().scale(hypothenuse), null);
-        this.graphView.addVertex(position);
+
+        return position;
     }
 
     /////////////////////////////// RETOURNE VERTEX VIEW INTERSECTED //////////////////////////////////////////
@@ -238,6 +284,4 @@ public class GraphCanvas extends GLCanvas {
         contextMenu.add(new ZoomLessAction());
         return contextMenu;
     }
-
-
 }

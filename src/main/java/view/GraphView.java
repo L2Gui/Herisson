@@ -182,4 +182,20 @@ public class GraphView implements Observer {
             this.edgeViewsOrdonned.add(edgeView);
         }
     }
+
+    public Map<Vertex, VertexView> getVertexViews() {
+        return vertexViews;
+    }
+
+    public Map<Edge, EdgeView> getEdgeViews() {
+        return edgeViews;
+    }
+
+    public List<VertexView> getVertexViewsOrdonned() {
+        return vertexViewsOrdonned;
+    }
+
+    public List<EdgeView> getEdgeViewsOrdonned() {
+        return edgeViewsOrdonned;
+    }
 }
