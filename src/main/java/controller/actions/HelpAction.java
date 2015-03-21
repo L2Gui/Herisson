@@ -20,7 +20,7 @@ public class HelpAction extends MenuAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            URI uri = URI.create("https://docs.google.com/document/d/1O6I38bpy3eshSb-ov9bVoirzjHJtZEO15fjJBlTmeho/edit?usp=sharing");
+            URI uri = URI.create("https://docs.google.com/document/d/1XBY4JRzuD6x30eix9GQEV2dLOjvsfL1xIouunaWkEeI/edit?usp=sharing");
             Desktop.getDesktop().browse(uri);
         } catch (IOException ex) {
             System.err.println("Erreur ouverture site web");
