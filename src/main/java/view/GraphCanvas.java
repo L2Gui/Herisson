@@ -179,14 +179,15 @@ public class GraphCanvas extends GLCanvas {
                         break;
 
                     case MOVE:
-                       if (selectedVertex != null) {
-                           positions[1] = selectedVertex.getModel().getPosition();
-                           System.out.println("END : " + positions[1].toString());
-                           GraphCanvas.this.controller.executeCommand(new MoveVertexCommand(selectedVertex.getModel(), positions[0], positions[1]));
-                           positions[0] = null;
-                           positions[1] = null;
-                           selectedVertex = null;
-                       }break;
+                        if (selectedVertex != null) {
+                            positions[1] = selectedVertex.getModel().getPosition();
+                            System.out.println("END : " + positions[1].toString());
+                            GraphCanvas.this.controller.executeCommand(new MoveVertexCommand(selectedVertex.getModel(), positions[0], positions[1]));
+                            positions[0] = null;
+                            positions[1] = null;
+                            selectedVertex = null;
+                        }
+                        break;
 
                     case DELETION:
                         break;
@@ -277,7 +278,8 @@ public class GraphCanvas extends GLCanvas {
     ////////////////////////////////////////// GENERATION DES POPUPS //////////////////////////////////////////
     private JPopupMenu getPopupOnVertex(VertexView vertexView){
         JPopupMenu contextMenu = new JPopupMenu();
-        contextMenu.add(new EditVertexNowAction(null, vertexView));    // passer le vertexview en question en param
+        contextMenu.add(new EditVertexNowAction(this.controller, vertexView));    // passer le vertexview en question en param
+        contextMenu.add(new CopyNowAction(this.controller, vertexView));
         contextMenu.add(new JPopupMenu.Separator());
         contextMenu.add(new UndoAction());
         contextMenu.add(new RedoAction());
