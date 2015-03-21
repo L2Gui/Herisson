@@ -15,6 +15,13 @@ public class Edge {
         this.label = "";
     }
 
+    public Edge(Graph graph, Vertex src, Vertex dst) {
+        srcVertex = src;
+        dstVertex = dst;
+        this.label = "";
+        this.graph = graph;
+        this.style = graph.getStyleManager().getDefaultEdgeStyle();
+    }
 
     public Edge(Graph graph) {
         this();
