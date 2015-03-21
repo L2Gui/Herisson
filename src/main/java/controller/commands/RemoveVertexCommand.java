@@ -20,6 +20,7 @@ public class RemoveVertexCommand implements ICommand{
     public void execute(Graph graph) {
         this.graph = graph;
         this.vertex.setGraph(graph);
+        this.vertex.setDeleted(true);
         for(Edge edge : vertex.getEdges())
         {
             this.graph.removeEdge(edge);
@@ -29,10 +30,12 @@ public class RemoveVertexCommand implements ICommand{
 
     @Override
     public void undo() {
+        this.vertex.setDeleted(false);
         this.graph.addVertex(this.vertex);
+
         for(Edge edge : this.vertex.getEdges())
         {
-            if (edge.getDstVertex() != null && edge.getSrcVertex() != null)
+            if (edge.getDstVertex().isDeleted() == false && edge.getSrcVertex().isDeleted() == false)
                 this.graph.addEdge(edge);
         }
     }
