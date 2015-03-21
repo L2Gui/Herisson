@@ -108,7 +108,6 @@ public class GraphCanvas extends GLCanvas {
                         case MOVE:
                             if (selectedVertex != null) {
                                 positions[0] = selectedVertex.getModel().getPosition();
-                                System.out.println("START : " + positions[0].toString());
                             }
                             break;
 
@@ -160,40 +159,42 @@ public class GraphCanvas extends GLCanvas {
 
             @Override
             public void mouseReleased(MouseEvent arg0) {
-                initGraphCanvas();
-                isMousePressed = false;
-                VertexView intersectedVertexView = getIntersectedVertexView(arg0.getX(), arg0.getY());
-                switch (GraphCanvas.this.controller.getState()) {
-                    case VERTEX_CREATION:
-                        break;
 
-                    case EDGE_CREATION:
-                        if (intersectedVertexView != null && selectedVertex != null)
-                            GraphCanvas.this.graphView.addEdge(GraphCanvas.this.selectedVertex.getModel(), intersectedVertexView.getModel());
-                        break;
+                if (arg0.getButton() == MouseEvent.BUTTON1) {
+                    initGraphCanvas();
+                    isMousePressed = false;
+                    VertexView intersectedVertexView = getIntersectedVertexView(arg0.getX(), arg0.getY());
+                    switch (GraphCanvas.this.controller.getState()) {
+                        case VERTEX_CREATION:
+                            break;
 
-                    case VERTEX_EDITION:
-                        break;
+                        case EDGE_CREATION:
+                            if (intersectedVertexView != null && selectedVertex != null)
+                                GraphCanvas.this.graphView.addEdge(GraphCanvas.this.selectedVertex.getModel(), intersectedVertexView.getModel());
+                            break;
 
-                    case EDGE_EDITION:
-                        break;
+                        case VERTEX_EDITION:
+                            break;
 
-                    case MOVE:
-                        if (selectedVertex != null) {
-                            positions[1] = selectedVertex.getModel().getPosition();
-                            System.out.println("END : " + positions[1].toString());
-                            GraphCanvas.this.controller.executeCommand(new MoveVertexCommand(selectedVertex.getModel(), positions[0], positions[1]));
-                            positions[0] = null;
-                            positions[1] = null;
-                            selectedVertex = null;
-                        }
-                        break;
+                        case EDGE_EDITION:
+                            break;
 
-                    case DELETION:
-                        break;
+                        case MOVE:
+                            if (selectedVertex != null) {
+                                positions[1] = selectedVertex.getModel().getPosition();
+                                GraphCanvas.this.controller.executeCommand(new MoveVertexCommand(selectedVertex.getModel(), positions[0], positions[1]));
+                                positions[0] = null;
+                                positions[1] = null;
+                                selectedVertex = null;
+                            }
+                            break;
 
-                    default:
-                        break;
+                        case DELETION:
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
             }
         });
