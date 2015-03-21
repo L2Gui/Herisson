@@ -19,8 +19,8 @@ public class RemoveVertexCommand implements ICommand{
     @Override
     public void execute(Graph graph) {
         this.graph = graph;
-        this.vertex.setGraph(graph);
         this.vertex.setDeleted(true);
+        this.vertex.setGraph(graph);
         for(Edge edge : vertex.getEdges())
         {
             this.graph.removeEdge(edge);
