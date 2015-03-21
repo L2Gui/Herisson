@@ -11,6 +11,7 @@ import opengl.utils.GLRay;
 import opengl.vertex.GLVertex;
 import org.javatuples.Pair;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
@@ -136,13 +137,19 @@ public class GraphCanvas extends GLCanvas {
 
     @Override
     public void paint(Matrix4f transformationMatrix) {
-        for (Map.Entry<Vertex, VertexView> vertexEntry : this.vertexViews.entrySet()) {
-            vertexEntry.getValue().render(transformationMatrix);
-        }
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
 
         for (Map.Entry<Edge, EdgeView> edgeEntry : this.edgeViews.entrySet()) {
             edgeEntry.getValue().render(transformationMatrix);
         }
+
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+
+        for (Map.Entry<Vertex, VertexView> vertexEntry : this.vertexViews.entrySet()) {
+            vertexEntry.getValue().render(transformationMatrix);
+        }
+
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
 
         for (Map.Entry<Vertex, VertexView> vertexEntry : this.vertexViews.entrySet()) {
             vertexEntry.getValue().renderText(transformationMatrix);
@@ -151,6 +158,8 @@ public class GraphCanvas extends GLCanvas {
         for (Map.Entry<Edge, EdgeView> edgeEntry : this.edgeViews.entrySet()) {
             edgeEntry.getValue().renderText(transformationMatrix);
         }
+
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
     }
 
     public void onGraphChange() {
@@ -223,9 +232,6 @@ public class GraphCanvas extends GLCanvas {
     private void loadGraph() {
         super.lockDraw();
 
-        float z = 0.0f;
-        float dz = 0.00000001f;
-
         this.vertexViews = new HashMap<Vertex, VertexView>();
         this.edgeViews = new HashMap<Edge, EdgeView>();
         this.vertexViewsOrdonned = new ArrayList<VertexView>();
@@ -233,8 +239,6 @@ public class GraphCanvas extends GLCanvas {
 
         for (Vertex vertex : this.graph.getVertices()) {
             VertexView vertexView = new VertexView(vertex, this.vertexMesh, this.labelShader);
-            //vertexView.setPosition();
-
             vertexView.setShader(this.vertexEdgeShader);
             this.vertexViews.put(vertex, vertexView);
             this.vertexViewsOrdonned.add(vertexView);
@@ -244,6 +248,7 @@ public class GraphCanvas extends GLCanvas {
             EdgeView edgeView = new EdgeView(edge, this.edgeMesh, this.labelShader);
             edgeView.setShader(this.vertexEdgeShader);
             this.edgeViews.put(edge, edgeView);
+            this.edgeViewsOrdonned.add(edgeView);
         }
 
         super.unlockDraw();
