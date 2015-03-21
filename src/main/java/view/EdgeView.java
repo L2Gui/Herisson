@@ -36,6 +36,12 @@ public class EdgeView extends ViewElement {
         this.labelMesh.init();
         this.labelMesh.setColor(this.edgeModel.getTextColor());
 
+        this.refreshTransform();
+
+        this.onModelChange();
+    }
+
+    public void refreshTransform() {
         Quaternion rotationZ = QuaternionUtils.quaternionLookRotation(new Vector3f(0.0f, 0.0f, 1.0f));
         Vector3f directionXY = Vector3f.sub(this.edgeModel.getDstVertex().getPosition(), this.edgeModel.getSrcVertex().getPosition(), null);
 
@@ -49,8 +55,6 @@ public class EdgeView extends ViewElement {
         this.setPosition(center);
         this.setRotation(rotation);
         this.setScale(new Vector3f(directionXY.length(), this.edgeModel.getThickness(), 1.0f));
-
-        this.onModelChange();
     }
 
     @Override

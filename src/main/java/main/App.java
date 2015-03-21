@@ -27,6 +27,8 @@ public class App {
 
             // Controller
             Controller controller = new Controller();
+
+            // Construction des liens
             controller.setGraphWindow(window);
             controller.addGraph(graph1);
             controller.addGraph(graph2);
