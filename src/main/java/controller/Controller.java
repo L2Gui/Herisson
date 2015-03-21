@@ -26,6 +26,7 @@ public class Controller {
     // View
     private GraphWindow window;
     private GraphCanvas canvas;
+    private State state;
 
     public Controller() {
         this.setupIOAlgorithm();
@@ -82,5 +83,13 @@ public class Controller {
 
     private void setupSizeAlgorithms() {
         this.sizeAlgorithms = new HashMap<String, ISizeAlgorithm>();
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 }

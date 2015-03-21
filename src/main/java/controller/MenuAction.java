@@ -55,6 +55,12 @@ public abstract class MenuAction extends AbstractAction {
         this.controller = controller;
     }
 
+    public Controller getController() {
+        return controller;
+    }
+
     @Override
     public abstract void actionPerformed(ActionEvent e);
+
+
 }

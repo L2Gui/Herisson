@@ -2,6 +2,7 @@ package controller.actions;
 
 import controller.Controller;
 import controller.MenuAction;
+import controller.State;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -22,6 +23,7 @@ public class EditVertexAction extends MenuAction{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        this.getController().setState(State.VERTEX_EDITION);
         System.out.println("edit vertex ("+e.getSource().getClass().getName()+")");
     }
 }
