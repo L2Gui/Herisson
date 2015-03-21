@@ -12,7 +12,6 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
-import utils.MathUtils;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
@@ -163,7 +162,7 @@ public class GraphCanvas extends GLCanvas {
                     if (intersectedVertexView != null) {
                         getPopupOnVertex(intersectedVertexView).show(arg0.getComponent(), arg0.getX(), arg0.getY());
                     } else {
-                        System.out.println("PAS INTERSECTION !!!!");
+                        getPopupOnNothing(arg0.getX(), arg0.getY()).show(arg0.getComponent(), arg0.getX(), arg0.getY());
                     }
                 }
                 unlockDraw();
@@ -305,13 +304,23 @@ public class GraphCanvas extends GLCanvas {
         contextMenu.add(new EditVertexNowAction(this.controller, vertexView));    // passer le vertexview en question en param
         contextMenu.add(new CopyNowAction(this.controller, vertexView));
         contextMenu.add(new JPopupMenu.Separator());
-        contextMenu.add(new UndoAction());
-        contextMenu.add(new RedoAction());
-        contextMenu.add(new ZoomPlusAction());
-        contextMenu.add(new ZoomLessAction());
+        contextMenu.add(new UndoAction(this.controller));
+        contextMenu.add(new RedoAction(this.controller));
+        contextMenu.add(new ZoomPlusAction(this.controller));
+        contextMenu.add(new ZoomLessAction(this.controller));
         return contextMenu;
     }
-
+    private JPopupMenu getPopupOnNothing(int x, int y){
+        JPopupMenu contextMenu = new JPopupMenu();
+        contextMenu.add(new PasteNowAction(this.controller, x, y));
+        contextMenu.add(new JPopupMenu.Separator());
+        contextMenu.add(new UndoAction(this.controller));
+        contextMenu.add(new RedoAction(this.controller));
+        contextMenu.add(new ZoomPlusAction(this.controller));
+        contextMenu.add(new ZoomLessAction(this.controller));
+        return contextMenu;
+    }
+    ////////////////////////////////////////////////  ANIMATION //////////////////////////////////////////////
     public void animationLoop() {
         lockDraw();
         graphView.animate();

@@ -24,6 +24,7 @@ public class RemoveEdgeCommand implements ICommand {
 
     @Override
     public void undo() {
-        this.graph.addEdge(this.edge);
+        if (edge.getSrcVertex().isDeleted() == false && edge.getDstVertex().isDeleted() == false)
+            this.graph.addEdge(this.edge);
     }
 }
