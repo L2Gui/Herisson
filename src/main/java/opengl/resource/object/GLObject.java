@@ -30,7 +30,7 @@ public abstract class GLObject implements IGLObject {
     @Override
     public void setPosition(Vector3f position) {
         this.position = position;
-        this.computeMatrix();
+        this.onModelChange();
     }
 
     @Override
@@ -46,8 +46,8 @@ public abstract class GLObject implements IGLObject {
         float xVal = axis.x * sinVal;
         float yVal = axis.y * sinVal;
         float zVal = axis.z * sinVal;
-        this.rotation = new Quaternion(xVal, yVal, zVal, cosVal);
-        this.computeMatrix();
+        Quaternion rotation = new Quaternion(xVal, yVal, zVal, cosVal);
+        this.setRotation(rotation);
     }
 
     @Override
@@ -57,14 +57,15 @@ public abstract class GLObject implements IGLObject {
 
     @Override
     public void setRotation(Quaternion rotation) {
+        rotation = rotation.normalise(null);
         this.rotation = rotation;
-        this.computeMatrix();
+        this.onModelChange();
     }
 
     @Override
     public void translate(Vector3f translation) {
         this.position.translate(translation.x, translation.y, translation.z);
-        this.computeMatrix();
+        this.onModelChange();
     }
 
     @Override
@@ -81,8 +82,7 @@ public abstract class GLObject implements IGLObject {
         float yVal = axis.y * sinVal;
         float zVal = axis.z * sinVal;
         Quaternion rotation = new Quaternion(xVal, yVal, zVal, cosVal);
-        Quaternion.mul(rotation, this.rotation, this.rotation);
-        this.computeMatrix();
+        this.rotate(rotation);
     }
 
     @Override
@@ -92,12 +92,14 @@ public abstract class GLObject implements IGLObject {
 
     @Override
     public void rotate(Quaternion rotation) {
+        rotation = rotation.normalise(null);
         Quaternion.mul(this.rotation, rotation, this.rotation);
-        this.computeMatrix();
+        this.rotation = this.rotation.normalise(null);
+        this.onModelChange();
     }
 
 	@Override
-     public void computeMatrix() {
+     public void onModelChange() {
         this.modelMatrix.setIdentity();
         Matrix4f.mul(this.modelMatrix, QuaternionUtils.quaternionToMatrix(this.rotation), this.modelMatrix);
         this.modelMatrix.translate(this.position);
@@ -107,4 +109,6 @@ public abstract class GLObject implements IGLObject {
 	public Matrix4f getModelMatrix() {
 		return this.modelMatrix;
 	}
+
+
 }
