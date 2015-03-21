@@ -95,7 +95,6 @@ public class GraphCanvas extends GLCanvas {
                     switch(GraphCanvas.this.controller.getState())
                     {
                         case VERTEX_CREATION:
-                            System.out.println("MODE VERTEX_CREATION");
 
                             if(intersectedVertex == null) {
                                 GraphCanvas.this.createVertex(arg0.getX(), arg0.getY());
@@ -103,27 +102,25 @@ public class GraphCanvas extends GLCanvas {
                             break;
 
                         case EDGE_CREATION:
-                            System.out.println("MODE EDGE_CREATION");
                             break;
 
                         case VERTEX_EDITION:
-                            System.out.println("MODE VERTEX_EDITION");
                             break;
 
                         case EDGE_EDITION:
-                            System.out.println("MODE EDGE_EDITION");
                             break;
 
                         case MOVE:
-                            System.out.println("MODE MOVE");
                             break;
 
                         case DELETION:
-                            System.out.println("MODE DELETION");
+                            /*if(intersectedVertex != null) {
+                                ViewElement viewElement = intersectedVertex;
+                                GraphCanvas.this.deleteElement(viewElement);
+                            }*/
                             break;
 
                         default:
-                            System.out.println("ERREUR STATE");
                     }
 
 
@@ -133,28 +130,22 @@ public class GraphCanvas extends GLCanvas {
                     switch(GraphCanvas.this.controller.getState())
                     {
                         case VERTEX_CREATION:
-                            System.out.println("MODE VERTEX_CREATION");
 
                             break;
 
                         case EDGE_CREATION:
-                            System.out.println("MODE EDGE_CREATION");
                             break;
 
                         case VERTEX_EDITION:
-                            System.out.println("MODE VERTEX_EDITION");
                             break;
 
                         case EDGE_EDITION:
-                            System.out.println("MODE EDGE_EDITION");
                             break;
 
                         case MOVE:
-                            System.out.println("MODE MOVE");
                             break;
 
                         case DELETION:
-                            System.out.println("MODE DELETION");
                             break;
 
                         default:
@@ -173,39 +164,35 @@ public class GraphCanvas extends GLCanvas {
             public void mouseReleased(MouseEvent arg0) {
 
                 initGraphCanvas();
-                isMousePressed = false;
-                VertexView intersectedVertex = getIntersectedVertexView(arg0.getX(), arg0.getY());
-                switch(GraphCanvas.this.controller.getState())
-                {
-                    case VERTEX_CREATION:
-                        System.out.println("MODE VERTEX_CREATION");
 
-                        break;
+                if (arg0.getButton() == MouseEvent.BUTTON1) {
 
-                    case EDGE_CREATION:
-                        System.out.println("MODE EDGE_CREATION");
-                        if (intersectedVertex != null && selectedVertex != null)
-                            createEdge(GraphCanvas.this.selectedVertex, intersectedVertex);
-                        break;
+                    isMousePressed = false;
+                    VertexView intersectedVertex = getIntersectedVertexView(arg0.getX(), arg0.getY());
+                    switch (GraphCanvas.this.controller.getState()) {
+                        case VERTEX_CREATION:
+                            break;
 
-                    case VERTEX_EDITION:
-                        System.out.println("MODE VERTEX_EDITION");
-                        break;
+                        case EDGE_CREATION:
+                            if (intersectedVertex != null && selectedVertex != null)
+                                createEdge(GraphCanvas.this.selectedVertex, intersectedVertex);
+                            break;
 
-                    case EDGE_EDITION:
-                        System.out.println("MODE EDGE_EDITION");
-                        break;
+                        case VERTEX_EDITION:
+                            break;
 
-                    case MOVE:
-                        System.out.println("MODE MOVE");
-                        break;
+                        case EDGE_EDITION:
+                            break;
 
-                    case DELETION:
-                        System.out.println("MODE DELETION");
-                        break;
+                        case MOVE:
+                            break;
 
-                    default:
-                        System.out.println("ERREUR STATE");
+                        case DELETION:
+                            break;
+
+                        default:
+                            System.out.println("ERREUR STATE");
+                    }
                 }
             }
         });
