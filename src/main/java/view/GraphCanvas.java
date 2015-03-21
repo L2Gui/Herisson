@@ -3,6 +3,7 @@ package view;
 import controller.Controller;
 import controller.actions.*;
 import controller.commands.MoveVertexCommand;
+import controller.commands.RemoveEdgeCommand;
 import controller.commands.RemoveVertexCommand;
 import model.*;
 import opengl.GLCanvas;
@@ -29,6 +30,7 @@ public class GraphCanvas extends GLCanvas {
     //attributs utilitaires
     private boolean isMousePressed = false;
     private VertexView selectedVertex;
+    private EdgeView selectedEdge;
 
     public GraphCanvas() throws LWJGLException {}
 
@@ -85,10 +87,15 @@ public class GraphCanvas extends GLCanvas {
 
                 if (arg0.getButton() == MouseEvent.BUTTON1) { // CLIC GAUCHE
 
+
                     VertexView intersectedVertexView = getIntersectedVertexView(arg0.getX(), arg0.getY());
+                    EdgeView intersectedEdgeView = getIntersectedEdgeView(arg0.getX(), arg0.getY());
                     if (intersectedVertexView != null) {
                         selectedVertex = intersectedVertexView;
                         isMousePressed = true;
+                    }
+                    if (intersectedEdgeView != null) {
+                        selectedEdge = intersectedEdgeView;
                     }
                     switch (GraphCanvas.this.controller.getState()) {
                         case VERTEX_CREATION:
@@ -115,6 +122,9 @@ public class GraphCanvas extends GLCanvas {
                         case DELETION:
                             if(intersectedVertexView != null) {
                                 GraphCanvas.this.controller.executeCommand(new RemoveVertexCommand(selectedVertex.getModel()));
+                            }
+                            if(intersectedEdgeView != null) {
+                                GraphCanvas.this.controller.executeCommand(new RemoveEdgeCommand(selectedEdge.getModel()));
                             }
                             break;
 
@@ -274,6 +284,14 @@ public class GraphCanvas extends GLCanvas {
         GLRay ray = GraphCanvas.this.camera.getCursorRay(new Vector2f(x, y));
 
         return this.graphView.getIntersectedVertexView(ray);
+    }
+
+    /////////////////////////////// RETOURNE EDGE VIEW INTERSECTED //////////////////////////////////////////
+    private EdgeView getIntersectedEdgeView(int x, int y) {
+        y = GraphCanvas.this.getHeight() - y; //car y swing et y canvas sont inversés
+        GLRay ray = GraphCanvas.this.camera.getCursorRay(new Vector2f(x, y));
+
+        return this.graphView.getIntersectedEdgeView(ray);
     }
 
     ////////////////////////////////////////// GENERATION DES POPUPS //////////////////////////////////////////

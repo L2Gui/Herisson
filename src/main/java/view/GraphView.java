@@ -162,6 +162,15 @@ public class GraphView implements Observer {
         return intersectedVertex;
     }
 
+    public EdgeView getIntersectedEdgeView(GLRay ray) {
+        EdgeView intersectedEdge = null;
+        for (int i = 0; i < edgeViewsOrdonned.size() && intersectedEdge==null; i++) {
+            if (edgeViewsOrdonned.get(i).isIntersected(ray))
+                intersectedEdge = edgeViewsOrdonned.get(i);
+        }
+        return intersectedEdge;
+    }
+
     public void loadGraph(Graph graph) {
         this.vertexViews = new HashMap<Vertex, VertexView>();
         this.edgeViews = new HashMap<Edge, EdgeView>();
