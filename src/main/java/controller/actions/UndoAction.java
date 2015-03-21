@@ -22,6 +22,7 @@ public class UndoAction extends MenuAction{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println("undo ("+e.getSource().getClass().getName()+")");
         this.getController().getCurrentGraph().getCommandHandler().undo();
     }
 }
