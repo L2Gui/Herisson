@@ -18,7 +18,8 @@ public class App {
     public static void main(String args[]) {
         try {
             // Model
-            Graph graph = createSampleGraph();
+            Graph graph1 = createSampleGraph("graphe1");
+            Graph graph2 = createSampleGraph("graphe2");
 
             // View
             GraphCanvas canvas = new GraphCanvas();
@@ -27,7 +28,8 @@ public class App {
             // Controller
             Controller controller = new Controller();
             controller.setGraphWindow(window);
-            controller.addGraph(graph);
+            controller.addGraph(graph1);
+            controller.addGraph(graph2);
 
             window.setVisible(true);
         } catch (Exception e) {
@@ -36,9 +38,9 @@ public class App {
         }
     }
 
-    public static Graph createSampleGraph() {
+    public static Graph createSampleGraph(String name) {
         Graph g = new Graph();
-        g.setName("graphe test");
+        g.setName(name);
         Vertex v0 = new Vertex();
         v0.setPosition(new Vector3f(5f, 5f, 0f));
         v0.setLabel("Coucou");
