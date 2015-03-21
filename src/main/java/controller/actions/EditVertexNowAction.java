@@ -2,11 +2,15 @@ package controller.actions;
 
 import controller.Controller;
 import controller.MenuAction;
+import view.GraphCanvas;
+import view.TabbedGraph;
 import view.VertexView;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 
 
 public class EditVertexNowAction extends MenuAction{
@@ -31,9 +35,20 @@ public class EditVertexNowAction extends MenuAction{
         //modifiedVertexView = new VertexView()
         System.out.println("edit vertex (" + e.getSource().getClass().getName() + ")");
         JFrame f = new JFrame("Editer les options d'un noeud");
+        f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         JPanel p = new JPanel(new GridLayout(5, 2, 5, 5));
+
+        ////// Placer les elements //////
         p.add(new JLabel("Label :"));
         p.add(new JTextField(vertexView.getModel().getLabel()));
+
+        f.setContentPane(p);
+        f.addWindowStateListener(new WindowStateListener() {
+            @Override
+            public void windowStateChanged(WindowEvent e) {
+                e.getNewState();
+            }
+        });
 
     }
 }

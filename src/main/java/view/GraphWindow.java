@@ -328,6 +328,7 @@ public class GraphWindow extends JFrame {
         toggleNewVertex.setText("");
         toolBar.add(toggleNewVertex);
         modes.add(toggleNewVertex);
+        toggleNewVertex.setSelected(true);
 
         JToggleButton toggleEditEdge = new JToggleButton(this.editEdge);
         toggleEditEdge.setText("");
@@ -350,10 +351,17 @@ public class GraphWindow extends JFrame {
         toolBar.add(this.zoomMoins);
 
         JButton button;
+        JToggleButton tbutton;
         for(Component c : toolBar.getComponents()){
             try {
                 button = (JButton) c;
                 button.setFocusPainted(false);
+            }catch (ClassCastException e) {
+                //Ne rien faire, on évite ainsi les JToolBarSeparators qui sont incastables en JButton
+            }
+            try {
+                tbutton = (JToggleButton) c;
+                tbutton.setFocusPainted(false);
             }catch (ClassCastException e) {
                 //Ne rien faire, on évite ainsi les JToolBarSeparators qui sont incastables en JButton
             }

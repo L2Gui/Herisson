@@ -35,6 +35,7 @@ public class Controller {
         this.setupSizeAlgorithms();
 
         this.graphs = new ArrayList<Graph>();
+        this.state=ControllerState.VERTEX_CREATION;
     }
 
     public void executeCommand(ICommand command) {
