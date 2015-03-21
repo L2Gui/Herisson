@@ -209,11 +209,7 @@ public class GraphCanvas extends GLCanvas {
                     case MOVE:
                         if (selectedVertex != null) {
                             selectedVertex.setPosition(getLookAtPosition(arg0.getX(), arg0.getY()));
-                            Collection<Edge> edgesOfVertex = selectedVertex.getModel().getEdges();
-                            for (Edge edge : edgesOfVertex) {
-                                edge.setSrcVertex(selectedVertex.getModel());
-
-                            }
+                            selectedVertex.getModel().setPosition(getLookAtPosition(arg0.getX(), arg0.getY()));
                         } else if (false) {
                             //TODO Si on est sur les bords, rotation de la caméra
                         } else {
