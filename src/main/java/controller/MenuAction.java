@@ -17,6 +17,8 @@ public abstract class MenuAction extends AbstractAction {
      * @param mnemonicIndex L'index du nom qui sera souligné pour indiquer le mnemonic (peut être null)
      */
     public MenuAction(Controller controller, String name, String icon, Integer mnemonicKey, Integer mnemonicIndex) {
+
+        this.controller = controller;
         if(icon!=null) {
             ImageIcon smallIcon = new ImageIcon(icon);
             putValue(SMALL_ICON, smallIcon);
