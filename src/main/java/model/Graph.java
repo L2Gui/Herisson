@@ -50,7 +50,7 @@ public class Graph extends Observable {
             }
         }
 
-        super.notifyObservers();
+        this.update();
 	}
 	
 	/**
@@ -70,7 +70,7 @@ public class Graph extends Observable {
             vertex.setStyle(this.styleManager.getDefaultVertexStyle());
         }
 
-        super.notifyObservers();
+        this.update();
 	}
 	
 	// Fonctions de suppression dans les collections edges et vertices.
@@ -91,7 +91,7 @@ public class Graph extends Observable {
             edge = null;
         }
 
-        super.notifyObservers();
+        this.update();
 	}
 	
 	/**
@@ -110,7 +110,7 @@ public class Graph extends Observable {
             vertex = null;
         }
 
-        super.notifyObservers();
+        this.update();
 	}
 	
 	/**
@@ -136,6 +136,11 @@ public class Graph extends Observable {
 	public List<Edge> getEdges() {
 		return edges;
 	}
+
+    public void update() {
+        super.setChanged();
+        super.notifyObservers(this);
+    }
 	
 	/**
 	 * 
