@@ -7,7 +7,6 @@ import opengl.resource.object.GLObjectUsage;
 import opengl.resource.object.mesh.GLColorVariantMesh;
 import opengl.resource.object.mesh.GLTextMesh;
 import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector;
 import org.lwjgl.util.vector.Vector3f;
 
 import java.awt.*;
@@ -40,8 +39,8 @@ public class VertexView extends ViewElement {
     }
 
     @Override
-    public void computeMatrix() {
-        super.computeMatrix();
+    public void onModelChange() {
+        super.onModelChange();
         Vector3f position = Vector3f.add(super.getPosition(), new Vector3f(this.vertexModel.getSize() / 4.0f, - this.vertexModel.getSize() / 4.0f, super.getPosition().z), null);
         this.textDrawable.setPosition(position);
     }

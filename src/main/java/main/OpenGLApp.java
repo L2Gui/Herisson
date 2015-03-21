@@ -129,10 +129,13 @@ public class OpenGLApp extends GLCanvas {
 
     private void run() {
         try {
-            this.textObject.setPosition(1.0f, 1.0f, 0.0f);
+            this.drawableObject.setPosition(2.0f, 1.0f, 0.0f);
             Vector3f eye = new Vector3f(-0.5f, 0.5f, 5.0f);
             Vector3f direction = Vector3f.sub(new Vector3f(0.0f, 0.0f, 0.0f), eye, null);
             Vector3f idirection = new Vector3f(eye);
+
+            this.camera.setPosition(eye);
+            this.camera.rotate(180.0f, 0.0f, 1.0f, 0.0f);
 
             Quaternion rotation = QuaternionUtils.quaternionLookRotation(direction);
             Quaternion irotation = QuaternionUtils.quaternionLookRotation(idirection);
@@ -147,6 +150,7 @@ public class OpenGLApp extends GLCanvas {
                 this.camera.setRotation(intermRot);
                 this.drawableObject.setRotation(intermIRot);
                 this.textObject.setRotation(intermIRot);
+
                 super.unlockDraw();
                 Thread.sleep(16L);
             }

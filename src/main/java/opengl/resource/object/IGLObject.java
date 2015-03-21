@@ -95,7 +95,7 @@ public interface IGLObject {
     /**
      * Recalcule la matrice des transformations de l'objet
      */
-	void computeMatrix();
+	void onModelChange();
 
     /**
      * Retourne la matrice des transformations de l'objet

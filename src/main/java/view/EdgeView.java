@@ -50,12 +50,12 @@ public class EdgeView extends ViewElement {
         this.setRotation(rotation);
         this.setScale(new Vector3f(directionXY.length(), this.edgeModel.getThickness(), 1.0f));
 
-        this.computeMatrix();
+        this.onModelChange();
     }
 
     @Override
-    public void computeMatrix() {
-        super.computeMatrix();
+    public void onModelChange() {
+        super.onModelChange();
 
         Vector3f direction = new Vector3f(0.0f, this.edgeModel.getThickness() + 0.02f + (this.labelMesh.getHeight() * this.textDrawable.getScale().getY()) / 2.0f, 0.0f);
         direction = QuaternionUtils.quaternionTransform(super.getRotation(), direction);

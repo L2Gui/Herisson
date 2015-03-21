@@ -48,7 +48,7 @@ public class GLDrawableObject extends GLObject implements IGLDrawable {
     @Override
     public void setScale(Vector3f scale) {
         this.scale = scale;
-        this.computeMatrix();
+        this.onModelChange();
     }
 
     @Override
@@ -85,7 +85,7 @@ public class GLDrawableObject extends GLObject implements IGLDrawable {
         this.scale.x *= scale.x;
         this.scale.y *= scale.y;
         this.scale.z *= scale.z;
-        this.computeMatrix();
+        this.onModelChange();
     }
 
     @Override
@@ -94,7 +94,7 @@ public class GLDrawableObject extends GLObject implements IGLDrawable {
     }
 
     @Override
-    public void computeMatrix() {
+    public void onModelChange() {
         super.getModelMatrix().setIdentity();
         super.getModelMatrix().translate(super.getPosition());
         Matrix4f.mul(super.getModelMatrix(), QuaternionUtils.quaternionToMatrix(super.getRotation()), super.getModelMatrix());
