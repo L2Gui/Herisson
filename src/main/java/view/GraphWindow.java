@@ -44,7 +44,7 @@ public class GraphWindow extends JFrame {
     private MenuAction undo = new UndoAction();
     private MenuAction redo = new RedoAction();
     private MenuAction zoomPlus = new ZoomPlusAction();
-    private MenuAction zoomMoins = new ZoomMoinsAction();
+    private MenuAction zoomMoins = new ZoomLessAction();
     private MenuAction move = new MoveAction();
 
     /**

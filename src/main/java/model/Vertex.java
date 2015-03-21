@@ -118,7 +118,7 @@ public class Vertex {
 	 * 
 	 * @param color
 	 */
-	public Vertex setBackgroundColor( Color color){
+	public Vertex setBackgroundColor(Color color){
 
         VertexStyle newStyle = new VertexStyle(this.style);
         this.style.decrementUsageCount();

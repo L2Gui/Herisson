@@ -16,7 +16,7 @@ public class App {
     public static void main(String args[]) {
         try {
             // Model
-            /* deux graphes bidon juste pour voir les onglets */
+            /* deux graphes bidons juste pour voir les onglets */
             Graph g1 = new Graph();
             g1.setName("swappez d'onglet pour");
             Graph g2 = new Graph();
