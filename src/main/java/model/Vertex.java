@@ -42,6 +42,9 @@ public class Vertex {
 
 	public void setPosition(Vector3f position) {
 		this.position = position;
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
 	}
 
 	
@@ -82,6 +85,9 @@ public class Vertex {
         this.style.getVertices().add(this);
 
         graph.getStyleManager().addStyle(this.style);
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
 
         return this;
 	}
@@ -110,6 +116,10 @@ public class Vertex {
         this.style.getVertices().add(this);
 
         graph.getStyleManager().addStyle(this.style);
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
+
         return this;
 	}
 	
@@ -138,6 +148,10 @@ public class Vertex {
 
         graph.getStyleManager().addStyle(this.style);
 
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
+
         return this;
 	}
 	
@@ -155,6 +169,9 @@ public class Vertex {
 	 */
 	public void setLabel(String label) {
 		this.label = label;
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
 	}
 	
 	/**
@@ -181,6 +198,10 @@ public class Vertex {
         this.style.getVertices().add(this);
 
         graph.getStyleManager().addStyle(this.style);
+
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
 
         return this;
 	}
@@ -214,6 +235,10 @@ public class Vertex {
 
         graph.getStyleManager().addStyle(this.style);
 
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
+
         return this;
 	}
 	
@@ -237,6 +262,11 @@ public class Vertex {
         this.style.getVertices().add(this);
 
         graph.getStyleManager().addStyle(this.style);
+
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
+
         return this;
 	}
 	
@@ -263,6 +293,10 @@ public class Vertex {
         this.style.getVertices().add(this);
 
         graph.getStyleManager().addStyle(this.style);
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
+
         return this;
 	}
 
@@ -280,6 +314,9 @@ public class Vertex {
 
     public void setStyle(VertexStyle style) {
         this.style = style;
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
     }
 
     public Collection<Edge> getEdges() {

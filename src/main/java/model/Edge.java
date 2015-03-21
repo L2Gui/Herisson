@@ -55,6 +55,9 @@ public class Edge {
 	 */
 	public void setSrcVertex(Vertex srcVertex) {
 		this.srcVertex = srcVertex;
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
 	}
 
 	/**
@@ -71,6 +74,9 @@ public class Edge {
 	 */
 	public void setDstVertex(Vertex dstVertex) {
 		this.dstVertex = dstVertex;
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
 	}
 
 	
@@ -90,6 +96,9 @@ public class Edge {
 	 */
 	public void setStyle(EdgeStyle style) {
 		this.style = style;
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
 	}
 
 	// Modification methods for fields in style
@@ -115,6 +124,9 @@ public class Edge {
         this.style.incrementUsageCount();
 
         graph.getStyleManager().addStyle(this.style);
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
 
         return this;
 	}
@@ -140,6 +152,9 @@ public class Edge {
         this.style.incrementUsageCount();
 
         graph.getStyleManager().addStyle(this.style);
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
 
         return this;
 	}
@@ -165,6 +180,9 @@ public class Edge {
         this.style.incrementUsageCount();
 
         graph.getStyleManager().addStyle(this.style);
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
 
         return this;
 	}
@@ -190,7 +208,9 @@ public class Edge {
         this.style.incrementUsageCount();
 
         graph.getStyleManager().addStyle(this.style);
-
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
         return this;
 	}
 
@@ -200,5 +220,8 @@ public class Edge {
 
     public void setLabel(String label) {
         this.label = label;
+        if (this.graph != null) {
+            this.graph.notifyObservers();
+        }
     }
 }
