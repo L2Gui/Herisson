@@ -7,7 +7,9 @@ import view.GraphCanvas;
 import view.GraphView;
 import view.GraphWindow;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by Clement on 16/03/2015.
@@ -86,6 +88,13 @@ public class Controller {
         }
         this.currentGraph = graph;
         this.canvas.setGraphView(graphViews.get(graph));
+        this.getCanvas().setBackgroundColor(graph.getBackgroundColor());
+        this.getCanvas().setBackground(graph.getBackgroundColor());
+    }
+    public void setCurrentGraphBackgroundColor(Color color){
+        this.currentGraph.setBackgroundColor(color);
+        this.getCanvas().setBackgroundColor(currentGraph.getBackgroundColor());
+        this.getCanvas().setBackground(currentGraph.getBackgroundColor());
     }
 
     private void setupIOAlgorithm() {

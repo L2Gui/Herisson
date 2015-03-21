@@ -3,6 +3,7 @@ package model;
 import controller.CommandHandler;
 import controller.ICommand;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -17,6 +18,8 @@ public class Graph extends Observable {
 	private List<Edge> edges;
 	private List<Vertex> vertices;
 
+    private Color backgroundColor;
+
     private boolean isOriented;
 
     public Graph(){
@@ -27,6 +30,7 @@ public class Graph extends Observable {
         this.vertices = new ArrayList<Vertex>();
         this.styleManager = new StyleManager();
         this.commandHandler = new CommandHandler(this);
+        backgroundColor = new Color(230,230,230);
     }
 	
 	// Fonctions d'ajout dans les collections edges et vertices.
@@ -173,5 +177,13 @@ public class Graph extends Observable {
 
     public void setOriented(boolean isOriented) {
         this.isOriented = isOriented;
+    }
+
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(Color backgroundColor) {
+        this.backgroundColor = backgroundColor;
     }
 }

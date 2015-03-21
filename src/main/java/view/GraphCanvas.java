@@ -3,7 +3,8 @@ package view;
 import controller.Controller;
 import controller.actions.*;
 import controller.commands.MoveVertexCommand;
-import model.*;
+import controller.commands.RemoveEdgeCommand;
+import controller.commands.RemoveVertexCommand;
 import opengl.GLCanvas;
 import opengl.resource.object.camera.GLPerspectiveCamera;
 import opengl.utils.GLRay;
@@ -27,8 +28,10 @@ public class GraphCanvas extends GLCanvas {
     private GLPerspectiveCamera camera;
 
     //attributs utilitaires
+    private Object pasteBuffer;
     private boolean isMousePressed = false;
     private VertexView selectedVertex;
+    private EdgeView selectedEdge;
 
     public GraphCanvas() throws LWJGLException {}
 
@@ -85,10 +88,15 @@ public class GraphCanvas extends GLCanvas {
 
                 if (arg0.getButton() == MouseEvent.BUTTON1) { // CLIC GAUCHE
 
+
                     VertexView intersectedVertexView = getIntersectedVertexView(arg0.getX(), arg0.getY());
+                    EdgeView intersectedEdgeView = getIntersectedEdgeView(arg0.getX(), arg0.getY());
                     if (intersectedVertexView != null) {
                         selectedVertex = intersectedVertexView;
                         isMousePressed = true;
+                    }
+                    if (intersectedEdgeView != null) {
+                        selectedEdge = intersectedEdgeView;
                     }
                     switch (GraphCanvas.this.controller.getState()) {
                         case VERTEX_CREATION:
@@ -109,15 +117,16 @@ public class GraphCanvas extends GLCanvas {
                         case MOVE:
                             if (selectedVertex != null) {
                                 positions[0] = selectedVertex.getModel().getPosition();
-                                System.out.println("START : " + positions[0].toString());
                             }
                             break;
 
                         case DELETION:
-                            /*if(intersectedVertex != null) {
-                                ViewElement viewElement = intersectedVertex;
-                                GraphCanvas.this.deleteElement(viewElement);
-                            }*/
+                            if(intersectedVertexView != null) {
+                                GraphCanvas.this.controller.executeCommand(new RemoveVertexCommand(selectedVertex.getModel()));
+                            }
+                            if(intersectedEdgeView != null) {
+                                GraphCanvas.this.controller.executeCommand(new RemoveEdgeCommand(selectedEdge.getModel()));
+                            }
                             break;
 
                         default:
@@ -163,40 +172,42 @@ public class GraphCanvas extends GLCanvas {
             @Override
             public void mouseReleased(MouseEvent arg0) {
                 lockDraw();
-                initGraphCanvas();
-                isMousePressed = false;
-                VertexView intersectedVertexView = getIntersectedVertexView(arg0.getX(), arg0.getY());
-                switch (GraphCanvas.this.controller.getState()) {
-                    case VERTEX_CREATION:
-                        break;
 
-                    case EDGE_CREATION:
-                        if (intersectedVertexView != null && selectedVertex != null)
-                            GraphCanvas.this.graphView.addEdge(GraphCanvas.this.selectedVertex.getModel(), intersectedVertexView.getModel());
-                        break;
+                if (arg0.getButton() == MouseEvent.BUTTON1) {
+                    initGraphCanvas();
+                    isMousePressed = false;
+                    VertexView intersectedVertexView = getIntersectedVertexView(arg0.getX(), arg0.getY());
+                    switch (GraphCanvas.this.controller.getState()) {
+                        case VERTEX_CREATION:
+                            break;
 
-                    case VERTEX_EDITION:
-                        break;
+                        case EDGE_CREATION:
+                            if (intersectedVertexView != null && selectedVertex != null)
+                                GraphCanvas.this.graphView.addEdge(GraphCanvas.this.selectedVertex.getModel(), intersectedVertexView.getModel());
+                            break;
 
-                    case EDGE_EDITION:
-                        break;
+                        case VERTEX_EDITION:
+                            break;
 
-                    case MOVE:
-                        if (selectedVertex != null) {
-                            positions[1] = selectedVertex.getModel().getPosition();
-                            System.out.println("END : " + positions[1].toString());
-                            GraphCanvas.this.controller.executeCommand(new MoveVertexCommand(selectedVertex.getModel(), positions[0], positions[1]));
-                            positions[0] = null;
-                            positions[1] = null;
-                            selectedVertex = null;
-                        }
-                        break;
+                        case EDGE_EDITION:
+                            break;
 
-                    case DELETION:
-                        break;
+                        case MOVE:
+                            if (selectedVertex != null) {
+                                positions[1] = selectedVertex.getModel().getPosition();
+                                GraphCanvas.this.controller.executeCommand(new MoveVertexCommand(selectedVertex.getModel(), positions[0], positions[1]));
+                                positions[0] = null;
+                                positions[1] = null;
+                                selectedVertex = null;
+                            }
+                            break;
 
-                    default:
-                        break;
+                        case DELETION:
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
                 unlockDraw();
             }
@@ -280,6 +291,14 @@ public class GraphCanvas extends GLCanvas {
         return this.graphView.getIntersectedVertexView(ray);
     }
 
+    /////////////////////////////// RETOURNE EDGE VIEW INTERSECTED //////////////////////////////////////////
+    private EdgeView getIntersectedEdgeView(int x, int y) {
+        y = GraphCanvas.this.getHeight() - y; //car y swing et y canvas sont inversés
+        GLRay ray = GraphCanvas.this.camera.getCursorRay(new Vector2f(x, y));
+
+        return this.graphView.getIntersectedEdgeView(ray);
+    }
+
     ////////////////////////////////////////// GENERATION DES POPUPS //////////////////////////////////////////
     private JPopupMenu getPopupOnVertex(VertexView vertexView){
         JPopupMenu contextMenu = new JPopupMenu();
@@ -297,5 +316,13 @@ public class GraphCanvas extends GLCanvas {
         lockDraw();
         graphView.animate();
         unlockDraw();
+    }
+
+    public Object getPasteBuffer() {
+        return pasteBuffer;
+    }
+
+    public void setPasteBuffer(Object pasteBuffer) {
+        this.pasteBuffer = pasteBuffer;
     }
 }
