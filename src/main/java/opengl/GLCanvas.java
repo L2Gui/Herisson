@@ -20,6 +20,8 @@ public abstract class GLCanvas extends AWTGLCanvas {
     public abstract void init();
     public abstract void paint(Matrix4f transformationMatrix);
 
+    private Color backgroundColor = new Color(230, 230, 230);
+
 	public GLCanvas() throws LWJGLException {
 		super();
 		this.mutex = new ReentrantLock();
@@ -60,7 +62,7 @@ public abstract class GLCanvas extends AWTGLCanvas {
 
     @Override
     public void paintGL() {
-        GL11.glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
+        GL11.glClearColor((float)(1.*backgroundColor.getRed()/255), (float)(1.*backgroundColor.getGreen()/255), (float)(1.*backgroundColor.getBlue()/255), 1.0f);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
         this.mutex.lock();
@@ -96,5 +98,13 @@ public abstract class GLCanvas extends AWTGLCanvas {
     @Override
     public Dimension getPreferredSize() {
         return super.getParent().getSize();
+    }
+
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(Color backgroundColor) {
+        this.backgroundColor = backgroundColor;
     }
 }

@@ -116,5 +116,7 @@ public class Controller {
         this.state = state;
     }
 
-
+    public GraphCanvas getCanvas() {
+        return canvas;
+    }
 }
