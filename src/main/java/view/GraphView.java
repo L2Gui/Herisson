@@ -28,8 +28,6 @@ public class GraphView implements Observer {
 
     private Map<Vertex, VertexView> vertexViews;
     private Map<Edge, EdgeView> edgeViews;
-    private List<VertexView> vertexViewsOrdonned;
-    private List<EdgeView> edgeViewsOrdonned;
     private Collection<VertexView> createdVertices;
 
     private GLColorVariantMesh vertexMesh;
@@ -44,8 +42,6 @@ public class GraphView implements Observer {
         this.createdVertices = new ArrayList<VertexView>();
         this.vertexViews = new HashMap<Vertex, VertexView>();
         this.edgeViews = new HashMap<Edge, EdgeView>();
-        this.vertexViewsOrdonned = new ArrayList<VertexView>();
-        this.edgeViewsOrdonned = new ArrayList<EdgeView>();
         this.isInitialized = false;
     }
 
@@ -152,7 +148,6 @@ public class GraphView implements Observer {
 
         this.createdVertices.add(vertexView);
         this.vertexViews.put(vertex, vertexView);
-        this.vertexViewsOrdonned.add(vertexView);
     }
 
     public void addVertex(Vertex vertex) {
@@ -162,7 +157,6 @@ public class GraphView implements Observer {
 
         this.createdVertices.add(vertexView);
         this.vertexViews.put(vertex, vertexView);
-        this.vertexViewsOrdonned.add(vertexView);
     }
 
     public void addEdge(Vertex src, Vertex dst) {
@@ -175,7 +169,6 @@ public class GraphView implements Observer {
         edgeView.setShader(this.vertexEdgeShader);
 
         this.edgeViews.put(edge, edgeView);
-        this.edgeViewsOrdonned.add(edgeView);
     }
 
     public void addEdge(Edge edge) {
@@ -183,33 +176,37 @@ public class GraphView implements Observer {
         edgeView.setShader(this.vertexEdgeShader);
 
         this.edgeViews.put(edge, edgeView);
-        this.edgeViewsOrdonned.add(edgeView);
     }
 
     private void removeVertex(Vertex vertex) {
         this.vertexViews.remove(vertex);
-        this.vertexViewsOrdonned.remove(vertex);
     }
 
     private void removeEdge(Edge edge) {
         this.edgeViews.remove(edge);
-        this.edgeViewsOrdonned.remove(edge);
     }
 
     public VertexView getIntersectedVertexView(GLRay ray) {
         VertexView intersectedVertex = null;
-        for (int i = 0; i < vertexViewsOrdonned.size() && intersectedVertex==null; i++) {
-            if (vertexViewsOrdonned.get(i).isIntersected(ray))
-                intersectedVertex = vertexViewsOrdonned.get(i);
+        //TODO
+        for (Map.Entry<Vertex, VertexView> entry : this.vertexViews.entrySet()) {
+            if (entry.getValue().isIntersected(ray)) {
+                intersectedVertex = entry.getValue();
+                break;
+            }
         }
+
         return intersectedVertex;
     }
 
     public EdgeView getIntersectedEdgeView(GLRay ray) {
         EdgeView intersectedEdge = null;
-        for (int i = 0; i < edgeViewsOrdonned.size() && intersectedEdge==null; i++) {
-            if (edgeViewsOrdonned.get(i).isIntersected(ray))
-                intersectedEdge = edgeViewsOrdonned.get(i);
+        //TODO
+        for (Map.Entry<Edge, EdgeView> entry : this.edgeViews.entrySet()) {
+            if (entry.getValue().isIntersected(ray)) {
+                intersectedEdge = entry.getValue();
+                break;
+            }
         }
         return intersectedEdge;
     }
@@ -217,21 +214,17 @@ public class GraphView implements Observer {
     public void loadGraph(Graph graph) {
         this.vertexViews = new HashMap<Vertex, VertexView>();
         this.edgeViews = new HashMap<Edge, EdgeView>();
-        this.vertexViewsOrdonned = new ArrayList<VertexView>();
-        this.edgeViewsOrdonned = new ArrayList<EdgeView>();
 
         for (Vertex vertex : graph.getVertices()) {
             VertexView vertexView = new VertexView(vertex, this.vertexMesh, this.labelShader);
             vertexView.setShader(this.vertexEdgeShader);
             this.vertexViews.put(vertex, vertexView);
-            this.vertexViewsOrdonned.add(vertexView);
         }
 
         for (Edge edge : graph.getEdges()) {
             EdgeView edgeView = new EdgeView(edge, this.edgeMesh, this.labelShader);
             edgeView.setShader(this.vertexEdgeShader);
             this.edgeViews.put(edge, edgeView);
-            this.edgeViewsOrdonned.add(edgeView);
         }
     }
 
@@ -241,14 +234,6 @@ public class GraphView implements Observer {
 
     public Map<Edge, EdgeView> getEdgeViews() {
         return edgeViews;
-    }
-
-    public List<VertexView> getVertexViewsOrdonned() {
-        return vertexViewsOrdonned;
-    }
-
-    public List<EdgeView> getEdgeViewsOrdonned() {
-        return edgeViewsOrdonned;
     }
 
     public void animate() {

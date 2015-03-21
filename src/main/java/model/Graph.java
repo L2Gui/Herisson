@@ -39,7 +39,7 @@ public class Graph extends Observable {
 	 * 
 	 * @param edge : Correspond à l'élément à ajouter à this.edges (List<Edge>)
 	 */
-	public void addEdge(Edge edge){
+	public void addEdge(Edge edge) {
 		/* Surrement � modifier, neanmoins on doit prendre en compte que 
 		 * la m�thode add renvoie vrai si l'argument a pu etre ajout� ou 
 		 * faux si l'�l�ment existe d�ja dans la Collection.
