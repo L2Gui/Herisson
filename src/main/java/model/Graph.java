@@ -49,6 +49,8 @@ public class Graph extends Observable {
                 edge.setStyle(this.styleManager.getDefaultEdgeStyle());
             }
         }
+
+        this.update();
 	}
 	
 	/**
@@ -67,6 +69,8 @@ public class Graph extends Observable {
             vertex.setGraph(this);
             vertex.setStyle(this.styleManager.getDefaultVertexStyle());
         }
+
+        this.update();
 	}
 	
 	// Fonctions de suppression dans les collections edges et vertices.
@@ -86,6 +90,8 @@ public class Graph extends Observable {
             // forcer la destruction du edge
             edge = null;
         }
+
+        this.update();
 	}
 	
 	/**
@@ -103,6 +109,8 @@ public class Graph extends Observable {
             // forcer la destruction du vertex
             vertex = null;
         }
+
+        this.update();
 	}
 	
 	/**
@@ -128,6 +136,11 @@ public class Graph extends Observable {
 	public List<Edge> getEdges() {
 		return edges;
 	}
+
+    public void update() {
+        super.setChanged();
+        super.notifyObservers(this);
+    }
 	
 	/**
 	 * 

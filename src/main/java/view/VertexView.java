@@ -10,8 +10,10 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
 
-public class VertexView extends ViewElement {
+public class VertexView extends ViewElement implements Observer {
 	private Vertex vertexModel;
     private GLTextMesh labelMesh;
     private GLColorVariantMesh mesh;
@@ -19,6 +21,8 @@ public class VertexView extends ViewElement {
 
     public VertexView(Vertex vertexModel, GLColorVariantMesh mesh, GLShader labelShader) {
         this.vertexModel = vertexModel;
+
+        this.vertexModel.addObserver(this);
 
         this.labelMesh = new GLTextMesh();
         this.mesh = mesh;
@@ -34,8 +38,7 @@ public class VertexView extends ViewElement {
         this.labelMesh.init();
         this.labelMesh.setColor(this.vertexModel.getTextColor());
 
-        this.textDrawable.scale(this.vertexModel.getSize(), this.vertexModel.getSize(), 1.0f);
-        super.setPosition(vertexModel.getPosition());
+        this.refreshTransform();
     }
 
     @Override
@@ -62,5 +65,15 @@ public class VertexView extends ViewElement {
 
     public void setModel(Vertex vertexModel) {
         this.vertexModel = vertexModel;
+    }
+
+    private void refreshTransform() {
+        this.textDrawable.scale(this.vertexModel.getSize(), this.vertexModel.getSize(), 1.0f);
+        super.setPosition(vertexModel.getPosition());
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        this.refreshTransform();
     }
 }

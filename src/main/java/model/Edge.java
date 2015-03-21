@@ -1,8 +1,9 @@
 package model;
 
 import java.awt.*;
+import java.util.Observable;
 
-public class Edge {
+public class Edge extends Observable {
 	private Vertex srcVertex;
 	private Vertex dstVertex;
     private String label;
@@ -28,6 +29,7 @@ public class Edge {
         this.graph = graph;
         this.style = graph.getStyleManager().getDefaultEdgeStyle();
     }
+
     /**
      *
      * @return
@@ -55,9 +57,16 @@ public class Edge {
 	 */
 	public void setSrcVertex(Vertex srcVertex) {
 		this.srcVertex = srcVertex;
+
+        update();
 	}
 
-	/**
+    public void update() {
+        this.setChanged();
+        this.notifyObservers();
+    }
+
+    /**
 	 * 
 	 * @return
 	 */
@@ -71,6 +80,8 @@ public class Edge {
 	 */
 	public void setDstVertex(Vertex dstVertex) {
 		this.dstVertex = dstVertex;
+
+        update();
 	}
 
 	
@@ -90,6 +101,8 @@ public class Edge {
 	 */
 	public void setStyle(EdgeStyle style) {
 		this.style = style;
+
+        update();
 	}
 
 	// Modification methods for fields in style
@@ -116,6 +129,8 @@ public class Edge {
 
         graph.getStyleManager().addStyle(this.style);
 
+        update();
+
         return this;
 	}
 	
@@ -140,6 +155,8 @@ public class Edge {
         this.style.incrementUsageCount();
 
         graph.getStyleManager().addStyle(this.style);
+
+        update();
 
         return this;
 	}
@@ -166,6 +183,8 @@ public class Edge {
 
         graph.getStyleManager().addStyle(this.style);
 
+        update();
+
         return this;
 	}
 	
@@ -191,6 +210,8 @@ public class Edge {
 
         graph.getStyleManager().addStyle(this.style);
 
+        update();
+
         return this;
 	}
 
@@ -200,5 +221,7 @@ public class Edge {
 
     public void setLabel(String label) {
         this.label = label;
+
+        update();
     }
 }

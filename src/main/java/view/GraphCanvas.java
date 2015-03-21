@@ -238,7 +238,6 @@ public class GraphCanvas extends GLCanvas {
 
     ////////////////////////////// CREATION D'UN NOEUD //////////////////////////////////////////////////////
     private void createVertex(int x, int y) {
-
         this.graphView.addVertex(getLookAtPosition(x, y));
     }
 

@@ -62,6 +62,7 @@ public class Controller {
         GraphView graphView = new GraphView();
         graphView.setGraph(graph);
         graphView.setController(this);
+        graph.addObserver(graphView);
         this.canvas.setGraphView(graphView);
         this.graphs.add(graph);
         this.graphViews.put(graph, graphView);

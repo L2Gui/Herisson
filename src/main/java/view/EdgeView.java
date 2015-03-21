@@ -12,8 +12,10 @@ import org.lwjgl.util.vector.Vector3f;
 import utils.QuaternionUtils;
 
 import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
 
-public class EdgeView extends ViewElement {
+public class EdgeView extends ViewElement implements Observer {
     private Edge edgeModel;
     private GLTextMesh labelMesh;
     private GLColorVariantMesh mesh;
@@ -22,6 +24,8 @@ public class EdgeView extends ViewElement {
     public EdgeView(Edge edgeModel, GLColorVariantMesh mesh, GLShader labelShader) {
         this.edgeModel = edgeModel;
         this.mesh = mesh;
+
+        this.edgeModel.addObserver(this);
 
         this.labelMesh = new GLTextMesh();
         this.textDrawable = new GLDrawableObject(labelShader, labelMesh);
@@ -36,6 +40,12 @@ public class EdgeView extends ViewElement {
         this.labelMesh.init();
         this.labelMesh.setColor(this.edgeModel.getTextColor());
 
+        this.refreshTransform();
+
+        this.onModelChange();
+    }
+
+    public void refreshTransform() {
         Quaternion rotationZ = QuaternionUtils.quaternionLookRotation(new Vector3f(0.0f, 0.0f, 1.0f));
         Vector3f directionXY = Vector3f.sub(this.edgeModel.getDstVertex().getPosition(), this.edgeModel.getSrcVertex().getPosition(), null);
 
@@ -49,8 +59,6 @@ public class EdgeView extends ViewElement {
         this.setPosition(center);
         this.setRotation(rotation);
         this.setScale(new Vector3f(directionXY.length(), this.edgeModel.getThickness(), 1.0f));
-
-        this.onModelChange();
     }
 
     @Override
@@ -81,5 +89,10 @@ public class EdgeView extends ViewElement {
 
     public void setModel(Edge edgeModel) {
         this.edgeModel = edgeModel;
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        this.refreshTransform();
     }
 }

@@ -1,14 +1,13 @@
 package model;
 
-import opengl.resource.GLShader;
-import opengl.resource.object.mesh.GLColoredMesh;
 import org.lwjgl.util.vector.Vector3f;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Observable;
 
-public class Vertex {
+public class Vertex extends Observable {
 	private Collection<Edge> edges;
 	private VertexStyle style;
 	private Graph graph;
@@ -42,6 +41,13 @@ public class Vertex {
 
 	public void setPosition(Vector3f position) {
 		this.position = position;
+
+        for (Edge edge : this.edges) {
+            edge.update();
+        }
+
+        this.setChanged();
+        this.notifyObservers();
 	}
 
 	
@@ -83,6 +89,9 @@ public class Vertex {
 
         graph.getStyleManager().addStyle(this.style);
 
+        this.setChanged();
+        this.notifyObservers();
+
         return this;
 	}
 	
@@ -110,6 +119,10 @@ public class Vertex {
         this.style.getVertices().add(this);
 
         graph.getStyleManager().addStyle(this.style);
+
+        this.setChanged();
+        this.notifyObservers();
+
         return this;
 	}
 	
@@ -138,6 +151,9 @@ public class Vertex {
 
         graph.getStyleManager().addStyle(this.style);
 
+        this.setChanged();
+        this.notifyObservers();
+
         return this;
 	}
 	
@@ -155,6 +171,9 @@ public class Vertex {
 	 */
 	public void setLabel(String label) {
 		this.label = label;
+
+        this.setChanged();
+        this.notifyObservers();
 	}
 	
 	/**
@@ -181,6 +200,9 @@ public class Vertex {
         this.style.getVertices().add(this);
 
         graph.getStyleManager().addStyle(this.style);
+
+        this.setChanged();
+        this.notifyObservers();
 
         return this;
 	}
@@ -214,6 +236,9 @@ public class Vertex {
 
         graph.getStyleManager().addStyle(this.style);
 
+        this.setChanged();
+        this.notifyObservers();
+
         return this;
 	}
 	
@@ -237,6 +262,10 @@ public class Vertex {
         this.style.getVertices().add(this);
 
         graph.getStyleManager().addStyle(this.style);
+
+        this.setChanged();
+        this.notifyObservers();
+
         return this;
 	}
 	
@@ -263,6 +292,10 @@ public class Vertex {
         this.style.getVertices().add(this);
 
         graph.getStyleManager().addStyle(this.style);
+
+        this.setChanged();
+        this.notifyObservers();
+
         return this;
 	}
 
@@ -280,6 +313,9 @@ public class Vertex {
 
     public void setStyle(VertexStyle style) {
         this.style = style;
+
+        this.setChanged();
+        this.notifyObservers();
     }
 
     public Collection<Edge> getEdges() {

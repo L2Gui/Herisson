@@ -27,6 +27,8 @@ public class App {
 
             // Controller
             Controller controller = new Controller();
+
+            // Construction des liens
             controller.setGraphWindow(window);
             controller.addGraph(graph1);
             controller.addGraph(graph2);
@@ -56,6 +58,8 @@ public class App {
         Edge edge = new Edge();
         edge.setSrcVertex(v0);
         edge.setDstVertex(v1);
+        v0.addEdge(edge);
+        v1.addEdge(edge);
 
         g.addVertex(v0);
         g.addVertex(v1);
