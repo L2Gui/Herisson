@@ -22,6 +22,6 @@ public class UndoAction extends MenuAction{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("annuler ("+e.getSource().getClass().getName()+")");
+
     }
 }

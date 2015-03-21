@@ -50,23 +50,23 @@ public class StyleManager {
     }
 
     public void removeStyle(IStyle style){
-        if (style instanceof EdgeStyle){
+        if (style instanceof EdgeStyle) {
             if (!edgeStyles.isEmpty() && edgeStyles.contains(style)){
                 edgeStyles.remove(style);
             }
-        } else if (style instanceof VertexStyle){
+        } else if (style instanceof VertexStyle) {
             if (!vertexStyles.isEmpty() && vertexStyles.contains(style)){
                 vertexStyles.remove(style);
             }
         }
     }
 
-    public void addStyle(IStyle style){
-        if (style instanceof EdgeStyle){
+    public void addStyle(IStyle style) {
+        if (style instanceof EdgeStyle) {
             if (!edgeStyles.contains(style)) {
                 edgeStyles.add((EdgeStyle) style);
             }
-        } else if (style instanceof VertexStyle){
+        } else if (style instanceof VertexStyle) {
             if (!vertexStyles.contains(style)) {
                 vertexStyles.add((VertexStyle) style);
             }

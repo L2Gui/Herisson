@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 import controller.actions.*;
+import controller.commands.CreateVertexCommand;
 import model.*;
 import opengl.GLCanvas;
 import opengl.resource.GLShader;
@@ -67,7 +68,7 @@ public class GraphCanvas extends GLCanvas {
     public void init() {
         this.camera = new GLPerspectiveCamera(70.0f, 0.01f, 100.0f);
         this.camera.lookToDirection(new Vector3f(0.0f, 0.0f, -1.0f));
-        //this.camera.rotate(30, new Vector3f(0, 1, 0));
+        this.camera.setPosition(new Vector3f(0.0f, 0.0f, 10.0f));
         super.setCamera(this.camera);
 
         super.addMouseListener(new MouseInputAdapter() {
@@ -113,7 +114,6 @@ public class GraphCanvas extends GLCanvas {
             }
         });
 
-
         this.vertexEdgeShader = new GLShader("coloru3D.vert", "color.frag");
         this.labelShader = new GLShader("textureu3D.vert", "texture.frag");
         this.vertexEdgeShader.init();
@@ -152,8 +152,6 @@ public class GraphCanvas extends GLCanvas {
 
         this.graph = GraphCanvas.getSampleGraph();
         this.loadGraph();
-
-        this.camera.setPosition(0.0f, 0.0f, 10.0f);
     }
 
     @Override
@@ -164,14 +162,6 @@ public class GraphCanvas extends GLCanvas {
             edgeEntry.getValue().render(transformationMatrix);
         }
 
-        GL11.glEnable(GL11.GL_DEPTH_TEST);
-
-        for (Map.Entry<Vertex, VertexView> vertexEntry : this.vertexViews.entrySet()) {
-            vertexEntry.getValue().render(transformationMatrix);
-        }
-
-        GL11.glDisable(GL11.GL_DEPTH_TEST);
-
         for (Map.Entry<Vertex, VertexView> vertexEntry : this.vertexViews.entrySet()) {
             vertexEntry.getValue().renderText(transformationMatrix);
         }
@@ -181,6 +171,10 @@ public class GraphCanvas extends GLCanvas {
         }
 
         GL11.glEnable(GL11.GL_DEPTH_TEST);
+
+        for (Map.Entry<Vertex, VertexView> vertexEntry : this.vertexViews.entrySet()) {
+            vertexEntry.getValue().render(transformationMatrix);
+        }
     }
 
     public void onGraphChange() {
@@ -214,6 +208,8 @@ public class GraphCanvas extends GLCanvas {
         Vertex v = new Vertex(graph);
         v.setPosition(position);
         //v.setLabel("sommet");
+
+        this.controller.executeCommand(new CreateVertexCommand(v));
 
         VertexView vv = new VertexView(v, this.vertexMesh, this.labelShader);
         vv.setShader(this.vertexEdgeShader);
