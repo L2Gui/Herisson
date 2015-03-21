@@ -45,6 +45,8 @@ public class GraphCanvas extends GLCanvas {
             this.graphView.init();
         } catch (LWJGLException e) {
             e.printStackTrace();
+        } catch (IllegalStateException e) {
+            // Not yet displayable
         }
     }
 
@@ -63,13 +65,8 @@ public class GraphCanvas extends GLCanvas {
         this.camera.setPosition(new Vector3f(0.0f, 0.0f, 10.0f));
         super.setCamera(this.camera);
 
-        /** Keyboard Listener **/
-        super.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                System.out.println("Key pressed: "+e.getKeyChar()+" : "+e.getKeyCode());
-            }
-        });
+        if (this.graphView != null)
+            this.graphView.init();
 
         /** MouseListener **/
         super.addMouseListener(new MouseInputAdapter() {
@@ -96,7 +93,6 @@ public class GraphCanvas extends GLCanvas {
                     switch(GraphCanvas.this.controller.getState())
                     {
                         case VERTEX_CREATION:
-
                             if(intersectedVertexView == null) {
                                 GraphCanvas.this.createVertex(arg0.getX(), arg0.getY());
                             }
@@ -194,7 +190,6 @@ public class GraphCanvas extends GLCanvas {
             }
         });
 
-
         super.addMouseMotionListener(new MouseMotionAdapter() {
 
             public void initGraphCanvas() {
@@ -229,7 +224,6 @@ public class GraphCanvas extends GLCanvas {
             }
         });
 
-        this.graphView = this.controller.createSampleGraph();
         this.graphView.init();
     }
 
@@ -290,6 +284,4 @@ public class GraphCanvas extends GLCanvas {
         contextMenu.add(new ZoomLessAction());
         return contextMenu;
     }
-
-
 }
