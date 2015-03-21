@@ -46,6 +46,7 @@ public class Controller {
     public void setGraphWindow(GraphWindow window) {
         this.window = window;
         this.canvas = window.getCanvas();
+        this.canvas.setController(this);
 
         for (Graph graph : this.graphs) {
             this.window.addGraph(graph);

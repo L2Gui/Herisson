@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 
-public class CopyAction extends MenuAction{
+public class CopyAction extends MenuAction {
 
     public CopyAction() {
         this(null);
@@ -22,6 +22,6 @@ public class CopyAction extends MenuAction{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Copier ("+e.getSource().getClass().getName()+")");
+
     }
 }

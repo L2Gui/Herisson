@@ -55,13 +55,19 @@ public class GraphCanvas extends GLCanvas {
         this.onGraphChange();
     }
 
+    public Controller getController() {
+        return controller;
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
     @Override
     public void init() {
-
-        this.controller = new Controller();
         this.camera = new GLPerspectiveCamera(70.0f, 0.01f, 100.0f);
         this.camera.lookToDirection(new Vector3f(0.0f, 0.0f, -1.0f));
-        //GraphCanvas.this.camera.rotate(30, new Vector3f(0, 1, 0));
+        //this.camera.rotate(30, new Vector3f(0, 1, 0));
         super.setCamera(this.camera);
 
         super.addMouseListener(new MouseInputAdapter() {
@@ -78,7 +84,6 @@ public class GraphCanvas extends GLCanvas {
 
                 initGraphCanvas();
                 if (arg0.getButton() == MouseEvent.BUTTON1) { //clic gauche
-
                     VertexView intersectedVertex = getIntersectedVertexView(arg0.getX(), arg0.getY());
                     if (intersectedVertex != null) {
                         GraphCanvas.this.selectedVertex = intersectedVertex;
@@ -86,9 +91,7 @@ public class GraphCanvas extends GLCanvas {
                     } else {
                         GraphCanvas.this.createVertex(arg0.getX(), arg0.getY());
                     }
-
                 } else if (arg0.getButton() == MouseEvent.BUTTON3) { //clic droit
-
                     VertexView intersectedVertex = getIntersectedVertexView(arg0.getX(), arg0.getY());
                     if (intersectedVertex != null) {
                             getPopupOnVertex(intersectedVertex).show(arg0.getComponent(), arg0.getX(), arg0.getY());
@@ -184,11 +187,8 @@ public class GraphCanvas extends GLCanvas {
         this.loadGraph();
     }
 
-
-
     ////////////////////////////// CREATION D'UN NOEUD //////////////////////////////////////////////////////
     private void createVertex(int x, int y) {
-
         System.out.println("Clic");
 
         GLRay ray = this.camera.getCursorRay(new Vector2f(x, super.getSize().height - y));
@@ -222,7 +222,7 @@ public class GraphCanvas extends GLCanvas {
         this.vertexViewsOrdonned.add(vv);
     }
 
-    ////////////////////////////// CREATION D'UNE ARRETE //////////////////////////////////////////////////////
+    ////////////////////////////// CREATION D'UNE ARETE //////////////////////////////////////////////////////
     private void createEdge(VertexView source, VertexView dest) {
 
         Vertex srcVertex = source.getModel();
@@ -328,5 +328,4 @@ public class GraphCanvas extends GLCanvas {
         }
         return g;
     }
-
 }

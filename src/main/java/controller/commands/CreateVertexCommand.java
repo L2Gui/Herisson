@@ -7,11 +7,11 @@ import model.Vertex;
 /**
  * Created by Clement on 13/03/2015.
  */
-public class CreateVertex implements ICommand {
+public class CreateVertexCommand implements ICommand {
     private Vertex vertex;
     private Graph graph;
 
-    public CreateVertex() {
+    public CreateVertexCommand() {
         this.vertex = new Vertex();
     }
 

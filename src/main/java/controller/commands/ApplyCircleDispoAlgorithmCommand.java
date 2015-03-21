@@ -10,11 +10,11 @@ import java.awt.event.ActionEvent;
 /**
  * Created by Clement on 16/03/2015.
  */
-public class ApplyCircleDispoAlgorithm implements ICommand {
+public class ApplyCircleDispoAlgorithmCommand implements ICommand {
     private IDispoAlgorithm algo;
     private Graph graph;
 
-    public ApplyCircleDispoAlgorithm() {
+    public ApplyCircleDispoAlgorithmCommand() {
         this.algo = new DispoCircleAlgorithm();
     }
 
