@@ -8,6 +8,7 @@ import controller.command.RemoveEdgeCommand;
 import controller.command.RemoveVertexCommand;
 import model.GraphElement;
 import model.Vertex;
+import model.algorithm.ColorWithEdgesAlgorithm;
 import opengl.GLCanvas;
 import opengl.resource.object.camera.GLPerspectiveCamera;
 import opengl.utils.GLRay;
@@ -243,8 +244,8 @@ public class GraphCanvas extends GLCanvas {
                     case MOVE:
                         if(oldPosition !=null){
                             Vector2f delta = Vector2f.sub(new Vector2f(arg0.getX(), arg0.getY()), oldPosition, null);
-                            GraphCanvas.this.camera.rotate((float)(delta.getX()*0.5), new Vector3f(0f,-1f,0f));
-                            GraphCanvas.this.camera.rotate((float)(delta.getY()*0.5), new Vector3f(1f,0f,0f));
+                            GraphCanvas.this.camera.rotate((float)(delta.getX()*0.1), new Vector3f(0f,-1f,0f));
+                            GraphCanvas.this.camera.rotate((float)(delta.getY()*0.1), new Vector3f(1f,0f,0f));
                             oldPosition.setX(arg0.getX());
                             oldPosition.setY(arg0.getY());
                         }
