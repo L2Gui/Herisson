@@ -10,6 +10,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class SizeWithEdgesAlgorithm implements ISizeAlgorithm {
+    @Override
+    public String toString() {
+        return "Taille en fonction du degrès";
+    }
+
     private float minSize;
     private float maxSize;
     /**
@@ -54,12 +59,13 @@ public class SizeWithEdgesAlgorithm implements ISizeAlgorithm {
 
         //affectation des couleurs
         for(Vertex v : g.getVertices()){
-            set.add(new Pair<Vertex, Float>(v, getNewSizeOf(v.getEdges().size())));
+            set.add(new Pair<Vertex, Float>(v, getNewSizeOf(v.getEdges().size(), nbMaxVertices)));
         }
         return set;
     }
 
-    private float getNewSizeOf(int value){
-        return (value*(this.maxSize-this.minSize))+this.minSize;
+    private float getNewSizeOf(int value, int maxValue){
+        Double ratio = 1.*value/maxValue;
+        return (float) (ratio*(this.maxSize-this.minSize))+this.minSize;
     }
 }
