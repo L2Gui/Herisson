@@ -21,10 +21,11 @@ public class Vertex extends GraphElement {
         position = null;
         label = "";
     }
+
     public Vertex(Vertex v){
-        //this.edges = new ArrayList<Edge>(v.getEdges());
-        this.edges = new ArrayList<Edge>();
+        this.edges = new ArrayList<Edge>(); //les noeuds crées par copie n'ont pas d'aretes.
         this.style = new VertexStyle(v.getStyle());
+        this.style = v.getStyle();
         this.graph = v.getGraph();
         this.position = new Vector3f(v.getPosition());
         this.label = new String(v.getLabel());
