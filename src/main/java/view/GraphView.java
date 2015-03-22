@@ -17,9 +17,12 @@ import opengl.vertex.GLVertex;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
+import utils.ColorUtils;
 import utils.MathUtils;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by Clement on 21/03/2015.
@@ -33,6 +36,7 @@ public class GraphView implements Observer {
 
     private Collection<VertexView> createdVertices;
     private Map<VertexView, Vector3f> translatingVertices;
+    private Map<VertexView, Color> coloringVertices;
 
     private GLColorVariantMesh vertexSquareMesh;
     private GLColorVariantMesh vertexCircleMesh;
@@ -49,6 +53,7 @@ public class GraphView implements Observer {
     public GraphView() {
         this.createdVertices = new ArrayList<VertexView>();
         this.translatingVertices = new HashMap<VertexView, Vector3f>();
+        this.coloringVertices = new HashMap<VertexView, Color>();
         this.vertexViews = new HashMap<Vertex, VertexView>();
         this.edgeViews = new HashMap<Edge, EdgeView>();
         this.isInitialized = false;
@@ -236,6 +241,10 @@ public class GraphView implements Observer {
         this.translatingVertices.remove(vertexView);
     }
 
+    public void addColoringVertex(Vertex vertex, Color color) {
+        this.coloringVertices.put(this.vertexViews.get(vertex), color);
+    }
+
     public void loadGraph(Graph graph) {
         this.vertexViews.clear();
         this.edgeViews.clear();
@@ -291,6 +300,25 @@ public class GraphView implements Observer {
                 this.translatingVertices.remove(vertexView);
             }
         }
+        finishedVertices.clear();
+
+        for (Map.Entry<VertexView, Color> entry : this.coloringVertices.entrySet()) {
+            float distance = ColorUtils.colorDiff(entry.getKey().getModel().getBackgroundColor(), entry.getValue());
+            if (distance < 0.01f) {
+                entry.getKey().getModel().setBackgroundColor(entry.getValue());
+                finishedVertices.add(entry.getKey());
+            } else {
+                Color interm = ColorUtils.colorLerp(entry.getKey().getModel().getBackgroundColor(), entry.getValue(), 0.05f);
+                entry.getKey().getModel().setBackgroundColor(interm);
+            }
+        }
+
+        for (VertexView vertexView : finishedVertices) {
+            if (this.coloringVertices.containsKey(vertexView)) {
+                this.coloringVertices.remove(vertexView);
+            }
+        }
+        finishedVertices.clear();
     }
 
     private static GLColorVariantMesh SetupCircleMesh(int nbSides, GLShader shader) {
