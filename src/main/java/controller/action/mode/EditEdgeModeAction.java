@@ -5,6 +5,7 @@ import controller.ControllerState;
 import controller.MenuAction;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 
 public class EditEdgeModeAction extends MenuAction{
@@ -17,7 +18,7 @@ public class EditEdgeModeAction extends MenuAction{
      * Constructeur de Edit Edge
      */
     public EditEdgeModeAction(Controller controller) {
-        super(controller, "Modifier trait", "res/edit_edge3.png", null, null);
+        super(controller, "Modifier trait", "res/edit_edge3.png", KeyEvent.VK_5, null);
     }
 
     @Override

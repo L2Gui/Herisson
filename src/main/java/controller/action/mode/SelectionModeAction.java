@@ -5,6 +5,7 @@ import controller.ControllerState;
 import controller.MenuAction;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 
 public class SelectionModeAction extends MenuAction{
@@ -16,7 +17,7 @@ public class SelectionModeAction extends MenuAction{
      * Constructeur de Selection Action
      */
     public SelectionModeAction(Controller controller) {
-        super(controller, "Mode Sélection", "res/selection.png", null, null);
+        super(controller, "Mode Sélection", "res/selection.png", KeyEvent.VK_2, null);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class MoveModeAction extends MenuAction{
      * Constructeur de Move Action
      */
     public MoveModeAction(Controller controller) {
-        super(controller, "Mode déplacement", "res/move.png", KeyEvent.VK_D, 5);
+        super(controller, "Mode déplacement", "res/move.png", KeyEvent.VK_1, null);
     }
 
     @Override

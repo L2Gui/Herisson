@@ -5,6 +5,7 @@ import controller.ControllerState;
 import controller.MenuAction;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 
 public class NewVertexModeAction extends MenuAction{
@@ -17,7 +18,7 @@ public class NewVertexModeAction extends MenuAction{
      * Constructeur de NewVertex Action
      */
     public NewVertexModeAction(Controller controller) {
-        super(controller, "Nouveau noeud", "res/node3.png", null, null);
+        super(controller, "Nouveau noeud", "res/node3.png", KeyEvent.VK_4, null);
     }
 
     @Override
