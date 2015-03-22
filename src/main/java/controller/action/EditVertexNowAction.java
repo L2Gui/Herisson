@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
+import java.util.ArrayList;
 
 
 public class EditVertexNowAction extends MenuAction{
@@ -38,9 +39,11 @@ public class EditVertexNowAction extends MenuAction{
 
         final JFrame f = new JFrame("Editer les options d'un noeud");
 
-        f.setSize(320, 420);
+        f.setSize(350, 300);
 
         JPanel p = new JPanel(new GridLayout(8, 2));
+
+        ArrayList<JComponent> jElements = new ArrayList<JComponent>();
 
         JLabel labelText = new JLabel("Label");
         JLabel labelColor = new JLabel("Couleur du label");
@@ -59,13 +62,37 @@ public class EditVertexNowAction extends MenuAction{
 
         JTextField sizeJTF = new JTextField("texte par défault");
         JPanel positionPanel = new JPanel(new GridLayout(1, 3));
-        JTextField x = new JTextField("abscisse");
-        JTextField y = new JTextField("ordonée");
-        JTextField z = new JTextField("profondeur");
+        JTextField x = new JTextField("x");
+        JTextField y = new JTextField("y");
+        JTextField z = new JTextField("z");
         positionPanel.add(x);
         positionPanel.add(y);
         positionPanel.add(z);
         JTextField borderJTF = new JTextField("texte par défault");
+
+
+        // on ajoute tous nos éléments dans un arraylist pour pouvoir les modifier avec un foreach
+        jElements.add(labelText);
+        jElements.add(labelColor);
+        jElements.add(shape);
+        jElements.add(size);
+        jElements.add(position);
+        jElements.add(colorVertex);
+        jElements.add(border);
+        jElements.add(labelJTF);
+        jElements.add(shapeList);
+        jElements.add(b1);
+        jElements.add(b2);
+        jElements.add(ok);
+        jElements.add(cancel);
+        jElements.add(sizeJTF);
+        jElements.add(positionPanel);
+        jElements.add(borderJTF);
+
+        for(JComponent jc : jElements)
+        {
+
+        }
 
         b1.addActionListener(new ActionListener() {
 
