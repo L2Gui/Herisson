@@ -116,7 +116,9 @@ public class IOAlgorithmDot implements IOAlgorithm {
                 System.out.println("Edge Style line");
                 Edge edge = new Edge(graph);
                 edge.setSrcVertex(vertexMapOpen.get(edgeToken.split(" .. ")[0]));
+                vertexMapOpen.get(edgeToken.split(" .. ")[0]).addEdge(edge);
                 edge.setDstVertex(vertexMapOpen.get(edgeToken.split(" .. ")[1]));
+                vertexMapOpen.get(edgeToken.split(" .. ")[1]).addEdge(edge);
                 EdgeStyle edgeStyle = new EdgeStyle();
                 String[] styleValues = token.split(";");
                 for(String s : styleValues){
@@ -159,6 +161,16 @@ public class IOAlgorithmDot implements IOAlgorithm {
                 System.out.println("Edge ?");
                 edgeToken = token;
                 nodeToken = null;
+            } else if (token.matches("^[a-z]* [a-zA-Z0-9]* .*")){
+                if (token.split(" ").length >= 2){
+                    if (token.split(" ")[0].contains("digraph")){
+                        graph.setOriented(true);
+                    }else {
+                        graph.setOriented(false);
+                    }
+                    graph.setName(token.split(" ")[1]);
+                }
+                System.out.println("Graph name : "+ token);
             }
         }
     }
