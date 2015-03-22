@@ -32,6 +32,8 @@ public class GraphCanvas extends GLCanvas {
     private VertexView selectedVertex;
     private EdgeView selectedEdge;
 
+    private Vector2f oldPosition;
+
     public GraphCanvas() throws LWJGLException {}
 
     public GraphView getGraphView() {
@@ -119,6 +121,7 @@ public class GraphCanvas extends GLCanvas {
                             }
                             break;
                         case MOVE:
+                            oldPosition= new Vector2f(arg0.getX(), arg0.getY());
                             break;
 
                         case DELETION:
@@ -203,6 +206,7 @@ public class GraphCanvas extends GLCanvas {
                             }
                             break;
                         case MOVE:
+                            oldPosition=null;
                             break;
 
                         case DELETION:
@@ -234,7 +238,12 @@ public class GraphCanvas extends GLCanvas {
 
                 switch (GraphCanvas.this.getController().getState()) {
                     case MOVE:
-                        //TODO opengl rotation de caméra ! :D
+                        if(oldPosition !=null){
+                            //Vector2f delta = new Vector2f(arg0.getX(), arg0.getY()) - oldPosition;
+                        }
+                        /*GLRay ray = GraphCanvas.this.camera.getCursorRay(new Vector2f(arg0.getX(), GraphCanvas.this.getSize().height - arg0.getY()));
+                        GraphCanvas.this.camera.lookToDirection(ray.getDirection());*/
+
                         break;
                     case SELECTION:
                         if (selectedVertex != null) {
