@@ -24,7 +24,7 @@ public class RemoveEdgeCommand implements ICommand {
                 && this.edge.getSrcVertex().getEdges().contains(edge)){
             this.edge.getDstVertex().getEdges().remove(this.edge);
             this.edge.getSrcVertex().getEdges().remove(this.edge);
-        }
+        }// sinon, c'est que c'est un noeud qui demande ma suppression. Il va donc s'occuper de me supprimer partout où il faut.
         this.graph.removeEdge(this.edge);
     }
 
