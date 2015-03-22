@@ -2,13 +2,14 @@ package controller.action;
 
 import controller.Controller;
 import controller.MenuAction;
+import model.GraphElement;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 
 public class CutNowAction extends MenuAction {
-    private Object object;
+    private GraphElement element;
 
     public CutNowAction() {
         this(null, null);
@@ -17,15 +18,15 @@ public class CutNowAction extends MenuAction {
     /**
      * Constructeur de Cut Action
      */
-    public CutNowAction(Controller controller, Object object) {
+    public CutNowAction(Controller controller, GraphElement element) {
         super(controller, "Couper", "res/cut.png", KeyEvent.VK_X, null);
-        this.object = object;
+        this.element = element;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        System.out.println("COPY NOW !");
-        super.getController().getCanvas().setPasteBuffer(object);
+        super.getController().getCanvas().setPasteBuffer(element);
+        System.out.println(  super.getController().getCanvas().getPasteBuffer().toString());
     }
 }
