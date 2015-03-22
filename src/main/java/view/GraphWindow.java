@@ -100,10 +100,18 @@ public class GraphWindow extends JFrame {
          *   ********************************************    *
          *                                                   *
          * ***************************************************/
+        tabs=new TabbedGraph();
+
+        JPanel header = new JPanel();
+        header.setLayout(new BorderLayout());
+        header.add(generateToolBar(), BorderLayout.NORTH);
+        header.add(tabs, BorderLayout.SOUTH);
+
         this.contentPane.setLayout(new BorderLayout());
-        this.contentPane.add(generateToolBar(), BorderLayout.NORTH);
-        tabs=new TabbedGraph(canvas);
-        this.contentPane.add(tabs, BorderLayout.CENTER);
+        this.contentPane.add(header, BorderLayout.NORTH);
+        //this.contentPane.add(generateToolBar(), BorderLayout.NORTH);
+        //this.contentPane.add(tabs, BorderLayout.NORTH);
+        this.contentPane.add(canvas, BorderLayout.CENTER);
     }
 
     public GraphCanvas getCanvas() {
