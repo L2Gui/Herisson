@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 import controller.action.*;
+import controller.command.CreateVertexCommand;
 import controller.command.MoveVertexCommand;
 import controller.command.RemoveEdgeCommand;
 import controller.command.RemoveVertexCommand;
@@ -33,6 +34,8 @@ public class GraphCanvas extends GLCanvas {
     private boolean isMousePressed = false;
     private VertexView selectedVertex;
     private EdgeView selectedEdge;
+
+    private Vector2f oldPosition;
 
     public GraphCanvas() throws LWJGLException {}
 
@@ -121,6 +124,7 @@ public class GraphCanvas extends GLCanvas {
                             }
                             break;
                         case MOVE:
+                            oldPosition= new Vector2f(arg0.getX(), arg0.getY());
                             break;
 
                         case DELETION:
@@ -205,6 +209,7 @@ public class GraphCanvas extends GLCanvas {
                             }
                             break;
                         case MOVE:
+                            oldPosition=null;
                             break;
 
                         case DELETION:
@@ -236,7 +241,16 @@ public class GraphCanvas extends GLCanvas {
 
                 switch (GraphCanvas.this.getController().getState()) {
                     case MOVE:
-                        //TODO opengl rotation de caméra ! :D
+                        if(oldPosition !=null){
+                            Vector2f delta = Vector2f.sub(new Vector2f(arg0.getX(), arg0.getY()), oldPosition, null);
+                            GraphCanvas.this.camera.rotate((float)(delta.getX()*0.5), new Vector3f(0f,-1f,0f));
+                            GraphCanvas.this.camera.rotate((float)(delta.getY()*0.5), new Vector3f(1f,0f,0f));
+                            oldPosition.setX(arg0.getX());
+                            oldPosition.setY(arg0.getY());
+                        }
+                        /*GLRay ray = GraphCanvas.this.camera.getCursorRay(new Vector2f(arg0.getX(), GraphCanvas.this.getSize().height - arg0.getY()));
+                        GraphCanvas.this.camera.lookToDirection(ray.getDirection());*/
+
                         break;
                     case SELECTION:
                         if (selectedVertex != null) {
@@ -344,10 +358,9 @@ public class GraphCanvas extends GLCanvas {
         this.pasteBuffer = pasteBuffer;
     }
 
+
     public void paste(int x, int y) {
-        if (pasteBuffer instanceof Vertex) {
-            Vertex vertex = (Vertex) pasteBuffer;
-            vertex.setPosition(getLookAtPosition(x, y));
-        }
+
+
     }
 }
