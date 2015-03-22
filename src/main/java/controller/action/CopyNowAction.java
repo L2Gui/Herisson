@@ -27,7 +27,8 @@ public class CopyNowAction extends MenuAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        super.getController().getCanvas().setPasteBuffer(element);
+        if (element instanceof Vertex)
+            super.getController().getCanvas().setPasteBuffer(new Vertex(element));
         System.out.println( super.getController().getCanvas().getPasteBuffer().toString());
     }
 }
