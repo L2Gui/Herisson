@@ -132,9 +132,9 @@ public class GraphView implements Observer {
         }
         this.isInitialized = true;
     }
-    public void reloadLabels(){
-        this.labelShader = new GLShader("textureu3D.vert", "texture.frag");
-        this.labelShader.init();
+    public void reloadVertex(Vertex v){
+        this.vertexViews.remove(v);
+        this.addVertex(v);
     }
 
     public void paint(Matrix4f transformationMatrix) {
