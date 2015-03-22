@@ -2,11 +2,11 @@ package view;
 
 import controller.Controller;
 import controller.MenuAction;
-import controller.actions.*;
-import model.Graph;
-import model.IColorAlgorithm;
-import model.IDispoAlgorithm;
-import model.ISizeAlgorithm;
+import controller.action.*;
+import controller.action.mode.*;
+import model.algorithm.IColorAlgorithm;
+import model.algorithm.IDispoAlgorithm;
+import model.algorithm.ISizeAlgorithm;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -17,7 +17,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.util.Map;
 
 
@@ -33,19 +32,20 @@ public class GraphWindow extends JFrame {
     private MenuAction openFile = new OpenFileAction();
     private MenuAction save = new SaveAction();
     private MenuAction saveAs = new SaveAsAction();
-    private MenuAction newVertex = new NewVertexAction();
-    private MenuAction newEdge = new NewEdgeAction();
-    private MenuAction editVertex = new EditVertexAction();
-    private MenuAction editEdge = new EditEdgeAction();
+    private MenuAction move = new MoveModeAction();
+    private MenuAction selection = new SelectionModeAction();
+    private MenuAction newVertex = new NewVertexModeAction();
+    private MenuAction newEdge = new NewEdgeModeAction();
+    private MenuAction editVertex = new EditVertexModeAction();
+    private MenuAction editEdge = new EditEdgeModeAction();
     private MenuAction copy = new CopyAction();
     private MenuAction cut = new CutAction();
     private MenuAction paste = new PasteAction();
-    private MenuAction remove = new RemoveAction();
+    private MenuAction remove = new RemoveModeAction();
     private MenuAction undo = new UndoAction();
     private MenuAction redo = new RedoAction();
     private MenuAction zoomPlus = new ZoomPlusAction();
     private MenuAction zoomMoins = new ZoomLessAction();
-    private MenuAction move = new MoveAction();
     private MenuAction changeBGColor = new ChangeBackgroundColorAction();
 
     /**
@@ -127,6 +127,8 @@ public class GraphWindow extends JFrame {
         this.openFile.setController(controller);
         this.save.setController(controller);
         this.saveAs.setController(controller);
+        this.move.setController(controller);
+        this.selection.setController(controller);
         this.newVertex.setController(controller);
         this.newEdge.setController(controller);
         this.editVertex.setController(controller);
@@ -139,7 +141,6 @@ public class GraphWindow extends JFrame {
         this.redo.setController(controller);
         this.zoomPlus.setController(controller);
         this.zoomMoins.setController(controller);
-        this.move.setController(controller);
         this.tabs.setController(controller);
         this.changeBGColor.setController(controller);
     }
@@ -322,6 +323,11 @@ public class GraphWindow extends JFrame {
         toggleMove.setText("");
         toolBar.add(toggleMove);
         modes.add(toggleMove);
+
+        JToggleButton toggleSelection = new JToggleButton(this.selection);
+        toggleSelection.setText("");
+        toolBar.add(toggleSelection);
+        modes.add(toggleSelection);
 
         JToggleButton toggleNewEdge = new JToggleButton(this.newEdge);
         toggleNewEdge.setText("");

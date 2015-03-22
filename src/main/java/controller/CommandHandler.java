@@ -21,7 +21,9 @@ public class CommandHandler {
 		}
 		
 		ICommand command = this.commandStack.pop();
+        System.out.println("BEG Undo cmd "+command.getClass().getName());
 		command.undo();
+        System.out.println("END Undo cmd " + command.getClass().getName());
 		this.undoStack.push(command);
 	}
 	
@@ -31,12 +33,16 @@ public class CommandHandler {
 		}
 		
 		ICommand command = this.undoStack.pop();
+        System.out.println("BEG Redo cmd "+command.getClass().getName());
 		command.execute(this.graph);
+        System.out.println("END Redo cmd " + command.getClass().getName());
 		this.commandStack.push(command);
 	}
 	
 	public void executeCommand(ICommand command) {
-		command.execute(this.graph);
+        System.out.println("BEG Execute cmd "+command.getClass().getName());
+        command.execute(this.graph);
+        System.out.println("END Execute cmd " + command.getClass().getName());
 
         this.commandStack.push(command);
 

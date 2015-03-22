@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import model.algorithm.*;
 import view.GraphCanvas;
 import view.GraphView;
 import view.GraphWindow;

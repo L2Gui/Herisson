@@ -1,8 +1,8 @@
 package view;
 
 import controller.Controller;
-import controller.commands.CreateEdgeCommand;
-import controller.commands.CreateVertexCommand;
+import controller.command.CreateEdgeCommand;
+import controller.command.CreateVertexCommand;
 import model.Edge;
 import model.Graph;
 import model.GraphUpdate;
@@ -144,8 +144,7 @@ public class GraphView implements Observer {
 
         VertexView vertexView = new VertexView(vertex, this.vertexMesh, this.labelShader);
         vertexView.setShader(this.vertexEdgeShader);
-        //vertexView.setPosition(vertexView.getPosition().x, vertexView.getPosition().y, 3.0f);
-        vertexView.setPosition(vertexView.getPosition().x, vertexView.getPosition().y, 0.0f);
+        vertexView.setPosition(vertexView.getPosition().x, vertexView.getPosition().y, 3.0f);
 
         this.createdVertices.add(vertexView);
         this.vertexViews.put(vertex, vertexView);
@@ -154,8 +153,7 @@ public class GraphView implements Observer {
     public void addVertex(Vertex vertex) {
         VertexView vertexView = new VertexView(vertex, this.vertexMesh, this.labelShader);
         vertexView.setShader(this.vertexEdgeShader);
-        //vertexView.setPosition(vertexView.getPosition().x, vertexView.getPosition().y, 3.0f);
-        vertexView.setPosition(vertexView.getPosition().x, vertexView.getPosition().y, 0.0f);
+        vertexView.setPosition(vertexView.getPosition().x, vertexView.getPosition().y, 3.0f);
 
         this.createdVertices.add(vertexView);
         this.vertexViews.put(vertex, vertexView);

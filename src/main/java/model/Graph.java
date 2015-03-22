@@ -5,10 +5,11 @@ import controller.ICommand;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Observable;
 
-public class Graph extends Observable {
+public class Graph extends GraphElement {
     private CommandHandler commandHandler;
     private StyleManager styleManager;
 
@@ -97,6 +98,21 @@ public class Graph extends Observable {
             edge = null;
         }
 	}
+
+    /**
+     * Supprime toutes les arêtes présentes dans la collection passée en paramètre
+     *
+     * @param edges Collection<Edge>
+     */
+    public void removeEdges(Collection<Edge> edges) {
+        for(Edge edge : edges){
+            if (!this.edges.remove(edge)){
+                System.out.println("Edge suppression is impossible");
+            } else {
+                this.update(new GraphUpdate(GraphUpdate.UpdateType.REMOVE_EDGE, edge));
+            }
+        }
+    }
 	
 	/**
 	 * 

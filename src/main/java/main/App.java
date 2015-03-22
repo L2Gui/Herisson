@@ -2,17 +2,13 @@ package main;
 
 import controller.*;
 import model.*;
+import model.algorithm.DispoRandomAlgorithm;
 import org.javatuples.Pair;
 import org.lwjgl.util.vector.Vector3f;
 import view.GraphCanvas;
-import view.GraphView;
 import view.GraphWindow;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 public class App {
     public static void main(String args[]) {
@@ -35,10 +31,10 @@ public class App {
 
             window.setVisible(true);
 
-            /*while (window.isShowing()) {
+            while (window.isShowing()) {
                 canvas.animationLoop();
                 Thread.sleep(16L);
-            }*/
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);

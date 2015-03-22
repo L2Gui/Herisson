@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Observable;
 
-public class Vertex extends Observable {
+public class Vertex extends GraphElement {
 	private Collection<Edge> edges;
 	private VertexStyle style;
 	private Graph graph;
