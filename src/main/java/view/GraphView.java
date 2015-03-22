@@ -166,8 +166,7 @@ public class GraphView implements Observer {
             case DIAMOND: mesh = this.vertexDiamondMesh; break;
         }
 
-        VertexView vertexView = new VertexView(vertex, mesh, this.labelShader);
-        vertexView.setShader(this.vertexEdgeShader);
+        VertexView vertexView = new VertexView(vertex, mesh, this.vertexEdgeShader, this.labelShader);
         vertexView.setPosition(vertexView.getPosition().x, vertexView.getPosition().y, 3.0f);
 
         this.createdVertices.add(vertexView);
@@ -179,9 +178,10 @@ public class GraphView implements Observer {
         Edge edge = new Edge();
         edge.setSrcVertex(src);
         edge.setDstVertex(dst);
-        this.controller.executeCommand(new CreateEdgeCommand(edge));
-
-        this.addEdge(edge);
+        if(!(src.gotAnEdgeDirectedTo(dst) && dst.gotAnEdgeComingFrom(src))) {
+            this.controller.executeCommand(new CreateEdgeCommand(edge));
+            this.addEdge(edge);
+        }
     }
 
     public void addEdge(Edge edge) {

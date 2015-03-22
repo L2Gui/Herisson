@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Observable;
 
 public class Vertex extends GraphElement {
@@ -35,6 +36,28 @@ public class Vertex extends GraphElement {
         this();
         this.graph = graph;
         this.style = this.graph.getStyleManager().getDefaultVertexStyle();
+    }
+
+    public boolean gotAnEdgeDirectedTo(Vertex vertex){
+        Iterator<Edge> it = edges.iterator();
+        boolean found = false;
+        Edge edge = null;
+        while(it.hasNext() && !found){
+            edge = it.next();
+            found = edge.getDstVertex()==vertex;
+        }
+        return found;
+    }
+
+    public boolean gotAnEdgeComingFrom(Vertex vertex){
+        Iterator<Edge> it = edges.iterator();
+        boolean found = false;
+        Edge edge = null;
+        while(it.hasNext() && !found){
+            edge = it.next();
+            found = edge.getSrcVertex()==vertex;
+        }
+        return found;
     }
 
 	public Vector3f getPosition() {

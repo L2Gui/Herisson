@@ -42,7 +42,7 @@ import java.util.HashMap;
 public class ColorUtils {
 
     public static String colorToString(Color color){
-        return color.getBlue()+","+color.getGreen()+","+color.getRed();
+        return color.getRed()+","+color.getGreen()+","+color.getBlue();
     }
 
     public static Color RGBStringToColor(String rgbString) {
