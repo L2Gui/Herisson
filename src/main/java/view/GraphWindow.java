@@ -253,13 +253,7 @@ public class GraphWindow extends JFrame {
             for (final ISizeAlgorithm algo : sizeAlgorithms) {
                 JRadioButtonMenuItem sizeRadioBtn = new JRadioButtonMenuItem(algo.toString());
                 sizeGroup.add(sizeRadioBtn);
-                //TODO affecter une action au clic sur le bouton
-                sizeRadioBtn.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        System.out.println("Appliquer sur le graphe '" + controller.getCurrentGraph().getName() + "' l'algo " + algo.toString());
-                    }
-                });
+                sizeRadioBtn.setAction(new ApplySizeAlgorithmAction(algo, GraphWindow.this.controller));
                 size.add(sizeRadioBtn);
             }
         }catch(NullPointerException e){

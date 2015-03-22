@@ -2,6 +2,7 @@ package controller.action;
 
 import controller.Controller;
 import controller.MenuAction;
+import controller.command.ApplyColorAlgorithmCommand;
 import model.algorithm.IColorAlgorithm;
 
 import javax.swing.*;
@@ -26,10 +27,13 @@ public class ApplyColorAlgorithmAction extends MenuAction {
         //getController().getCanvas().getParent().getParent().getParent().getParent().getParent().getParent().setEnabled(false);
         mustApplyAlgorithm = false;
 
-        frame = new JFrame("Paramétrez l'algorythme "+algorithm.toString());
+        frame = new JFrame("Paramétrez l'algorithme "+algorithm.toString());
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setSize(new Dimension(300,100));
         frame.setResizable(false);
+
+        colorMin = this.algorithm.getMinColor();
+        colorMax = this.algorithm.getMaxColor();
 
         JPanel content = new JPanel(new GridLayout(2,2,5,5));
         final JButton colorMinBtn = new JButton("Couleur min");
@@ -38,7 +42,7 @@ public class ApplyColorAlgorithmAction extends MenuAction {
         colorMinBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Color color = JColorChooser.showDialog(getController().getCanvas(), "Choisissez la nouvelle couleur min", algorithm.getMinColor());
+                Color color = JColorChooser.showDialog(frame, "Choisissez la nouvelle couleur min", algorithm.getMinColor());
                 if (color != null) {
                     colorMin = color;
                     colorMinBtn.setBackground(color);
@@ -74,12 +78,11 @@ public class ApplyColorAlgorithmAction extends MenuAction {
         OkBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mustApplyAlgorithm = true;
+                getController().executeCommand(new ApplyColorAlgorithmCommand(algorithm, colorMin, colorMax));
                 frame.dispose();
             }
         });
         panelBtnOk.add(OkBtn);
-
 
         content.add(colorMinBtn);
         content.add(colorMaxBtn);
@@ -89,10 +92,5 @@ public class ApplyColorAlgorithmAction extends MenuAction {
         frame.setContentPane(content);
 
         frame.setVisible(true);
-
-        if(mustApplyAlgorithm){
-            //TODO appliquer l'algo
-            System.out.println("Appliquer algo commande");
-        }
     }
 }
