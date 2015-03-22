@@ -3,6 +3,8 @@ package controller.action;
 import controller.Controller;
 import controller.MenuAction;
 import model.VertexShape;
+import org.lwjgl.LWJGLException;
+import view.GraphCanvas;
 import view.VertexView;
 
 import javax.swing.*;
@@ -40,6 +42,7 @@ public class EditVertexNowAction extends MenuAction{
         final JFrame f = new JFrame("Editer les options d'un noeud");
 
         f.setSize(350, 350);
+        f.setResizable(false);
 
         JPanel p = new JPanel(new GridLayout(9, 2));
 
@@ -126,12 +129,19 @@ public class EditVertexNowAction extends MenuAction{
             @Override
             public void actionPerformed(ActionEvent e) {
                 vertexView.getModel().setLabel(labelJTF.getText());
-                vertexView.getModel().setTextColor(Color.blue);
-                vertexView.getModel().setSize(5);
+                //vertexView.getModel().setTextColor(Color.blue);
+                //vertexView.getModel().setSize(5);
                 //vertexView.getModel().setPosition();
-                vertexView.getModel().setBackgroundColor(Color.blue);
+                //vertexView.getModel().setBackgroundColor(Color.blue);
                 //vertexView.getModel().
 
+                try {
+                    getController().getCanvas().makeCurrent();
+                } catch (LWJGLException ex) {
+                    ex.printStackTrace();
+                }
+                getController().getCanvas().getGraphView().reloadVertex(vertexView);
+                //getController().getCanvas().getGraphView().init();
                 f.dispose();
             }
         });
