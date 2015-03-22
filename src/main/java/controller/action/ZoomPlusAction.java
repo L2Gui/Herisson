@@ -21,6 +21,6 @@ public class ZoomPlusAction extends MenuAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("zoom+ ("+e.getSource().getClass().getName()+")");
+        super.getController().getCanvas().setCameraZoom(1 / 1.5f);
     }
 }
