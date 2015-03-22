@@ -24,14 +24,15 @@ public class VertexView extends ViewElement implements Observer {
     private GLDrawableObject textDrawable;
     private GLDrawableObject borderDrawable;
 
-    public VertexView(Vertex vertexModel, GLColorVariantMesh mesh, GLShader labelShader) {
+    public VertexView(Vertex vertexModel, GLColorVariantMesh mesh, GLShader objectShader, GLShader labelShader) {
         this.vertexModel = vertexModel;
         this.vertexModel.addObserver(this);
         this.labelMesh = new GLTextMesh();
         this.textDrawable = new GLDrawableObject(labelShader, labelMesh);
-        this.borderDrawable
+        this.borderDrawable = new GLDrawableObject(objectShader, mesh);
         this.mesh = mesh;
 
+        super.setShader(objectShader);
         super.setMesh(this.mesh);
 
         String label = this.vertexModel.getLabel();
@@ -48,6 +49,9 @@ public class VertexView extends ViewElement implements Observer {
     @Override
     public void onModelChange() {
         super.onModelChange();
+
+        this.borderDrawable.setPosition(super.getPosition().x, super.getPosition().y, super.getPosition().z - 0.0001f);
+
         Vector3f textPosition = new Vector3f(this.vertexModel.getSize() / 4.0f, - this.vertexModel.getSize() / 4.0f, super.getPosition().z);
         textPosition.x += this.textDrawable.getScale().x / 8.0f;
         textPosition.y -= this.textDrawable.getScale().y / 8.0f;
@@ -57,6 +61,8 @@ public class VertexView extends ViewElement implements Observer {
 
     @Override
     public void render(Matrix4f transformationMatrix) {
+        this.mesh.setColor(this.vertexModel.getBorderColor());
+        this.borderDrawable.render(transformationMatrix);
         this.mesh.setColor(this.vertexModel.getBackgroundColor());
         super.render(transformationMatrix);
     }
@@ -81,6 +87,7 @@ public class VertexView extends ViewElement implements Observer {
     }
 
     private void refreshTransform() {
+        this.borderDrawable.setScale((this.vertexModel.getSize() / 2.0f) + this.vertexModel.getThickness(), (this.vertexModel.getSize() / 2.0f) + this.vertexModel.getThickness(), 1.0f);
         this.textDrawable.setScale(this.vertexModel.getSize(), this.vertexModel.getSize(), 1.0f);
         super.setPosition(vertexModel.getPosition());
     }

@@ -26,7 +26,7 @@ public class StyleManager {
 
         defaultVertexStyle = new VertexStyle().setBackgroundColor(Color.GRAY)
                                               .setBorderColor(Color.BLACK)
-                                              .setBorderThickness(1)
+                                              .setBorderThickness(0.1f)
                                               .setSize(2)
                                               .setTextColor(Color.BLACK)
                                               .setShape(VertexShape.SQUARE)
