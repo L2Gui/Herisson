@@ -22,7 +22,8 @@ public class Vertex extends GraphElement {
         label = "";
     }
     public Vertex(Vertex v){
-        this.edges = new ArrayList<Edge>(v.getEdges());
+        //this.edges = new ArrayList<Edge>(v.getEdges());
+        this.edges = new ArrayList<Edge>();
         this.style = new VertexStyle(v.getStyle());
         this.graph = v.getGraph();
         this.position = new Vector3f(v.getPosition());
