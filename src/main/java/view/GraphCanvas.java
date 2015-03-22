@@ -19,6 +19,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
@@ -121,6 +122,7 @@ public class GraphCanvas extends GLCanvas {
 
                         case SELECTION:
                             if (selectedVertex != null) {
+                                selectedVertex.getModel().getStyle().setBackgroundColor(Color.red);
                                 positions[0] = selectedVertex.getModel().getPosition();
                             }
                             break;
