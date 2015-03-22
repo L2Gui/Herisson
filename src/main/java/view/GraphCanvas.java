@@ -127,7 +127,6 @@ public class GraphCanvas extends GLCanvas {
 
                         case SELECTION:
                             if (selectedVertex != null) {
-                                selectedVertex.getModel().setBackgroundColor(Color.magenta);
                                 positions[0] = selectedVertex.getModel().getPosition();
                             }
                             break;
