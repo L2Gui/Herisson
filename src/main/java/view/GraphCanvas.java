@@ -6,6 +6,7 @@ import controller.command.MoveVertexCommand;
 import controller.command.RemoveEdgeCommand;
 import controller.command.RemoveVertexCommand;
 import model.GraphElement;
+import model.VertexStyle;
 import opengl.GLCanvas;
 import opengl.resource.object.camera.GLPerspectiveCamera;
 import opengl.utils.GLRay;
@@ -123,7 +124,7 @@ public class GraphCanvas extends GLCanvas {
 
                         case SELECTION:
                             if (selectedVertex != null) {
-                                selectedVertex.getModel().getStyle().setBackgroundColor(Color.red);
+                                selectedVertex.getModel().setBackgroundColor(Color.magenta);
                                 positions[0] = selectedVertex.getModel().getPosition();
                             }
                             break;
