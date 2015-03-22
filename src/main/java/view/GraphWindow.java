@@ -207,13 +207,7 @@ public class GraphWindow extends JFrame {
             for (final IDispoAlgorithm algo : dispoAlgorithms) {
                 JRadioButtonMenuItem dispositionRadioButton = new JRadioButtonMenuItem(algo.toString());
                 dispositionGroup.add(dispositionRadioButton);
-                //TODO affecter une action au clic sur le bouton
-                dispositionRadioButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        System.out.println("Appliquer sur le graphe '"+ controller.getCurrentGraph().getName()+"' l'algo "+ algo.toString());
-                    }
-                });
+                dispositionRadioButton.setAction(new ApplyDispoAlgorithmAction(algo, GraphWindow.this.controller));
                 disposition.add(dispositionRadioButton);
             }
         }catch(NullPointerException e){

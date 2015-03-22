@@ -9,6 +9,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class DispoCircleAlgorithm implements IDispoAlgorithm {
+    @Override
+    public String toString() {
+        return "Disposition circulaire";
+    }
     private float maxSize;
 
     public DispoCircleAlgorithm(){
