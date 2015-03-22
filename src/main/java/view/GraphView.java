@@ -236,6 +236,10 @@ public class GraphView implements Observer {
         this.translatingVertices.put(vertexView, position);
     }
 
+    public void addTranslatingVertex(Vertex vertex, Vector3f position) {
+        this.addTranslatingVertex(this.vertexViews.get(vertex), position);
+    }
+
     public void removeTranslatingVertex(VertexView vertexView) {
         this.translatingVertices.remove(vertexView);
     }

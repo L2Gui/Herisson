@@ -2,6 +2,7 @@ package controller.action;
 
 import controller.Controller;
 import controller.MenuAction;
+import controller.command.ApplyDispoAlgorithmCommand;
 import model.algorithm.IDispoAlgorithm;
 import view.NumericField;
 
@@ -27,6 +28,6 @@ public class ApplyDispoAlgorithmAction extends MenuAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //TODO smthing
+        getController().executeCommand(new ApplyDispoAlgorithmCommand(getController().getCanvas().getGraphView(), this.algorithm));
     }
 }
