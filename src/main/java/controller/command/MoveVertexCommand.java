@@ -2,7 +2,6 @@ package controller.command;
 
 import controller.ICommand;
 import model.Graph;
-import model.Vertex;
 import org.lwjgl.util.vector.Vector3f;
 import view.GraphView;
 import view.VertexView;
@@ -15,7 +14,6 @@ public class MoveVertexCommand implements ICommand{
     private VertexView vertexView;
     private Vector3f startPos;
     private Vector3f endPos;
-    private Graph graph;
 
     public MoveVertexCommand(GraphView graphView, VertexView vertexView, Vector3f startPos, Vector3f endPos) {
         this.graphView = graphView;
@@ -26,11 +24,11 @@ public class MoveVertexCommand implements ICommand{
 
     @Override
     public void execute(Graph graph) {
-        this.vertexView.getModel().setPosition(endPos);
+        graphView.addTranslatingVertex(vertexView, this.endPos);
     }
 
     @Override
     public void undo() {
-        graphView.addTranslatingVertices(vertexView, this.startPos);
+        graphView.addTranslatingVertex(vertexView, this.startPos);
     }
 }

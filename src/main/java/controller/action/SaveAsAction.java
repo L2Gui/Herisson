@@ -32,6 +32,9 @@ public class SaveAsAction extends MenuAction{
         fileChooser.addChoosableFileFilter(graphMLFilter);
         fileChooser.addChoosableFileFilter(dotFilter);
 
+        fileChooser.removeChoosableFileFilter(fileChooser.getAcceptAllFileFilter());
+        fileChooser.setFileFilter(graphMLFilter);
+
         int response = fileChooser.showSaveDialog(null);
 
 

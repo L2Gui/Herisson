@@ -9,6 +9,7 @@ import model.GraphUpdate;
 import model.Vertex;
 import opengl.resource.GLShader;
 import opengl.resource.object.GLObjectUsage;
+import opengl.resource.object.camera.IGLCamera;
 import opengl.resource.object.mesh.GLColorVariantMesh;
 import opengl.utils.GLRay;
 import opengl.vertex.GLVertex;
@@ -118,7 +119,7 @@ public class GraphView implements Observer {
         this.isInitialized = true;
     }
 
-    public void paint(Matrix4f transformationMatrix) {
+    public void paint(Matrix4f transformationMatrix, IGLCamera camera) {
         GL11.glDisable(GL11.GL_DEPTH_TEST);
 
         for (Map.Entry<Edge, EdgeView> edgeEntry : this.edgeViews.entrySet()) {
@@ -126,11 +127,11 @@ public class GraphView implements Observer {
         }
 
         for (Map.Entry<Vertex, VertexView> vertexEntry : this.vertexViews.entrySet()) {
-            vertexEntry.getValue().renderText(transformationMatrix);
+            vertexEntry.getValue().renderText(transformationMatrix, camera);
         }
 
         for (Map.Entry<Edge, EdgeView> edgeEntry : this.edgeViews.entrySet()) {
-            edgeEntry.getValue().renderText(transformationMatrix);
+            edgeEntry.getValue().renderText(transformationMatrix, camera);
         }
 
         GL11.glEnable(GL11.GL_DEPTH_TEST);
@@ -216,8 +217,12 @@ public class GraphView implements Observer {
         return intersectedEdge;
     }
 
-    public void addTranslatingVertices(VertexView vertexView, Vector3f position) {
+    public void addTranslatingVertex(VertexView vertexView, Vector3f position) {
         this.translatingVertices.put(vertexView, position);
+    }
+
+    public void removeTranslatingVertex(VertexView vertexView) {
+        this.translatingVertices.remove(vertexView);
     }
 
     public void loadGraph(Graph graph) {

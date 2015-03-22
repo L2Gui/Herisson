@@ -8,6 +8,7 @@ import controller.command.RemoveEdgeCommand;
 import controller.command.RemoveVertexCommand;
 import model.GraphElement;
 import model.Vertex;
+import model.algorithm.ColorWithEdgesAlgorithm;
 import opengl.GLCanvas;
 import opengl.resource.object.camera.GLPerspectiveCamera;
 import opengl.utils.GLRay;
@@ -113,6 +114,8 @@ public class GraphCanvas extends GLCanvas {
                             break;
 
                         case VERTEX_EDITION:
+                            ColorWithEdgesAlgorithm algo = new ColorWithEdgesAlgorithm();
+                            algo.execute(getController().getCurrentGraph());
                             break;
 
                         case EDGE_EDITION:
@@ -243,8 +246,8 @@ public class GraphCanvas extends GLCanvas {
                     case MOVE:
                         if(oldPosition !=null){
                             Vector2f delta = Vector2f.sub(new Vector2f(arg0.getX(), arg0.getY()), oldPosition, null);
-                            GraphCanvas.this.camera.rotate((float)(delta.getX()*0.5), new Vector3f(0f,-1f,0f));
-                            GraphCanvas.this.camera.rotate((float)(delta.getY()*0.5), new Vector3f(1f,0f,0f));
+                            GraphCanvas.this.camera.rotate((float)(delta.getX()*0.1), new Vector3f(0f,-1f,0f));
+                            GraphCanvas.this.camera.rotate((float)(delta.getY()*0.1), new Vector3f(1f,0f,0f));
                             oldPosition.setX(arg0.getX());
                             oldPosition.setY(arg0.getY());
                         }
@@ -254,6 +257,7 @@ public class GraphCanvas extends GLCanvas {
                         break;
                     case SELECTION:
                         if (selectedVertex != null) {
+                            graphView.removeTranslatingVertex(selectedVertex);
                             selectedVertex.setPosition(getLookAtPosition(arg0.getX(), arg0.getY()));
                             selectedVertex.getModel().setPosition(getLookAtPosition(arg0.getX(), arg0.getY()));
                         } else if (false) {
@@ -269,7 +273,7 @@ public class GraphCanvas extends GLCanvas {
     @Override
     public void paint(Matrix4f transformationMatrix) {
         if (this.graphView != null) {
-            this.graphView.paint(transformationMatrix);
+            this.graphView.paint(transformationMatrix, this.camera);
         }
     }
 
