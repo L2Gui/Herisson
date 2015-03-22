@@ -26,7 +26,6 @@ public class ApplySizeAlgorithmAction extends MenuAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //getController().getCanvas().getParent().getParent().getParent().getParent().getParent().getParent().setEnabled(false);
         mustApplyAlgorithm = false;
 
         frame = new JFrame("Paramétrez l'algorithme "+algorithm.toString());
