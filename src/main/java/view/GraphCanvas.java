@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 import controller.action.*;
+import controller.command.CreateVertexCommand;
 import controller.command.MoveVertexCommand;
 import controller.command.RemoveEdgeCommand;
 import controller.command.RemoveVertexCommand;
@@ -357,10 +358,9 @@ public class GraphCanvas extends GLCanvas {
         this.pasteBuffer = pasteBuffer;
     }
 
+
     public void paste(int x, int y) {
-        if (pasteBuffer instanceof Vertex) {
-            Vertex vertex = (Vertex) pasteBuffer;
-            vertex.setPosition(getLookAtPosition(x, y));
-        }
+
+
     }
 }
