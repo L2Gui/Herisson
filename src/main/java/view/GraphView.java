@@ -300,8 +300,8 @@ public class GraphView implements Observer {
         double midNbSides = (double) nbSides / 2.0f;
 
         for (int i = 0;i < nbSides;i++) {
-            double x = Math.cos(((double) i * Math.PI) / midNbSides);
-            double y = Math.sin(((double) i * Math.PI) / midNbSides);
+            double x = Math.cos(((double) i * Math.PI) / midNbSides) / 2.0f;
+            double y = Math.sin(((double) i * Math.PI) / midNbSides) / 2.0f;
             GLVertex vertex = new GLVertex();
             vertex.setPosition((float) x, (float) y, 0.0f);
 
