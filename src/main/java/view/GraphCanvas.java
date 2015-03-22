@@ -45,6 +45,7 @@ public class GraphCanvas extends GLCanvas {
     }
 
     public void setGraphView(GraphView graphView) {
+        super.lockDraw();
         this.graphView = graphView;
         try {
             super.makeCurrent();
@@ -54,6 +55,7 @@ public class GraphCanvas extends GLCanvas {
         } catch (IllegalStateException e) {
             // Not yet displayable
         }
+        super.unlockDraw();
     }
 
     public Controller getController() {
@@ -92,8 +94,6 @@ public class GraphCanvas extends GLCanvas {
                 initGraphCanvas();
 
                 if (arg0.getButton() == MouseEvent.BUTTON1) { // CLIC GAUCHE
-
-
                     VertexView intersectedVertexView = getIntersectedVertexView(arg0.getX(), arg0.getY());
                     EdgeView intersectedEdgeView = getIntersectedEdgeView(arg0.getX(), arg0.getY());
                     if (intersectedVertexView != null) {
@@ -138,8 +138,6 @@ public class GraphCanvas extends GLCanvas {
 
                         default:
                     }
-
-
                 } else if (arg0.getButton() == MouseEvent.BUTTON3) { // CLIC DROIT
 
                     VertexView intersectedVertexView = getIntersectedVertexView(arg0.getX(), arg0.getY());
@@ -335,6 +333,7 @@ public class GraphCanvas extends GLCanvas {
         contextMenu.add(new ZoomLessAction(this.controller));
         return contextMenu;
     }
+
     private JPopupMenu getPopupOnNothing(int x, int y){
         JPopupMenu contextMenu = new JPopupMenu();
         contextMenu.add(new PasteNowAction(this.controller, x, y));
@@ -345,6 +344,7 @@ public class GraphCanvas extends GLCanvas {
         contextMenu.add(new ZoomLessAction(this.controller));
         return contextMenu;
     }
+
     ////////////////////////////////////////////////  ANIMATION //////////////////////////////////////////////
     public void animationLoop() {
         lockDraw();

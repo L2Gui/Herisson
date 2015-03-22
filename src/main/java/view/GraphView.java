@@ -11,6 +11,7 @@ import opengl.resource.GLShader;
 import opengl.resource.object.GLObjectUsage;
 import opengl.resource.object.camera.IGLCamera;
 import opengl.resource.object.mesh.GLColorVariantMesh;
+import opengl.resource.object.mesh.GLMesh;
 import opengl.utils.GLRay;
 import opengl.vertex.GLVertex;
 import org.lwjgl.opengl.GL11;
@@ -33,8 +34,12 @@ public class GraphView implements Observer {
     private Collection<VertexView> createdVertices;
     private Map<VertexView, Vector3f> translatingVertices;
 
-    private GLColorVariantMesh vertexMesh;
+    private GLColorVariantMesh vertexSquareMesh;
+    private GLColorVariantMesh vertexCircleMesh;
+    private GLColorVariantMesh vertexDiamondMesh;
     private GLColorVariantMesh edgeMesh;
+
+
     private GLShader labelShader;
     private GLShader vertexEdgeShader;
 
@@ -104,13 +109,17 @@ public class GraphView implements Observer {
         this.vertexEdgeShader.init();
         this.labelShader.init();
 
-        this.vertexMesh = new GLColorVariantMesh();
+        this.vertexSquareMesh = new GLColorVariantMesh();
         this.edgeMesh = new GLColorVariantMesh();
 
-        this.vertexMesh.setup(this.vertexEdgeShader, vertices, indices, GLObjectUsage.STATIC);
+        this.vertexSquareMesh.setup(this.vertexEdgeShader, vertices, indices, GLObjectUsage.STATIC);
+        this.vertexCircleMesh = GraphView.SetupCircleMesh(40, this.vertexEdgeShader);
+        this.vertexDiamondMesh = GraphView.SetupCircleMesh(4, this.vertexEdgeShader);
         this.edgeMesh.setup(this.vertexEdgeShader, vertices, indices, GLObjectUsage.STATIC);
 
-        this.vertexMesh.init();
+        this.vertexCircleMesh.init();
+        this.vertexSquareMesh.init();
+        this.vertexDiamondMesh.init();
         this.edgeMesh.init();
 
         if (this.graph != null) {
@@ -146,17 +155,18 @@ public class GraphView implements Observer {
         vertex.setPosition(position);
         this.controller.executeCommand(new CreateVertexCommand(vertex));
 
-        VertexView vertexView = new VertexView(vertex, this.vertexMesh, this.labelShader);
-        vertexView.setShader(this.vertexEdgeShader);
-        vertexView.setPosition(vertexView.getPosition().x, vertexView.getPosition().y, 3.0f);
-
-        this.createdVertices.add(vertexView);
-        this.vertexViews.put(vertex, vertexView);
+        this.addVertex(vertex);
     }
 
     public void addVertex(Vertex vertex) {
+        GLColorVariantMesh mesh = null;
+        switch (vertex.getShape()) {
+            case SQUARE: mesh = this.vertexSquareMesh; break;
+            case CIRCLE: mesh = this.vertexCircleMesh; break;
+            case DIAMOND: mesh = this.vertexDiamondMesh; break;
+        }
 
-        VertexView vertexView = new VertexView(vertex, this.vertexMesh, this.labelShader);
+        VertexView vertexView = new VertexView(vertex, mesh, this.labelShader);
         vertexView.setShader(this.vertexEdgeShader);
         vertexView.setPosition(vertexView.getPosition().x, vertexView.getPosition().y, 3.0f);
 
@@ -171,14 +181,11 @@ public class GraphView implements Observer {
         edge.setDstVertex(dst);
         this.controller.executeCommand(new CreateEdgeCommand(edge));
 
-        EdgeView edgeView = new EdgeView(edge, this.vertexMesh, this.labelShader);
-        edgeView.setShader(this.vertexEdgeShader);
-
-        this.edgeViews.put(edge, edgeView);
+        this.addEdge(edge);
     }
 
     public void addEdge(Edge edge) {
-        EdgeView edgeView = new EdgeView(edge, this.vertexMesh, this.labelShader);
+        EdgeView edgeView = new EdgeView(edge, this.vertexSquareMesh, this.labelShader);
         edgeView.setShader(this.vertexEdgeShader);
 
         this.edgeViews.put(edge, edgeView);
@@ -226,19 +233,15 @@ public class GraphView implements Observer {
     }
 
     public void loadGraph(Graph graph) {
-        this.vertexViews = new HashMap<Vertex, VertexView>();
-        this.edgeViews = new HashMap<Edge, EdgeView>();
+        this.vertexViews.clear();
+        this.edgeViews.clear();
 
         for (Vertex vertex : graph.getVertices()) {
-            VertexView vertexView = new VertexView(vertex, this.vertexMesh, this.labelShader);
-            vertexView.setShader(this.vertexEdgeShader);
-            this.vertexViews.put(vertex, vertexView);
+            this.addVertex(vertex);
         }
 
         for (Edge edge : graph.getEdges()) {
-            EdgeView edgeView = new EdgeView(edge, this.edgeMesh, this.labelShader);
-            edgeView.setShader(this.vertexEdgeShader);
-            this.edgeViews.put(edge, edgeView);
+            this.addEdge(edge);
         }
     }
 
@@ -284,5 +287,39 @@ public class GraphView implements Observer {
                 this.translatingVertices.remove(vertexView);
             }
         }
+    }
+
+    private static GLColorVariantMesh SetupCircleMesh(int nbSides, GLShader shader) {
+        GLColorVariantMesh mesh = new GLColorVariantMesh();
+        ArrayList<GLVertex> vertices = new ArrayList<GLVertex>();
+
+        GLVertex center = new GLVertex();
+        center.setPosition(0.0f, 0.0f, 0.0f);
+        vertices.add(center);
+
+        double midNbSides = (double) nbSides / 2.0f;
+
+        for (int i = 0;i < nbSides;i++) {
+            double x = Math.cos(((double) i * Math.PI) / midNbSides);
+            double y = Math.sin(((double) i * Math.PI) / midNbSides);
+            GLVertex vertex = new GLVertex();
+            vertex.setPosition((float) x, (float) y, 0.0f);
+
+            vertices.add(vertex);
+        }
+
+        int[] indices = new int[(nbSides) * 3];
+        for (int i = 1;i < nbSides;i++) {
+            indices[(i - 1) * 3] = 0;
+            indices[(i - 1) * 3 + 1] = i;
+            indices[(i - 1) * 3 + 2] = i + 1;
+        }
+
+        indices[indices.length - 3] = 0;
+        indices[indices.length - 2] = 1;
+        indices[indices.length - 1] = vertices.size() - 1;
+
+        mesh.setup(shader, vertices, indices, GLObjectUsage.STATIC);
+        return mesh;
     }
 }

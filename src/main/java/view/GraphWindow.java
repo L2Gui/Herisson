@@ -17,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Map;
 
 
@@ -100,10 +101,18 @@ public class GraphWindow extends JFrame {
          *   ********************************************    *
          *                                                   *
          * ***************************************************/
+        tabs=new TabbedGraph();
+
+        JPanel header = new JPanel();
+        header.setLayout(new BorderLayout());
+        header.add(generateToolBar(), BorderLayout.NORTH);
+        header.add(tabs, BorderLayout.SOUTH);
+
         this.contentPane.setLayout(new BorderLayout());
-        this.contentPane.add(generateToolBar(), BorderLayout.NORTH);
-        tabs=new TabbedGraph(canvas);
-        this.contentPane.add(tabs, BorderLayout.CENTER);
+        this.contentPane.add(header, BorderLayout.NORTH);
+        //this.contentPane.add(generateToolBar(), BorderLayout.NORTH);
+        //this.contentPane.add(tabs, BorderLayout.NORTH);
+        this.contentPane.add(canvas, BorderLayout.CENTER);
     }
 
     public GraphCanvas getCanvas() {
@@ -115,9 +124,9 @@ public class GraphWindow extends JFrame {
      * @param colorAlgorithms
      * @param sizeAlgorithms
      */
-    public void setAlgorithms(Map<String, IDispoAlgorithm> dispoAlgorithms,
-                              Map<String, IColorAlgorithm> colorAlgorithms,
-                              Map<String, ISizeAlgorithm> sizeAlgorithms) {
+    public void setAlgorithms(Collection<IDispoAlgorithm> dispoAlgorithms,
+                              Collection<IColorAlgorithm> colorAlgorithms,
+                              Collection<ISizeAlgorithm> sizeAlgorithms) {
         super.setJMenuBar(generateMenuBar(dispoAlgorithms, colorAlgorithms, sizeAlgorithms));
     }
 
@@ -152,9 +161,9 @@ public class GraphWindow extends JFrame {
      * @param sizeAlgorithms Map des algos de taille
      * @return
      */
-    private JMenuBar generateMenuBar(Map<String, IDispoAlgorithm> dispoAlgorithms,
-                                     Map<String, IColorAlgorithm> colorAlgorithms,
-                                     Map<String, ISizeAlgorithm> sizeAlgorithms){
+    private JMenuBar generateMenuBar(Collection<IDispoAlgorithm> dispoAlgorithms,
+                                     Collection<IColorAlgorithm> colorAlgorithms,
+                                     Collection<ISizeAlgorithm> sizeAlgorithms){
         JMenuBar menu = new JMenuBar();
         JMenu file = new JMenu("Fichier");
         file.setMnemonic('F');
@@ -195,14 +204,14 @@ public class GraphWindow extends JFrame {
         ButtonGroup dispositionGroup = new ButtonGroup();
         // on essaie d'ajouter les éléments de la liste
         try{
-            for (final Map.Entry<String, IDispoAlgorithm> algo : dispoAlgorithms.entrySet()) {
-                JRadioButtonMenuItem dispositionRadioButton = new JRadioButtonMenuItem(algo.getKey());
+            for (final IDispoAlgorithm algo : dispoAlgorithms) {
+                JRadioButtonMenuItem dispositionRadioButton = new JRadioButtonMenuItem(algo.toString());
                 dispositionGroup.add(dispositionRadioButton);
                 //TODO affecter une action au clic sur le bouton
                 dispositionRadioButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Appliquer sur le graphe '"+ controller.getCurrentGraph().getName()+"' l'algo "+ algo.getKey());
+                        System.out.println("Appliquer sur le graphe '"+ controller.getCurrentGraph().getName()+"' l'algo "+ algo.toString());
                     }
                 });
                 disposition.add(dispositionRadioButton);
@@ -221,16 +230,10 @@ public class GraphWindow extends JFrame {
         ButtonGroup colorGroup = new ButtonGroup();
         // on essaie d'ajouter les éléments de la liste
         try{
-            for (final Map.Entry<String, IColorAlgorithm> algo : colorAlgorithms.entrySet()) {
-                JRadioButtonMenuItem colorRadioBtn = new JRadioButtonMenuItem(algo.getKey());
+            for (final IColorAlgorithm algo : colorAlgorithms) {
+                JRadioButtonMenuItem colorRadioBtn = new JRadioButtonMenuItem();
                 colorGroup.add(colorRadioBtn);
-                //TODO affecter une action au clic sur le bouton
-                colorRadioBtn.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        System.out.println("Appliquer sur le graphe '"+controller.getCurrentGraph().getName()+"' l'algo "+algo.getKey());
-                    }
-                });
+                colorRadioBtn.setAction(new ApplyColorAlgorithmAction(algo, GraphWindow.this.controller));
                 color.add(colorRadioBtn);
             }
         }catch(NullPointerException e){
@@ -247,14 +250,14 @@ public class GraphWindow extends JFrame {
         ButtonGroup sizeGroup = new ButtonGroup();
         // on essaie d'ajouter les éléments de la liste
         try{
-            for (final Map.Entry<String, ISizeAlgorithm> algo : sizeAlgorithms.entrySet()) {
-                JRadioButtonMenuItem sizeRadioBtn = new JRadioButtonMenuItem(algo.getKey());
+            for (final ISizeAlgorithm algo : sizeAlgorithms) {
+                JRadioButtonMenuItem sizeRadioBtn = new JRadioButtonMenuItem(algo.toString());
                 sizeGroup.add(sizeRadioBtn);
                 //TODO affecter une action au clic sur le bouton
                 sizeRadioBtn.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Appliquer sur le graphe '" + controller.getCurrentGraph().getName() + "' l'algo " + algo.getKey());
+                        System.out.println("Appliquer sur le graphe '" + controller.getCurrentGraph().getName() + "' l'algo " + algo.toString());
                     }
                 });
                 size.add(sizeRadioBtn);

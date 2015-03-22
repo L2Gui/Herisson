@@ -1,6 +1,7 @@
 package view;
 
 import model.Vertex;
+import model.VertexShape;
 import opengl.resource.GLShader;
 import opengl.resource.object.GLDrawableObject;
 import opengl.resource.object.GLObjectUsage;
@@ -24,12 +25,10 @@ public class VertexView extends ViewElement implements Observer {
 
     public VertexView(Vertex vertexModel, GLColorVariantMesh mesh, GLShader labelShader) {
         this.vertexModel = vertexModel;
-
         this.vertexModel.addObserver(this);
-
         this.labelMesh = new GLTextMesh();
-        this.mesh = mesh;
         this.textDrawable = new GLDrawableObject(labelShader, labelMesh);
+        this.mesh = mesh;
 
         super.setMesh(this.mesh);
 
