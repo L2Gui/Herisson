@@ -20,7 +20,7 @@ public interface ISizeAlgorithm {
      *
      * @return la taille qu'aura un élément dont l'attribut paramètre est au minimum
      */
-    public void getMinSize();
+    public float getMinSize();
 
     /**
      * Applique l'algorythme au graphe passé en paramètre (en fonction d'un paramètre) en tenant compte de la couleur min et max.
