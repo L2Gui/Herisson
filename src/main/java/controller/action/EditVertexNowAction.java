@@ -39,9 +39,9 @@ public class EditVertexNowAction extends MenuAction{
 
         final JFrame f = new JFrame("Editer les options d'un noeud");
 
-        f.setSize(350, 300);
+        f.setSize(350, 350);
 
-        JPanel p = new JPanel(new GridLayout(8, 2));
+        JPanel p = new JPanel(new GridLayout(9, 2));
 
         ArrayList<JComponent> jElements = new ArrayList<JComponent>();
 
@@ -51,24 +51,26 @@ public class EditVertexNowAction extends MenuAction{
         JLabel size = new JLabel("Taille");
         JLabel position = new JLabel("Position");
         JLabel colorVertex = new JLabel("Couleur du noeud");
-        JLabel border = new JLabel("Taille de la bordure");
+        JLabel borderSize = new JLabel("Taille de la bordure");
+        JLabel borderColor = new JLabel("Couleur de la bordure");
 
-        final JTextField labelJTF = new JTextField("texte par défault");
+        final JTextField labelJTF = new JTextField(vertexView.getModel().getLabel());
         JComboBox shapeList = new JComboBox(VertexShape.values());
         JButton b1 = new JButton("Couleur du label",  rightButtonIcon);
         JButton b2 = new JButton("Couleur du noeud",  rightButtonIcon);
+        JButton b3 = new JButton("Couleur de la bordure",  rightButtonIcon);
         JButton ok = new JButton("OK");
         JButton cancel = new JButton("Annuler");
 
-        JTextField sizeJTF = new JTextField("texte par défault");
+        JTextField sizeJTF = new JTextField("" + vertexView.getModel().getSize());
         JPanel positionPanel = new JPanel(new GridLayout(1, 3));
-        JTextField x = new JTextField("x");
-        JTextField y = new JTextField("y");
-        JTextField z = new JTextField("z");
+        JTextField x = new JTextField("" + vertexView.getModel().getPosition().getX());
+        JTextField y = new JTextField("" + vertexView.getModel().getPosition().getY());
+        JTextField z = new JTextField("" + vertexView.getModel().getPosition().getZ());
         positionPanel.add(x);
         positionPanel.add(y);
         positionPanel.add(z);
-        JTextField borderJTF = new JTextField("texte par défault");
+        JTextField borderJTF = new JTextField("" + vertexView.getModel().getThickness());
 
 
         // on ajoute tous nos éléments dans un arraylist pour pouvoir les modifier avec un foreach
@@ -78,11 +80,12 @@ public class EditVertexNowAction extends MenuAction{
         jElements.add(size);
         jElements.add(position);
         jElements.add(colorVertex);
-        jElements.add(border);
+        jElements.add(borderSize);
         jElements.add(labelJTF);
         jElements.add(shapeList);
         jElements.add(b1);
         jElements.add(b2);
+        jElements.add(b3);
         jElements.add(ok);
         jElements.add(cancel);
         jElements.add(sizeJTF);
@@ -91,7 +94,8 @@ public class EditVertexNowAction extends MenuAction{
 
         for(JComponent jc : jElements)
         {
-
+           // if (jc instanceof JLabel)
+                //(JLabel)jc.setHorizontalAlignment(SwingConstants.CENTER);
         }
 
         b1.addActionListener(new ActionListener() {
@@ -103,6 +107,14 @@ public class EditVertexNowAction extends MenuAction{
         });
 
         b2.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                Color color = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", Color.white);
+            }
+        });
+
+        b3.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e)
             {
@@ -143,8 +155,10 @@ public class EditVertexNowAction extends MenuAction{
         p.add(positionPanel);
         p.add(colorVertex);
         p.add(b2);
-        p.add(border);
+        p.add(borderSize);
         p.add(borderJTF);
+        p.add(borderColor);
+        p.add(b3);
         p.add(ok);
         p.add(cancel);
 
