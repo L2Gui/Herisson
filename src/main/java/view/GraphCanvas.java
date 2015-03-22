@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 import controller.action.*;
+import controller.command.CreateVertexCommand;
 import controller.command.MoveVertexCommand;
 import controller.command.RemoveEdgeCommand;
 import controller.command.RemoveVertexCommand;
@@ -201,7 +202,7 @@ public class GraphCanvas extends GLCanvas {
                         case SELECTION:
                             if (selectedVertex != null) {
                                 positions[1] = selectedVertex.getModel().getPosition();
-                                GraphCanvas.this.controller.executeCommand(new MoveVertexCommand(selectedVertex.getModel(), positions[0], positions[1]));
+                                GraphCanvas.this.controller.executeCommand(new MoveVertexCommand(graphView, selectedVertex, positions[0], positions[1]));
                                 positions[0] = null;
                                 positions[1] = null;
                                 selectedVertex = null;
@@ -253,6 +254,7 @@ public class GraphCanvas extends GLCanvas {
                         break;
                     case SELECTION:
                         if (selectedVertex != null) {
+                            graphView.removeTranslatingVertex(selectedVertex);
                             selectedVertex.setPosition(getLookAtPosition(arg0.getX(), arg0.getY()));
                             selectedVertex.getModel().setPosition(getLookAtPosition(arg0.getX(), arg0.getY()));
                         } else if (false) {
@@ -355,12 +357,5 @@ public class GraphCanvas extends GLCanvas {
 
     public void setPasteBuffer(GraphElement pasteBuffer) {
         this.pasteBuffer = pasteBuffer;
-    }
-
-    public void paste(int x, int y) {
-        if (pasteBuffer instanceof Vertex) {
-            Vertex vertex = (Vertex) pasteBuffer;
-            vertex.setPosition(getLookAtPosition(x, y));
-        }
     }
 }

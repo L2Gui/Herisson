@@ -8,6 +8,7 @@ import opengl.resource.object.mesh.GLColorVariantMesh;
 import opengl.resource.object.mesh.GLTextMesh;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
+import utils.MathUtils;
 
 import java.awt.*;
 import java.util.Observable;
@@ -52,10 +53,16 @@ public class VertexView extends ViewElement implements Observer {
     }
 
     @Override
-    public void render(Matrix4f transformationMatrix)
-    {
+    public void render(Matrix4f transformationMatrix) {
         this.mesh.setColor(this.vertexModel.getBackgroundColor());
         super.render(transformationMatrix);
+    }
+
+    public void translateTo(Vector3f newPosition, float percentage) {
+        Vector3f position = super.getPosition();
+        Vector3f interm = MathUtils.vectorLerp(position, newPosition, percentage);
+
+        this.vertexModel.setPosition(interm);
     }
 
     public void renderText(Matrix4f transformationMatrix) {

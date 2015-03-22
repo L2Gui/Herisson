@@ -2,7 +2,12 @@ package controller.action;
 
 import controller.Controller;
 import controller.MenuAction;
+import controller.command.PasteCommand;
 import model.GraphElement;
+import model.Vertex;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.util.vector.Vector3f;
+import view.GraphCanvas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -32,17 +37,11 @@ public class PasteNowAction extends MenuAction{
     public void actionPerformed(ActionEvent e) {
         System.out.println("Coller NOW ("+e.getSource().getClass().getName()+")");
 
-        super.getController().getCanvas().paste(x, y);
-
-
-        //pour le cast:
-        /*for( Object o : objects) {
-            try {
-                Vertex v = (Vertex) o;
-            } catch (ClassCastException e) {
-                //do nothing
-            }
-        }*/
-
+        if (getController().getCanvas().getPasteBuffer() instanceof Vertex) {
+            //GraphCanvas.this.controller.executeCommand(new CreateVertexCommand((Vertex) pasteBuffer));
+            Vertex vertex = new Vertex((Vertex) getController().getCanvas().getPasteBuffer());
+            vertex.setPosition(new Vector3f(x,y,vertex.getPosition().getZ()));
+            this.getController().getCurrentGraph().getCommandHandler().executeCommand(new PasteCommand(getController(), vertex));
+        }
     }
 }
