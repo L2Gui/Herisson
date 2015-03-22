@@ -243,9 +243,7 @@ public class GraphCanvas extends GLCanvas {
                             selectedVertex.setPosition(getLookAtPosition(arg0.getX(), arg0.getY()));
                             selectedVertex.getModel().setPosition(getLookAtPosition(arg0.getX(), arg0.getY()));
                         } else if (false) {
-                            //TODO Si on est sur les bords, rotation de la caméra
-                        } else {
-                            System.out.print(".");
+                            //TODO selection multiple zone
                         }
                         break;
                 }
