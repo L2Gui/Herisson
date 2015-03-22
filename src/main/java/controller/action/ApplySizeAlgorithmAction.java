@@ -2,6 +2,7 @@ package controller.action;
 
 import controller.Controller;
 import controller.MenuAction;
+import controller.command.ApplySizeAlgorithmCommand;
 import model.algorithm.ISizeAlgorithm;
 import view.NumericField;
 
@@ -26,9 +27,11 @@ public class ApplySizeAlgorithmAction extends MenuAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.sizeMinField = new NumericField(5.0);
-        this.sizeMaxField = new NumericField(10.0);
-        mustApplyAlgorithm = false;
+        this.sizeMin = 1.0f;
+        this.sizeMax = 3.0f;
+
+        this.sizeMinField = new NumericField((double) this.sizeMin);
+        this.sizeMaxField = new NumericField((double) this.sizeMax);
 
         frame = new JFrame("Paramétrez l'algorithme "+algorithm.toString());
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -36,8 +39,6 @@ public class ApplySizeAlgorithmAction extends MenuAction {
         frame.setResizable(false);
 
         JPanel content = new JPanel(new GridLayout(2,2,5,5));
-
-
 
         JPanel panelBtnCancel = new JPanel();
         JButton cancelBtn = new JButton("Annuler");
@@ -67,7 +68,7 @@ public class ApplySizeAlgorithmAction extends MenuAction {
                     }
                     frame.repaint();
                 }else {
-                    mustApplyAlgorithm = true;
+                    getController().executeCommand(new ApplySizeAlgorithmCommand(getController().getCanvas().getGraphView(), algorithm, sizeMin, sizeMax));
                     frame.dispose();
                 }
             }
@@ -83,11 +84,6 @@ public class ApplySizeAlgorithmAction extends MenuAction {
         frame.setContentPane(content);
 
         frame.setVisible(true);
-
-        if(mustApplyAlgorithm){
-            //TODO appliquer l'algo
-            System.out.println("Appliquer algo commande");
-        }
     }
 
 }
