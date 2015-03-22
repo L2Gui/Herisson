@@ -2,21 +2,24 @@ package controller.action;
 
 import controller.Controller;
 import controller.MenuAction;
-import model.algorithm.IColorAlgorithm;
+import model.algorithm.ISizeAlgorithm;
+import view.NumericField;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ApplyColorAlgorithmAction extends MenuAction {
-    private IColorAlgorithm algorithm;
-    private Color colorMin;
-    private Color colorMax;
+public class ApplySizeAlgorithmAction extends MenuAction {
+    private ISizeAlgorithm algorithm;
+    private float sizeMin;
+    private float sizeMax;
+    private NumericField sizeMinField;
+    private NumericField sizeMaxField;
     private JFrame frame;
     private boolean mustApplyAlgorithm;
 
-    public ApplyColorAlgorithmAction(IColorAlgorithm colorAlgorithm, Controller controller) {
+    public ApplySizeAlgorithmAction(ISizeAlgorithm colorAlgorithm, Controller controller) {
         super(controller, colorAlgorithm.toString(), null, null, null);
         algorithm = colorAlgorithm;
     }
@@ -32,32 +35,8 @@ public class ApplyColorAlgorithmAction extends MenuAction {
         frame.setResizable(false);
 
         JPanel content = new JPanel(new GridLayout(2,2,5,5));
-        final JButton colorMinBtn = new JButton("Couleur min");
-        colorMinBtn.setBackground(algorithm.getMinColor());
-        colorMinBtn.setFocusPainted(false);
-        colorMinBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Color color = JColorChooser.showDialog(frame, "Choisissez la nouvelle couleur min", algorithm.getMinColor());
-                if (color != null) {
-                    colorMin = color;
-                    colorMinBtn.setBackground(color);
-                }
-            }
-        });
-        final JButton colorMaxBtn = new JButton("Couleur max");
-        colorMaxBtn.setBackground(algorithm.getMaxColor());
-        colorMaxBtn.setFocusPainted(false);
-        colorMaxBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Color color = JColorChooser.showDialog(getController().getCanvas(), "Choisissez la nouvelle couleur max", algorithm.getMaxColor());
-                if(color != null){
-                    colorMax = color;
-                    colorMaxBtn.setBackground(color);
-                }
-            }
-        });
+
+
 
         JPanel panelBtnCancel = new JPanel();
         JButton cancelBtn = new JButton("Annuler");
@@ -74,13 +53,21 @@ public class ApplyColorAlgorithmAction extends MenuAction {
         OkBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mustApplyAlgorithm = true;
-                frame.dispose();
+                if(!(sizeMinField.isValid() && sizeMaxField.isValid())){
+                    if(!sizeMinField.isValid()){
+                        sizeMinField.set
+                    }
+                }else {
+                    mustApplyAlgorithm = true;
+                    frame.dispose();
+                }
             }
         });
         panelBtnOk.add(OkBtn);
-        content.add(colorMinBtn);
-        content.add(colorMaxBtn);
+
+
+        content.add(new NumericField(10.0));
+        content.add(new NumericField(5.5));
         content.add(panelBtnCancel);
         content.add(panelBtnOk);
 
@@ -93,4 +80,5 @@ public class ApplyColorAlgorithmAction extends MenuAction {
             System.out.println("Appliquer algo commande");
         }
     }
+
 }
