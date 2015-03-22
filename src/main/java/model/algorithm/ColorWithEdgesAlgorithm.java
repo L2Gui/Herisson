@@ -61,15 +61,16 @@ public class ColorWithEdgesAlgorithm implements IColorAlgorithm {
 
         //affectation des couleurs
         for(Vertex v : g.getVertices()){
-            set.add(new Pair<Vertex, Color>(v, getNewColorOf(v.getEdges().size())));
+            set.add(new Pair<Vertex, Color>(v, getNewColorOf(v.getEdges().size(), nbMaxVertices)));
         }
         return set;
     }
 
-    private Color getNewColorOf(int value){
-        int red = (value*(this.maxColor.getRed()-this.minColor.getRed()))+this.minColor.getRed();
-        int green = (value*(this.maxColor.getGreen()-this.minColor.getGreen()))+this.minColor.getGreen();
-        int blue = (value*(this.maxColor.getBlue()-this.minColor.getBlue()))+this.minColor.getBlue();
+    private Color getNewColorOf(int value, int maxEdges){
+        double ratio = 1.*value/maxEdges;
+        int red = (int) (ratio*(this.maxColor.getRed()-this.minColor.getRed()))+this.minColor.getRed();
+        int green = (int) (ratio*(this.maxColor.getGreen()-this.minColor.getGreen()))+this.minColor.getGreen();
+        int blue = (int) (ratio*(this.maxColor.getBlue()-this.minColor.getBlue()))+this.minColor.getBlue();
 
         return new Color(red, green, blue);
     }
