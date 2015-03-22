@@ -198,7 +198,7 @@ public class GraphCanvas extends GLCanvas {
                         case SELECTION:
                             if (selectedVertex != null) {
                                 positions[1] = selectedVertex.getModel().getPosition();
-                                GraphCanvas.this.controller.executeCommand(new MoveVertexCommand(selectedVertex.getModel(), positions[0], positions[1]));
+                                GraphCanvas.this.controller.executeCommand(new MoveVertexCommand(graphView, selectedVertex, positions[0], positions[1]));
                                 positions[0] = null;
                                 positions[1] = null;
                                 selectedVertex = null;

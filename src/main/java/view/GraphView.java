@@ -28,7 +28,9 @@ public class GraphView implements Observer {
 
     private Map<Vertex, VertexView> vertexViews;
     private Map<Edge, EdgeView> edgeViews;
+
     private Collection<VertexView> createdVertices;
+    private Map<VertexView, Vector3f> translatingVertices;
 
     private GLColorVariantMesh vertexMesh;
     private GLColorVariantMesh edgeMesh;
@@ -40,6 +42,7 @@ public class GraphView implements Observer {
 
     public GraphView() {
         this.createdVertices = new ArrayList<VertexView>();
+        this.translatingVertices = new HashMap<VertexView, Vector3f>();
         this.vertexViews = new HashMap<Vertex, VertexView>();
         this.edgeViews = new HashMap<Edge, EdgeView>();
         this.isInitialized = false;
@@ -211,6 +214,10 @@ public class GraphView implements Observer {
         return intersectedEdge;
     }
 
+    public void addTranslatingVertices(VertexView vertexView, Vector3f position) {
+        this.translatingVertices.put(vertexView, position);
+    }
+
     public void loadGraph(Graph graph) {
         this.vertexViews = new HashMap<Vertex, VertexView>();
         this.edgeViews = new HashMap<Edge, EdgeView>();
@@ -241,6 +248,7 @@ public class GraphView implements Observer {
 
         for (VertexView vertexView : this.createdVertices) {
             if (vertexView.getPosition().z < 0.01f) {
+                vertexView.getPosition().setZ(0.0f);
                 finishedVertices.add(vertexView);
             } else {
                 Vector3f position = vertexView.getPosition();
@@ -252,5 +260,22 @@ public class GraphView implements Observer {
         }
 
         this.createdVertices.removeAll(finishedVertices);
+        finishedVertices.clear();
+
+        for (Map.Entry<VertexView, Vector3f> entry : this.translatingVertices.entrySet()) {
+            float distance = Vector3f.sub(entry.getKey().getPosition(), entry.getValue(), null).length();
+            if (distance < 0.01f) {
+                entry.getKey().setPosition(entry.getValue());
+                finishedVertices.add(entry.getKey());
+            } else {
+                entry.getKey().translateTo(entry.getValue(), 0.05f);
+            }
+        }
+
+        for (VertexView vertexView : finishedVertices) {
+            if (this.translatingVertices.containsKey(vertexView)) {
+                this.translatingVertices.remove(vertexView);
+            }
+        }
     }
 }
