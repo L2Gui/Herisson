@@ -11,8 +11,11 @@ public class MathUtils {
         return Math.max(min, Math.min(max, val));
     }
 
-    public static Vector3f vectorLerp(Vector3f start, Vector3f end, float percent)
-    {
+    public static Vector3f vectorLerp(Vector3f start, Vector3f end, float percent) {
         return Vector3f.add(start, ((Vector3f) Vector3f.sub(end, start, null).scale(percent)), null);
+    }
+
+    public static float floatLerp(float start, float end, float percent) {
+        return start + (end - start) * percent;
     }
 }

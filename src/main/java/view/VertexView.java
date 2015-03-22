@@ -90,6 +90,7 @@ public class VertexView extends ViewElement implements Observer {
         this.borderDrawable.setScale((this.vertexModel.getSize() / 2.0f) + this.vertexModel.getThickness(), (this.vertexModel.getSize() / 2.0f) + this.vertexModel.getThickness(), 1.0f);
         this.textDrawable.setScale(this.vertexModel.getSize(), this.vertexModel.getSize(), 1.0f);
         super.setPosition(vertexModel.getPosition());
+        super.setScale(this.vertexModel.getSize() / 2.0f, this.vertexModel.getSize() / 2.0f, 1.0f);
     }
 
     @Override

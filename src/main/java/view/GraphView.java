@@ -35,6 +35,7 @@ public class GraphView implements Observer {
     private Map<Edge, EdgeView> edgeViews;
 
     private Collection<VertexView> createdVertices;
+    private Map<VertexView, Float> resizingVertices;
     private Map<VertexView, Vector3f> translatingVertices;
     private Map<VertexView, Color> coloringVertices;
 
@@ -52,6 +53,7 @@ public class GraphView implements Observer {
 
     public GraphView() {
         this.createdVertices = new ArrayList<VertexView>();
+        this.resizingVertices = new HashMap<VertexView, Float>();
         this.translatingVertices = new HashMap<VertexView, Vector3f>();
         this.coloringVertices = new HashMap<VertexView, Color>();
         this.vertexViews = new HashMap<Vertex, VertexView>();
@@ -247,6 +249,10 @@ public class GraphView implements Observer {
         return intersectedEdge;
     }
 
+    public void addResizingVertex(Vertex vertex, float size) {
+        this.resizingVertices.put(this.vertexViews.get(vertex), size);
+    }
+
     public void addTranslatingVertex(VertexView vertexView, Vector3f position) {
         this.translatingVertices.put(vertexView, position);
     }
@@ -334,6 +340,25 @@ public class GraphView implements Observer {
         for (VertexView vertexView : finishedVertices) {
             if (this.coloringVertices.containsKey(vertexView)) {
                 this.coloringVertices.remove(vertexView);
+            }
+        }
+        finishedVertices.clear();
+
+
+        for (Map.Entry<VertexView, Float> entry : this.resizingVertices.entrySet()) {
+            float distance = Math.abs(entry.getKey().getModel().getSize() - entry.getValue());
+            if (distance < 0.01f) {
+                entry.getKey().getModel().setSize(entry.getValue());
+                finishedVertices.add(entry.getKey());
+            } else {
+                float interm = MathUtils.floatLerp(entry.getKey().getModel().getSize(), entry.getValue(), 0.05f);
+                entry.getKey().getModel().setSize(interm);
+            }
+        }
+
+        for (VertexView vertexView : finishedVertices) {
+            if (this.resizingVertices.containsKey(vertexView)) {
+                this.resizingVertices.remove(vertexView);
             }
         }
         finishedVertices.clear();
