@@ -114,8 +114,6 @@ public class GraphCanvas extends GLCanvas {
                             break;
 
                         case VERTEX_EDITION:
-                            ColorWithEdgesAlgorithm algo = new ColorWithEdgesAlgorithm();
-                            algo.execute(getController().getCurrentGraph());
                             break;
 
                         case EDGE_EDITION:

@@ -2,6 +2,7 @@ package controller.action;
 
 import controller.Controller;
 import controller.MenuAction;
+import model.VertexShape;
 import view.VertexView;
 
 import javax.swing.*;
@@ -38,7 +39,7 @@ public class EditVertexNowAction extends MenuAction{
 
         ////// Placer les elements //////
         p.add(new JLabel("Label :"));
-        p.add(new JTextField(vertexView.getModel().getLabel()));
+        JComboBox shape = new JComboBox(VertexShape.values());
 
         f.setContentPane(p);
         f.addWindowStateListener(new WindowStateListener() {

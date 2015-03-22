@@ -9,6 +9,11 @@ import java.util.Set;
 
 public interface IDispoAlgorithm {
     /**
+     * @return Le nom de l'algorythme
+     */
+    @Override
+    public String toString();
+    /**
      * Applique l'algorythme au graphe passé en paramètre (ne modifie pas le graphe !) et renvoie un set de paire<Coord,Vertex>
      * @param g graphe
      * @return un Set< Pair<Vertex, Vector3f> >
