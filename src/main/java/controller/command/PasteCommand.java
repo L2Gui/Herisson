@@ -22,8 +22,6 @@ public class PasteCommand implements ICommand{
 
     @Override
     public void execute(Graph graph) {
-        /*vertex.setPosition(getLookAtPosition(x, y));
-        this.getController().getCurrentGraph().getVertices().add(new Vertex(vertex));
-        this.graphView.addVertex(new Vertex(vertex));*/
+        graph.getVertices().add(new Vertex(vertex));
     }
 }
