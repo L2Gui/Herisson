@@ -140,7 +140,7 @@ public class EditVertexNowAction extends MenuAction{
                 } catch (LWJGLException ex) {
                     ex.printStackTrace();
                 }*/
-                //getController().getCanvas().getGraphView().Label();
+                getController().getCanvas().getGraphView().reloadVertex(vertexView);
                 //getController().getCanvas().getGraphView().init();
                 f.dispose();
             }

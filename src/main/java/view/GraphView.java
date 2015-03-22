@@ -132,7 +132,7 @@ public class GraphView implements Observer {
         }
         this.isInitialized = true;
     }
-    public void reloadVertex(Vertex v){
+    public void reloadVertex(VertexView vv){
         loadGraph(graph);
     }
 
