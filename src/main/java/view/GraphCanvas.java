@@ -11,12 +11,15 @@ import opengl.resource.object.camera.GLPerspectiveCamera;
 import opengl.utils.GLRay;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Quaternion;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import utils.MathUtils;
+import utils.QuaternionUtils;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -69,6 +72,7 @@ public class GraphCanvas extends GLCanvas {
 
     @Override
     public void init() {
+        super.lockDraw();
         this.camera = new GLPerspectiveCamera(70.0f, 0.01f, 100.0f);
         this.camera.lookToDirection(new Vector3f(0.0f, 0.0f, -1.0f));
         this.camera.setPosition(new Vector3f(0.0f, 0.0f, 10.0f));
@@ -122,6 +126,7 @@ public class GraphCanvas extends GLCanvas {
 
                         case SELECTION:
                             if (selectedVertex != null) {
+                                selectedVertex.getModel().getStyle().setBackgroundColor(Color.red);
                                 positions[0] = selectedVertex.getModel().getPosition();
                             }
                             break;
@@ -168,7 +173,7 @@ public class GraphCanvas extends GLCanvas {
                     }
 
                     if (intersectedVertexView != null) {
-                        getPopupOnVertex(intersectedVertexView).show(arg0.getComponent(), arg0.getX(), arg0.getY());
+                        getPopupOnVertex(intersectedVertexView, arg0.getX(), arg0.getY()).show(arg0.getComponent(), arg0.getX(), arg0.getY());
                     } else {
                         getPopupOnNothing(arg0.getX(), arg0.getY()).show(arg0.getComponent(), arg0.getX(), arg0.getY());
                     }
@@ -269,13 +274,16 @@ public class GraphCanvas extends GLCanvas {
         super.addMouseWheelListener(new MouseAdapter() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent mouseWheelEvent) {
+                lockDraw();
                 int dz = mouseWheelEvent.getWheelRotation();
                 float strength = 1.1f;
 
                 float zoomFactor = (float) Math.pow(strength, dz);
                 setCameraZoom(zoomFactor);
+                unlockDraw();
             }
         });
+        super.unlockDraw();
     }
 
     @Override
@@ -332,7 +340,8 @@ public class GraphCanvas extends GLCanvas {
     }
 
     ////////////////////////////////////////// GENERATION DES POPUPS //////////////////////////////////////////
-    private JPopupMenu getPopupOnVertex(VertexView vertexView){
+    private JPopupMenu getPopupOnVertex(VertexView vertexView, int x, int y){
+        super.lockDraw();
         JPopupMenu contextMenu = new JPopupMenu();
         contextMenu.add(new EditVertexNowAction(this.controller, vertexView));    // passer le vertexview en question en param
         contextMenu.add(new CopyNowAction(this.controller, vertexView.getModel()));
@@ -341,27 +350,40 @@ public class GraphCanvas extends GLCanvas {
         contextMenu.add(new JPopupMenu.Separator());
         contextMenu.add(new UndoAction(this.controller));
         contextMenu.add(new RedoAction(this.controller));
-        contextMenu.add(new ZoomPlusAction(this.controller));
-        contextMenu.add(new ZoomLessAction(this.controller));
+        contextMenu.add(new ZoomPlusNowAction(this.controller, x, y));
+        contextMenu.add(new ZoomLessNowAction(this.controller, x, y));
+        super.unlockDraw();
         return contextMenu;
     }
 
     private JPopupMenu getPopupOnNothing(int x, int y){
+        super.lockDraw();
         JPopupMenu contextMenu = new JPopupMenu();
         contextMenu.add(new PasteNowAction(this.controller, x, y));
         contextMenu.add(new JPopupMenu.Separator());
         contextMenu.add(new UndoAction(this.controller));
         contextMenu.add(new RedoAction(this.controller));
-        contextMenu.add(new ZoomPlusAction(this.controller));
-        contextMenu.add(new ZoomLessAction(this.controller));
+        contextMenu.add(new ZoomPlusNowAction(this.controller, x, y));
+        contextMenu.add(new ZoomLessNowAction(this.controller, x, y));
+        super.unlockDraw();
         return contextMenu;
     }
 
     public void setCameraZoom(float zoomFactor) {
+        super.lockDraw();
         if (this.cameraTarget == null) {
             this.cameraTarget = new Vector3f(camera.getPosition());
         }
         this.cameraTarget.z *= zoomFactor;
+        super.unlockDraw();
+    }
+
+    public void setCameraFocus(int x, int y) {
+        super.lockDraw();
+        Vector3f lookAtPosition = this.getLookAtPosition(x, y);
+        this.cameraTarget.x = lookAtPosition.x;
+        this.cameraTarget.y = lookAtPosition.y;
+        super.unlockDraw();
     }
 
     ////////////////////////////////////////////////  ANIMATION //////////////////////////////////////////////

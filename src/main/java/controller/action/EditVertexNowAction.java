@@ -38,9 +38,9 @@ public class EditVertexNowAction extends MenuAction{
         ImageIcon rightButtonIcon = new ImageIcon("res/edit_color.png");
 
         JFrame f = new JFrame("Editer les options d'un noeud");
-        f.setSize(300, 420);
+        f.setSize(320, 420);
 
-        JPanel p = new JPanel(new GridLayout(6, 2, 5, 5));
+        JPanel p = new JPanel(new GridLayout(8, 2, 5, 5));
 
         JLabel labelText = new JLabel("Label");
         JLabel labelColor = new JLabel("Couleur du label");
@@ -53,13 +53,10 @@ public class EditVertexNowAction extends MenuAction{
         JTextField labelJTF = new JTextField("texte par défault");
         JComboBox shapeList = new JComboBox(VertexShape.values());
         JButton b1 = new JButton("Couleur du label",  rightButtonIcon);
-        b1.addActionListener(new ActionListener() {
+        JButton b2 = new JButton("Couleur du noeud",  rightButtonIcon);
+        JButton ok = new JButton("OK");
+        JButton cancel = new JButton("Annuler");
 
-            public void actionPerformed(ActionEvent e)
-            {
-                Color color = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", Color.white);
-            }
-        });
         JTextField sizeJTF = new JTextField("texte par défault");
         JPanel positionPanel = new JPanel(new GridLayout(1, 3));
         JTextField x = new JTextField("abscisse");
@@ -70,6 +67,35 @@ public class EditVertexNowAction extends MenuAction{
         positionPanel.add(z);
         JTextField borderJTF = new JTextField("texte par défault");
 
+        b1.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                Color color = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", Color.white);
+            }
+        });
+
+        b2.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                Color color = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", Color.white);
+            }
+        });
+
+        ok.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //EditVertexNowAction.f.dispose();
+            }
+        });
+
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //EditVertexNowAction.f.dispose();
+            }
+        });
 
         p.add(labelText);
         p.add(labelJTF);
@@ -78,13 +104,15 @@ public class EditVertexNowAction extends MenuAction{
         p.add(shape);
         p.add(shapeList);
         p.add(size);
-        p.add(positionPanel);
         p.add(sizeJTF);
         p.add(position);
+        p.add(positionPanel);
         p.add(colorVertex);
-        p.add(b1);
+        p.add(b2);
         p.add(border);
         p.add(borderJTF);
+        p.add(ok);
+        p.add(cancel);
 
 
         f.setContentPane(p);
