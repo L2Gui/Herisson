@@ -26,7 +26,8 @@ public class ApplySizeAlgorithmAction extends MenuAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //getController().getCanvas().getParent().getParent().getParent().getParent().getParent().getParent().setEnabled(false);
+        this.sizeMinField = new NumericField(5.0);
+        this.sizeMaxField = new NumericField(10.0);
         mustApplyAlgorithm = false;
 
         frame = new JFrame("Paramétrez l'algorithme "+algorithm.toString());
@@ -54,7 +55,17 @@ public class ApplySizeAlgorithmAction extends MenuAction {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(!(sizeMinField.isValid() && sizeMaxField.isValid())){
-                    //erreur
+                    if(sizeMinField.isValid()){
+                        sizeMinField.setBackground(new Color(1f,1f,1f,1f));
+                    }else {
+                        sizeMinField.setBackground(new Color(0.8f, 0.1f, 0.1f, 0.8f));
+                    }
+                    if(sizeMaxField.isValid()){
+                        sizeMaxField.setBackground(new Color(1f,1f,1f,1f));
+                    }else {
+                        sizeMaxField.setBackground(new Color(0.8f, 0.1f, 0.1f, 0.8f));
+                    }
+                    frame.repaint();
                 }else {
                     mustApplyAlgorithm = true;
                     frame.dispose();
@@ -64,8 +75,8 @@ public class ApplySizeAlgorithmAction extends MenuAction {
         panelBtnOk.add(OkBtn);
 
 
-        content.add(new NumericField(10.0));
-        content.add(new NumericField(5.5));
+        content.add(sizeMinField);
+        content.add(sizeMaxField);
         content.add(panelBtnCancel);
         content.add(panelBtnOk);
 
