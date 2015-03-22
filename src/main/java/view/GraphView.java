@@ -134,7 +134,7 @@ public class GraphView implements Observer {
     }
     public void reloadVertex(VertexView vv){
         this.vertexViews.remove(vv);
-        this.addVertex(vv.getModel());
+        this.addVertexWithNoAnimation(vv.getModel());
     }
 
     public void paint(Matrix4f transformationMatrix) {
@@ -177,6 +177,20 @@ public class GraphView implements Observer {
 
         VertexView vertexView = new VertexView(vertex, mesh, this.vertexEdgeShader, this.labelShader);
         vertexView.setPosition(vertexView.getPosition().x, vertexView.getPosition().y, 3.0f);
+
+        this.createdVertices.add(vertexView);
+        this.vertexViews.put(vertex, vertexView);
+    }
+    public void addVertexWithNoAnimation(Vertex vertex) {
+        GLColorVariantMesh mesh = null;
+        switch (vertex.getShape()) {
+            case SQUARE: mesh = this.vertexSquareMesh; break;
+            case CIRCLE: mesh = this.vertexCircleMesh; break;
+            case DIAMOND: mesh = this.vertexDiamondMesh; break;
+        }
+
+        VertexView vertexView = new VertexView(vertex, mesh, this.vertexEdgeShader, this.labelShader);
+        vertexView.setPosition(vertexView.getPosition().x, vertexView.getPosition().y, 0.0f);
 
         this.createdVertices.add(vertexView);
         this.vertexViews.put(vertex, vertexView);
