@@ -17,6 +17,11 @@ public class ColorWithEdgesAlgorithm implements IColorAlgorithm {
     private Color maxColor = Color.BLUE;
     private Color minColor = Color.RED;
 
+    @Override
+    public String toString() {
+        return "Couleur en fonction du degrès";
+    }
+
     public ColorWithEdgesAlgorithm(){
     }
 
@@ -46,6 +51,7 @@ public class ColorWithEdgesAlgorithm implements IColorAlgorithm {
      */
     @Override
     public Set<Pair<Vertex, Color>> execute(Color minColor, Color maxColor, Graph g) {
+
         Set set = new HashSet();
 
         this.minColor = minColor;

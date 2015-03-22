@@ -9,6 +9,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class DispoRandomAlgorithm implements IDispoAlgorithm {
+    @Override
+    public String toString() {
+        return "Disposition aléatoire";
+    }
     /**
      * Dispose les sommets de manière aléatoire (en prenant en compte la taille du graphe actuel)
      *
