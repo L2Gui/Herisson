@@ -122,8 +122,7 @@ public class GraphCanvas extends GLCanvas {
                         case DELETION:
                             if(intersectedVertexView != null) {
                                 GraphCanvas.this.controller.executeCommand(new RemoveVertexCommand(selectedVertex.getModel()));
-                            }
-                            if(intersectedEdgeView != null) {
+                            }else if(intersectedEdgeView != null) {
                                 GraphCanvas.this.controller.executeCommand(new RemoveEdgeCommand(selectedEdge.getModel()));
                             }
                             break;
@@ -303,6 +302,7 @@ public class GraphCanvas extends GLCanvas {
         JPopupMenu contextMenu = new JPopupMenu();
         contextMenu.add(new EditVertexNowAction(this.controller, vertexView));    // passer le vertexview en question en param
         contextMenu.add(new CopyNowAction(this.controller, vertexView));
+        contextMenu.add(new RemoveNowAction(this.controller, vertexView.getModel()));
         contextMenu.add(new JPopupMenu.Separator());
         contextMenu.add(new UndoAction(this.controller));
         contextMenu.add(new RedoAction(this.controller));

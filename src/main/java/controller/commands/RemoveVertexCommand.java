@@ -20,15 +20,19 @@ public class RemoveVertexCommand implements ICommand{
     public void execute(Graph graph) {
         this.graph = graph;
         this.vertex.setGraph(graph);
-        for(Edge edge : vertex.getEdges())
-        {
-            if(edge.getSrcVertex()==this.vertex){
-                edge.getDstVertex().getEdges().remove(edge);
-            }else{
-                edge.getSrcVertex().getEdges().remove(edge);
+
+        //si le noeud a des arêtes, on les supprime aussi
+        if(!vertex.getEdges().isEmpty()) {
+            for(Edge edge : vertex.getEdges())
+            {
+                if(edge.getSrcVertex()==this.vertex){
+                    edge.getDstVertex().getEdges().remove(edge);
+                }else{
+                    edge.getSrcVertex().getEdges().remove(edge);
+                }
             }
+            this.graph.getCommandHandler().executeCommand(new RemoveEdgesCommand(vertex.getEdges()));
         }
-        this.graph.getCommandHandler().executeCommand(new RemoveEdgesCommand(vertex.getEdges()));
 
         vertex.getEdges().clear();
 

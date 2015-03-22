@@ -23,7 +23,6 @@ public class RedoAction extends MenuAction{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("restaurer ("+e.getSource().getClass().getName()+")");
         try {
             this.getController().getCanvas().makeCurrent();
         } catch (LWJGLException e1) {

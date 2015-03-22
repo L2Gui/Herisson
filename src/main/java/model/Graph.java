@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Observable;
 
-public class Graph extends Observable {
+public class Graph extends GraphElement {
     private CommandHandler commandHandler;
     private StyleManager styleManager;
 

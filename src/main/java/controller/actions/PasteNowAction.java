@@ -2,6 +2,7 @@ package controller.actions;
 
 import controller.Controller;
 import controller.MenuAction;
+import model.GraphElement;
 import model.Vertex;
 
 import java.awt.event.ActionEvent;
@@ -10,7 +11,7 @@ import java.util.Collection;
 
 
 public class PasteNowAction extends MenuAction{
-    Collection<Object> objects;
+    Collection<GraphElement> objects;
     public PasteNowAction() {
         this(null, 0, 0);
     }

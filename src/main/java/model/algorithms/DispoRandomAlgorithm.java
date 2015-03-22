@@ -1,5 +1,7 @@
-package model;
+package model.algorithms;
 
+import model.Graph;
+import model.Vertex;
 import org.javatuples.Pair;
 import org.lwjgl.util.vector.Vector3f;
 

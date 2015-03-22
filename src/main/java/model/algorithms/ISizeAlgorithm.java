@@ -1,4 +1,6 @@
-package model;
+package model.algorithms;
+
+import model.Graph;
 
 public interface ISizeAlgorithm {
     /**

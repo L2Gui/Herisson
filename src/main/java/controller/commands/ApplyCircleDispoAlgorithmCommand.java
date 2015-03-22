@@ -1,11 +1,9 @@
 package controller.commands;
 
 import controller.ICommand;
-import model.DispoCircleAlgorithm;
+import model.algorithms.DispoCircleAlgorithm;
 import model.Graph;
-import model.IDispoAlgorithm;
-
-import java.awt.event.ActionEvent;
+import model.algorithms.IDispoAlgorithm;
 
 /**
  * Created by Clement on 16/03/2015.

@@ -2,17 +2,13 @@ package main;
 
 import controller.*;
 import model.*;
+import model.algorithms.DispoRandomAlgorithm;
 import org.javatuples.Pair;
 import org.lwjgl.util.vector.Vector3f;
 import view.GraphCanvas;
-import view.GraphView;
 import view.GraphWindow;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 public class App {
     public static void main(String args[]) {

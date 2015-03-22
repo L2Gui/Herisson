@@ -7,22 +7,22 @@ import controller.MenuAction;
 import java.awt.event.ActionEvent;
 
 
-public class NewVertexAction extends MenuAction{
+public class NewVertexModeAction extends MenuAction{
 
-    public NewVertexAction() {
+    public NewVertexModeAction() {
         this(null);
     }
     
     /**
      * Constructeur de NewVertex Action
      */
-    public NewVertexAction(Controller controller) {
+    public NewVertexModeAction(Controller controller) {
         super(controller, "Nouveau noeud", "res/node3.png", null, null);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         this.getController().setState(ControllerState.VERTEX_CREATION);
-        System.out.println("nouveau noeud ("+e.getSource().getClass().getName()+")");
+        System.out.println("*** mode new vertex ("+e.getSource().getClass().getName()+")");
     }
 }

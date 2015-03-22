@@ -1,5 +1,7 @@
-package model;
+package model.algorithms;
 
+
+import model.Graph;
 
 import java.awt.*;
 

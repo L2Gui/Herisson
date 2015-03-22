@@ -23,7 +23,6 @@ public class UndoAction extends MenuAction{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("undo ("+e.getSource().getClass().getName()+")");
         try {
             this.getController().getCanvas().makeCurrent();
         } catch (LWJGLException e1) {

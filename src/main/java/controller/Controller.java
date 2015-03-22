@@ -1,8 +1,7 @@
 package controller;
 
 import model.*;
-import org.javatuples.Pair;
-import org.lwjgl.util.vector.Vector3f;
+import model.algorithms.*;
 import view.GraphCanvas;
 import view.GraphView;
 import view.GraphWindow;
