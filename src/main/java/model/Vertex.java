@@ -13,10 +13,8 @@ public class Vertex extends Observable {
 	private Graph graph;
 	private Vector3f position;
 	private String label;
-    private boolean isDeleted;
 
     public Vertex() {
-        isDeleted = false;
         edges = new ArrayList<Edge>();
         style = null;
         graph = null;
@@ -24,7 +22,6 @@ public class Vertex extends Observable {
         label = "";
     }
     public Vertex(Vertex v){
-        isDeleted = false;
         this.edges = new ArrayList<Edge>(v.getEdges());
         this.style = new VertexStyle(v.getStyle());
         this.graph = v.getGraph();
@@ -34,7 +31,6 @@ public class Vertex extends Observable {
 
     public Vertex(Graph graph){
         this();
-        isDeleted = false;
         this.graph = graph;
         this.style = this.graph.getStyleManager().getDefaultVertexStyle();
     }
@@ -320,14 +316,6 @@ public class Vertex extends Observable {
 
         this.setChanged();
         this.notifyObservers();
-    }
-
-    public boolean isDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
     }
 
     public Collection<Edge> getEdges() {

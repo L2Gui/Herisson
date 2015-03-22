@@ -19,24 +19,27 @@ public class RemoveVertexCommand implements ICommand{
     @Override
     public void execute(Graph graph) {
         this.graph = graph;
-        this.vertex.setDeleted(true);
         this.vertex.setGraph(graph);
         for(Edge edge : vertex.getEdges())
         {
-            this.graph.removeEdge(edge);
+                this.graph.getCommandHandler().executeCommand(new RemoveEdgeCommand(edge, true));
+                if(edge.getSrcVertex()==this.vertex){
+                    edge.getDstVertex().getEdges().remove(edge);
+                }else{
+                    edge.getSrcVertex().getEdges().remove(edge);
+                }
         }
+        vertex.getEdges().clear();
+
         this.graph.removeVertex(this.vertex);
     }
 
     @Override
     public void undo() {
-        this.vertex.setDeleted(false);
         this.graph.addVertex(this.vertex);
-
         for(Edge edge : this.vertex.getEdges())
         {
-            if (edge.getDstVertex().isDeleted() == false && edge.getSrcVertex().isDeleted() == false)
-                this.graph.addEdge(edge);
+            //this.graph.addEdge(edge);
         }
     }
 }
