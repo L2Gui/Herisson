@@ -55,7 +55,7 @@ public class ApplySizeAlgorithmAction extends MenuAction {
             public void actionPerformed(ActionEvent e) {
                 if(!(sizeMinField.isValid() && sizeMaxField.isValid())){
                     if(!sizeMinField.isValid()){
-                        sizeMinField.set
+                        //sizeMinField.set
                     }
                 }else {
                     mustApplyAlgorithm = true;

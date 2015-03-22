@@ -83,7 +83,7 @@ public class ApplyColorAlgorithmAction extends MenuAction {
             }
         });
         panelBtnOk.add(OkBtn);
-        
+
         content.add(colorMinBtn);
         content.add(colorMaxBtn);
         content.add(panelBtnCancel);
