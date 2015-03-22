@@ -16,7 +16,6 @@ import java.awt.event.WindowStateListener;
 public class EditVertexNowAction extends MenuAction{
 
     private VertexView vertexView;
-    private VertexView modifiedVertexView;
 
     public EditVertexNowAction() {
         this(null, null);
@@ -87,10 +86,13 @@ public class EditVertexNowAction extends MenuAction{
         ok.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("iverbciyzebr zr");
-                if(!vertexView.getModel().getLabel().matches(labelJTF.getText()))
-
                 vertexView.getModel().setLabel(labelJTF.getText());
+                vertexView.getModel().setTextColor(Color.blue);
+                vertexView.getModel().setSize(5);
+                //vertexView.getModel().setPosition();
+                vertexView.getModel().setBackgroundColor(Color.blue);
+                //vertexView.getModel().
+
                 f.dispose();
             }
         });
