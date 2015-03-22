@@ -179,9 +179,10 @@ public class GraphView implements Observer {
         Edge edge = new Edge();
         edge.setSrcVertex(src);
         edge.setDstVertex(dst);
-        this.controller.executeCommand(new CreateEdgeCommand(edge));
-
-        this.addEdge(edge);
+        if(!(src.gotAnEdgeDirectedTo(dst) && dst.gotAnEdgeComingFrom(src))) {
+            this.controller.executeCommand(new CreateEdgeCommand(edge));
+            this.addEdge(edge);
+        }
     }
 
     public void addEdge(Edge edge) {
