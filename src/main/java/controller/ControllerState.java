@@ -6,5 +6,6 @@ public enum ControllerState {
     VERTEX_EDITION,
     EDGE_EDITION,
     MOVE,
-    DELETION
+    DELETION,
+    SELECTION
 }

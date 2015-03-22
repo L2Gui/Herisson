@@ -31,6 +31,8 @@ public class GraphWindow extends JFrame {
     private MenuAction openFile = new OpenFileAction();
     private MenuAction save = new SaveAction();
     private MenuAction saveAs = new SaveAsAction();
+    private MenuAction move = new MoveModeAction();
+    private MenuAction selection = new SelectionModeAction();
     private MenuAction newVertex = new NewVertexModeAction();
     private MenuAction newEdge = new NewEdgeModeAction();
     private MenuAction editVertex = new EditVertexModeAction();
@@ -43,7 +45,6 @@ public class GraphWindow extends JFrame {
     private MenuAction redo = new RedoAction();
     private MenuAction zoomPlus = new ZoomPlusAction();
     private MenuAction zoomMoins = new ZoomLessAction();
-    private MenuAction move = new MoveAction();
     private MenuAction changeBGColor = new ChangeBackgroundColorAction();
 
     /**
@@ -125,6 +126,8 @@ public class GraphWindow extends JFrame {
         this.openFile.setController(controller);
         this.save.setController(controller);
         this.saveAs.setController(controller);
+        this.move.setController(controller);
+        this.selection.setController(controller);
         this.newVertex.setController(controller);
         this.newEdge.setController(controller);
         this.editVertex.setController(controller);
@@ -137,7 +140,6 @@ public class GraphWindow extends JFrame {
         this.redo.setController(controller);
         this.zoomPlus.setController(controller);
         this.zoomMoins.setController(controller);
-        this.move.setController(controller);
         this.tabs.setController(controller);
         this.changeBGColor.setController(controller);
     }
@@ -320,6 +322,11 @@ public class GraphWindow extends JFrame {
         toggleMove.setText("");
         toolBar.add(toggleMove);
         modes.add(toggleMove);
+
+        JToggleButton toggleSelection = new JToggleButton(this.selection);
+        toggleSelection.setText("");
+        toolBar.add(toggleSelection);
+        modes.add(toggleSelection);
 
         JToggleButton toggleNewEdge = new JToggleButton(this.newEdge);
         toggleNewEdge.setText("");
