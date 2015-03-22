@@ -3,7 +3,7 @@ package model;
 import java.awt.*;
 import java.util.Observable;
 
-public class Edge extends Observable {
+public class Edge extends GraphElement {
 	private Vertex srcVertex;
 	private Vertex dstVertex;
     private String label;
