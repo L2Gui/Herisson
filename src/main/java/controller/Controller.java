@@ -1,15 +1,15 @@
 package controller;
 
 import model.*;
-import org.javatuples.Pair;
-import org.lwjgl.util.vector.Vector3f;
 import view.GraphCanvas;
 import view.GraphView;
 import view.GraphWindow;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Clement on 16/03/2015.
@@ -128,4 +128,10 @@ public class Controller {
     public GraphCanvas getCanvas() {
         return canvas;
     }
+
+
+    public Map<String, IOAlgorithm> getIoAlgorithms() {
+        return ioAlgorithms;
+    }
+
 }

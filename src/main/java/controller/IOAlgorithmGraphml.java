@@ -350,8 +350,12 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
         // display nice nice
         xmlOutput.setFormat(Format.getPrettyFormat());
 
+        if (!filename.endsWith(".graphml")){
+            filename += ".graphml";
+        }
+
         try {
-            xmlOutput.output(gDoc, new FileWriter(filename+".xml"));
+            xmlOutput.output(gDoc, new FileWriter(filename));
         } catch (IOException e) {
             e.printStackTrace();
         }
