@@ -22,12 +22,13 @@ public class RemoveVertexCommand implements ICommand{
         this.vertex.setGraph(graph);
         for(Edge edge : vertex.getEdges())
         {
-                this.graph.getCommandHandler().executeCommand(new RemoveEdgeCommand(edge, true));
-                if(edge.getSrcVertex()==this.vertex){
-                    edge.getDstVertex().getEdges().remove(edge);
-                }else{
-                    edge.getSrcVertex().getEdges().remove(edge);
-                }
+            if(edge.getSrcVertex()==this.vertex){
+                edge.getDstVertex().getEdges().remove(edge);
+            }else{
+                edge.getSrcVertex().getEdges().remove(edge);
+            }
+            this.graph.getCommandHandler().executeCommand(new RemoveEdgeCommand(edge));
+
         }
         vertex.getEdges().clear();
 

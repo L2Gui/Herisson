@@ -10,22 +10,18 @@ import model.Graph;
 public class RemoveEdgeCommand implements ICommand {
     private Edge edge;
     private Graph graph;
-    private boolean removedFromARemovedVertex;
 
     public RemoveEdgeCommand(Edge edge) {
         this.edge = edge;
-        this.removedFromARemovedVertex = false;
-    }
-    public RemoveEdgeCommand(Edge edge, boolean removedFromARemovedVertex) {
-        this.edge = edge;
-        this.removedFromARemovedVertex = removedFromARemovedVertex;
     }
 
     @Override
     public void execute(Graph graph) {
         this.graph = graph;
         this.edge.setGraph(graph);
-        if(!removedFromARemovedVertex){
+        // si l'arete est présente dans la liste d'arete de ses 2 noeuds, on la supprime des deux listes
+        if(this.edge.getDstVertex().getEdges().contains(edge)
+                && this.edge.getSrcVertex().getEdges().contains(edge)){
             this.edge.getDstVertex().getEdges().remove(this.edge);
             this.edge.getSrcVertex().getEdges().remove(this.edge);
         }
