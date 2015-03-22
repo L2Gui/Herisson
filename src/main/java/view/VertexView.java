@@ -44,8 +44,11 @@ public class VertexView extends ViewElement implements Observer {
     @Override
     public void onModelChange() {
         super.onModelChange();
-        Vector3f position = Vector3f.add(super.getPosition(), new Vector3f(this.vertexModel.getSize() / 4.0f, - this.vertexModel.getSize() / 4.0f, super.getPosition().z), null);
-        this.textDrawable.setPosition(position);
+        Vector3f textPosition = new Vector3f(this.vertexModel.getSize() / 4.0f, - this.vertexModel.getSize() / 4.0f, super.getPosition().z);
+        textPosition.x += this.textDrawable.getScale().x / 8.0f;
+        textPosition.y -= this.textDrawable.getScale().y / 8.0f;
+        Vector3f.add(super.getPosition(),textPosition, textPosition);
+        this.textDrawable.setPosition(textPosition);
     }
 
     @Override

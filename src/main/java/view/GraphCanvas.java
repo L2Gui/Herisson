@@ -5,6 +5,8 @@ import controller.action.*;
 import controller.command.MoveVertexCommand;
 import controller.command.RemoveEdgeCommand;
 import controller.command.RemoveVertexCommand;
+import model.GraphElement;
+import model.Vertex;
 import opengl.GLCanvas;
 import opengl.resource.object.camera.GLPerspectiveCamera;
 import opengl.utils.GLRay;
@@ -27,7 +29,7 @@ public class GraphCanvas extends GLCanvas {
     private GLPerspectiveCamera camera;
 
     //attributs utilitaires
-    private Object pasteBuffer;
+    private GraphElement pasteBuffer;
     private boolean isMousePressed = false;
     private VertexView selectedVertex;
     private EdgeView selectedEdge;
@@ -316,7 +318,8 @@ public class GraphCanvas extends GLCanvas {
     private JPopupMenu getPopupOnVertex(VertexView vertexView){
         JPopupMenu contextMenu = new JPopupMenu();
         contextMenu.add(new EditVertexNowAction(this.controller, vertexView));    // passer le vertexview en question en param
-        contextMenu.add(new CopyNowAction(this.controller, vertexView));
+        contextMenu.add(new CopyNowAction(this.controller, vertexView.getModel()));
+        contextMenu.add(new CutNowAction(this.controller, vertexView.getModel()));
         contextMenu.add(new RemoveNowAction(this.controller, vertexView.getModel()));
         contextMenu.add(new JPopupMenu.Separator());
         contextMenu.add(new UndoAction(this.controller));
@@ -342,11 +345,18 @@ public class GraphCanvas extends GLCanvas {
         unlockDraw();
     }
 
-    public Object getPasteBuffer() {
+    public GraphElement getPasteBuffer() {
         return pasteBuffer;
     }
 
-    public void setPasteBuffer(Object pasteBuffer) {
+    public void setPasteBuffer(GraphElement pasteBuffer) {
         this.pasteBuffer = pasteBuffer;
+    }
+
+    public void paste(int x, int y) {
+        if (pasteBuffer instanceof Vertex) {
+            Vertex vertex = (Vertex) pasteBuffer;
+            vertex.setPosition(getLookAtPosition(x, y));
+        }
     }
 }
