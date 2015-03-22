@@ -28,6 +28,15 @@ public abstract class GLCanvas extends AWTGLCanvas {
 		this.mutex = new ReentrantLock();
 	}
 
+    public GLCanvas(GLCanvas canvas, PixelFormat pf) throws LWJGLException {
+        super(pf);
+        canvas.camera = camera;
+    }
+
+    public GLCanvas(PixelFormat pf) throws LWJGLException {
+        super(pf);
+    }
+
     public void setCamera(IGLCamera camera) {
 		this.camera = camera;
 	}

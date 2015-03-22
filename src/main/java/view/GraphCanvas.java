@@ -257,6 +257,7 @@ public class GraphCanvas extends GLCanvas {
                         break;
                     case SELECTION:
                         if (selectedVertex != null) {
+                            graphView.removeTranslatingVertex(selectedVertex);
                             selectedVertex.setPosition(getLookAtPosition(arg0.getX(), arg0.getY()));
                             selectedVertex.getModel().setPosition(getLookAtPosition(arg0.getX(), arg0.getY()));
                         } else if (false) {
@@ -272,7 +273,7 @@ public class GraphCanvas extends GLCanvas {
     @Override
     public void paint(Matrix4f transformationMatrix) {
         if (this.graphView != null) {
-            this.graphView.paint(transformationMatrix);
+            this.graphView.paint(transformationMatrix, this.camera);
         }
     }
 
