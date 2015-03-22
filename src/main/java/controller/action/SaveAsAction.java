@@ -40,7 +40,7 @@ public class SaveAsAction extends MenuAction{
 
 
         if (response == JFileChooser.APPROVE_OPTION){
-            String filename = fileChooser.getSelectedFile().getName();
+            String filename = fileChooser.getSelectedFile().getAbsolutePath();
             System.out.println(filename);
 
             fileChooser.getFileFilter();

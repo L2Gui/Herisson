@@ -16,7 +16,6 @@ import java.awt.event.WindowStateListener;
 public class EditVertexNowAction extends MenuAction{
 
     private VertexView vertexView;
-    private VertexView modifiedVertexView;
 
     public EditVertexNowAction() {
         this(null, null);
@@ -37,7 +36,8 @@ public class EditVertexNowAction extends MenuAction{
 
         ImageIcon rightButtonIcon = new ImageIcon("res/edit_color.png");
 
-        JFrame f = new JFrame("Editer les options d'un noeud");
+        final JFrame f = new JFrame("Editer les options d'un noeud");
+
         f.setSize(320, 420);
 
         JPanel p = new JPanel(new GridLayout(8, 2, 5, 5));
@@ -50,7 +50,7 @@ public class EditVertexNowAction extends MenuAction{
         JLabel colorVertex = new JLabel("Couleur du noeud");
         JLabel border = new JLabel("Taille de la bordure");
 
-        JTextField labelJTF = new JTextField("texte par défault");
+        final JTextField labelJTF = new JTextField("texte par défault");
         JComboBox shapeList = new JComboBox(VertexShape.values());
         JButton b1 = new JButton("Couleur du label",  rightButtonIcon);
         JButton b2 = new JButton("Couleur du noeud",  rightButtonIcon);
@@ -86,7 +86,14 @@ public class EditVertexNowAction extends MenuAction{
         ok.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //EditVertexNowAction.f.dispose();
+                vertexView.getModel().setLabel(labelJTF.getText());
+                vertexView.getModel().setTextColor(Color.blue);
+                vertexView.getModel().setSize(5);
+                //vertexView.getModel().setPosition();
+                vertexView.getModel().setBackgroundColor(Color.blue);
+                //vertexView.getModel().
+
+                f.dispose();
             }
         });
 

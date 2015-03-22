@@ -40,7 +40,7 @@ public class OpenFileAction extends MenuAction{
         int response = fileChooser.showOpenDialog(null);
 
         if (response == JFileChooser.APPROVE_OPTION) {
-            String filename = fileChooser.getSelectedFile().getName();
+            String filename = fileChooser.getSelectedFile().getAbsolutePath();
             System.out.println(filename);
 
             Graph graph = null;
