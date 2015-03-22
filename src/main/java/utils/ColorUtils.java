@@ -41,6 +41,28 @@ import java.util.HashMap;
 
 public class ColorUtils {
 
+    public static Color colorLerp(Color src, Color dst, float percent) {
+        int dr = dst.getRed() - src.getRed();
+        int dg = dst.getGreen() - src.getGreen();
+        int db = dst.getBlue() - src.getBlue();
+        int da = dst.getAlpha() - src.getAlpha();
+
+        dr = (int) ((float) dr * (1.0f - percent));
+        dg = (int) ((float) dg * (1.0f - percent));
+        db = (int) ((float) db * (1.0f - percent));
+        da = (int) ((float) da * (1.0f - percent));
+
+        return new Color(dst.getRed() - dr, dst.getGreen() - dg, dst.getBlue() - db, dst.getAlpha() - da);
+    }
+
+    public static float colorDiff(Color color1, Color color2) {
+        return Math.abs(
+            color2.getRed() - color1.getRed() +
+            color2.getGreen() - color1.getGreen() +
+            color2.getBlue() - color1.getBlue() +
+            color2.getAlpha() - color1.getAlpha());
+    }
+
     public static String colorToString(Color color){
         return color.getRed()+","+color.getGreen()+","+color.getBlue();
     }
