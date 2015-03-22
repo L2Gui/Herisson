@@ -2,7 +2,7 @@ package main;
 
 import controller.*;
 import model.*;
-import model.algorithms.DispoRandomAlgorithm;
+import model.algorithm.DispoRandomAlgorithm;
 import org.javatuples.Pair;
 import org.lwjgl.util.vector.Vector3f;
 import view.GraphCanvas;

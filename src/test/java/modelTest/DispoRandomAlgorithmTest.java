@@ -1,6 +1,6 @@
 package modelTest;
 
-import model.algorithms.DispoRandomAlgorithm;
+import model.algorithm.DispoRandomAlgorithm;
 import model.Graph;
 import model.Vertex;
 import org.javatuples.Pair;

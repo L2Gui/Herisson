@@ -1,6 +1,6 @@
 package modelTest;
 
-import model.algorithms.DispoCircleAlgorithm;
+import model.algorithm.DispoCircleAlgorithm;
 import model.Graph;
 import model.Vertex;
 import org.javatuples.Pair;

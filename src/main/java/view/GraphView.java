@@ -1,8 +1,8 @@
 package view;
 
 import controller.Controller;
-import controller.commands.CreateEdgeCommand;
-import controller.commands.CreateVertexCommand;
+import controller.command.CreateEdgeCommand;
+import controller.command.CreateVertexCommand;
 import model.Edge;
 import model.Graph;
 import model.GraphUpdate;

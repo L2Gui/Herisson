@@ -1,10 +1,10 @@
 package view;
 
 import controller.Controller;
-import controller.actions.*;
-import controller.commands.MoveVertexCommand;
-import controller.commands.RemoveEdgeCommand;
-import controller.commands.RemoveVertexCommand;
+import controller.action.*;
+import controller.command.MoveVertexCommand;
+import controller.command.RemoveEdgeCommand;
+import controller.command.RemoveVertexCommand;
 import opengl.GLCanvas;
 import opengl.resource.object.camera.GLPerspectiveCamera;
 import opengl.utils.GLRay;

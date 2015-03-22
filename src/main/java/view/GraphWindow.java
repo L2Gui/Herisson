@@ -2,10 +2,11 @@ package view;
 
 import controller.Controller;
 import controller.MenuAction;
-import controller.actions.*;
-import model.algorithms.IColorAlgorithm;
-import model.algorithms.IDispoAlgorithm;
-import model.algorithms.ISizeAlgorithm;
+import controller.action.*;
+import controller.action.mode.*;
+import model.algorithm.IColorAlgorithm;
+import model.algorithm.IDispoAlgorithm;
+import model.algorithm.ISizeAlgorithm;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
