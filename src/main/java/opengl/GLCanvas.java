@@ -4,6 +4,7 @@ import opengl.resource.object.camera.IGLCamera;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.AWTGLCanvas;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.vector.Matrix4f;
 
 import java.awt.*;
@@ -23,7 +24,7 @@ public abstract class GLCanvas extends AWTGLCanvas {
     private Color backgroundColor = new Color(230, 230, 230);
 
 	public GLCanvas() throws LWJGLException {
-		super();
+		super(new PixelFormat(8, 0, 0, 4));
 		this.mutex = new ReentrantLock();
 	}
 
