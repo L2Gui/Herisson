@@ -214,8 +214,12 @@ public class GraphView implements Observer {
         return intersectedEdge;
     }
 
-    public void addTranslatingVertices(VertexView vertexView, Vector3f position) {
+    public void addTranslatingVertex(VertexView vertexView, Vector3f position) {
         this.translatingVertices.put(vertexView, position);
+    }
+
+    public void removeTranslatingVertex(VertexView vertexView) {
+        this.translatingVertices.remove(vertexView);
     }
 
     public void loadGraph(Graph graph) {

@@ -254,6 +254,7 @@ public class GraphCanvas extends GLCanvas {
                         break;
                     case SELECTION:
                         if (selectedVertex != null) {
+                            graphView.removeTranslatingVertex(selectedVertex);
                             selectedVertex.setPosition(getLookAtPosition(arg0.getX(), arg0.getY()));
                             selectedVertex.getModel().setPosition(getLookAtPosition(arg0.getX(), arg0.getY()));
                         } else if (false) {
