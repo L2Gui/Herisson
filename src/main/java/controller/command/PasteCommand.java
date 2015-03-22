@@ -22,6 +22,6 @@ public class PasteCommand implements ICommand{
 
     @Override
     public void execute(Graph graph) {
-        graph.getVertices().add(new Vertex(vertex));
+        graph.getVertices().add(vertex);
     }
 }
