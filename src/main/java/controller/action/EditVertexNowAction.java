@@ -40,7 +40,7 @@ public class EditVertexNowAction extends MenuAction{
 
         f.setSize(320, 420);
 
-        JPanel p = new JPanel(new GridLayout(8, 2, 5, 5));
+        JPanel p = new JPanel(new GridLayout(8, 2));
 
         JLabel labelText = new JLabel("Label");
         JLabel labelColor = new JLabel("Couleur du label");
