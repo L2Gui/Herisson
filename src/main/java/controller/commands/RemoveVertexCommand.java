@@ -27,9 +27,9 @@ public class RemoveVertexCommand implements ICommand{
             }else{
                 edge.getSrcVertex().getEdges().remove(edge);
             }
-            this.graph.getCommandHandler().executeCommand(new RemoveEdgeCommand(edge));
-
         }
+        this.graph.getCommandHandler().executeCommand(new RemoveEdgesCommand(vertex.getEdges()));
+
         vertex.getEdges().clear();
 
         this.graph.removeVertex(this.vertex);

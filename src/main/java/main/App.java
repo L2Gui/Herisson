@@ -35,10 +35,10 @@ public class App {
 
             window.setVisible(true);
 
-            /*while (window.isShowing()) {
+            while (window.isShowing()) {
                 canvas.animationLoop();
                 Thread.sleep(16L);
-            }*/
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);
