@@ -7,10 +7,8 @@ import view.GraphView;
 import view.GraphWindow;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Clement on 16/03/2015.
@@ -18,9 +16,9 @@ import java.util.Map;
 public class Controller {
     // Algorithms
     private Map<String, IOAlgorithm> ioAlgorithms;
-    private Map<String, IDispoAlgorithm> dispoAlgorithms;
-    private Map<String, IColorAlgorithm> colorAlgorithms;
-    private Map<String, ISizeAlgorithm> sizeAlgorithms;
+    private Collection<IDispoAlgorithm> dispoAlgorithms;
+    private Collection<IColorAlgorithm> colorAlgorithms;
+    private Collection<ISizeAlgorithm> sizeAlgorithms;
 
     // Model
     private List<Graph> graphs;
@@ -105,17 +103,19 @@ public class Controller {
     }
 
     private void setupDispoAlgorithm() {
-        this.dispoAlgorithms = new HashMap<String, IDispoAlgorithm>();
-        this.dispoAlgorithms.put("Disposition aléatoire", new DispoRandomAlgorithm());
-        this.dispoAlgorithms.put("Disposition en cercle", new DispoCircleAlgorithm());
+        this.dispoAlgorithms = new ArrayList<IDispoAlgorithm>();
+        this.dispoAlgorithms.add(new DispoRandomAlgorithm());
+        this.dispoAlgorithms.add(new DispoCircleAlgorithm());
     }
 
     private void setupColorAlgorithms() {
-        this.colorAlgorithms = new HashMap<String, IColorAlgorithm>();
+        this.colorAlgorithms = new ArrayList<IColorAlgorithm>();
+        this.colorAlgorithms.add(new ColorWithEdgesAlgorithm());
     }
 
     private void setupSizeAlgorithms() {
-        this.sizeAlgorithms = new HashMap<String, ISizeAlgorithm>();
+        this.sizeAlgorithms = new ArrayList<ISizeAlgorithm>();
+        this.sizeAlgorithms.add(new SizeWithEdgesAlgorithm());
     }
 
     public ControllerState getState() {
