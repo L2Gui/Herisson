@@ -1,13 +1,11 @@
 package model;
 
 import controller.CommandHandler;
-import controller.ICommand;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Observable;
 
 public class Graph extends GraphElement {
     private CommandHandler commandHandler;
@@ -51,8 +49,14 @@ public class Graph extends GraphElement {
                 System.out.println("Edge already exists");
             } else {
                 // On renseigne ici l'attribut graph du lien en l'ajoutant dans celui ci
-                edge.setGraph(this);
-                edge.setStyle(this.styleManager.getDefaultEdgeStyle());
+                if (edge.getGraph() == null) {
+                    edge.setGraph(this);
+                }
+
+                if (edge.getStyle() == null) {
+                    edge.setStyle(this.styleManager.getDefaultEdgeStyle());
+                }
+
                 this.update(new GraphUpdate(GraphUpdate.UpdateType.ADD_EDGE, edge));
             }
         }
@@ -72,8 +76,15 @@ public class Graph extends GraphElement {
 			System.out.println("Vertex already exist");
 		} else {
             // On renseigne ici l'attribut graph du noeud en l'ajoutant dans celui ci
-            vertex.setGraph(this);
-            vertex.setStyle(this.styleManager.getDefaultVertexStyle());
+
+            if (vertex.getGraph() == null) {
+                vertex.setGraph(this);
+            }
+
+            if (vertex.getStyle() == null){
+                vertex.setStyle(this.styleManager.getDefaultVertexStyle());
+            }
+
             this.update(new GraphUpdate(GraphUpdate.UpdateType.ADD_VERTEX, vertex));
         }
 	}
