@@ -132,6 +132,10 @@ public class GraphView implements Observer {
         }
         this.isInitialized = true;
     }
+    public void reloadVertex(Vertex v){
+        this.vertexViews.remove(v);
+        this.addVertex(v);
+    }
 
     public void paint(Matrix4f transformationMatrix) {
         GL11.glDisable(GL11.GL_DEPTH_TEST);
