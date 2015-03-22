@@ -152,5 +152,30 @@ public class VertexStyle implements IStyle {
         return this.id;
     }
 
+    public boolean isEquals(VertexStyle style) {
+        if (!this.borderColor.equals(style.borderColor)){
+            return false;
+        }
+        if (this.size != style.size){
+            return false;
+        }
+        if (!this.textColor.equals(style.textColor)){
+            return false;
+        }
+        if (this.shape != style.shape){
+            return false;
+        }
+        if (!this.backgroundColor.equals(style.backgroundColor)){
+            return false;
+        }
+        if (!this.font.equals(style.font)){
+            return false;
+        }
+        if (this.borderThickness != style.borderThickness){
+            return false;
+        }
+        return true;
+    }
+
 
 }

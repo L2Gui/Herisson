@@ -1,21 +1,167 @@
 package controller;
 
 import model.*;
+import org.lwjgl.util.vector.Vector3f;
 import utils.ColorUtils;
 import utils.FontUtils;
+import utils.LineStyleUtils;
+import utils.ShapeUtils;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 public class IOAlgorithmDot implements IOAlgorithm {
 
+    private HashMap<String, Vertex> vertexMapOpen = null;
+
 	@Override
 	public Graph open(String filename) {
-		// TODO Auto-generated method stub
-		return null;
+        vertexMapOpen = new HashMap<String, Vertex>();
+		Graph graph = new Graph();
+
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(filename));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+            while (line != null) {
+                System.out.println(line);
+                parseDotLine(line, graph);
+                line = br.readLine();
+            }
+            String everything = sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+		return graph;
 	}
+
+    private void parseDotLine(String line, Graph graph){
+        StringTokenizer tokenizer = new StringTokenizer(line, "[");
+        String token = "";
+        String nodeToken = null;
+        String edgeToken = null;
+        while (tokenizer.hasMoreTokens()){
+            token = tokenizer.nextToken();
+            if(nodeToken != null){
+                System.out.println("Vertex style line");
+                Vertex vertex = new Vertex(graph);
+                VertexStyle vertexStyle = new VertexStyle();
+                Vector3f vertexPos = new Vector3f(0,0,0);
+                vertexMapOpen.put(nodeToken, vertex);
+                String[] styleValues = token.split(";");
+                for(String s : styleValues){
+                    if(s.split("=").length == 2){
+                        String value = s.split("=")[1].replace("]", "").replace(" ","");
+                        String key = s.split("=")[0].replace(" ","");
+                        if (key.contains("shape")){
+                            vertexStyle.setShape(ShapeUtils.stringToShape(value));
+                        }
+                        if (key.contains( "font")){
+                            vertexStyle.setFont(FontUtils.stringToFont(value));
+                        }
+                        if (key.contains("size")){
+                            vertexStyle.setSize(Float.parseFloat(value));
+                        }
+                        if (key.contains("border-thickness")){
+                            vertexStyle.setBorderThickness(Float.parseFloat(value));
+
+                        }
+                        if (key.contains("background-color")){
+                            vertexStyle.setBackgroundColor(ColorUtils.RGBStringToColor(value));
+                        }
+                        if (key.contains("text-color")){
+                            vertexStyle.setTextColor(ColorUtils.RGBStringToColor(value));
+                        }
+                        if (key.contains("border-color")){
+                            vertexStyle.setBorderColor(ColorUtils.RGBStringToColor(value));
+                        }
+                        if (key.contains("label")){
+                            vertex.setLabel(value);
+                        }
+                        if (key.contains("pos_x")){
+                            vertexPos.setX(Float.parseFloat(value));
+                        }
+                        if (key.contains("pos_y")){
+                            vertexPos.setY(Float.parseFloat(value));
+                        }
+                        if (key.contains("pos_z")) {
+                            vertexPos.setZ(Float.parseFloat(value));
+                        }
+                    }
+                }
+                if (vertexStyle.isEquals(graph.getStyleManager().getDefaultVertexStyle())){
+                    vertex.setStyle(graph.getStyleManager().getDefaultVertexStyle());
+                } else {
+                    vertex.setStyle(vertexStyle);
+                    graph.getStyleManager().addStyle(vertexStyle);
+                }
+                vertex.setPosition(vertexPos);
+                graph.addVertex(vertex);
+            } else if (edgeToken != null){
+                System.out.println("Edge Style line");
+                Edge edge = new Edge(graph);
+                edge.setSrcVertex(vertexMapOpen.get(edgeToken.split(" .. ")[0]));
+                edge.setDstVertex(vertexMapOpen.get(edgeToken.split(" .. ")[1]));
+                EdgeStyle edgeStyle = new EdgeStyle();
+                String[] styleValues = token.split(";");
+                for(String s : styleValues){
+                    if(s.split("=").length == 2){
+                        String value = s.split("=")[1].replace("]", "").replace(" ","");
+                        String key = s.split("=")[0].replace(" ","");
+                        if (key.contains( "font")){
+                            edgeStyle.setFont(FontUtils.stringToFont(value));
+                        }
+                        if (key.contains("thickness")){
+                            edgeStyle.setThickness(Float.parseFloat(value));
+                        }
+                        if (key.contains("color")){
+                            edgeStyle.setColor(ColorUtils.RGBStringToColor(value));
+                        }
+                        if (key.contains("text-color")){
+                            edgeStyle.setTextColor(ColorUtils.RGBStringToColor(value));
+                        }
+                        if (key.contains("label")){
+                            edge.setLabel(value);
+                        }
+                        if (key.contains("style")){
+                            edgeStyle.setStyle(LineStyleUtils.stringToLineStyle(value));
+                        }
+                    }
+                }
+                if (edgeStyle.isEquals(graph.getStyleManager().getDefaultEdgeStyle())){
+                    edge.setStyle(graph.getStyleManager().getDefaultEdgeStyle());
+                } else {
+                    edge.setStyle(edgeStyle);
+                    graph.getStyleManager().addStyle(edgeStyle);
+                }
+                graph.addEdge(edge);
+            } else if (token.matches("^[a-zA-Z0-9]*$")){
+                System.out.println("Node ?");
+                nodeToken = token;
+                System.out.println(vertexMapOpen.size());
+                edgeToken = null;
+            } else if (token.matches("^[a-zA-Z0-9]* -- [a-zA-Z0-9]*$") || token.matches("[a-zA-Z0-9] -> [a-zA-Z0-9]")){
+                System.out.println("Edge ?");
+                edgeToken = token;
+                nodeToken = null;
+            }
+        }
+    }
 
 	@Override
 	public void save(String filename, Graph graph) {
@@ -108,7 +254,7 @@ public class IOAlgorithmDot implements IOAlgorithm {
 	@Override
 	public boolean isConform(String filname) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }

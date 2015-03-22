@@ -109,4 +109,23 @@ public class EdgeStyle implements IStyle {
     public long getId() {
         return this.id;
     }
+
+    public boolean isEquals(EdgeStyle style) {
+        if (!this.textColor.equals(style.textColor)){
+            return false;
+        }
+        if (this.style != style.style){
+            return false;
+        }
+        if (!this.color.equals(style.color)){
+            return false;
+        }
+        if (!this.font.equals(style.font)){
+            return false;
+        }
+        if (this.thickness != style.thickness){
+            return false;
+        }
+        return true;
+    }
 }
