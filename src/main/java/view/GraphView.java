@@ -154,6 +154,7 @@ public class GraphView implements Observer {
     }
 
     public void addVertex(Vertex vertex) {
+
         VertexView vertexView = new VertexView(vertex, this.vertexMesh, this.labelShader);
         vertexView.setShader(this.vertexEdgeShader);
         vertexView.setPosition(vertexView.getPosition().x, vertexView.getPosition().y, 3.0f);
@@ -163,6 +164,7 @@ public class GraphView implements Observer {
     }
 
     public void addEdge(Vertex src, Vertex dst) {
+
         Edge edge = new Edge();
         edge.setSrcVertex(src);
         edge.setDstVertex(dst);

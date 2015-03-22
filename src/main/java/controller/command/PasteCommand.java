@@ -34,5 +34,6 @@ public class PasteCommand implements ICommand{
         }
         graph.addVertex(vertex);
         controller.getCanvas().getGraphView().addVertex(vertex);
+        //this.controller.getCanvas().getController().getCurrentGraph().addVertex(vertex);
     }
 }
