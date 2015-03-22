@@ -1,8 +1,11 @@
 package controller.command;
 
+import controller.Controller;
 import controller.ICommand;
 import model.Graph;
 import model.Vertex;
+import org.lwjgl.LWJGLException;
+import view.GraphCanvas;
 
 /**
  * Created by Corentin on 22/03/2015.
@@ -10,9 +13,11 @@ import model.Vertex;
 public class PasteCommand implements ICommand{
 
     private Vertex vertex;
+    private Controller controller;
 
-    public PasteCommand(Vertex vertex) {
+    public PasteCommand(Controller controller, Vertex vertex) {
         this.vertex = vertex;
+        this.controller = controller;
     }
 
     @Override
@@ -22,6 +27,12 @@ public class PasteCommand implements ICommand{
 
     @Override
     public void execute(Graph graph) {
-        graph.getVertices().add(vertex);
+        try {
+            controller.getCanvas().makeCurrent();
+        } catch (LWJGLException e) {
+            e.printStackTrace();
+        }
+        graph.addVertex(vertex);
+        controller.getCanvas().getGraphView().addVertex(vertex);
     }
 }
