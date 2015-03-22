@@ -18,7 +18,7 @@ public class RemoveModeAction extends MenuAction{
      * Constructeur de Remove Action
      */
     public RemoveModeAction(Controller controller) {
-        super(controller, "Supprimer", "res/cancel.png", KeyEvent.VK_R, 4);
+        super(controller, "Supprimer", "res/cancel.png", KeyEvent.VK_7, 4);
     }
 
     @Override

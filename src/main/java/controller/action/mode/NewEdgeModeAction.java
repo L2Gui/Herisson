@@ -5,6 +5,7 @@ import controller.ControllerState;
 import controller.MenuAction;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 
 public class NewEdgeModeAction extends MenuAction{
@@ -17,7 +18,7 @@ public class NewEdgeModeAction extends MenuAction{
      * Constructeur de NewEdge Action
      */
     public NewEdgeModeAction(Controller controller) {
-        super(controller, "Nouveau trait", "res/edge3.png", null, null);
+        super(controller, "Nouveau trait", "res/edge3.png", KeyEvent.VK_3, null);
     }
 
     @Override

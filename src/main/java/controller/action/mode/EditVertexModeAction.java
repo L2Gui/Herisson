@@ -5,6 +5,7 @@ import controller.ControllerState;
 import controller.MenuAction;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 
 public class EditVertexModeAction extends MenuAction{
@@ -17,7 +18,7 @@ public class EditVertexModeAction extends MenuAction{
      * Constructeur de EditVertex Action
      */
     public EditVertexModeAction(Controller controller) {
-        super(controller, "Modifier Noeud", "res/edit_node3.png", null, null);
+        super(controller, "Modifier Noeud", "res/edit_node3.png", KeyEvent.VK_6, null);
     }
 
     @Override
