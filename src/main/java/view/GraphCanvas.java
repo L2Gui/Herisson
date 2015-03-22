@@ -2,12 +2,10 @@ package view;
 
 import controller.Controller;
 import controller.action.*;
-import controller.command.CreateVertexCommand;
 import controller.command.MoveVertexCommand;
 import controller.command.RemoveEdgeCommand;
 import controller.command.RemoveVertexCommand;
 import model.GraphElement;
-import model.Vertex;
 import opengl.GLCanvas;
 import opengl.resource.object.camera.GLPerspectiveCamera;
 import opengl.utils.GLRay;
@@ -15,11 +13,14 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import utils.MathUtils;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseWheelEvent;
 
 /**
  * Created by Clement on 13/03/2015.
@@ -28,6 +29,7 @@ public class GraphCanvas extends GLCanvas {
     private GraphView graphView;
     private Controller controller;
     private GLPerspectiveCamera camera;
+    private Vector3f cameraTarget;
 
     //attributs utilitaires
     private GraphElement pasteBuffer;
@@ -44,6 +46,7 @@ public class GraphCanvas extends GLCanvas {
     }
 
     public void setGraphView(GraphView graphView) {
+        super.lockDraw();
         this.graphView = graphView;
         try {
             super.makeCurrent();
@@ -53,6 +56,7 @@ public class GraphCanvas extends GLCanvas {
         } catch (IllegalStateException e) {
             // Not yet displayable
         }
+        super.unlockDraw();
     }
 
     public Controller getController() {
@@ -91,8 +95,6 @@ public class GraphCanvas extends GLCanvas {
                 initGraphCanvas();
 
                 if (arg0.getButton() == MouseEvent.BUTTON1) { // CLIC GAUCHE
-
-
                     VertexView intersectedVertexView = getIntersectedVertexView(arg0.getX(), arg0.getY());
                     EdgeView intersectedEdgeView = getIntersectedEdgeView(arg0.getX(), arg0.getY());
                     if (intersectedVertexView != null) {
@@ -137,8 +139,6 @@ public class GraphCanvas extends GLCanvas {
 
                         default:
                     }
-
-
                 } else if (arg0.getButton() == MouseEvent.BUTTON3) { // CLIC DROIT
 
                     VertexView intersectedVertexView = getIntersectedVertexView(arg0.getX(), arg0.getY());
@@ -243,8 +243,8 @@ public class GraphCanvas extends GLCanvas {
                     case MOVE:
                         if(oldPosition !=null){
                             Vector2f delta = Vector2f.sub(new Vector2f(arg0.getX(), arg0.getY()), oldPosition, null);
-                            GraphCanvas.this.camera.rotate((float)(delta.getX()*0.5), new Vector3f(0f,-1f,0f));
-                            GraphCanvas.this.camera.rotate((float)(delta.getY()*0.5), new Vector3f(1f,0f,0f));
+                            GraphCanvas.this.camera.rotate((float)(delta.getX()*0.1), new Vector3f(0f,-1f,0f));
+                            GraphCanvas.this.camera.rotate((float)(delta.getY()*0.1), new Vector3f(1f,0f,0f));
                             oldPosition.setX(arg0.getX());
                             oldPosition.setY(arg0.getY());
                         }
@@ -265,6 +265,17 @@ public class GraphCanvas extends GLCanvas {
                 unlockDraw();
             }
         });
+
+        super.addMouseWheelListener(new MouseAdapter() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent mouseWheelEvent) {
+                int dz = mouseWheelEvent.getWheelRotation();
+                float strength = 1.1f;
+
+                float zoomFactor = (float) Math.pow(strength, dz);
+                setCameraZoom(zoomFactor);
+            }
+        });
     }
 
     @Override
@@ -280,7 +291,7 @@ public class GraphCanvas extends GLCanvas {
     }
 
     ////////////////////////////// RECUPERE POSITION PLAN 2D //////////////////////////////////////////////////////
-    private Vector3f getLookAtPosition(int x, int y){
+    public Vector3f getLookAtPosition(int x, int y){
         GLRay ray = this.camera.getCursorRay(new Vector2f(x, super.getSize().height - y));
 
         /**
@@ -334,6 +345,7 @@ public class GraphCanvas extends GLCanvas {
         contextMenu.add(new ZoomLessAction(this.controller));
         return contextMenu;
     }
+
     private JPopupMenu getPopupOnNothing(int x, int y){
         JPopupMenu contextMenu = new JPopupMenu();
         contextMenu.add(new PasteNowAction(this.controller, x, y));
@@ -344,9 +356,31 @@ public class GraphCanvas extends GLCanvas {
         contextMenu.add(new ZoomLessAction(this.controller));
         return contextMenu;
     }
+
+    public void setCameraZoom(float zoomFactor) {
+        if (this.cameraTarget == null) {
+            this.cameraTarget = new Vector3f(camera.getPosition());
+        }
+        this.cameraTarget.z *= zoomFactor;
+    }
+
     ////////////////////////////////////////////////  ANIMATION //////////////////////////////////////////////
     public void animationLoop() {
         lockDraw();
+
+        if (this.cameraTarget != null) {
+            Vector3f position = this.camera.getPosition();
+            float length = Vector3f.sub(position, this.cameraTarget, null).length();
+
+            if (length < 0.01f) {
+                this.camera.setPosition(this.cameraTarget);
+                this.cameraTarget = null;
+            } else {
+                Vector3f interm = MathUtils.vectorLerp(position, this.cameraTarget, 0.05f);
+                this.camera.setPosition(interm);
+            }
+        }
+
         graphView.animate();
         unlockDraw();
     }
@@ -358,4 +392,6 @@ public class GraphCanvas extends GLCanvas {
     public void setPasteBuffer(GraphElement pasteBuffer) {
         this.pasteBuffer = pasteBuffer;
     }
+
+
 }

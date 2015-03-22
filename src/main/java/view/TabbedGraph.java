@@ -12,23 +12,19 @@ import java.util.Vector;
 
 public class TabbedGraph extends JTabbedPane {
     private Controller controller = null;
-    private GraphCanvas canvas;
     private int index=0;
 
     /**
      * Constructeur de TabbedGraph. Prend un canvas en paramètre
-     *
-     * @param canvas le canvas qui sera utilisé par tous les graphes
      */
-    public TabbedGraph(GraphCanvas canvas) {
-        this.canvas = canvas;
+    public TabbedGraph() {
         this.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 if(getSelectedIndex()!=-1) {
                     TabbedGraph.this.controller.selectGraph(getSelectedIndex());
                     setComponentAt(index, new JPanel());
-                    setComponentAt(getSelectedIndex(), getEncapsulatedCanvas());
+                    setComponentAt(getSelectedIndex(), new JPanel());
                     index = getSelectedIndex();
                 }
             }
@@ -45,19 +41,13 @@ public class TabbedGraph extends JTabbedPane {
      * @param name le graphe à ajouter
      */
     public void addGraphTab(String name) {
-        super.addTab(name, getEncapsulatedCanvas());
+        super.addTab(name, new JPanel());
         setSelectedIndex(getTabCount()-1);
         index=getSelectedIndex();
     }
 
-    /**
-     *
-     * @return le canvas encapsulé dans un JPanel
-     */
-    private JPanel getEncapsulatedCanvas(){
-        JPanel p = new JPanel();
-        p.setLayout(new BorderLayout());
-        p.add(canvas, BorderLayout.CENTER);
-        return p;
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(super.getPreferredSize().width, 20);
     }
 }

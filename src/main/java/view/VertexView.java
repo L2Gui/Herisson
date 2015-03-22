@@ -1,14 +1,17 @@
 package view;
 
 import model.Vertex;
+import model.VertexShape;
 import opengl.resource.GLShader;
 import opengl.resource.object.GLDrawableObject;
 import opengl.resource.object.GLObjectUsage;
+import opengl.resource.object.camera.IGLCamera;
 import opengl.resource.object.mesh.GLColorVariantMesh;
 import opengl.resource.object.mesh.GLTextMesh;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import utils.MathUtils;
+import utils.QuaternionUtils;
 
 import java.awt.*;
 import java.util.Observable;
@@ -22,12 +25,10 @@ public class VertexView extends ViewElement implements Observer {
 
     public VertexView(Vertex vertexModel, GLColorVariantMesh mesh, GLShader labelShader) {
         this.vertexModel = vertexModel;
-
         this.vertexModel.addObserver(this);
-
         this.labelMesh = new GLTextMesh();
-        this.mesh = mesh;
         this.textDrawable = new GLDrawableObject(labelShader, labelMesh);
+        this.mesh = mesh;
 
         super.setMesh(this.mesh);
 

@@ -4,6 +4,7 @@ import model.Edge;
 import opengl.resource.GLShader;
 import opengl.resource.object.GLDrawableObject;
 import opengl.resource.object.GLObjectUsage;
+import opengl.resource.object.camera.IGLCamera;
 import opengl.resource.object.mesh.GLColorVariantMesh;
 import opengl.resource.object.mesh.GLTextMesh;
 import org.lwjgl.util.vector.Matrix4f;

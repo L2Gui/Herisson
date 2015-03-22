@@ -9,6 +9,7 @@ import view.GraphCanvas;
 import view.GraphWindow;
 
 import java.awt.*;
+import java.util.ConcurrentModificationException;
 
 public class App {
     public static void main(String args[]) {
