@@ -166,8 +166,7 @@ public class GraphView implements Observer {
             case DIAMOND: mesh = this.vertexDiamondMesh; break;
         }
 
-        VertexView vertexView = new VertexView(vertex, mesh, this.labelShader);
-        vertexView.setShader(this.vertexEdgeShader);
+        VertexView vertexView = new VertexView(vertex, mesh, this.vertexEdgeShader, this.labelShader);
         vertexView.setPosition(vertexView.getPosition().x, vertexView.getPosition().y, 3.0f);
 
         this.createdVertices.add(vertexView);
