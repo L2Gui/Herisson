@@ -270,7 +270,7 @@ public class GraphCanvas extends GLCanvas {
     @Override
     public void paint(Matrix4f transformationMatrix) {
         if (this.graphView != null) {
-            this.graphView.paint(transformationMatrix);
+            this.graphView.paint(transformationMatrix, this.camera);
         }
     }
 
