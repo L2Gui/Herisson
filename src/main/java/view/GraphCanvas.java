@@ -291,7 +291,7 @@ public class GraphCanvas extends GLCanvas {
     }
 
     ////////////////////////////// RECUPERE POSITION PLAN 2D //////////////////////////////////////////////////////
-    private Vector3f getLookAtPosition(int x, int y){
+    public Vector3f getLookAtPosition(int x, int y){
         GLRay ray = this.camera.getCursorRay(new Vector2f(x, super.getSize().height - y));
 
         /**
@@ -392,4 +392,6 @@ public class GraphCanvas extends GLCanvas {
     public void setPasteBuffer(GraphElement pasteBuffer) {
         this.pasteBuffer = pasteBuffer;
     }
+
+
 }

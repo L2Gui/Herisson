@@ -40,7 +40,7 @@ public class PasteNowAction extends MenuAction{
         if (getController().getCanvas().getPasteBuffer() instanceof Vertex) {
             //GraphCanvas.this.controller.executeCommand(new CreateVertexCommand((Vertex) pasteBuffer));
             Vertex vertex = new Vertex((Vertex) getController().getCanvas().getPasteBuffer());
-            vertex.setPosition(new Vector3f(x,y,vertex.getPosition().getZ()));
+            vertex.setPosition(getController().getCanvas().getLookAtPosition(x, y));
             this.getController().getCurrentGraph().getCommandHandler().executeCommand(new PasteCommand(getController(), vertex));
         }
     }

@@ -175,6 +175,7 @@ public class GraphView implements Observer {
     }
 
     public void addEdge(Vertex src, Vertex dst) {
+
         Edge edge = new Edge();
         edge.setSrcVertex(src);
         edge.setDstVertex(dst);
