@@ -128,7 +128,7 @@ public class GraphView implements Observer {
         this.isInitialized = true;
     }
 
-    public void paint(Matrix4f transformationMatrix, IGLCamera camera) {
+    public void paint(Matrix4f transformationMatrix) {
         GL11.glDisable(GL11.GL_DEPTH_TEST);
 
         for (Map.Entry<Edge, EdgeView> edgeEntry : this.edgeViews.entrySet()) {
@@ -136,11 +136,11 @@ public class GraphView implements Observer {
         }
 
         for (Map.Entry<Vertex, VertexView> vertexEntry : this.vertexViews.entrySet()) {
-            vertexEntry.getValue().renderText(transformationMatrix, camera);
+            vertexEntry.getValue().renderText(transformationMatrix);
         }
 
         for (Map.Entry<Edge, EdgeView> edgeEntry : this.edgeViews.entrySet()) {
-            edgeEntry.getValue().renderText(transformationMatrix, camera);
+            edgeEntry.getValue().renderText(transformationMatrix);
         }
 
         GL11.glEnable(GL11.GL_DEPTH_TEST);

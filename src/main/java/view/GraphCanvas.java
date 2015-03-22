@@ -2,13 +2,10 @@ package view;
 
 import controller.Controller;
 import controller.action.*;
-import controller.command.CreateVertexCommand;
 import controller.command.MoveVertexCommand;
 import controller.command.RemoveEdgeCommand;
 import controller.command.RemoveVertexCommand;
 import model.GraphElement;
-import model.Vertex;
-import model.algorithm.ColorWithEdgesAlgorithm;
 import opengl.GLCanvas;
 import opengl.resource.object.camera.GLPerspectiveCamera;
 import opengl.utils.GLRay;
@@ -16,12 +13,15 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import utils.MathUtils;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseWheelEvent;
 
 /**
  * Created by Clement on 13/03/2015.
@@ -30,6 +30,7 @@ public class GraphCanvas extends GLCanvas {
     private GraphView graphView;
     private Controller controller;
     private GLPerspectiveCamera camera;
+    private Vector3f cameraTarget;
 
     //attributs utilitaires
     private GraphElement pasteBuffer;
@@ -266,12 +267,23 @@ public class GraphCanvas extends GLCanvas {
                 unlockDraw();
             }
         });
+
+        super.addMouseWheelListener(new MouseAdapter() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent mouseWheelEvent) {
+                int dz = mouseWheelEvent.getWheelRotation();
+                float strength = 1.1f;
+
+                float zoomFactor = (float) Math.pow(strength, dz);
+                setCameraZoom(zoomFactor);
+            }
+        });
     }
 
     @Override
     public void paint(Matrix4f transformationMatrix) {
         if (this.graphView != null) {
-            this.graphView.paint(transformationMatrix, this.camera);
+            this.graphView.paint(transformationMatrix);
         }
     }
 
@@ -347,9 +359,30 @@ public class GraphCanvas extends GLCanvas {
         return contextMenu;
     }
 
+    public void setCameraZoom(float zoomFactor) {
+        if (this.cameraTarget == null) {
+            this.cameraTarget = new Vector3f(camera.getPosition());
+        }
+        this.cameraTarget.z *= zoomFactor;
+    }
+
     ////////////////////////////////////////////////  ANIMATION //////////////////////////////////////////////
     public void animationLoop() {
         lockDraw();
+
+        if (this.cameraTarget != null) {
+            Vector3f position = this.camera.getPosition();
+            float length = Vector3f.sub(position, this.cameraTarget, null).length();
+
+            if (length < 0.01f) {
+                this.camera.setPosition(this.cameraTarget);
+                this.cameraTarget = null;
+            } else {
+                Vector3f interm = MathUtils.vectorLerp(position, this.cameraTarget, 0.05f);
+                this.camera.setPosition(interm);
+            }
+        }
+
         graphView.animate();
         unlockDraw();
     }

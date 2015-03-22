@@ -80,11 +80,7 @@ public class EdgeView extends ViewElement implements Observer {
         super.render(transformationMatrix);
     }
 
-    public void renderText(Matrix4f transformationMatrix, IGLCamera camera) {
-        Vector3f direction = Vector3f.sub(camera.getPosition(), this.textDrawable.getPosition(), null);
-        direction.x = -direction.x;
-        direction.y = -direction.y;
-        this.textDrawable.setRotation(QuaternionUtils.quaternionLookRotation(direction));
+    public void renderText(Matrix4f transformationMatrix) {
         this.textDrawable.render(transformationMatrix);
     }
 
