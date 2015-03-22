@@ -133,8 +133,7 @@ public class GraphView implements Observer {
         this.isInitialized = true;
     }
     public void reloadVertex(Vertex v){
-        this.vertexViews.remove(v);
-        this.addVertex(v);
+        loadGraph(graph);
     }
 
     public void paint(Matrix4f transformationMatrix) {
