@@ -113,10 +113,12 @@ public class GraphCanvas extends GLCanvas {
                         case EDGE_EDITION:
                             break;
 
-                        case MOVE:
+                        case SELECTION:
                             if (selectedVertex != null) {
                                 positions[0] = selectedVertex.getModel().getPosition();
                             }
+                            break;
+                        case MOVE:
                             break;
 
                         case DELETION:
@@ -147,7 +149,8 @@ public class GraphCanvas extends GLCanvas {
 
                         case EDGE_EDITION:
                             break;
-
+                        case SELECTION:
+                            break;
                         case MOVE:
                             break;
 
@@ -190,7 +193,7 @@ public class GraphCanvas extends GLCanvas {
                         case EDGE_EDITION:
                             break;
 
-                        case MOVE:
+                        case SELECTION:
                             if (selectedVertex != null) {
                                 positions[1] = selectedVertex.getModel().getPosition();
                                 GraphCanvas.this.controller.executeCommand(new MoveVertexCommand(selectedVertex.getModel(), positions[0], positions[1]));
@@ -198,6 +201,8 @@ public class GraphCanvas extends GLCanvas {
                                 positions[1] = null;
                                 selectedVertex = null;
                             }
+                            break;
+                        case MOVE:
                             break;
 
                         case DELETION:
@@ -229,6 +234,9 @@ public class GraphCanvas extends GLCanvas {
 
                 switch (GraphCanvas.this.getController().getState()) {
                     case MOVE:
+                        //TODO opengl rotation de caméra ! :D
+                        break;
+                    case SELECTION:
                         if (selectedVertex != null) {
                             selectedVertex.setPosition(getLookAtPosition(arg0.getX(), arg0.getY()));
                             selectedVertex.getModel().setPosition(getLookAtPosition(arg0.getX(), arg0.getY()));
