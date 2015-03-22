@@ -4,6 +4,7 @@ import controller.Controller;
 import controller.MenuAction;
 import model.VertexShape;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.util.vector.Vector3f;
 import view.GraphCanvas;
 import view.VertexView;
 
@@ -19,6 +20,12 @@ import java.util.ArrayList;
 public class EditVertexNowAction extends MenuAction{
 
     private VertexView vertexView;
+    Color flabelColor;
+    Color fvertexColor;
+    Color fborderColor;
+    JTextField x;
+    JTextField y;
+    JTextField z;
 
     public EditVertexNowAction() {
         this(null, null);
@@ -38,6 +45,10 @@ public class EditVertexNowAction extends MenuAction{
         System.out.println("edit vertex (" + e.getSource().getClass().getName() + ")");
 
         ImageIcon rightButtonIcon = new ImageIcon("res/edit_color.png");
+
+        flabelColor = vertexView.getModel().getTextColor();
+        fvertexColor = vertexView.getModel().getBackgroundColor();
+        fborderColor = vertexView.getModel().getBorderColor();
 
         final JFrame f = new JFrame("Editer les options d'un noeud");
 
@@ -65,11 +76,11 @@ public class EditVertexNowAction extends MenuAction{
         JButton ok = new JButton("OK");
         JButton cancel = new JButton("Annuler");
 
-        JTextField sizeJTF = new JTextField("" + vertexView.getModel().getSize());
+        final JTextField sizeJTF = new JTextField("" + vertexView.getModel().getSize());
         JPanel positionPanel = new JPanel(new GridLayout(1, 3));
-        JTextField x = new JTextField("" + vertexView.getModel().getPosition().getX());
-        JTextField y = new JTextField("" + vertexView.getModel().getPosition().getY());
-        JTextField z = new JTextField("" + vertexView.getModel().getPosition().getZ());
+        x = new JTextField("" + String.format("%.2f", vertexView.getModel().getPosition().getX()));
+        y = new JTextField("" + String.format("%.2f", vertexView.getModel().getPosition().getY()));
+        z = new JTextField("" + String.format("%.2f", vertexView.getModel().getPosition().getZ()));
         positionPanel.add(x);
         positionPanel.add(y);
         positionPanel.add(z);
@@ -104,24 +115,24 @@ public class EditVertexNowAction extends MenuAction{
         b1.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e)
-            {
-                Color color = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", Color.white);
+            { //textColor
+                flabelColor = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", flabelColor);
             }
         });
 
         b2.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e)
-            {
-                Color color = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", Color.white);
+            { //vertexColor
+                fvertexColor = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", fvertexColor);
             }
         });
 
         b3.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e)
-            {
-                Color color = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", Color.white);
+            { //borderColor
+                fborderColor = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", fborderColor);
             }
         });
 
@@ -129,11 +140,15 @@ public class EditVertexNowAction extends MenuAction{
             @Override
             public void actionPerformed(ActionEvent e) {
                 vertexView.getModel().setLabel(labelJTF.getText());
-                //vertexView.getModel().setTextColor(Color.blue);
-                //vertexView.getModel().setSize(5);
-                //vertexView.getModel().setPosition();
-                //vertexView.getModel().setBackgroundColor(Color.blue);
-                //vertexView.getModel().
+                vertexView.getModel().setTextColor(flabelColor);
+                //if float
+                vertexView.getModel().setSize(Float.parseFloat(sizeJTF.getText()));
+                //if float
+                vertexView.getModel().setPosition(new Vector3f(Float.parseFloat(x.getText().replaceFirst(",", ".")), Float.parseFloat(y.getText().replaceFirst(",", ".")), 0)); // z = 0
+                vertexView.getModel().setBackgroundColor(fvertexColor);
+                vertexView.getModel().setBorderColor(fborderColor);
+                //vertexView.getModel().setThickness(02);
+                //getController().getCanvas().getGraphView().addTranslatingVertex(vertexView, new Vector3f(Float.parseFloat(x.getText()), Float.parseFloat(y.getText()), 0));
 
                 try {
                     getController().getCanvas().makeCurrent();
@@ -143,6 +158,7 @@ public class EditVertexNowAction extends MenuAction{
                 getController().getCanvas().getGraphView().reloadVertex(vertexView);
                 //getController().getCanvas().getGraphView().init();
                 f.dispose();
+
             }
         });
 
