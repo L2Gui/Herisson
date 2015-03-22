@@ -78,7 +78,7 @@ public class ApplyColorAlgorithmAction extends MenuAction {
         OkBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                getController().executeCommand(new ApplyColorAlgorithmCommand(algorithm, colorMin, colorMax));
+                getController().executeCommand(new ApplyColorAlgorithmCommand(getController().getCanvas().getGraphView(), algorithm, colorMin, colorMax));
                 frame.dispose();
             }
         });
