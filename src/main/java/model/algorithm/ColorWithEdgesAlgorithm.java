@@ -21,7 +21,7 @@ public class ColorWithEdgesAlgorithm implements IColorAlgorithm {
     public String toString() {
         return "Couleur en fonction du degrès";
     }
-    
+
     public ColorWithEdgesAlgorithm(){
     }
 

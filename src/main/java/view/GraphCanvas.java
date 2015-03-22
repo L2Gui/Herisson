@@ -147,6 +147,8 @@ public class GraphCanvas extends GLCanvas {
                 } else if (arg0.getButton() == MouseEvent.BUTTON3) { // CLIC DROIT
 
                     VertexView intersectedVertexView = getIntersectedVertexView(arg0.getX(), arg0.getY());
+                    EdgeView intersectedEdgeView = getIntersectedEdgeView(arg0.getX(), arg0.getY());
+
                     switch (GraphCanvas.this.controller.getState()) {
                         case VERTEX_CREATION:
 
@@ -174,7 +176,9 @@ public class GraphCanvas extends GLCanvas {
 
                     if (intersectedVertexView != null) {
                         getPopupOnVertex(intersectedVertexView, arg0.getX(), arg0.getY()).show(arg0.getComponent(), arg0.getX(), arg0.getY());
-                    } else {
+                    } else if(intersectedEdgeView !=null){
+                        getPopupOnEdge(intersectedEdgeView, arg0.getX(), arg0.getY()).show(arg0.getComponent(), arg0.getX(), arg0.getY());
+                    }else{
                         getPopupOnNothing(arg0.getX(), arg0.getY()).show(arg0.getComponent(), arg0.getX(), arg0.getY());
                     }
                 }
@@ -347,6 +351,21 @@ public class GraphCanvas extends GLCanvas {
         contextMenu.add(new CopyNowAction(this.controller, vertexView.getModel()));
         contextMenu.add(new CutNowAction(this.controller, vertexView.getModel()));
         contextMenu.add(new RemoveNowAction(this.controller, vertexView.getModel()));
+        contextMenu.add(new JPopupMenu.Separator());
+        contextMenu.add(new UndoAction(this.controller));
+        contextMenu.add(new RedoAction(this.controller));
+        contextMenu.add(new ZoomPlusNowAction(this.controller, x, y));
+        contextMenu.add(new ZoomLessNowAction(this.controller, x, y));
+        super.unlockDraw();
+        return contextMenu;
+    }
+    private JPopupMenu getPopupOnEdge(EdgeView edgeView, int x, int y){
+        super.lockDraw();
+        JPopupMenu contextMenu = new JPopupMenu();
+        //contextMenu.add(new EditVertexNowAction(this.controller, vertexView));    // passer le vertexview en question en param
+        //contextMenu.add(new CopyNowAction(this.controller, vertexView.getModel()));
+        //contextMenu.add(new CutNowAction(this.controller, vertexView.getModel()));
+        contextMenu.add(new RemoveNowAction(this.controller, edgeView.getModel()));
         contextMenu.add(new JPopupMenu.Separator());
         contextMenu.add(new UndoAction(this.controller));
         contextMenu.add(new RedoAction(this.controller));
