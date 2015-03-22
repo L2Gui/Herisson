@@ -29,6 +29,7 @@ public class VertexView extends ViewElement implements Observer {
         this.vertexModel.addObserver(this);
         this.labelMesh = new GLTextMesh();
         this.textDrawable = new GLDrawableObject(labelShader, labelMesh);
+        this.borderDrawable
         this.mesh = mesh;
 
         super.setMesh(this.mesh);
