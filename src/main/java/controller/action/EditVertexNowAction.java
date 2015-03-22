@@ -135,11 +135,11 @@ public class EditVertexNowAction extends MenuAction{
                 //vertexView.getModel().setBackgroundColor(Color.blue);
                 //vertexView.getModel().
 
-                /*try {
+                try {
                     getController().getCanvas().makeCurrent();
                 } catch (LWJGLException ex) {
                     ex.printStackTrace();
-                }*/
+                }
                 getController().getCanvas().getGraphView().reloadVertex(vertexView);
                 //getController().getCanvas().getGraphView().init();
                 f.dispose();
