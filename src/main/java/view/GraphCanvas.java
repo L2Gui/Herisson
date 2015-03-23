@@ -1,27 +1,22 @@
 package view;
 
 import controller.Controller;
-import controller.KeyAction;
 import controller.action.*;
 import controller.command.MoveVertexCommand;
 import controller.command.RemoveEdgeCommand;
 import controller.command.RemoveVertexCommand;
 import model.GraphElement;
-import model.VertexStyle;
 import opengl.GLCanvas;
 import opengl.resource.object.camera.GLPerspectiveCamera;
 import opengl.utils.GLRay;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Quaternion;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import utils.MathUtils;
-import utils.QuaternionUtils;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
-import java.awt.*;
 import java.awt.event.*;
 
 /**
@@ -91,6 +86,7 @@ public class GraphCanvas extends GLCanvas {
         final Vector3f[] positions = new Vector3f[2]; //obligé pour commande MoveVertexCommand
 
         final JPanel parent = (JPanel) super.getParent();
+        parent.requestFocus();
         parent.getInputMap().put(KeyStroke.getKeyStroke("Z"), "zDown");
         parent.getInputMap().put(KeyStroke.getKeyStroke("Q"), "qDown");
         parent.getInputMap().put(KeyStroke.getKeyStroke("S"), "sDown");
@@ -164,8 +160,6 @@ public class GraphCanvas extends GLCanvas {
                 float speed = 0.02f;
                 while (isShowing()) {
                     lockDraw();
-
-                    getParent().requestFocus();
 
                     if (zDown || qDown || sDown || dDown) {
                         if (GraphCanvas.this.cameraTarget == null) {
