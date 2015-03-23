@@ -15,8 +15,8 @@ public class App {
     public static void main(String args[]) {
         try {
             // Model
-            Graph graph1 = createSampleGraph("graphe1");
-            Graph graph2 = createSampleGraph("graphe2");
+            Graph graph1 = createSampleGraph("Nouveau Graphe");
+            //Graph graph2 = createSampleGraph("graphe2");
 
             // View
             GraphCanvas canvas = new GraphCanvas();
@@ -28,7 +28,7 @@ public class App {
             // Construction des liens
             controller.setGraphWindow(window);
             controller.addGraph(graph1);
-            controller.addGraph(graph2);
+            //controller.addGraph(graph2);
 
             window.setVisible(true);
 
