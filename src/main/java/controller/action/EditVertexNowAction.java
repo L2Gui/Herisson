@@ -27,13 +27,13 @@ public class EditVertexNowAction extends MenuAction{
                 255-color.getBlue());
     }
     private VertexView vertexView;
-    Color flabelColor;
-    Color fvertexColor;
-    Color fborderColor;
-    JComboBox<VertexShape> shapeList;
-    NumericField x;
-    NumericField y;
-    NumericField z;
+    private Color flabelColor;
+    private Color fvertexColor;
+    private Color fborderColor;
+    private JComboBox<VertexShape> shapeList;
+    private NumericField x;
+    private NumericField y;
+    private NumericField z;
 
     public EditVertexNowAction() {
         this(null, null);
@@ -49,7 +49,7 @@ public class EditVertexNowAction extends MenuAction{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //modifiedVertexView = new VertexView()
+
         System.out.println("edit vertex (" + e.getSource().getClass().getName() + ")");
 
         Icon icone = new ImageIcon("res/edit_color.png");
@@ -128,7 +128,7 @@ public class EditVertexNowAction extends MenuAction{
         colorLabelBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) { //textColor
-                Color newColor = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", flabelColor);
+                Color newColor = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur du label", flabelColor);
                 if (newColor != null) {
                     flabelColor = newColor;
                     colorLabelBtn.setBackground(newColor);
@@ -139,7 +139,7 @@ public class EditVertexNowAction extends MenuAction{
         colorVertexBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) { //vertexColor
-                Color newColor = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", fvertexColor);
+                Color newColor = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur du noeud", fvertexColor);
                 if (newColor != null) {
                     fvertexColor = newColor;
                     colorVertexBtn.setBackground(newColor);
@@ -150,7 +150,7 @@ public class EditVertexNowAction extends MenuAction{
         colorBorderBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) { //borderColor
-                Color newColor = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", fborderColor);
+                Color newColor = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de la bordure", fborderColor);
                 if (newColor != null) {
                     fborderColor = newColor;
                     colorBorderBtn.setBackground(fborderColor);
