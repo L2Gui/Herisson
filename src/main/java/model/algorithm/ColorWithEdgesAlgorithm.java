@@ -65,10 +65,18 @@ public class ColorWithEdgesAlgorithm implements IColorAlgorithm {
             nbMinVertices = Math.min(nbMinVertices, v.getEdges().size());
         }
 
-        //affectation des couleurs
-        for(Vertex v : g.getVertices()){
-            set.add(new Pair<Vertex, Color>(v, getNewColorOf(v.getEdges().size(), nbMaxVertices)));
+        if(nbMaxVertices > 0) {
+            //affectation des couleurs par rapport au nb d'arêtes si le max d'arête et != 0
+            for (Vertex v : g.getVertices()) {
+                set.add(new Pair<Vertex, Color>(v, getNewColorOf(v.getEdges().size(), nbMaxVertices)));
+            }
+        }else{
+            //sinon, couleur min pour tout le monde
+            for (Vertex v : g.getVertices()) {
+                set.add(new Pair<Vertex, Color>(v, this.minColor));
+            }
         }
+
         return set;
     }
 

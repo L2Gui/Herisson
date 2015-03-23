@@ -63,9 +63,16 @@ public class SizeWithEdgesAlgorithm implements ISizeAlgorithm {
             nbMinVertices = Math.min(nbMinVertices, v.getEdges().size());
         }
 
-        //affectation des couleurs
-        for(Vertex v : g.getVertices()){
-            set.add(new Pair<Vertex, Float>(v, getNewSizeOf(v.getEdges().size(), nbMaxVertices)));
+        if(nbMaxVertices > 0) {
+            //affectation des tailles par rapport au nb d'arêtes si le max d'arête et != 0
+            for (Vertex v : g.getVertices()) {
+                set.add(new Pair<Vertex, Float>(v, getNewSizeOf(v.getEdges().size(), nbMaxVertices)));
+            }
+        }else{
+            //sinon, taille min pour tout le monde
+            for (Vertex v : g.getVertices()) {
+                set.add(new Pair<Vertex, Float>(v, this.minSize));
+            }
         }
         return set;
     }
