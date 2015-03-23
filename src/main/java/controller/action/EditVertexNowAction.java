@@ -136,7 +136,7 @@ public class EditVertexNowAction extends MenuAction{
             { //vertexColor
                 Color newColor = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", fvertexColor);
                 if(newColor != null){
-                    flabelColor = newColor;
+                    fvertexColor = newColor;
                     colorVertexBtn.setBackground(newColor);
                     colorVertexBtn.setForeground(invert(newColor));
                 }
