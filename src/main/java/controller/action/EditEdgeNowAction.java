@@ -30,12 +30,14 @@ public class EditEdgeNowAction extends MenuAction {
 
     public EditEdgeNowAction(Controller controller, EdgeView edgeView) {
         super(controller, "Modifier trait", "res/edit_edge3.png", null, null);
+        this.edgeView = edgeView;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("edit edge (" + e.getSource().getClass().getName() + ")");
 
+        sizeJTF = new NumericField((double)edgeView.getModel().getThickness());
         Icon icone = new ImageIcon("res/edit_color.png");
 
         color = edgeView.getModel().getColor();
@@ -44,15 +46,15 @@ public class EditEdgeNowAction extends MenuAction {
         final JFrame f = new JFrame("Éditer les options d'une arête");
 
         f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        f.setSize(350, 380);
+        f.setSize(350, 160);
         f.setResizable(false);
 
-        JPanel p = new JPanel(new GridLayout(4, 2, 5, 5));
+        JPanel p = new JPanel(new GridLayout(3, 2, 5, 5));
 
         ArrayList<JComponent> jElements = new ArrayList<JComponent>();
 
         JLabel colorLabel = new JLabel("Couleur");
-        JLabel size = new JLabel("Epaisseur");
+        JLabel sizeLabel = new JLabel("Epaisseur");
 
         sizeJTF = new NumericField((double) edgeView.getModel().getThickness());
         final JButton colorBtn = new JButton(icone); colorBtn.setFocusPainted(false); colorBtn.setBackground(color);
@@ -60,7 +62,8 @@ public class EditEdgeNowAction extends MenuAction {
         JButton cancel = new JButton("Annuler");
 
         // on ajoute tous nos éléments dans un arraylist pour pouvoir les modifier avec un foreach
-        jElements.add(size);
+        jElements.add(sizeLabel);
+        jElements.add(colorLabel);
         jElements.add(sizeJTF);
         jElements.add(ok);
         jElements.add(cancel);
@@ -108,7 +111,7 @@ public class EditEdgeNowAction extends MenuAction {
             }
         });
 
-        p.add(size);
+        p.add(sizeLabel);
         p.add(sizeJTF);
         p.add(colorLabel);
         p.add(colorBtn);
