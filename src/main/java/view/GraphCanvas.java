@@ -1,6 +1,7 @@
 package view;
 
 import controller.Controller;
+import controller.KeyAction;
 import controller.action.*;
 import controller.command.MoveVertexCommand;
 import controller.command.RemoveEdgeCommand;
@@ -21,10 +22,7 @@ import utils.QuaternionUtils;
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseWheelEvent;
+import java.awt.event.*;
 
 /**
  * Created by Clement on 13/03/2015.
@@ -42,6 +40,10 @@ public class GraphCanvas extends GLCanvas {
     private EdgeView selectedEdge;
 
     private Vector2f oldPosition;
+    private boolean zDown;
+    private boolean sDown;
+    private boolean qDown;
+    private boolean dDown;
 
     public GraphCanvas() throws LWJGLException {}
 
@@ -71,6 +73,10 @@ public class GraphCanvas extends GLCanvas {
         this.controller = controller;
     }
 
+    public void setCameraTarget(Vector3f vector3f) {
+        this.cameraTarget = vector3f;
+    }
+
     @Override
     public void init() {
         super.lockDraw();
@@ -83,6 +89,113 @@ public class GraphCanvas extends GLCanvas {
             this.graphView.init();
 
         final Vector3f[] positions = new Vector3f[2]; //obligé pour commande MoveVertexCommand
+
+        final JPanel parent = (JPanel) super.getParent();
+        parent.getInputMap().put(KeyStroke.getKeyStroke("Z"), "zDown");
+        parent.getInputMap().put(KeyStroke.getKeyStroke("Q"), "qDown");
+        parent.getInputMap().put(KeyStroke.getKeyStroke("S"), "sDown");
+        parent.getInputMap().put(KeyStroke.getKeyStroke("D"), "dDown");
+        parent.getInputMap().put(KeyStroke.getKeyStroke("released Z"), "zUp");
+        parent.getInputMap().put(KeyStroke.getKeyStroke("released Q"), "qUp");
+        parent.getInputMap().put(KeyStroke.getKeyStroke("released S"), "sUp");
+        parent.getInputMap().put(KeyStroke.getKeyStroke("released D"), "dUp");
+
+        parent.getActionMap().put("zDown", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                zDown = true;
+            }
+        });
+
+        parent.getActionMap().put("qDown", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                qDown = true;
+            }
+        });
+
+        parent.getActionMap().put("sDown", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                sDown = true;
+            }
+        });
+
+        parent.getActionMap().put("dDown", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                dDown = true;
+            }
+        });
+
+        parent.getActionMap().put("zUp", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                zDown = false;
+            }
+        });
+
+        parent.getActionMap().put("qUp", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                qDown = false;
+            }
+        });
+
+        parent.getActionMap().put("sUp", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                sDown = false;
+            }
+        });
+
+        parent.getActionMap().put("dUp", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                dDown = false;
+            }
+        });
+
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+
+                float speed = 0.02f;
+                while (isShowing()) {
+                    lockDraw();
+
+                    getParent().requestFocus();
+
+                    if (zDown || qDown || sDown || dDown) {
+                        if (GraphCanvas.this.cameraTarget == null) {
+                            GraphCanvas.this.cameraTarget = new Vector3f(camera.getPosition());
+                        }
+
+                        if (zDown) {
+                            GraphCanvas.this.cameraTarget.y += GraphCanvas.this.cameraTarget.z * speed;
+                        } else if (sDown) {
+                            GraphCanvas.this.cameraTarget.y -= GraphCanvas.this.cameraTarget.z * speed;
+                        }
+
+                        if (qDown) {
+                            GraphCanvas.this.cameraTarget.x -= GraphCanvas.this.cameraTarget.z * speed;
+                        } else if (dDown) {
+                            GraphCanvas.this.cameraTarget.x += GraphCanvas.this.cameraTarget.z * speed;
+                        }
+                    }
+
+                    unlockDraw();
+                    try {
+                        Thread.sleep(16L);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+
+        thread.start();
 
         /** MouseListener **/
         super.addMouseListener(new MouseInputAdapter() {
@@ -131,13 +244,13 @@ public class GraphCanvas extends GLCanvas {
                             }
                             break;
                         case MOVE:
-                            oldPosition= new Vector2f(arg0.getX(), arg0.getY());
+                            oldPosition = new Vector2f(arg0.getX(), arg0.getY());
                             break;
 
                         case DELETION:
-                            if(intersectedVertexView != null) {
+                            if (intersectedVertexView != null) {
                                 GraphCanvas.this.controller.executeCommand(new RemoveVertexCommand(selectedVertex.getModel()));
-                            }else if(intersectedEdgeView != null) {
+                            } else if (intersectedEdgeView != null) {
                                 GraphCanvas.this.controller.executeCommand(new RemoveEdgeCommand(selectedEdge.getModel()));
                             }
                             break;
@@ -176,9 +289,9 @@ public class GraphCanvas extends GLCanvas {
 
                     if (intersectedVertexView != null) {
                         getPopupOnVertex(intersectedVertexView, arg0.getX(), arg0.getY()).show(arg0.getComponent(), arg0.getX(), arg0.getY());
-                    } else if(intersectedEdgeView !=null){
+                    } else if (intersectedEdgeView != null) {
                         getPopupOnEdge(intersectedEdgeView, arg0.getX(), arg0.getY()).show(arg0.getComponent(), arg0.getX(), arg0.getY());
-                    }else{
+                    } else {
                         getPopupOnNothing(arg0.getX(), arg0.getY()).show(arg0.getComponent(), arg0.getX(), arg0.getY());
                     }
                 }
@@ -218,7 +331,7 @@ public class GraphCanvas extends GLCanvas {
                             }
                             break;
                         case MOVE:
-                            oldPosition=null;
+                            oldPosition = null;
                             break;
 
                         case DELETION:
@@ -413,7 +526,7 @@ public class GraphCanvas extends GLCanvas {
             Vector3f position = this.camera.getPosition();
             float length = Vector3f.sub(position, this.cameraTarget, null).length();
 
-            if (length < 0.01f) {
+            if (length < 0.001f) {
                 this.camera.setPosition(this.cameraTarget);
                 this.cameraTarget = null;
             } else {
