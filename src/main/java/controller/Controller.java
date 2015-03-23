@@ -138,4 +138,7 @@ public class Controller {
         return ioAlgorithms;
     }
 
+    public GraphWindow getWindow() {
+        return window;
+    }
 }

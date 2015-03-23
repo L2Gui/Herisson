@@ -381,4 +381,8 @@ public class GraphWindow extends JFrame {
     public void addGraph(String name){
         tabs.addGraphTab(name);
     }
+
+    public TabbedGraph getTabs(){
+        return tabs;
+    }
 }
