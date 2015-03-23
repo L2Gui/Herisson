@@ -161,7 +161,7 @@ public class EditVertexNowAction extends MenuAction{
         ok.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Vertex oldVertex = new Vertex(vertexView.getModel());
+                Vertex oldVertex = new Vertex(vertexView.getModel());
                 vertexView.getModel().setLabel(labelJTF.getText());
                 vertexView.getModel().setTextColor(flabelColor);
                 vertexView.getModel().setShape((VertexShape) shapeList.getSelectedItem());
@@ -179,7 +179,7 @@ public class EditVertexNowAction extends MenuAction{
                     ex.printStackTrace();
                 }
                 getController().getCanvas().getGraphView().reloadVertex(vertexView);
-                //getController().getCanvas().getController().executeCommand(new ChangeVertexThroughBoxCommand(getController().getCanvas().getGraphView(), oldVertex, vertexView));
+                getController().getCanvas().getController().executeCommand(new ChangeVertexThroughBoxCommand(getController().getCanvas().getGraphView(), oldVertex, vertexView));
                 f.dispose();
             }
         });
