@@ -213,7 +213,7 @@ public class EditVertexNowAction extends MenuAction{
 
         p.add(panelCancel);
         p.add(panelOk);
-        
+
         f.setContentPane(p);
 
         f.setLocationRelativeTo(null);
