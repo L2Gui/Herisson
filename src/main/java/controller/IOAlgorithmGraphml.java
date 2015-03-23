@@ -175,7 +175,7 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
 
 			if (dst != null){
 				edge.setDstVertex(vertices.get(dst));
-				vertices.get(src).addEdge(edge);
+				vertices.get(dst).addEdge(edge);
 			}
 
 			edges.put(id, edge);
