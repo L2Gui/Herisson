@@ -8,13 +8,13 @@ public class ShapeUtils {
 		VertexShape shape = VertexShape.SQUARE;
 
         String testable = value.toLowerCase();
-		if (testable == "square") {
+		if (testable.contains("carré")) {
             shape = VertexShape.SQUARE;
         }
-        if (testable == "circle") {
+        if (testable.contains("cercle")) {
             shape = VertexShape.CIRCLE;
         }
-        if (testable == "diamond"){
+        if (testable.contains("losange")){
 			shape = VertexShape.DIAMOND;
         }
 		
