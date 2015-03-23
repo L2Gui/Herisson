@@ -187,7 +187,7 @@ public class EditVertexNowAction extends MenuAction{
         cancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //EditVertexNowAction.f.dispose();
+                f.dispose();
             }
         });
 
