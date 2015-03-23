@@ -49,6 +49,7 @@ public class GraphWindow extends JFrame {
     private MenuAction redo = new RedoAction();
     private MenuAction zoomPlus = new ZoomPlusAction();
     private MenuAction zoomMoins = new ZoomLessAction();
+    private MenuAction resetCamera = new ResetCameraAction();
     private MenuAction changeBGColor = new ChangeBackgroundColorAction();
 
     /**
@@ -153,6 +154,7 @@ public class GraphWindow extends JFrame {
         this.redo.setController(controller);
         this.zoomPlus.setController(controller);
         this.zoomMoins.setController(controller);
+        this.resetCamera.setController(controller);
         this.tabs.setController(controller);
         this.changeBGColor.setController(controller);
     }
@@ -269,6 +271,7 @@ public class GraphWindow extends JFrame {
         display.add(color);
         display.add(size);
         display.add(this.changeBGColor);
+        display.add(this.resetCamera);
 
         menu.add(display);
 
@@ -358,6 +361,7 @@ public class GraphWindow extends JFrame {
         toolBar.addSeparator();
 
         toolBar.add(this.changeBGColor);
+        toolBar.add(this.resetCamera);
 
         JButton button;
         JToggleButton tbutton;

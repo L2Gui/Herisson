@@ -1,0 +1,57 @@
+graph Nouveau Graphe {
+
+n0[pos_x=16.073372; pos_y=-6.43436; pos_z=-0.009987399; background-color=255,0,0; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=1.0; border-thickness=0.1; shape=Cercle]
+n1[pos_x=13.706513; pos_y=-2.5036263; pos_z=-0.0099889515; background-color=128,0,127; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=2.0; border-thickness=0.1; shape=Cercle]
+n2[pos_x=6.647713; pos_y=7.76697; pos_z=-0.010000229; background-color=128,0,127; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=2.0; border-thickness=0.1; shape=Cercle]
+n3[pos_x=-7.6661634; pos_y=-1.0515531; pos_z=-0.010000229; background-color=0,0,255; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=3.0; border-thickness=0.1; shape=Losange]
+n4[pos_x=-0.117666185; pos_y=-11.554757; pos_z=-0.009989038; background-color=128,0,127; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=2.0; border-thickness=0.1; shape=Cercle]
+n5[pos_x=3.1422298; pos_y=2.8403513; pos_z=-0.009995423; background-color=255,0,0; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=1.0; border-thickness=0.1; shape=Cercle]
+n6[pos_x=-12.088351; pos_y=-8.6998415; pos_z=-0.009987567; background-color=255,0,0; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=1.0; border-thickness=0.1; shape=Cercle]
+n7[pos_x=-8.199316; pos_y=12.573527; pos_z=-0.00999085; background-color=255,0,0; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=1.0; border-thickness=0.1; shape=Cercle]
+n8[pos_x=-15.969117; pos_y=8.120256; pos_z=-0.009987131; background-color=255,0,0; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=1.0; border-thickness=0.1; shape=Cercle]
+n9[pos_x=4.7323685; pos_y=-8.317932; pos_z=-0.0099889655; background-color=128,0,127; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=2.0; border-thickness=0.1; shape=Cercle]
+n10[pos_x=1.956276; pos_y=11.044375; pos_z=-0.0099923685; background-color=128,0,127; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=2.0; border-thickness=0.1; shape=Cercle]
+n11[pos_x=11.007263; pos_y=-7.051841; pos_z=-0.009997884; background-color=255,0,0; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=1.0; border-thickness=0.1; shape=Losange]
+n12[pos_x=2.315224; pos_y=-12.495338; pos_z=-0.009994935; background-color=255,0,0; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=1.0; border-thickness=0.1; shape=Cercle]
+n13[pos_x=3.2178073; pos_y=1.3512231; pos_z=-0.009998104; background-color=255,0,0; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=1.0; border-thickness=0.1; shape=Cercle]
+n14[pos_x=-13.584788; pos_y=-15.384291; pos_z=-0.009998722; background-color=255,0,0; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=1.0; border-thickness=0.1; shape=Cercle]
+n15[pos_x=7.4881; pos_y=2.0181108; pos_z=-0.00999186; background-color=128,0,127; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=2.0; border-thickness=0.1; shape=Carré]
+n16[pos_x=10.866157; pos_y=-16.278324; pos_z=-0.009995865; background-color=128,0,127; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=2.0; border-thickness=0.1; shape=Cercle]
+n17[pos_x=-12.993257; pos_y=14.398934; pos_z=-0.009995088; background-color=192,0,63; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=1.5; border-thickness=0.1; shape=Cercle]
+n18[pos_x=-3.119695; pos_y=11.17229; pos_z=-0.00999026; background-color=255,0,0; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=1.0; border-thickness=0.1; shape=Cercle]
+n19[pos_x=-16.732492; pos_y=-13.484299; pos_z=-0.009995619; background-color=255,0,0; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=1.0; border-thickness=0.1; shape=Cercle]
+n20[pos_x=-15.860787; pos_y=-14.878427; pos_z=-0.009992551; background-color=255,0,0; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=1.0; border-thickness=0.1; shape=Cercle]
+n21[pos_x=1.2477956; pos_y=-13.636007; pos_z=-0.009994587; background-color=128,0,127; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=2.0; border-thickness=0.1; shape=Cercle]
+n22[pos_x=-6.726533; pos_y=17.033833; pos_z=-0.009999024; background-color=255,0,0; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=1.0; border-thickness=0.1; shape=Cercle]
+n23[pos_x=11.8928795; pos_y=7.8581285; pos_z=-0.009994971; label=ljlk; background-color=128,0,127; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=2.0; border-thickness=0.1; shape=Cercle]
+n24[pos_x=-9.06358; pos_y=-9.823179; pos_z=-0.009990057; background-color=192,0,63; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=1.5; border-thickness=0.1; shape=Cercle]
+n25[pos_x=10.248734; pos_y=-6.078784; pos_z=-0.009989478; background-color=0,0,255; border-color=0,0,0; text-color=0,0,0; font=Verdana,32,0; size=3.0; border-thickness=0.1; shape=Cercle]
+n24 -- n25[; font=Verdana,32,0; thickness=0.1; text-color=0,0,0; color=0,0,0; style=SOLID]
+
+n25 -- n3[; font=Verdana,32,0; thickness=0.1; text-color=0,0,0; color=0,0,0; style=SOLID]
+
+n3 -- n2[; font=Verdana,32,0; thickness=0.1; text-color=0,0,0; color=0,0,0; style=SOLID]
+
+n2 -- n1[; font=Verdana,32,0; thickness=0.1; text-color=0,0,0; color=0,0,0; style=SOLID]
+
+n1 -- n25[; font=Verdana,32,0; thickness=0.1; text-color=0,0,0; color=0,0,0; style=SOLID]
+
+n25 -- n21[; font=Verdana,32,0; thickness=0.1; text-color=0,0,0; color=0,0,0; style=SOLID]
+
+n21 -- n16[; font=Verdana,32,0; thickness=0.1; text-color=0,0,0; color=0,0,0; style=SOLID]
+
+n16 -- n9[; font=Verdana,32,0; thickness=0.1; text-color=0,0,0; color=0,0,0; style=SOLID]
+
+n9 -- n4[; font=Verdana,32,0; thickness=0.1; text-color=0,0,0; color=0,0,0; style=SOLID]
+
+n4 -- n15[; font=Verdana,32,0; thickness=0.1; text-color=0,0,0; color=0,0,0; style=SOLID]
+
+n15 -- n23[; font=Verdana,32,0; thickness=0.1; text-color=0,0,0; color=0,0,0; style=SOLID]
+
+n23 -- n10[; font=Verdana,32,0; thickness=0.1; text-color=0,0,0; color=0,0,0; style=SOLID]
+
+n10 -- n3[; font=Verdana,32,0; thickness=0.1; text-color=0,0,0; color=0,0,0; style=SOLID]
+
+n3 -- n17[; font=Verdana,32,0; thickness=0.1; text-color=0,0,0; color=0,0,0; style=SOLID]
+
+}

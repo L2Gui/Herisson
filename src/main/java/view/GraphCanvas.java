@@ -5,6 +5,7 @@ import controller.action.*;
 import controller.command.MoveVertexCommand;
 import controller.command.RemoveEdgeCommand;
 import controller.command.RemoveVertexCommand;
+import model.Graph;
 import model.GraphElement;
 import opengl.GLCanvas;
 import opengl.resource.object.camera.GLPerspectiveCamera;
@@ -507,6 +508,11 @@ public class GraphCanvas extends GLCanvas {
         Vector3f lookAtPosition = this.getLookAtPosition(x, y);
         this.cameraTarget.x = lookAtPosition.x;
         this.cameraTarget.y = lookAtPosition.y;
+        super.unlockDraw();
+    }
+    public void setCameraDirection(Vector3f direction) {
+        super.lockDraw();
+        this.camera.lookToDirection(direction);
         super.unlockDraw();
     }
 
