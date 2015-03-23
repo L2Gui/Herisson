@@ -6,7 +6,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Observable;
 
 public class Vertex extends GraphElement {
 	private Collection<Edge> edges;
@@ -337,7 +336,12 @@ public class Vertex extends GraphElement {
     }
 
     public void setStyle(VertexStyle style) {
+        if (this.style != null){
+            this.style.decrementUsageCount();
+        }
+
         this.style = style;
+        style.incrementUsageCount();
 
         this.setChanged();
         this.notifyObservers();

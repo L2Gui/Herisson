@@ -71,6 +71,7 @@ public class StyleManager {
                 vertexStyles.add((VertexStyle) style);
             }
         }
+        update();
     }
 
     public List<EdgeStyle> getEdgeStyles() {
@@ -89,6 +90,9 @@ public class StyleManager {
         this.vertexStyles = vertexStyles;
     }
 
+    /**
+     * Update the StyleMaager by deleting the styles with usageCount equal to 0
+     */
     public void update(){
         for (EdgeStyle e : edgeStyles){
             if (e.getUsageCount() <= 0){

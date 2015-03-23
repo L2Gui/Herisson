@@ -39,6 +39,7 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
 		graphRacine = document.getRootElement().getChild("graph");
 		keyRacine = document.getRootElement().getChildren("key");
 
+
         if (graphRacine.getAttributeValue("id") != null) {
             graph.setName(graphRacine.getAttributeValue("id"));
         }
@@ -190,7 +191,7 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
                                         .setBorderThickness(Float.parseFloat(elt.getChild("border-thickness").getText()))
                                         .setTextColor(ColorUtils.RGBStringToColor(elt.getChild("text-color").getText()))
                                         .setFont(FontUtils.stringToFont(elt.getChild("font").getText()))
-                                        .setShape(ShapeUtils.stringToShape(elt.getChild("shape").toString()))
+                                        .setShape(ShapeUtils.stringToShape(elt.getChild("shape").getText()))
                                         .setSize(Float.parseFloat(elt.getChild("size").getText()));
 
         return vertexStyle;
@@ -211,6 +212,10 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
 	public void save(String filename, Graph graph) {
         Element graphml = new Element("graphml", "http://graphml.graphdrawing.org/xmlns");
 
+
+        for (VertexStyle vertexStyle :graph.getStyleManager().getVertexStyles()){
+            System.out.println(vertexStyle.getId() +" : "+vertexStyle.getUsageCount());
+        }
 
         Namespace XSI = Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
         graphml.addNamespaceDeclaration(XSI);

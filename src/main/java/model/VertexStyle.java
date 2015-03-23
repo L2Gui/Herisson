@@ -178,4 +178,19 @@ public class VertexStyle implements IStyle {
     }
 
 
+    public void addVertex(Vertex vertex){
+        if (vertices != null){
+            if (!vertices.contains(vertex)){
+                vertices.add(vertex);
+            }
+        }
+    }
+
+    public void removeVertex(Vertex vertex){
+        if (vertices != null){
+            if (vertices.contains(vertex)){
+                vertices.remove(vertex);
+            }
+        }
+    }
 }
