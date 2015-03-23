@@ -22,10 +22,14 @@ public class TabbedGraph extends JTabbedPane {
             @Override
             public void stateChanged(ChangeEvent e) {
                 if(getSelectedIndex()!=-1) {
-                    TabbedGraph.this.controller.selectGraph(getSelectedIndex());
-                    setComponentAt(index, new JPanel());
-                    setComponentAt(getSelectedIndex(), new JPanel());
-                    index = getSelectedIndex();
+                    try {
+                        TabbedGraph.this.controller.selectGraph(getSelectedIndex());
+                        setComponentAt(index, new JPanel());
+                        setComponentAt(getSelectedIndex(), new JPanel());
+                        index = getSelectedIndex();
+                    }catch (IndexOutOfBoundsException ex){
+                        TabbedGraph.this.repaint();
+                    }
                 }
             }
         });

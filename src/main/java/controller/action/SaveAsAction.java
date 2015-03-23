@@ -3,6 +3,7 @@ package controller.action;
 import controller.Controller;
 import controller.MenuAction;
 import controller.fileChooserUtil.FileTypeFilter;
+import view.TabbedGraph;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -57,7 +58,10 @@ public class SaveAsAction extends MenuAction{
                     this.getController().getIoAlgorithms().get("GraphML").save(filename, this.getController().getCurrentGraph());
                 }
             }
+            getController().getCurrentGraph().setName(fileChooser.getSelectedFile().getName());
+            getController().getWindow().getTabs().setTitleAt(getController().getWindow().getTabs().getSelectedIndex(), getController().getCurrentGraph().getName());
+            getController().getWindow().getTabs().repaint();
         }
-        System.out.println("Enregistrer sous ("+e.getSource().getClass().getName()+")");
+
     }
 }

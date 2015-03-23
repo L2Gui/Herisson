@@ -31,6 +31,8 @@ public class GraphWindow extends JFrame {
 
     private MenuAction newFile = new NewFileAction();
     private MenuAction openFile = new OpenFileAction();
+    private MenuAction closeFile = new CloseFileAction();
+
     private MenuAction save = new SaveAction();
     private MenuAction saveAs = new SaveAsAction();
     private MenuAction move = new MoveModeAction();
@@ -134,6 +136,7 @@ public class GraphWindow extends JFrame {
         this.controller = controller;
         this.newFile.setController(controller);
         this.openFile.setController(controller);
+        this.closeFile.setController(controller); ((CloseFileAction)this.closeFile).setTabbedGraph(tabs);
         this.save.setController(controller);
         this.saveAs.setController(controller);
         this.move.setController(controller);
@@ -171,6 +174,7 @@ public class GraphWindow extends JFrame {
         file.add(this.openFile);
         file.add(this.save);
         file.add(this.saveAs);
+        file.add(this.closeFile);
         menu.add(file);
 
         JMenu edit = new JMenu("Edition");
@@ -376,5 +380,9 @@ public class GraphWindow extends JFrame {
 
     public void addGraph(String name){
         tabs.addGraphTab(name);
+    }
+
+    public TabbedGraph getTabs(){
+        return tabs;
     }
 }

@@ -2,6 +2,8 @@ package controller.action;
 
 import controller.Controller;
 import controller.MenuAction;
+import model.Graph;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -21,6 +23,8 @@ public class NewFileAction extends MenuAction{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Nouveau fichier ("+e.getSource().getClass().getName()+")");
+        Graph g = new Graph();
+        g.setName("nouveau Graphe");
+        getController().addGraph(g);
     }
 }
