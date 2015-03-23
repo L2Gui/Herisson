@@ -29,7 +29,7 @@ public class StyleManager {
                                               .setBorderThickness(0.1f)
                                               .setSize(2)
                                               .setTextColor(Color.BLACK)
-                                              .setShape(VertexShape.SQUARE)
+                                              .setShape(VertexShape.CIRCLE)
                                               .setFont(new Font("Verdana", Font.PLAIN, 32));
     }
 
