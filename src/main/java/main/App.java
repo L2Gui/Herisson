@@ -15,7 +15,8 @@ public class App {
     public static void main(String args[]) {
         try {
             // Model
-            Graph graph1 = createSampleGraph("Nouveau Graphe");
+            Graph graph1 = new Graph();
+            graph1.setName("Nouveau Graphe");
             //Graph graph2 = createSampleGraph("graphe2");
 
             // View
