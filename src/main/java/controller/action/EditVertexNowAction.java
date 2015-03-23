@@ -19,7 +19,11 @@ import java.util.ArrayList;
 
 
 public class EditVertexNowAction extends MenuAction{
-
+    private Color invert(Color color){
+        return new Color(255-color.getRed(),
+                255-color.getGreen(),
+                255-color.getBlue());
+    }
     private VertexView vertexView;
     Color flabelColor;
     Color fvertexColor;
@@ -46,8 +50,6 @@ public class EditVertexNowAction extends MenuAction{
         //modifiedVertexView = new VertexView()
         System.out.println("edit vertex (" + e.getSource().getClass().getName() + ")");
 
-        ImageIcon rightButtonIcon = new ImageIcon("res/edit_color.png");
-
         flabelColor = vertexView.getModel().getTextColor();
         fvertexColor = vertexView.getModel().getBackgroundColor();
         fborderColor = vertexView.getModel().getBorderColor();
@@ -55,10 +57,10 @@ public class EditVertexNowAction extends MenuAction{
         final JFrame f = new JFrame("Editer les options d'un noeud");
 
         f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        f.setSize(350, 350);
+        f.setSize(350, 380);
         f.setResizable(false);
 
-        JPanel p = new JPanel(new GridLayout(9, 2));
+        JPanel p = new JPanel(new GridLayout(9, 2, 5, 5));
 
         ArrayList<JComponent> jElements = new ArrayList<JComponent>();
 
@@ -67,15 +69,15 @@ public class EditVertexNowAction extends MenuAction{
         JLabel shape = new JLabel("Forme");
         JLabel size = new JLabel("Taille");
         JLabel position = new JLabel("Position");
-        JLabel colorVertex = new JLabel("Couleur du noeud");
+        final JLabel colorVertex = new JLabel("Couleur du noeud");
         JLabel borderSize = new JLabel("Taille de la bordure");
         JLabel borderColor = new JLabel("Couleur de la bordure");
 
         final NumericField labelJTF = new NumericField(vertexView.getModel().getLabel());
         shapeList = new JComboBox<VertexShape>(VertexShape.values());
-        JButton b1 = new JButton("Couleur du label",  rightButtonIcon);
-        JButton b2 = new JButton("Couleur du noeud",  rightButtonIcon);
-        JButton b3 = new JButton("Couleur de la bordure",  rightButtonIcon);
+        final JButton colorLabelBtn = new JButton("Couleur du label"); colorLabelBtn.setBackground(flabelColor); colorLabelBtn.setForeground(invert(flabelColor));
+        final JButton colorVertexBtn = new JButton("Couleur du noeud"); colorVertexBtn.setBackground(fvertexColor); colorVertexBtn.setForeground(invert(fvertexColor));
+        final JButton colorBorderBtn = new JButton("Couleur de la bordure"); colorBorderBtn.setBackground(fborderColor); colorBorderBtn.setForeground(invert(fborderColor));
         JButton ok = new JButton("OK");
         JButton cancel = new JButton("Annuler");
 
@@ -103,42 +105,58 @@ public class EditVertexNowAction extends MenuAction{
         jElements.add(borderSize);
         jElements.add(labelJTF);
         jElements.add(shapeList);
-        jElements.add(b1);
-        jElements.add(b2);
-        jElements.add(b3);
+        jElements.add(colorLabelBtn);
+        jElements.add(colorVertexBtn);
+        jElements.add(colorBorderBtn);
         jElements.add(ok);
         jElements.add(cancel);
         jElements.add(sizeJTF);
         jElements.add(positionPanel);
         jElements.add(borderJTF);
+        jElements.add(borderColor);
 
         for(JComponent jc : jElements)
         {
-           // if (jc instanceof JLabel)
-                //(JLabel)jc.setHorizontalAlignment(SwingConstants.CENTER);
+            if (jc instanceof JLabel)
+                jc.setBorder(BorderFactory.createEmptyBorder(0,15,0,0));
         }
 
-        b1.addActionListener(new ActionListener() {
+        colorLabelBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e)
             { //textColor
-                flabelColor = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", flabelColor);
+                Color newColor = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", flabelColor);
+                if(newColor != null){
+                    flabelColor = newColor;
+                    colorLabelBtn.setBackground(newColor);
+                    colorLabelBtn.setForeground(invert(newColor));
+                }
             }
         });
 
-        b2.addActionListener(new ActionListener() {
+        colorVertexBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e)
             { //vertexColor
-                fvertexColor = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", fvertexColor);
+                Color newColor = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", fvertexColor);
+                if(newColor != null){
+                    fvertexColor = newColor;
+                    colorVertexBtn.setBackground(newColor);
+                    colorVertexBtn.setForeground(invert(newColor));
+                }
             }
         });
 
-        b3.addActionListener(new ActionListener() {
+        colorBorderBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e)
             { //borderColor
-                fborderColor = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", fborderColor);
+                Color newColor = JColorChooser.showDialog(null, "Choisissez la nouvelle couleur de fond", fborderColor);
+                if(newColor !=null){
+                    fborderColor = newColor;
+                    colorBorderBtn.setBackground(fborderColor);
+                    colorBorderBtn.setForeground(invert(fborderColor));
+                }
             }
         });
 
@@ -177,7 +195,7 @@ public class EditVertexNowAction extends MenuAction{
         p.add(labelText);
         p.add(labelJTF);
         p.add(labelColor);
-        p.add(b1);
+        p.add(colorLabelBtn);
         p.add(shape);
         p.add(shapeList);
         p.add(size);
@@ -185,13 +203,19 @@ public class EditVertexNowAction extends MenuAction{
         p.add(position);
         p.add(positionPanel);
         p.add(colorVertex);
-        p.add(b2);
+        p.add(colorVertexBtn);
         p.add(borderSize);
         p.add(borderJTF);
         p.add(borderColor);
-        p.add(b3);
-        p.add(ok);
-        p.add(cancel);
+        p.add(colorBorderBtn);
+
+        JPanel panelOk = new JPanel();
+        panelOk.add(ok);
+        JPanel panelCancel = new JPanel();
+        panelCancel.add(cancel);
+
+        p.add(panelOk);
+        p.add(panelCancel);
 
 
         f.setContentPane(p);
