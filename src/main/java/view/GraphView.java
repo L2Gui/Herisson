@@ -135,6 +135,10 @@ public class GraphView implements Observer {
         this.vertexViews.remove(vv);
         this.addVertexWithNoAnimation(vv.getModel());
     }
+    public void reloadEdge(EdgeView ev){
+        this.edgeViews.remove(ev);
+        this.addEdge(ev.getModel());
+    }
 
     public void paint(Matrix4f transformationMatrix) {
         GL11.glDisable(GL11.GL_DEPTH_TEST);
