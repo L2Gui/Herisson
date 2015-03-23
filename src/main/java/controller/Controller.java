@@ -72,6 +72,9 @@ public class Controller {
             this.window.addGraph(graph.getName());
         }
     }
+    public void removeGraphe(Graph graph){
+        graphs.remove(graph);
+    }
 
     public void selectGraph(int graphID) {
         this.setCurrentGraph(this.graphs.get(graphID));
