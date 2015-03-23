@@ -1,21 +1,24 @@
 package controller;
 
+import opengl.resource.object.IGLObject;
+import org.lwjgl.util.vector.Vector3f;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class KeyAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;
+
+	private Vector3f cameraTarget;
+    private Vector3f translation;
 	
-	private KeyBinding keyState;
-	private boolean set;
-	
-	public KeyAction(KeyBinding keyState, boolean set) {
-		this.keyState = keyState;
-		this.set = set;
+	public KeyAction(Vector3f cameraTarget, Vector3f translation) {
+		this.cameraTarget = cameraTarget;
+		this.translation = translation;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		this.keyState.setState(this.set);
+		Vector3f.add(this.cameraTarget, this.translation, this.cameraTarget);
 	}
 }

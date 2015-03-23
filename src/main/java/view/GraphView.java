@@ -9,9 +9,7 @@ import model.GraphUpdate;
 import model.Vertex;
 import opengl.resource.GLShader;
 import opengl.resource.object.GLObjectUsage;
-import opengl.resource.object.camera.IGLCamera;
 import opengl.resource.object.mesh.GLColorVariantMesh;
-import opengl.resource.object.mesh.GLMesh;
 import opengl.utils.GLRay;
 import opengl.vertex.GLVertex;
 import org.lwjgl.opengl.GL11;
@@ -43,7 +41,6 @@ public class GraphView implements Observer {
     private GLColorVariantMesh vertexCircleMesh;
     private GLColorVariantMesh vertexDiamondMesh;
     private GLColorVariantMesh edgeMesh;
-
 
     private GLShader labelShader;
     private GLShader vertexEdgeShader;
