@@ -78,8 +78,8 @@ public class ApplySizeAlgorithmAction extends MenuAction {
 
         content.add(sizeMinField);
         content.add(sizeMaxField);
-        content.add(panelBtnCancel);
         content.add(panelBtnOk);
+        content.add(panelBtnCancel);
 
         frame.setContentPane(content);
 

@@ -86,8 +86,8 @@ public class ApplyColorAlgorithmAction extends MenuAction {
 
         content.add(colorMinBtn);
         content.add(colorMaxBtn);
-        content.add(panelBtnCancel);
         content.add(panelBtnOk);
+        content.add(panelBtnCancel);
 
         frame.setContentPane(content);
 

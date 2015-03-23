@@ -214,8 +214,8 @@ public class EditVertexNowAction extends MenuAction{
         JPanel panelCancel = new JPanel();
         panelCancel.add(cancel);
 
-        p.add(panelCancel);
         p.add(panelOk);
+        p.add(panelCancel);
 
         f.setContentPane(p);
 

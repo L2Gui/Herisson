@@ -228,9 +228,17 @@ public class GraphCanvas extends GLCanvas {
                             break;
 
                         case VERTEX_EDITION:
+                            if (intersectedVertexView != null) {
+                                new EditVertexNowAction(GraphCanvas.this.controller, intersectedVertexView)
+                                        .actionPerformed(new ActionEvent(GraphCanvas.this, 0, "edition de verex"));
+                            }
                             break;
 
                         case EDGE_EDITION:
+                            if (intersectedEdgeView != null) {
+                                new EditEdgeNowAction(GraphCanvas.this.controller, intersectedEdgeView)
+                                        .actionPerformed(new ActionEvent(GraphCanvas.this, 0, "edition de edge"));
+                            }
                             break;
 
                         case SELECTION:
