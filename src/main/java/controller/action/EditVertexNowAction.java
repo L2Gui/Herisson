@@ -6,6 +6,7 @@ import model.VertexShape;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.util.vector.Vector3f;
 import view.GraphCanvas;
+import view.NumericField;
 import view.VertexView;
 
 import javax.swing.*;
@@ -24,9 +25,9 @@ public class EditVertexNowAction extends MenuAction{
     Color fvertexColor;
     Color fborderColor;
     JComboBox<VertexShape> shapeList;
-    JTextField x;
-    JTextField y;
-    JTextField z;
+    NumericField x;
+    NumericField y;
+    NumericField z;
 
     public EditVertexNowAction() {
         this(null, null);
@@ -70,7 +71,7 @@ public class EditVertexNowAction extends MenuAction{
         JLabel borderSize = new JLabel("Taille de la bordure");
         JLabel borderColor = new JLabel("Couleur de la bordure");
 
-        final JTextField labelJTF = new JTextField(vertexView.getModel().getLabel());
+        final NumericField labelJTF = new NumericField(vertexView.getModel().getLabel());
         shapeList = new JComboBox<VertexShape>(VertexShape.values());
         JButton b1 = new JButton("Couleur du label",  rightButtonIcon);
         JButton b2 = new JButton("Couleur du noeud",  rightButtonIcon);
@@ -78,15 +79,18 @@ public class EditVertexNowAction extends MenuAction{
         JButton ok = new JButton("OK");
         JButton cancel = new JButton("Annuler");
 
-        final JTextField sizeJTF = new JTextField("" + vertexView.getModel().getSize());
+        final NumericField sizeJTF = new NumericField("" + vertexView.getModel().getSize());
         JPanel positionPanel = new JPanel(new GridLayout(1, 3));
-        x = new JTextField("" + String.format("%.2f", vertexView.getModel().getPosition().getX()));
-        y = new JTextField("" + String.format("%.2f", vertexView.getModel().getPosition().getY()));
-        z = new JTextField("" + String.format("%.2f", vertexView.getModel().getPosition().getZ()));
+        x = new NumericField("" + String.format("%.2f", vertexView.getModel().getPosition().getX()));
+        y = new NumericField("" + String.format("%.2f", vertexView.getModel().getPosition().getY()));
+        z = new NumericField("" + String.format("%.2f", vertexView.getModel().getPosition().getZ()));
+        z.setEditable(false);
+        z.setBackground(new Color(255, 150, 150));
+
         positionPanel.add(x);
         positionPanel.add(y);
         positionPanel.add(z);
-        final JTextField borderJTF = new JTextField("" + vertexView.getModel().getThickness());
+        final NumericField borderJTF = new NumericField("" + vertexView.getModel().getThickness());
 
 
         // on ajoute tous nos éléments dans un arraylist pour pouvoir les modifier avec un foreach
@@ -144,25 +148,22 @@ public class EditVertexNowAction extends MenuAction{
                 vertexView.getModel().setLabel(labelJTF.getText());
                 vertexView.getModel().setTextColor(flabelColor);
                 vertexView.getModel().setShape((VertexShape)shapeList.getSelectedItem());
-                        //if float
-                        vertexView.getModel().setSize(Float.parseFloat(sizeJTF.getText()));
-                //if float
-                vertexView.getModel().setPosition(new Vector3f(Float.parseFloat(x.getText().replaceFirst(",", ".")), Float.parseFloat(y.getText().replaceFirst(",", ".")), 0)); // z = 0
+                if (sizeJTF.isValid())
+                    vertexView.getModel().setSize(Float.parseFloat(sizeJTF.getText()));
+                else {System.out.println("pas un float");}
+                if (x.isValid() && y.isValid())
+                    vertexView.getModel().setPosition(new Vector3f(Float.parseFloat(x.getText().replaceFirst(",", ".")), Float.parseFloat(y.getText().replaceFirst(",", ".")), 0)); // z = 0
                 vertexView.getModel().setBackgroundColor(fvertexColor);
                 vertexView.getModel().setBorderColor(fborderColor);
-                //float
-                vertexView.getModel().setThickness(Float.parseFloat(borderJTF.getText()));
-                //getController().getCanvas().getGraphView().addTranslatingVertex(vertexView, new Vector3f(Float.parseFloat(x.getText()), Float.parseFloat(y.getText()), 0));
-
+                if (borderJTF.isValid())
+                    vertexView.getModel().setThickness(Float.parseFloat(borderJTF.getText()));
                 try {
                     getController().getCanvas().makeCurrent();
                 } catch (LWJGLException ex) {
                     ex.printStackTrace();
                 }
                 getController().getCanvas().getGraphView().reloadVertex(vertexView);
-                //getController().getCanvas().getGraphView().init();
                 f.dispose();
-
             }
         });
 

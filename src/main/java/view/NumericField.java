@@ -11,6 +11,7 @@ public class NumericField extends JTextField{
     public NumericField(Double value){
         super.setText(value.toString());
     }
+
     public boolean isValid(){
         try{
             Double.parseDouble(super.getText());
@@ -21,4 +22,10 @@ public class NumericField extends JTextField{
             return false;
         }
     }
+
+    public NumericField(String value){
+
+        super.setText(value);
+    }
+
 }
