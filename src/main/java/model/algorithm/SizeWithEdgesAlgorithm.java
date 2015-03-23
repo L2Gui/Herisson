@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class SizeWithEdgesAlgorithm implements ISizeAlgorithm {
+
     @Override
     public String toString() {
         return "Taille en fonction du degrès";
@@ -17,20 +18,25 @@ public class SizeWithEdgesAlgorithm implements ISizeAlgorithm {
 
     private float minSize;
     private float maxSize;
+
+    public SizeWithEdgesAlgorithm(){
+        this.minSize=(float)1.0;
+        this.maxSize=(float)3.0;
+    }
     /**
      * @return la taille qu'aura un élément dont l'attribut paramètre est au maximum
      */
     @Override
     public float getMaxSize() {
-        return 0;
+        return maxSize;
     }
 
     /**
      * @return la taille qu'aura un élément dont l'attribut paramètre est au minimum
      */
     @Override
-    public void getMinSize() {
-
+    public float getMinSize() {
+        return minSize;
     }
 
     /**
