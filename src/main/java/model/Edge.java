@@ -1,7 +1,6 @@
 package model;
 
 import java.awt.*;
-import java.util.Observable;
 
 public class Edge extends GraphElement {
 	private Vertex srcVertex;
@@ -40,7 +39,9 @@ public class Edge extends GraphElement {
 
     public void setGraph(Graph graph) {
         this.graph = graph;
-        this.style = graph.getStyleManager().getDefaultEdgeStyle();
+        if (this.style == null) {
+            this.style = graph.getStyleManager().getDefaultEdgeStyle();
+        }
     }
 		
 	/**

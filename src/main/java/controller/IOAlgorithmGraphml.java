@@ -19,7 +19,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
 public class IOAlgorithmGraphml implements IOAlgorithm {
 
@@ -129,6 +128,7 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
                 }
             }
 			vertices.put(id, vertex);
+            graph.addVertex(vertex);
 		}
 
 		for (Element edg : graphRacine.getChildren("edge")){
@@ -178,12 +178,7 @@ public class IOAlgorithmGraphml implements IOAlgorithm {
 			}
 
 			edges.put(id, edge);
-		}
-		for (Entry<String, Edge> e : edges.entrySet()) {
-			graph.addEdge(e.getValue());
-		}
-		for (Entry<String, Vertex> e : vertices.entrySet()) {
-			graph.addVertex(e.getValue());
+            graph.addEdge(edge);
 		}
 		return graph;
 	}
