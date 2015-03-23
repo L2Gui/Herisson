@@ -43,7 +43,6 @@ public class Graph extends GraphElement {
 		 * la m�thode add renvoie vrai si l'argument a pu etre ajout� ou 
 		 * faux si l'�l�ment existe d�ja dans la Collection.
 		 */
-
         if (edge != null) {
             if (!edges.add(edge)) {
                 System.out.println("Edge already exists");
@@ -56,7 +55,6 @@ public class Graph extends GraphElement {
                 if (edge.getStyle() == null) {
                     edge.setStyle(this.styleManager.getDefaultEdgeStyle());
                 }
-
                 this.update(new GraphUpdate(GraphUpdate.UpdateType.ADD_EDGE, edge));
             }
         }

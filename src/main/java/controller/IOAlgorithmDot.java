@@ -265,7 +265,6 @@ public class IOAlgorithmDot implements IOAlgorithm {
 
 	@Override
 	public boolean isConform(String filname) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

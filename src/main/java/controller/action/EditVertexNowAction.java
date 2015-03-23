@@ -79,6 +79,7 @@ public class EditVertexNowAction extends MenuAction{
 
         final NumericField labelJTF = new NumericField(vertexView.getModel().getLabel());
         shapeList = new JComboBox<VertexShape>(VertexShape.values());
+        shapeList.setSelectedItem(vertexView.getModel().getShape());
         final JButton colorLabelBtn = new JButton(icone); colorLabelBtn.setFocusPainted(false); colorLabelBtn.setBackground(flabelColor);
         final JButton colorVertexBtn = new JButton(icone); colorVertexBtn.setFocusPainted(false); colorVertexBtn.setBackground(fvertexColor);
         final JButton colorBorderBtn = new JButton(icone);  colorBorderBtn.setFocusPainted(false);colorBorderBtn.setBackground(fborderColor);
