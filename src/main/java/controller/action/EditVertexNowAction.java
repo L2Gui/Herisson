@@ -75,9 +75,9 @@ public class EditVertexNowAction extends MenuAction{
 
         final NumericField labelJTF = new NumericField(vertexView.getModel().getLabel());
         shapeList = new JComboBox<VertexShape>(VertexShape.values());
-        final JButton colorLabelBtn = new JButton("Couleur du label"); colorLabelBtn.setBackground(flabelColor); colorLabelBtn.setForeground(invert(flabelColor));
-        final JButton colorVertexBtn = new JButton("Couleur du noeud"); colorVertexBtn.setBackground(fvertexColor); colorVertexBtn.setForeground(invert(fvertexColor));
-        final JButton colorBorderBtn = new JButton("Couleur de la bordure"); colorBorderBtn.setBackground(fborderColor); colorBorderBtn.setForeground(invert(fborderColor));
+        final JButton colorLabelBtn = new JButton(); colorLabelBtn.setBackground(flabelColor);
+        final JButton colorVertexBtn = new JButton(); colorVertexBtn.setBackground(fvertexColor);
+        final JButton colorBorderBtn = new JButton(); colorBorderBtn.setBackground(fborderColor);
         JButton ok = new JButton("OK");
         JButton cancel = new JButton("Annuler");
 
@@ -129,7 +129,6 @@ public class EditVertexNowAction extends MenuAction{
                 if(newColor != null){
                     flabelColor = newColor;
                     colorLabelBtn.setBackground(newColor);
-                    colorLabelBtn.setForeground(invert(newColor));
                 }
             }
         });
@@ -142,7 +141,6 @@ public class EditVertexNowAction extends MenuAction{
                 if(newColor != null){
                     fvertexColor = newColor;
                     colorVertexBtn.setBackground(newColor);
-                    colorVertexBtn.setForeground(invert(newColor));
                 }
             }
         });
@@ -155,7 +153,6 @@ public class EditVertexNowAction extends MenuAction{
                 if(newColor !=null){
                     fborderColor = newColor;
                     colorBorderBtn.setBackground(fborderColor);
-                    colorBorderBtn.setForeground(invert(fborderColor));
                 }
             }
         });
@@ -214,10 +211,9 @@ public class EditVertexNowAction extends MenuAction{
         JPanel panelCancel = new JPanel();
         panelCancel.add(cancel);
 
-        p.add(panelOk);
         p.add(panelCancel);
-
-
+        p.add(panelOk);
+        
         f.setContentPane(p);
 
         f.setLocationRelativeTo(null);
