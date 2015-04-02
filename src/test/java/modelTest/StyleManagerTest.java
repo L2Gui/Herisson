@@ -20,14 +20,14 @@ public class StyleManagerTest {
 
         Assert.assertEquals(styleManager.getDefaultEdgeStyle().getColor(), Color.BLACK);
         Assert.assertEquals(styleManager.getDefaultEdgeStyle().getTextColor(), Color.BLACK);
-        Assert.assertEquals(styleManager.getDefaultEdgeStyle().getThickness(), 0.2f, 0.0);
+        Assert.assertEquals(styleManager.getDefaultEdgeStyle().getThickness(), 0.1, 0.0001);
 
         Assert.assertEquals(styleManager.getDefaultVertexStyle().getBackgroundColor(), Color.GRAY);
         Assert.assertEquals(styleManager.getDefaultVertexStyle().getTextColor(), Color.BLACK);
         Assert.assertEquals(styleManager.getDefaultVertexStyle().getBorderColor(), Color.BLACK);
-        Assert.assertEquals(styleManager.getDefaultVertexStyle().getBorderThickness(), 1.0, 0.0);
+        Assert.assertEquals(styleManager.getDefaultVertexStyle().getBorderThickness(), 0.1, 0.0001);
         Assert.assertEquals(styleManager.getDefaultVertexStyle().getSize(), 2.0, 0.0);
-        Assert.assertEquals(styleManager.getDefaultVertexStyle().getShape(), VertexShape.SQUARE);
+        Assert.assertEquals(styleManager.getDefaultVertexStyle().getShape(), VertexShape.CIRCLE);
     }
 
     @Test

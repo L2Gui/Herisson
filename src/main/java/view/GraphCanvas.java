@@ -5,10 +5,9 @@ import controller.action.*;
 import controller.command.MoveVertexCommand;
 import controller.command.RemoveEdgeCommand;
 import controller.command.RemoveVertexCommand;
-import model.Graph;
 import model.GraphElement;
 import opengl.GLCanvas;
-import opengl.resource.object.camera.GLPerspectiveCamera;
+import opengl.object.camera.GLPerspectiveCamera;
 import opengl.utils.GLRay;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.util.vector.Matrix4f;
@@ -76,7 +75,7 @@ public class GraphCanvas extends GLCanvas {
     @Override
     public void init() {
         super.lockDraw();
-        this.camera = new GLPerspectiveCamera(70.0f, 0.01f, 100.0f);
+        this.camera = new GLPerspectiveCamera(70.0f, 0.01f, 100000.0f);
         this.camera.lookToDirection(new Vector3f(0.0f, 0.0f, -1.0f));
         this.camera.setPosition(new Vector3f(0.0f, 0.0f, 10.0f));
         super.setCamera(this.camera);

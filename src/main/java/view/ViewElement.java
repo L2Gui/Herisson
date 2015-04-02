@@ -1,6 +1,6 @@
 package view;
 
-import opengl.resource.object.GLDrawableObject;
+import opengl.object.GLDrawableObject;
 
 public abstract class ViewElement extends GLDrawableObject {
 	private String label;

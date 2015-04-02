@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <node-style xmlns="" id="ns0" default="true">
+    <shape>Cercle</shape>
+    <size>2.0</size>
+    <border-thickness>0.1</border-thickness>
+    <background-color>128,128,128</background-color>
+    <text-color>0,0,0</text-color>
+    <border-color>0,0,0</border-color>
+    <font>Verdana,32,0</font>
+  </node-style>
+  <node-style xmlns="" id="ns1" default="false">
+    <shape>Carré</shape>
+    <size>2.0</size>
+    <border-thickness>0.1</border-thickness>
+    <background-color>128,128,128</background-color>
+    <text-color>0,0,0</text-color>
+    <border-color>0,0,0</border-color>
+    <font>Verdana,32,0</font>
+  </node-style>
+  <edge-style xmlns="" id="es0" default="true">
+    <thickness>0.1</thickness>
+    <color>0,0,0</color>
+    <text-color>0,0,0</text-color>
+    <font>Verdana,32,0</font>
+    <line-style>SOLID</line-style>
+  </edge-style>
+  <graph xmlns="" id="Nouveau Graphe" edgedefault="undirected">
+    <node id="n0" style="ns0">
+      <position>
+        <posx>-8.82177</posx>
+        <posy>-0.6193368</posy>
+        <posz>-0.010000229</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n1" style="ns0">
+      <position>
+        <posx>-5.1812787</posx>
+        <posy>0.95166355</posy>
+        <posz>-0.010000229</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n2" style="ns0">
+      <position>
+        <posx>2.5528758</posx>
+        <posy>0.030211713</posy>
+        <posz>-0.010000229</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n3" style="ns0">
+      <position>
+        <posx>7.2356644</posx>
+        <posy>2.3262887</posy>
+        <posz>-0.010000229</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n4" style="ns0">
+      <position>
+        <posx>-1.3293074</posx>
+        <posy>3.1420002</posy>
+        <posz>-0.010000229</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n5" style="ns0">
+      <position>
+        <posx>-2.1450195</posx>
+        <posy>-4.577049</posy>
+        <posz>-0.010000229</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n6" style="ns0">
+      <position>
+        <posx>6.268894</posx>
+        <posy>-2.3111825</posy>
+        <posz>-0.010000229</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n7" style="ns0">
+      <position>
+        <posx>6.3142133</posx>
+        <posy>1.6616349</posy>
+        <posz>-0.010001183</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n8" style="ns0">
+      <position>
+        <posx>3.474328</posx>
+        <posy>3.9123943</posy>
+        <posz>-0.010000229</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n9" style="ns1">
+      <position>
+        <posx>-4.138981</posx>
+        <posy>3.489433</posy>
+        <posz>-0.010000229</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n10" style="ns0">
+      <position>
+        <posx>-0.18126908</posx>
+        <posy>-2.53777</posy>
+        <posz>-0.010000229</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n11" style="ns0">
+      <position>
+        <posx>-5.634451</posx>
+        <posy>-1.8882213</posy>
+        <posz>-0.010000229</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n12" style="ns0">
+      <position>
+        <posx>-7.8549995</posx>
+        <posy>3.4441154</posy>
+        <posz>-0.009999275</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n13" style="ns0">
+      <position>
+        <posx>-5.135962</posx>
+        <posy>5.045327</posy>
+        <posz>-0.010000229</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n14" style="ns0">
+      <position>
+        <posx>-0.92145175</posx>
+        <posy>5.4078655</posy>
+        <posz>-0.010000229</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n15" style="ns0">
+      <position>
+        <posx>1.525682</posx>
+        <posy>2.3867116</posy>
+        <posz>-0.009999275</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n16" style="ns0">
+      <position>
+        <posx>-0.37764454</posx>
+        <posy>-0.16616358</posy>
+        <posz>-0.010000229</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n17" style="ns0">
+      <position>
+        <posx>-2.703933</posx>
+        <posy>-0.9063464</posy>
+        <posz>-0.009999275</posz>
+      </position>
+      <label />
+    </node>
+    <node id="n18" style="ns0">
+      <position>
+        <posx>-2.220548</posx>
+        <posy>1.6163175</posy>
+        <posz>-0.010000229</posz>
+      </position>
+      <label />
+    </node>
+  </graph>
+</graphml>

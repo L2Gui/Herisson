@@ -1,6 +1,6 @@
 package opengl;
 
-import opengl.resource.object.camera.IGLCamera;
+import opengl.object.camera.IGLCamera;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.AWTGLCanvas;
 import org.lwjgl.opengl.GL11;
