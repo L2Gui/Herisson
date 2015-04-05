@@ -9,6 +9,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class DispoCircleAlgorithm implements IDispoAlgorithm {
+    /**
+     * Retourne le nom de l'algo
+     * @return le nom de l'algo
+     */
     @Override
     public String toString() {
         return "Disposition circulaire";

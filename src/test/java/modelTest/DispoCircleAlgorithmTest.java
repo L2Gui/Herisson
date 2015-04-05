@@ -92,7 +92,6 @@ public class DispoCircleAlgorithmTest {
         float maxSize = 10;
 
         Vertex v = new Vertex(g);
-        //TODO faire diffréremment, il faudra utiliser une méthode de vertex quand il y en aura une
         v.getStyle().setSize(maxSize);
         v.setPosition(new Vector3f(2f,2f,0f));
 
